@@ -405,8 +405,9 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  background: url("../img/hero-bg.jpg");
+  background: url("../img/hero-bg.jpg") center center no-repeat;
   position: relative;
+  
   padding: 120px 0 0 0;
 }
 
@@ -1108,32 +1109,32 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Team
+# template
 --------------------------------------------------------------*/
-.team {
+.template {
   background: #fff;
 }
 
-.team .member {
+.template .member {
   text-align: center;
   margin-bottom: 80px;
   position: relative;
 }
 
-.team .member .pic {
+.template .member .pic {
   border-radius: 4px;
   overflow: hidden;
 }
 
-.team .member img {
+.template .member img {
   transition: all ease-in-out 0.4s;
 }
 
-.team .member:hover img {
+.template .member:hover img {
   transform: scale(1.1);
 }
 
-.team .member .member-info {
+.template .member .member-info {
   position: absolute;
   bottom: -80px;
   left: 0px;
@@ -1144,7 +1145,7 @@ section {
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-.team .member h4 {
+.template .member h4 {
   font-weight: 700;
   margin-bottom: 10px;
   font-size: 16px;
@@ -1153,7 +1154,7 @@ section {
   padding-bottom: 10px;
 }
 
-.team .member h4::after {
+.template .member h4::after {
   content: '';
   position: absolute;
   display: block;
@@ -1164,27 +1165,27 @@ section {
   left: calc(50% - 25px);
 }
 
-.team .member span {
+.template .member span {
   font-style: italic;
   display: block;
   font-size: 13px;
   color: #01036f;
 }
 
-.team .member .social {
+.template .member .social {
   margin-top: 10px;
 }
 
-.team .member .social a {
+.template .member .social a {
   transition: color 0.3s;
   color: #01036f;
 }
 
-.team .member .social a:hover {
+.template .member .social a:hover {
   color: #1acc8d;
 }
 
-.team .member .social i {
+.template .member .social i {
   font-size: 16px;
   margin: 0 2px;
 }

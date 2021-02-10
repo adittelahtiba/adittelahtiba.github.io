@@ -8,15 +8,10 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-/* @font-face{
-  font-family: "Freestyle Script";
-  src: url('../font/FREESCPT.TTF');
-  font-family: "harlowsi";
-  src: url('../font/HARLOWSI.TTF');
-} */
+
 
 body {
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
   color: #444444;
 }
 
@@ -31,11 +26,11 @@ a:hover {
 }
 
 h1{
-font-family: "harlowsi";
+font-family: 'Lobster', cursive;
 }
 
 h2, h3, h4, h5, h6 {
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -276,7 +271,7 @@ h2, h3, h4, h5, h6 {
   transition: 0.3s;
   font-size: 15px;
   font-weight: 500;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lobster', cursive;
 }
 
 .nav-menu > ul > li > a:before {
@@ -342,7 +337,7 @@ h2, h3, h4, h5, h6 {
 
 .nav-menu .drop-down > a:after {
   content: "\ea99";
-  font-family: IcoFont;
+  font-family: 'Lobster', cursive;
   padding-left: 5px;
 }
 
@@ -363,7 +358,7 @@ h2, h3, h4, h5, h6 {
 
 .nav-menu .drop-down .drop-down > a:after {
   content: "\eaa0";
-  font-family: IcoFont;
+  font-family: 'Lobster', cursive;
   position: absolute;
   right: 15px;
 }
@@ -438,7 +433,7 @@ h2, h3, h4, h5, h6 {
 
 .mobile-nav .drop-down > a:after {
   content: "\ea99";
-  font-family: IcoFont;
+  font-family: 'Lobster', cursive;
   padding-left: 10px;
   position: absolute;
   right: 15px;
@@ -527,7 +522,7 @@ h2, h3, h4, h5, h6 {
 }
 
 #hero .btn-get-started {
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 1px;
@@ -712,7 +707,7 @@ section {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(255, 166, 193);
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
 }
 
 .section-title h2::after {
@@ -730,7 +725,7 @@ section {
   font-size: 36px;
   font-weight: 700;
   /* text-transform: uppercase; */
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
   color: rgb(255, 57, 116);
 }
 
@@ -1037,7 +1032,7 @@ section {
 .counts .count-box p {
   padding: 0;
   margin: 0;
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
   font-size: 14px;
 }
 
@@ -1091,7 +1086,7 @@ section {
 }
 
 .btn-galelery{
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
   margin-top: 15px;
   font-weight: 500;
   font-size: 16px;
@@ -1527,7 +1522,7 @@ team
   font-size: 36px;
   color: rgb(255, 57, 116);
   font-weight: 600;
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
   margin-bottom: 20px;
 }
 
@@ -1583,7 +1578,7 @@ team
   transition: none;
   font-size: 14px;
   font-weight: 400;
-  font-family: 'Tangerine', cursive;
+  font-family: 'Lobster', cursive;
   font-weight: 600;
   transition: 0.3s;
 }
@@ -1636,7 +1631,7 @@ team
 .faq .faq-list a {
   display: block;
   position: relative;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lobster', cursive;
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
@@ -1876,7 +1871,7 @@ team
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Lobster', cursive;
 }
 
 #footer .footer-top .social-links a {

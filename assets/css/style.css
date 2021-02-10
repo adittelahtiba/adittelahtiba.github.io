@@ -8,15 +8,15 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-@font-face{
+/* @font-face{
   font-family: "Freestyle Script";
   src: url('../font/FREESCPT.TTF');
   font-family: "harlowsi";
   src: url('../font/HARLOWSI.TTF');
-}
+} */
 
 body {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: 'Tangerine', cursive;
   color: #444444;
 }
 
@@ -35,7 +35,7 @@ font-family: "harlowsi";
 }
 
 h2, h3, h4, h5, h6 {
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Tangerine', cursive;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -527,7 +527,7 @@ h2, h3, h4, h5, h6 {
 }
 
 #hero .btn-get-started {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Tangerine', cursive;
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 1px;
@@ -712,7 +712,7 @@ section {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(255, 166, 193);
-  font-family: "Poppins", sans-serif;
+  font-family: 'Tangerine', cursive;
 }
 
 .section-title h2::after {
@@ -730,7 +730,7 @@ section {
   font-size: 36px;
   font-weight: 700;
   /* text-transform: uppercase; */
-  font-family: "harlowsi";
+  font-family: 'Tangerine', cursive;
   color: rgb(255, 57, 116);
 }
 
@@ -1037,7 +1037,7 @@ section {
 .counts .count-box p {
   padding: 0;
   margin: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Tangerine', cursive;
   font-size: 14px;
 }
 
@@ -1091,7 +1091,7 @@ section {
 }
 
 .btn-galelery{
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Tangerine', cursive;
   margin-top: 15px;
   font-weight: 500;
   font-size: 16px;
@@ -1527,7 +1527,7 @@ team
   font-size: 36px;
   color: rgb(255, 57, 116);
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Tangerine', cursive;
   margin-bottom: 20px;
 }
 
@@ -1583,7 +1583,7 @@ team
   transition: none;
   font-size: 14px;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Tangerine', cursive;
   font-weight: 600;
   transition: 0.3s;
 }

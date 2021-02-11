@@ -4,10 +4,15 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+
+
+
 !(function ($) {
   "use strict";
 
-  // $('.promosi').delay(2000).addCLass('promo');
+
+  // <script>
+  {/* </script> */ }
 
 
   //countdown
@@ -196,6 +201,8 @@
   }
   $(window).on('load', function () {
     aos_init();
+    $('#exampleModal').delay(5000).modal('show');
   });
+
 
 })(jQuery);

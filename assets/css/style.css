@@ -85,36 +85,41 @@ h2, h3, h4, h5, h6 {
   }
 }
 
-/* promo coutdown */
-.promo{
-  position: fixed;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  left: 0px;
-  top: 0px;
-  overflow: hidden;
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 0.25s, transform 0.35s;  
-  z-index: 99;
+
+/* Green */
+.pilih {
+  border-color:  rgb(255, 57, 116);
+  color: rgb(255, 255, 255);
+  width: 80px;
+  padding: 0%;
 }
 
-.promo .content{
-  position: absolute;
-  width: 80%;
-  height: 300px;
-  max-height: 70%;
-  top: 20%;
-  left: 10%;
-  background: salmon;
-  border-radius: 15px;
-  box-shadow: 0 3px 15px -2px #222222;
-  padding: 20px;
+.pilih:hover {
+  background-color:  rgb(255, 57, 116);
+  color: white;
+}
+
+/* promo coutdown */
+
+.promo{
+  background:rgb(253, 77, 130);
+  margin-top: 140px;
+}
+
+.header-modal{
+  padding: 5px;
+  color: white;
+}
+
+.close-promo{
+  margin-top: 20px;
+  color: white;
 }
 
 .promo .countdown div {
   text-align: center;
+  background: rgb(245, 105, 147);
+  color: #1884bf;
   border: 2px solid rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   margin: 10px 10px;

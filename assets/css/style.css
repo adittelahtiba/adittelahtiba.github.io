@@ -102,7 +102,7 @@ h2, h3, h4, h5, h6 {
 /* promo coutdown */
 
 .promo{
-  background:rgb(253, 77, 130);
+  background:#ffb0c8;
   margin-top: 140px;
 }
 
@@ -118,7 +118,7 @@ h2, h3, h4, h5, h6 {
 
 .promo .countdown div {
   text-align: center;
-  background: rgb(245, 105, 147);
+  background: #ffc2d4;
   color: #1884bf;
   border: 2px solid rgba(255, 255, 255, 0.8);
   border-radius: 8px;

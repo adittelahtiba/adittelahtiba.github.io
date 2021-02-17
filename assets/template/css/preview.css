@@ -1,0 +1,49 @@
+/* https://unsplash.com/photos/H_cZqryUuok?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink */
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  
+    h1,h2{
+        font-family: 'Alex Brush', cursive;
+    }
+
+    h3, h4, h5, h6 {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* home */
+.home{
+    background: url('../background/template.png');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+}
+.couple{
+    background: orchid;
+}
+.event{
+    background: url('../background/template.png');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+}
+.gallery{
+    background: orchid;
+}
+
+.guest{
+    background: url('../background/template.png');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+}
+
+
+.profil-penganten{
+    width: 40%;
+	/* height: 200px; */
+	background: #dac52c;
+	border-radius: 100%;
+}
+
+    /* end home */

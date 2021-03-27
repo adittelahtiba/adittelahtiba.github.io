@@ -1,7 +1,12 @@
-// .
+$(window).on('load', function () {
+
 let videooffline = document.getElementById('videooffline');
+let audiona = document.getElementById('audiona');
 $('.pause').hide();
 $('.off-sound').hide();
+offsound();
+
+});
 
 function play() {
 	videooffline.play();
@@ -16,13 +21,14 @@ function pause() {
 }
 
 function onsound() {
-	// videooffline.play();
+	audiona.pause();
 	$('.on-sound').hide();
 	$('.off-sound').show();
 }
 
 function offsound() {
-	// videooffline.pause();
+	audiona.play();
 	$('.off-sound').hide();
 	$('.on-sound').show();
 }
+

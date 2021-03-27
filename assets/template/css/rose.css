@@ -4,13 +4,23 @@
     }
   
     h1,h2{
-        font-family: 'Alex Brush', cursive;
+        font-family: 'Rouge Script', cursive;
     }
+
+    a:hover {
+        text-decoration: none;
+      }
 
     hr {
         width: 50%;
         border-top: 3px solid rgb(220, 160, 98);
         margin-left: 25%;
+    }
+
+    .navbar{
+        position: fixed;
+        width:100%;
+        bottom: 0;
     }
 
     /* h3, h4, h5, h6 {
@@ -24,11 +34,10 @@
       background-position: center top;
       background-repeat: no-repeat;
       color: black;
-      /* height: 100%; */
 }
 
 
-.couple,.gallery,.event{
+.couple,.gallery,.event,.kisah{
     background: url('../../img/tema/rose-bodi.jpg');
     background-attachment: fixed;
     background-size: cover;
@@ -36,18 +45,56 @@
     background-repeat: no-repeat;
 }
 
+.kisah{
+    margin-bottom: -80px;
+}
+
+.on-sound {
+    position: fixed;
+    display: inline;
+    right: 15px;
+    top: 15px;
+    opacity: 0.6;
+    z-index: 99999;
+  }
+
+.off-sound {
+    position: fixed;
+    display: inline;
+    right: 15px;
+    top: 15px;
+    opacity: 0.1;
+    z-index: 99999;
+  }
+
+  .off-sound:hover{
+      opacity: 0.7;
+  }
+
 .foot{
       background: url('../../img/tema/Rose.jpg');
       background-size: 101%;
       background-position: center bottom;
       background-repeat: no-repeat;
-      margin-bottom: -20px;
+      margin-bottom: -80px;
       height: 370px;
       color: black;
 }
 
-.guest,.credit{
+.kisah-mempelai{
+    text-align: justify;
+    padding: 10%;
+    font-family: 'Handlee', cursive;
+}
+
+.guest{
+    margin-top: 50px;
     background: white;
+}
+
+.credit{
+    background: rgb(26, 25, 25);
+    color: rgb(197, 194, 194);
 }
 
 
@@ -58,16 +105,63 @@
     margin-top: 2%;
 }
 
+.gallery video:before{
+    background-color: blue;
+    position: relative;
+}
 
+#play,#pause{
+    content: '';
+    position: absolute;
+    width: 85%;
+    height: 70%;
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation: pulsate-btn 2s;
+    animation: pulsate-btn 2s;
+    -webkit-animation-direction: forwards;
+    animation-direction: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: steps;
+    animation-timing-function: steps;
+    opacity: 0;
+    top: 2%;
+    left: 8%;
+    color: white;
+}
+
+#play2{
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 0%;
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation: pulsate-btn 2s;
+    animation: pulsate-btn 2s;
+    -webkit-animation-direction: forwards;
+    animation-direction: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: steps;
+    animation-timing-function: steps;
+    opacity: 1;
+    top: 35%;
+    left: 45%;
+    color: white;
+    background: white;
+}
 
 .endctn{
     height: 100px;
 }
 
-/* .gallery img:hover{
-    padding: 0%;
-    padding: 4%;
-} */
+.gallery img:hover{
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+}
 
 /* .gallery .thumbnail{
     background: white;
@@ -81,6 +175,13 @@
 	background: #dac52c;
 	border-radius: 100%;
     margin-top: 25%;
+}
+
+.profil{
+    width: 30%;
+	background: #dac52c;
+	border-radius: 100%;
+    margin-top: 15%;
 }
 
 .play{
@@ -98,6 +199,17 @@
     font-family: 'Bad Script', cursive;
 }
 
+.judul-2{
+    margin-top: 5%;
+    font-family: 'Bad Script', cursive;
+}
+
+.judul-3{
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-family: 'Bad Script', cursive;
+}
+
 .pengantin{
     margin-top: 7%;
 }
@@ -107,6 +219,20 @@
 }
 
 
+.pesan-tamu{
+    margin-left: 0%;
+    padding: 6%;
+}
+
+
+.kirimpesan{
+    margin-top: 20px;
+}
+
+
+.carousel-item{
+    min-height: 240px;
+}
 
 
 /* tampilan laptop */
@@ -134,7 +260,7 @@
         height: 700px;
     }
 
-    .couple,.gallery,.event{
+    .couple,.gallery,.event,.kisah{
         /* background-size: 404px; */
         background: none;
     }
@@ -157,6 +283,10 @@
         left: 50%;      
         margin-left: -200px;
     }
+
+    /* .on-sound{
+        opacity: 1;
+    } */
 }
 
 

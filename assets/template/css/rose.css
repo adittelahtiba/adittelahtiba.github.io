@@ -1,0 +1,169 @@
+/* https://unsplash.com/photos/H_cZqryUuok?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink */
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  
+    h1,h2{
+        font-family: 'Alex Brush', cursive;
+    }
+
+    hr {
+        width: 50%;
+        border-top: 3px solid rgb(220, 160, 98);
+        margin-left: 25%;
+    }
+
+    /* h3, h4, h5, h6 {
+        font-family: 'Roboto', sans-serif;
+    } */
+
+    /* home */
+.home{
+      background: url('../../img/tema/Rose.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      color: black;
+      /* height: 100%; */
+}
+
+
+.couple,.gallery,.event{
+    background: url('../../img/tema/rose-bodi.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position:center top;
+    background-repeat: no-repeat;
+}
+
+.foot{
+      background: url('../../img/tema/Rose.jpg');
+      background-size: 101%;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      margin-bottom: -20px;
+      height: 370px;
+      color: black;
+}
+
+.guest,.credit{
+    background: white;
+}
+
+
+.gallery img,video{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 4%;
+    margin-top: 2%;
+}
+
+
+
+.endctn{
+    height: 100px;
+}
+
+/* .gallery img:hover{
+    padding: 0%;
+    padding: 4%;
+} */
+
+/* .gallery .thumbnail{
+    background: white;
+} */
+
+
+
+
+.profil-pengantin{
+    width: 50%;
+	background: #dac52c;
+	border-radius: 100%;
+    margin-top: 25%;
+}
+
+.play{
+    background: violet;
+}
+
+
+.judul{
+    margin-top: 10%;
+    font-family: 'Bad Script', cursive;
+}
+
+.judul-1{
+    margin-top: 35%;
+    font-family: 'Bad Script', cursive;
+}
+
+.pengantin{
+    margin-top: 7%;
+}
+
+.pengantin h6{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+
+/* tampilan laptop */
+@media (min-width: 400px) { 
+    body{
+      background:url('../../img/tema/Rose-bg.jpg');
+      background-size: 100%;
+      background-attachment: fixed;
+      background-position: right top;
+      background-repeat: no-repeat;
+    }
+
+    body:before {
+        content: "";
+        background: rgba(255, 241, 246, 0.91);
+        position: fixed;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+    .home{
+        background-size: 400px;
+        height: 700px;
+    }
+
+    .couple,.gallery,.event{
+        /* background-size: 404px; */
+        background: none;
+    }
+
+
+    .bodi{
+        background: url('../../img/tema/rose-bodi.jpg');
+        background-size: 404px;
+        background-position: center top;
+        width: 400px;
+        position: relative;
+        bottom: 0;
+        left: 50%;      
+        margin-left: -200px; 
+    }
+    .navbar{
+        width: 400px;  
+        position: fixed;
+        bottom: 0;
+        left: 50%;      
+        margin-left: -200px;
+    }
+}
+
+
+@media (min-width: 550px) { 
+.bodi{
+    box-shadow: 0 4px 12px 5px rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);       
+}
+}
+
+    /* end home */

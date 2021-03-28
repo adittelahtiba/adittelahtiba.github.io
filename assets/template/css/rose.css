@@ -29,7 +29,7 @@
 
     /* home */
 .home{
-      /* background: url('../../img/tema/Rose-body.jpg'); */
+      background: url('../../img/tema/Rose-body.jpg');
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;

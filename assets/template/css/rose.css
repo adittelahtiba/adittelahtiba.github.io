@@ -1,6 +1,6 @@
 /* https://unsplash.com/photos/H_cZqryUuok?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink */
     body {
-      font-family: 'Roboto', sans-serif;
+        font-family: 'Handlee', cursive;
     }
   
     h1,h2{
@@ -29,15 +29,42 @@
 
     /* home */
 .home{
-      background: url('../../img/tema/Rose.jpg');
+      /* background: url('../../img/tema/rose-bodi.jpg'); */
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
       color: black;
 }
 
+.tema{
+    width: 99%;
+}
 
-.couple,.gallery,.event,.kisah{
+.awal{
+    position: absolute;
+    height: 10%;
+    margin-top: -180%;
+}
+
+.countdown{
+    font-family: 'Delius', cursive;
+    color: black;
+}
+
+.countdown .box-ctdn{
+    padding: 2%;    
+}
+
+.box-ctdn p{
+    margin-bottom: 0%;
+}
+
+.ikon{
+    color: black;
+}
+
+
+.couple,.gallery,.event,.kisah,.ayat{
     background: url('../../img/tema/rose-bodi.jpg');
     background-attachment: fixed;
     background-size: cover;
@@ -72,23 +99,21 @@
   }
 
 .foot{
-      background: url('../../img/tema/Rose.jpg');
-      background-size: 100%;
+      background: url('../../img/tema/Rose-foot.jpg');
+      background-size: 99%;
       background-position: center bottom;
       background-repeat: no-repeat;
-      margin-bottom: -80px;
       height: 370px;
       color: black;
 }
 
-.kisah-mempelai{
+.kisah-mempelai,.isi-ayat{
     text-align: justify;
     padding: 10%;
     font-family: 'Handlee', cursive;
 }
 
 .guest{
-    margin-top: 50px;
     background: white;
 }
 
@@ -171,10 +196,10 @@
 
 
 .profil-pengantin{
-    width: 50%;
+    width: 37%;
 	background: #dac52c;
 	border-radius: 100%;
-    margin-top: 25%;
+    margin-top: 20%;
 }
 
 .profil{
@@ -195,8 +220,9 @@
 }
 
 .judul-1{
-    margin-top: 35%;
-    font-family: 'Bad Script', cursive;
+    margin-top: 30%;
+    height: 30%;
+    font-family: 'Dancing Script', cursive;
 }
 
 .judul-2{
@@ -205,18 +231,14 @@
 }
 
 .judul-3{
-    margin-top: 1%;
-    margin-bottom: 1%;
-    font-family: 'Bad Script', cursive;
+    margin-bottom: 0%;
+    font-family: 'Handlee', cursive;
 }
 
 .pengantin{
     margin-top: 7%;
 }
 
-.pengantin h6{
-    font-family: 'Roboto', sans-serif;
-}
 
 
 .pesan-tamu{
@@ -260,7 +282,11 @@
         height: 700px;
     }
 
-    .couple,.gallery,.event,.kisah{
+    .tema{
+        width: 100%;
+    }
+
+    .couple,.gallery,.event,.kisah,.ayat{
         /* background-size: 404px; */
         background: none;
     }
@@ -285,7 +311,15 @@
     }
 
     .foot{
-        background-size: 101%;
+        background-size: 100%;
+    }
+
+    .guest{
+        height: 120%;
+    }
+
+    .on-sound{
+        opacity: 1;
     }
 }
 

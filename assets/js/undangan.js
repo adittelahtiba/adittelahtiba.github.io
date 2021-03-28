@@ -6,6 +6,16 @@ $('.pause').hide();
 $('.off-sound').hide();
 offsound();
 
+
+  //countdown
+  if ($('.countdown').length) {
+    var count = $('.countdown').data('count');
+    var template = $('.countdown').html();
+    $('.countdown').countdown(count, function (event) {
+      $(this).html(event.strftime(template));
+    });
+  }
+  
 });
 
 function play() {

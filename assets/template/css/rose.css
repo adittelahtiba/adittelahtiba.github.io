@@ -180,6 +180,7 @@
 
 .endctn{
     height: 100px;
+    background: none;
 }
 
 .gallery img:hover{

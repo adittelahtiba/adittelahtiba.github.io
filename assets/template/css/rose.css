@@ -29,7 +29,7 @@
 
     /* home */
 .home{
-      /* background: url('../../img/tema/Rose-bodi.jpg'); */
+      /* background: url('../../img/tema/Rose-body.jpg'); */
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
@@ -65,11 +65,10 @@
 
 
 .couple,.gallery,.event,.kisah,.ayat{
-    background: url('../../img/tema/Rose-bodi.jpg');
+    background: url('../../img/tema/Rose-body.jpg');
     background-attachment: fixed;
     background-size: cover;
     background-position:center top;
-    background-repeat: no-repeat;
 }
 
 .kisah{
@@ -294,7 +293,7 @@
 
 
     .bodi{
-        background: url('../../img/tema/Rose-bodi.jpg');
+        background: url('../../img/tema/Rose-body.jpg');
         background-size: 404px;
         background-position: center top;
         width: 400px;

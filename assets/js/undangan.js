@@ -42,3 +42,11 @@ function offsound() {
 	$('.on-sound').show();
 }
 
+function navhide(){
+	$('.navbar').hide();
+}
+
+$('.modal').on('hidden.bs.modal', function() {
+	$('.navbar').show();
+});
+

@@ -1,98 +1,103 @@
 /* https://unsplash.com/photos/H_cZqryUuok?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink */
-    body {
-        font-family: 'Handlee', cursive;
-    }
-  
-    h1,h2{
-        font-family: 'Rouge Script', cursive;
-    }
+body {
+    font-family: 'Handlee', cursive;
+}
 
-    a:hover {
-        text-decoration: none;
-      }
+h1,
+h2 {
+    font-family: 'Rouge Script', cursive;
+}
 
-    hr {
-        width: 50%;
-        border-top: 3px solid rgb(220, 160, 98);
-        margin-left: 25%;
-    }
+a:hover {
+    text-decoration: none;
+}
 
-    .navbar{
-        position: fixed;
-        width:100%;
-        bottom: 0;
-        height: 50px;
-        margin-bottom: -8px;
-    }
+hr {
+    width: 50%;
+    border-top: 3px solid rgb(220, 160, 98);
+    margin-left: 25%;
+}
 
-    .modal-content{
-        background: none;
-        border: none;
-    }
+.navbar {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 50px;
+    margin-bottom: -8px;
+}
 
-    .modal-sm iframe{
-        border-radius: 4%;
-    }
+.modal-content {
+    background: none;
+    border: none;
+}
 
-    
+.modal-sm iframe {
+    border-radius: 4%;
+}
 
-    /* h3, h4, h5, h6 {
+
+
+/* h3, h4, h5, h6 {
         font-family: 'Roboto', sans-serif;
     } */
 
-    /* home */
-.home{
-      background: url('../../img/tema/Rose-body.jpg');
-      background-size: cover;
-      background-position: center top;
-      background-repeat: no-repeat;
-      
-      color: black;
+/* home */
+.home {
+    background: url('../../img/tema/Rose-body.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+
+    color: black;
 }
 
-.tema{
+.tema {
     width: 99%;
 }
 
-.awal{
+.awal {
     position: absolute;
     height: 10%;
     margin-top: -180%;
 }
 
-.countdown{
+.countdown {
     font-family: 'Delius', cursive;
     color: black;
 }
 
-.countdown .box-ctdn{
-    padding: 2%;    
+.countdown .box-ctdn {
+    padding: 2%;
 }
 
-.box-ctdn p{
+.box-ctdn p {
     margin-bottom: 0%;
 }
 
-.ikon{
+.ikon {
     color: black;
 }
 
 
-.couple,.gallery,.event,.kisah,.ayat{
+.couple,
+.gallery,
+.event,
+.kisah,
+.ayat {
     background: url('../../img/tema/Rose-body.jpg');
     /* background-attachment: fixed; */
     background-size: 100%;
-    background-position:right top;
+    background-position: right top;
     /* background-repeat: no-repeat; */
 }
 
-.turut-undang{
+.turut-undang {
     width: 100%;
     margin-left: 0%;
     padding: 4%;
 }
 
-.kisah{
+.kisah {
     margin-bottom: -80px;
 }
 
@@ -103,7 +108,7 @@
     top: 15px;
     opacity: 0.6;
     z-index: 99999;
-  }
+}
 
 .off-sound {
     position: fixed;
@@ -112,50 +117,60 @@
     top: 15px;
     opacity: 0.1;
     z-index: 99999;
-  }
-
-  .off-sound:hover{
-      opacity: 0.7;
-  }
-
-.foot{
-      background: url('../../img/tema/Rose-foot.jpg');
-      background-size: 99%;
-      background-position: center bottom;
-      background-repeat: no-repeat;
-      height: 370px;
-      color: black;
 }
 
-.kisah-mempelai,.isi-ayat{
+.off-sound:hover {
+    opacity: 0.7;
+}
+
+.frame-gbr {
+    padding-right: 20%;
+}
+
+.foot {
+    background: url('../../img/tema/Rose-foot.jpg');
+    background-size: 99%;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    height: 370px;
+    color: black;
+}
+
+.kisah-mempelai,
+.isi-ayat {
     text-align: justify;
-    padding: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5%;
+    padding-bottom: 5%;
     font-family: 'Handlee', cursive;
 }
 
-.guest{
+.guest {
     background: white;
 }
 
-.credit{
+.credit {
     background: rgb(26, 25, 25);
     color: rgb(197, 194, 194);
 }
 
 
-.gallery img,video{
+.gallery img,
+video {
     width: 90%;
     margin-left: 5%;
     margin-right: 4%;
     margin-top: 2%;
 }
 
-.gallery video:before{
+.gallery video:before {
     background-color: blue;
     position: relative;
 }
 
-#play,#pause{
+#play,
+#pause {
     content: '';
     position: absolute;
     width: 85%;
@@ -176,7 +191,7 @@
     color: white;
 }
 
-#play2{
+#play2 {
     content: '';
     position: absolute;
     width: 0%;
@@ -198,90 +213,115 @@
     background: white;
 }
 
-.endctn{
+.endctn {
     height: 100px;
     background: none;
 }
 
-.gallery img:hover{
+.gallery img:hover {
     width: 100%;
     margin-left: 0px;
     margin-right: 0px;
 }
 
-.nav-item{
+.nav-item {
     margin-bottom: -15px;
     /* margin-top: -3%; */
 }
 
-.nav-item p{
+.nav-item p {
     margin-top: -8px;
 }
+
 /* .gallery .thumbnail{
     background: white;
 } */
 
+.frame {
+    width: 100%;
+    text-align: center;
+}
+
+.couple-top,
+.couple-bottom {
+    padding: 6%;
+}
+
+.quran {
+    padding-left: 10%;
+    padding-right: 10%;
+}
 
 
+.frame-pengantin {
+    width: 50%;
+    margin-top: -49%;
+    margin-right: -7%;
+}
 
-.profil-pengantin{
+.profil-pengantin {
     width: 37%;
-	background: #dac52c;
-	border-radius: 100%;
+    background: #dac52c;
+    border-radius: 100%;
     margin-top: 20%;
 }
 
-.profil{
+.profil {
     width: 30%;
-	background: #dac52c;
-	border-radius: 100%;
+    background: #dac52c;
+    border-radius: 100%;
     margin-top: 15%;
 }
 
-.play{
+.play {
     background: violet;
 }
 
 
-.judul{
+.judul {
     margin-top: 10%;
     font-family: 'Bad Script', cursive;
 }
 
-.judul-1{
+.judul-1 {
     margin-top: 30%;
     height: 30%;
     font-family: 'Dancing Script', cursive;
 }
 
-.judul-2{
+.judul-2 {
     margin-top: 5%;
     font-family: 'Bad Script', cursive;
 }
 
-.judul-3{
+.judul-3 {
     margin-bottom: 0%;
     font-family: 'Handlee', cursive;
 }
 
-.pengantin{
-    margin-top: 7%;
+.pengantin {
+    margin-top: -5%;
+}
+
+.profil-pengantin-bottom {
+    width: 46%;
+    margin-top: -46%;
+    margin-right: 5%;
 }
 
 
-
-.pesan-tamu{
+.pesan-tamu {
     margin-left: 0%;
     padding: 6%;
 }
 
 
-.kirimpesan{
+.kirimpesan {
     margin-top: 20px;
 }
 
 
-.carousel-item{
+.carousel-item {
     min-height: 240px;
 }
 
@@ -289,13 +329,13 @@
 
 
 /* tampilan laptop */
-@media (min-width: 700px) { 
-    body{
-      background:url('../../img/tema/Rose-bg.jpg');
-      background-size: 100%;
-      background-attachment: fixed;
-      background-position: right top;
-      background-repeat: no-repeat;
+@media (min-width: 700px) {
+    body {
+        background: url('../../img/tema/Rose-bg.jpg');
+        background-size: 100%;
+        background-attachment: fixed;
+        background-position: right top;
+        background-repeat: no-repeat;
     }
 
     body:before {
@@ -306,60 +346,65 @@
         top: 0;
         left: 0;
         right: 0;
-      }
+    }
 
-    .home{
+    .home {
         background-size: 400px;
         height: 700px;
     }
 
-    .tema{
+    .tema {
         width: 100%;
     }
 
-    .couple,.gallery,.event,.kisah,.ayat{
+    .couple,
+    .gallery,
+    .event,
+    .kisah,
+    .ayat {
         /* background-size: 404px; */
         background: none;
     }
 
 
-    .bodi{
+    .bodi {
         background: url('../../img/tema/Rose-body.jpg');
         background-size: 404px;
         background-position: center top;
         width: 400px;
         position: relative;
         bottom: 0;
-        left: 50%;      
-        margin-left: -200px; 
+        left: 50%;
+        margin-left: -200px;
     }
-    .navbar{
-        width: 400px;  
+
+    .navbar {
+        width: 400px;
         position: fixed;
         bottom: 0;
-        left: 50%;      
+        left: 50%;
         margin-left: -200px;
         height: 50px;
     }
 
-    .foot{
+    .foot {
         background-size: 100%;
     }
 
-    .guest{
+    .guest {
         height: 120%;
     }
 
-    .on-sound{
+    .on-sound {
         opacity: 1;
     }
 }
 
 
-@media (min-width: 750px) { 
-.bodi{
-    box-shadow: 0 4px 12px 5px rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);       
-}
+@media (min-width: 750px) {
+    .bodi {
+        box-shadow: 0 4px 12px 5px rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    }
 }
 
-    /* end home */
+/* end home */

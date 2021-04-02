@@ -1,4 +1,7 @@
-$('#loader').show();
+$(document).ready(function () {
+	$(".preloader").fadeOut();
+})
+
 
 $(window).on('load', function () {
 

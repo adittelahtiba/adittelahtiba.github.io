@@ -27,6 +27,25 @@
 <!-- <body oncontextmenu="return false" onkeydown="return false;" onmousedown="return false;"> -->
 
 <body>
+
+	<div class="modal" tabindex="-1" id="loader">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Modal title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>Modal body text goes here.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="bodi">
 
 		<!-- <div id="preloader"></div> -->
@@ -219,13 +238,13 @@
 							data-bs-target="#mapsmodal">
 							<i class="fas fa-map-marked-alt"></i><br><small>Maps</small>
 						</button>
-						<a href="#live-btn">
-							<button type="button" class="btn btn-dark" id="live-btn">
+						<a href="#live" id="live-btn">
+							<button type="button" class="btn btn-dark">
 								<i class="fab fa-youtube"></i><br><small>&nbsp;Live&nbsp;</small>
 							</button>
 						</a>
 
-						<div id="live-frame" hidden>
+						<div id="live-frame">
 							<iframe width="100%" src="https://www.youtube.com/embed/_GUEOfnm8u8"
 								title="YouTube video player" frameborder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

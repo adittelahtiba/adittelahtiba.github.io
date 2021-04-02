@@ -1,3 +1,5 @@
+$('#loader').show();
+
 $(window).on('load', function () {
 
 	let videooffline = document.getElementById('videooffline');
@@ -5,6 +7,7 @@ $(window).on('load', function () {
 	$('.pause').hide();
 	$('.off-sound').hide();
 	offsound();
+	$('#live-frame').hide();
 
 	setInterval(function () {
 		hitungmundur();
@@ -64,8 +67,9 @@ $(window).on('load', function () {
 		}
 	}
 
-	$('#live-btn').on('click', () => {
+	$('#live').on('click', () => {
 		$('#live-frame').show();
+		console.log('h');
 	});
 
 });

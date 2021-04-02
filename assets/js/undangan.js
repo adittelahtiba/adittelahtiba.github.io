@@ -1,15 +1,15 @@
 $(document).ready(function () {
-	$(".preloader").fadeOut();
+	offsound();
 })
 
 
 $(window).on('load', function () {
-
+	$(".preloader").fadeOut();
 	let videooffline = document.getElementById('videooffline');
 	let audiona = document.getElementById('audiona');
 	$('.pause').hide();
 	$('.off-sound').hide();
-	offsound();
+
 	$('#live-frame').hide();
 
 	setInterval(function () {

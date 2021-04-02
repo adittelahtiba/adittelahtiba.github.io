@@ -1,7 +1,26 @@
-$(document).ready(function () {
-	offsound();
-})
+var a = 1;
+setInterval(function () {
+	if (a < 15) {
+		if ((a % 4) == 0) {
+			$("#loadpoint").html('');
+		} else if ((a % 4) == 1) {
+			$("#loadpoint").html('.');
+		} else if ((a % 4) == 2) {
+			$("#loadpoint").html('..');
+		} else {
+			$("#loadpoint").html('...');
+		}
+	}
+	if (a == 15) {
+		$('.text-load').html(`<button style="background:none; border-radius:15%; border-color:#ba9346; color:#ba9346;" onclick="tutupload()">Open</button>`);
+		clearInterval(this);
+	}
+	a++;
+}, 500);
 
+function tutupload() {
+	$(".preloader").fadeOut();
+}
 
 $(window).on('load', function () {
 	$(".preloader").fadeOut();
@@ -9,6 +28,7 @@ $(window).on('load', function () {
 	let audiona = document.getElementById('audiona');
 	$('.pause').hide();
 	$('.off-sound').hide();
+	offsound();
 
 	$('#live-frame').hide();
 
@@ -42,37 +62,38 @@ $(window).on('load', function () {
 			seconds = "0" + seconds;
 		}
 
-		if ($('.countdown').length) {
-			$('.countdown').html(`<div class="box-ctdn text-center">
-		<p>
-			${days}
-		</p>
-		<small>Hari</small>
-	</div>
-	<div class="box-ctdn text-center">
-		<p>
-			${hours}
-		</p>
-		<small>Jam</small>
-	</div>
-	<div class="box-ctdn text-center">
-		<p>
-			${minutes}
-		</p>
-		<small>Menit</small>
-	</div>
-	<div class="box-ctdn text-center">
-		<p>
-			${seconds}
-		</p>
-		<small>Detik</small>
-	</div>`);
+		if (($('.countdown').length) && (timeLeft > 0)) {
+			$('.countdown').html(` <div class="box-ctdn text-center">
+			<p>
+				${days}
+			</p>
+			<small>Hari</small>
+		</div>
+		<div class="box-ctdn text-center">
+			<p>
+				${hours}
+			</p>
+			<small>Jam</small>
+		</div>
+		<div class="box-ctdn text-center">
+			<p>
+				${minutes}
+			</p>
+			<small>Menit</small>
+		</div>
+		<div class="box-ctdn text-center">
+			<p>
+				${seconds}
+			</p>
+			<small>Detik</small>
+		</div>`);
+		} else {
+			$('.countdown').html(``);
 		}
 	}
 
 	$('#live').on('click', () => {
 		$('#live-frame').show();
-		console.log('h');
 	});
 
 });

@@ -29,13 +29,20 @@
 <body>
 
 	<div class="preloader">
-		<div class="loading">
-			<img src="poi.gif" width="80">
-			<p>Harap Tunggu</p>
+		<div class="loading" id="loading">
+			<div>
+				<p style="margin-top: 0%; font-size: 55px;">Dewi</p>
+				<p class="text-center" style="margin-top: -35%; margin-right: 10%; font-size: 40px;">&</p>
+				<p class="pull-right" style="margin-top: -30%; margin-right: 10%; font-size: 55px;">Putra</p>
+			</div>
+			<div class="text-load" style="margin-top: 45%;">
+				Loading<span id="loadpoint"></span>
+			</div>
 		</div>
 	</div>
 
 	<div class="bodi">
+
 
 		<!-- <div id="preloader"></div> -->
 
@@ -227,7 +234,7 @@
 							data-bs-target="#mapsmodal">
 							<i class="fas fa-map-marked-alt"></i><br><small>Maps</small>
 						</button>
-						<a href="#live" id="live-btn">
+						<a href="#live" id="live">
 							<button type="button" class="btn btn-dark">
 								<i class="fab fa-youtube"></i><br><small>&nbsp;Live&nbsp;</small>
 							</button>

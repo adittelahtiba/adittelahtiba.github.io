@@ -93,7 +93,8 @@ $(window).on('load', function () {
 	}
 
 	$('#live').on('click', () => {
-		$('#live-frame').show();
+		$('#live-frame').fadeIn();
+		$('#live').fadeOut();
 	});
 
 });

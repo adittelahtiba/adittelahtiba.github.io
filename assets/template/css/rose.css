@@ -18,6 +18,12 @@ hr {
     margin-left: 25%;
 }
 
+.live-frame {
+    width: 120%;
+    padding: 10%;
+    margin-left: -10%;
+}
+
 .preloader {
     position: fixed;
     top: 0;
@@ -276,6 +282,12 @@ video {
     text-align: center;
 }
 
+.batas {
+    width: 99%;
+    text-align: center;
+    margin-left: 0.5%;
+}
+
 .couple-top,
 .couple-bottom {
     padding: 6%;
@@ -437,6 +449,11 @@ video {
 
     .on-sound {
         opacity: 1;
+    }
+
+    .batas {
+        width: 100%;
+        margin-left: 0%;
     }
 }
 

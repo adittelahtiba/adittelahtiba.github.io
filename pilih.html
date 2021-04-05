@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <title>Hello, world!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- rimixion -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Dancing+Script&family=Handlee&family=Rouge+Script&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Delius&display=swap" rel="stylesheet">
+
+    <link href="assets/css/pilih.css" rel="stylesheet">
+</head>
+
+<!-- <body oncontextmenu="return false"> -->
+
+<body background="assets/img/tema/Rose.jpg">
+    <div class="form">
+        <form>
+            <section id="wanita" class="wanita">
+                <div class="container">
+                    <div class="text-center">
+                        <h2>Mempelai Wanita</h2>
+                        <hr>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nama_lengkap_w" name="nama_lengkap_w"
+                                placeholder="Nama Lengkap">
+                            <label for="floatingInput">Nama Lengkap</label>
+                            <small class="pull-left message" style="color:deeppink;" id="m_nama_lengkap_w">*Tidak Boleh
+                                Kosong</small>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nama_panggilan_w" name="nama_panggilan_w"
+                                placeholder="Nama Panggilan">
+                            <label for="floatingInput">Nama Panggilan</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_nama_panggilan_w">*Tidak
+                                Boleh
+                                Kosong</small>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nama_ibu_w" name="nama_ibu_w"
+                                placeholder="Nama Ibu">
+                            <label for="floatingInput">Nama Ibu</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_nama_ibu_w">*Tidak Boleh
+                                Kosong</small>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nama_ayah_w" name="nama_ayah_w"
+                                placeholder="Nama Ayah">
+                            <label for="floatingInput">Nama Ayah</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_nama_ayah_w">*Tidak Boleh
+                                Kosong</small>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="no_hp_w" name="no_hp_w"
+                                placeholder="Nomor Whatsapp">
+                            <label for="floatingInput">Nomor Whatsapp</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_no_hp_w">*Tidak Boleh
+                                Kosong</small>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="container text-right mt-5">
+                    <div class="col-sm-12">
+                        <button id="wnext" class="btn btn-primary" type="button">Next</button>
+                    </div>
+                </div>
+            </section>
+            <section id="pria" class="pria">
+                <div class="container">
+                    <div class="text-center">
+                        <h2>Mempelai Pria</h2>
+                        <hr>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nama_lengkap_p" name="nama_lengkap_p"
+                                placeholder="Nama Lengkap">
+                            <label for="floatingInput">Nama Lengkap</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_nama_lengkap_p">*Tidak Boleh
+                                Kosong</small>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nama_panggilan_p" name="nama_panggilan_p"
+                                placeholder="Nama Panggilan">
+                            <label for="floatingInput">Nama Panggilan</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_nama_panggilan_p">*Tidak
+                                Boleh
+                                Kosong</small>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nama_ibu_p" name="nama_ibu_p"
+                                placeholder="Nama Ibu">
+                            <label for="floatingInput">Nama Ibu</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_nama_ibu_p">*Tidak Boleh
+                                Kosong</small>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nama_ayah_p" name="nama_ayah_p"
+                                placeholder="Nama Ayah">
+                            <label for="floatingInput">Nama Ayah</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_nama_ayah_p">*Tidak Boleh
+                                Kosong</small>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="no_hp_p" name="no_hp_p"
+                                placeholder="Nomor Whatsapp">
+                            <label for="floatingInput">Nomor Whatsapp</label>
+                            <small class="pull-left message" style="color: deeppink;" id="m_no_hp_p">*Tidak Boleh
+                                Kosong</small>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="container text-right mt-5">
+                    <div class="col-sm-12">
+                        <button id="pprev" class="btn btn-secondary me-md-2" type="button">Prev</button>
+                        <button id="pnext" class="btn btn-primary" type="button">Next</button>
+                    </div>
+                </div>
+            </section>
+            <section id="akad" class="akad">
+                <div class="container">
+                    <div class="text-center">
+                        <h2>Akad Nikah</h2>
+                        <hr>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <div class="mb-3 row">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="tanggal_akad" name="tanggal_akad"
+                                    placeholder="Tanggal Akad Nikah">
+                                <label for="floatingInput">Tanggal Akad Nikah</label>
+                                <small class="pull-left message" id="m_tanggal_akad" style="color: deeppink;">*Tidak
+                                    Boleh
+                                    Kosong</small>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="mulai_akad" name="mulai_akad"
+                                    placeholder="Waktu Akad Nikah">
+                                <label for="floatingInput">Waktu Mulai</label>
+                                <small class="pull-left message" id="m_mulai_akad" style="color: deeppink;">*Tidak Boleh
+                                    Kosong</small>
+                            </div>
+                            <small>
+                                <table>
+                                    <tr>
+                                        <td width="50%">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="akad_selesai" checked>
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Sampai Selesai
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td width="50%">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="akad_custom">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Tentukan Waktu Selesai
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+
+                            </small>
+                            <div class="form-floating mb-3" id="custom-akad">
+
+                            </div>
+                            <div class="form-floating mb-3">
+                                <small class="pull-left message" id="m_selesai_akad" style="color: deeppink;">*Tidak
+                                    boleh
+                                    kosong</small>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="lokasi_akad"
+                                    name="lokasi_akad" style="height: 100px"></textarea>
+                                <label for="floatingTextarea2">Lokasi Akad</label>
+                                <small class="pull-left message" id="m_lokasi_akad" style="color: deeppink;">*Tidak
+                                    Boleh
+                                    Kosong</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container text-right mt-5">
+                    <div class="col-sm-12">
+                        <button id="aprev" class="btn btn-secondary me-md-2" type="button">Prev</button>
+                        <button id="anext" class="btn btn-primary" type="button">Next</button>
+                    </div>
+                </div>
+            </section>
+            <section id="resepsi" class="resepsi">
+                <div class="container">
+                    <div class="text-center">
+                        <h2>Resepsi</h2>
+                        <hr>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <div class="mb-3 row">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="tanggal_resepsi" name="tanggal_resepsi"
+                                    placeholder="Tanggal resepsi Nikah">
+                                <label for="floatingInput">Tanggal resepsi Nikah</label>
+                                <small class="pull-left message" id="m_tanggal_resepsi" style="color: deeppink;">*Tidak
+                                    Boleh
+                                    Kosong</small>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="mulai_resepsi" name="mulai_resepsi"
+                                    placeholder="Waktu resepsi Nikah">
+                                <label for="floatingInput">Waktu Mulai</label>
+                                <small class="pull-left message" id="m_mulai_resepsi" style="color: deeppink;">*Tidak
+                                    Boleh
+                                    Kosong</small>
+                            </div>
+                            <small>
+                                <table>
+                                    <tr>
+                                        <td width="50%">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="resepsi_selesai" checked>
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Sampai Selesai
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td width="50%">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="resepsi_custom">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Tentukan Waktu Selesai
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+
+                            </small>
+                            <div class="form-floating mb-3" id="custom-resepsi">
+                            </div>
+                            <div class="form-floating mb-3">
+                                <small class="pull-left message" id="m_selesai_resepsi" style="color: deeppink;">*Tidak
+                                    boleh
+                                    kosong</small>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="lokasi_resepsi"
+                                    name="lokasi_resepsi" style="height: 100px"></textarea>
+                                <label for="floatingTextarea2">Lokasi resepsi</label>
+                                <small class="pull-left message" id="m_lokasi_resepsi" style="color: deeppink;">*Tidak
+                                    Boleh
+                                    Kosong</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container text-right mt-5">
+                    <div class="col-sm-12">
+                        <button id="rprev" class="btn btn-secondary me-md-2" type="button">Prev</button>
+                        <button id="rnext" class="btn btn-primary" type="button">Next</button>
+                    </div>
+                </div>
+            </section>
+            <section id="selesai" class="selesai">
+                <div class="container">
+                    <div class="text-center">
+                        <h2>Selesai</h2>
+                        <hr>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        Anda
+                    </div>
+                </div>
+                <div class="container text-right mt-5">
+                    <div class="col-sm-12">
+                        <button id="rprev" class="btn btn-secondary me-md-2" type="button">Prev</button>
+                        <button id="rnext" class="btn btn-primary" type="button">Next</button>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+    <!-- end konten -->
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/js/pilih.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+    <!-- <script src="assets/vendor/jquery-countdown/jquery.countdown.min.js"></script> -->
+    <!-- font font-awesome -->
+    <script src="https://kit.fontawesome.com/6a2f2ec9f0.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

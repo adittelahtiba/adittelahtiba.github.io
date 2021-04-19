@@ -193,7 +193,7 @@ hr {
 }
 
 .guest {
-    background: white;
+    background: #050124;
 }
 
 .credit {
@@ -289,8 +289,9 @@ video {
 }
 
 .batas {
-    width: 120%;
+    width: 100%;
     text-align: center;
+    margin-left: -3%;
 }
 
 .couple-top,
@@ -388,6 +389,7 @@ video {
     margin-bottom: -20px;
     height: 270px;
     padding-top: 10%;
+
 }
 
 

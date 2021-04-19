@@ -394,7 +394,7 @@ video {
 /* tampilan laptop */
 @media (min-width: 500px) {
     body {
-        background: url('../img/tema/Rose-bg.jpg');
+        background: url('../img/tema/Rose.jpg');
         background-size: 100%;
         background-attachment: fixed;
         background-position: right top;

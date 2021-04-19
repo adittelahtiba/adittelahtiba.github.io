@@ -16,8 +16,8 @@ a:hover {
 
 hr {
     width: 50%;
-    border-top: 3px solid rgb(220, 160, 98);
     margin-left: 25%;
+    color: #e8dd75;
 }
 
 .live-frame {
@@ -98,7 +98,7 @@ hr {
 }
 
 .tema {
-    width: 99%;
+    width: 100.25%;
 }
 
 .awal {
@@ -175,7 +175,7 @@ hr {
 
 .foot {
     background: url('../img/tema/Luxury-foot.jpg');
-    background-size: 99%;
+    background-size: 100%;
     background-position: center bottom;
     background-repeat: no-repeat;
     height: 370px;
@@ -289,7 +289,7 @@ video {
 }
 
 .batas {
-    width: 101%;
+    width: 100%;
     text-align: center;
 }
 
@@ -305,15 +305,15 @@ video {
 
 
 .frame-pengantin {
-    width: 200px;
-    margin-top: -197px;
-    margin-right: -28px;
+    width: 150px;
+    margin-top: -148px;
+    /* margin-right: -28px; */
     /* margin-right: -7%; */
 }
 
 .profil-pengantin {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     margin-top: 50px;
 
@@ -363,9 +363,8 @@ video {
 }
 
 .profil-pengantin-bottom {
-    width: 150px;
-    margin-top: -151px;
-    margin-left: -16px;
+    width: 120px;
+    margin-top: -127px;
 }
 
 
@@ -419,7 +418,9 @@ video {
     }
 
     .tema {
-        width: 100%;
+        width: 101.25%;
+        margin-left: -0.5%;
+        margin-top: -1%;
     }
 
     .couple,
@@ -460,7 +461,8 @@ video {
     }
 
     .foot {
-        background-size: 100%;
+        width: 102%;
+        margin-left: -1%;
     }
 
     .guest {
@@ -472,8 +474,8 @@ video {
     }
 
     .batas {
-        width: 100%;
-        margin-left: 0%;
+        width: 101.25%;
+        margin-left: -0.5%;
     }
 }
 

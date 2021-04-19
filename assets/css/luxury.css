@@ -37,7 +37,7 @@ hr {
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background-color: rgba(255, 241, 246, 0.91);
+    background-color: rgba(20, 7, 66, 0.91);
     color: #ba9346;
     font-family: 'Rouge Script', cursive;
 }
@@ -289,9 +289,8 @@ video {
 }
 
 .batas {
-    width: 100%;
+    width: 101%;
     text-align: center;
-    margin-left: -3%;
 }
 
 .couple-top,
@@ -406,7 +405,7 @@ video {
 
     body:before {
         content: "";
-        background: rgba(255, 241, 246, 0.91);
+        background: rgba(7, 2, 39, 0.91);
         position: fixed;
         bottom: 0;
         top: 0;

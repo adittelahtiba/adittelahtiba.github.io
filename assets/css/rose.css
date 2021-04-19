@@ -304,16 +304,20 @@ video {
 
 
 .frame-pengantin {
-    width: 50%;
-    margin-top: -49%;
-    margin-right: -7%;
+    width: 200px;
+    margin-top: -197px;
+    margin-right: -28px;
+    /* margin-right: -7%; */
 }
 
 .profil-pengantin {
-    width: 37%;
-    background: #dac52c;
-    border-radius: 100%;
-    margin-top: 20%;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-top: 50px;
+
+    object-fit: cover;
+    object-position: center right;
 }
 
 .profil {
@@ -385,7 +389,7 @@ video {
 
 
 /* tampilan laptop */
-@media (min-width: 700px) {
+@media (min-width: 500px) {
     body {
         background: url('../img/tema/Rose-bg.jpg');
         background-size: 100%;

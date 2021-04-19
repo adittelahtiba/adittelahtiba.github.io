@@ -317,14 +317,18 @@ video {
     margin-top: 50px;
 
     object-fit: cover;
-    object-position: center right;
+    object-position: center middle;
 }
 
 .profil {
-    width: 30%;
+    width: 100px;
+    height: 100px;
     background: #dac52c;
     border-radius: 100%;
-    margin-top: 15%;
+    margin-top: 100px;
+
+    object-fit: cover;
+    object-position: center middle;
 }
 
 .play {
@@ -358,9 +362,9 @@ video {
 }
 
 .profil-pengantin-bottom {
-    width: 46%;
-    margin-top: -46%;
-    margin-right: 5%;
+    width: 150px;
+    margin-top: -151px;
+    margin-left: -16px;
 }
 
 

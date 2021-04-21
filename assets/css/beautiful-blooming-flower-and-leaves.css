@@ -1,13 +1,22 @@
 /* https://unsplash.com/photos/H_cZqryUuok?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink */
 body {
     font-family: 'Handlee', cursive;
-    color: white;
+    color: #ba9346;
 }
 
 h1,
 h2 {
     font-family: 'Rouge Script', cursive;
-    color: white;
+    color: #ba9346;
+}
+
+.btn-dark {
+    color: #ba9346;
+}
+
+.img-thumbnail {
+    background-color: #ba9346;
+    border-color: #ba9346;
 }
 
 a:hover {
@@ -37,7 +46,7 @@ hr {
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background-color: rgba(20, 7, 66, 0.91);
+    background-color: #252013;
     color: #ba9346;
     font-family: 'Rouge Script', cursive;
 }
@@ -89,12 +98,12 @@ hr {
 
 /* home */
 .home {
-    background: url('../img/tema/Luxury-body.jpg');
+    background: url('../img/tema/beautiful-blooming-flower-and-leaves-body.jpg');
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
 
-    color: white;
+    color: #ba9346;
 }
 
 .tema {
@@ -109,7 +118,7 @@ hr {
 
 .countdown {
     font-family: 'Delius', cursive;
-    color: white;
+    color: #ba9346;
 }
 
 .countdown .box-ctdn {
@@ -121,7 +130,7 @@ hr {
 }
 
 .ikon {
-    color: white;
+    color: #ba9346;
 }
 
 
@@ -130,7 +139,7 @@ hr {
 .event,
 .kisah,
 .ayat {
-    background: url('../img/tema/Luxury-body.jpg');
+    background: url('../img/tema/beautiful-blooming-flower-and-leaves-body.jpg');
     /* background-attachment: fixed; */
     background-size: 100%;
     background-position: right top;
@@ -176,12 +185,12 @@ hr {
 }
 
 .foot {
-    background: url('../img/tema/Luxury-foot.jpg');
+    background: url('../img/tema/beautiful-blooming-flower-and-leaves-foot.png');
     background-size: 100%;
     background-position: center bottom;
     background-repeat: no-repeat;
     height: 370px;
-    color: white;
+    color: #ba9346;
     margin-bottom: -2%;
 }
 
@@ -237,7 +246,7 @@ video {
     opacity: 0;
     top: 2%;
     left: 8%;
-    color: white;
+    color: #ba9346;
 }
 
 #play2 {
@@ -258,8 +267,8 @@ video {
     opacity: 1;
     top: 35%;
     left: 45%;
-    color: white;
-    background: white;
+    color: #ba9346;
+    background: #ba9346;
 }
 
 .endctn {
@@ -283,7 +292,7 @@ video {
 }
 
 /* .gallery .thumbnail{
-    background: white;
+    background: #ba9346;
 } */
 
 .frame {
@@ -294,6 +303,7 @@ video {
 .batas {
     width: 100%;
     text-align: center;
+    margin-top: -40%;
 }
 
 .couple-top,
@@ -398,7 +408,7 @@ video {
 /* tampilan laptop */
 @media (min-width: 500px) {
     body {
-        background: url('../img/tema/Luxury.jpg');
+        background: url('../img/tema/beautiful-blooming-flower-and-leaves.png');
         background-size: 100%;
         background-attachment: fixed;
         background-position: right top;
@@ -407,7 +417,7 @@ video {
 
     body:before {
         content: "";
-        background: rgba(7, 2, 39, 0.91);
+        background: rgba(0, 0, 0, 0.81);
         position: fixed;
         bottom: 0;
         top: 0;
@@ -421,9 +431,8 @@ video {
     }
 
     .tema {
-        width: 101.25%;
-        margin-left: -0.5%;
-        margin-top: -1%;
+        width: 100%;
+        margin-left: -1%;
     }
 
     .couple,
@@ -443,7 +452,7 @@ video {
     }
 
     .bodi {
-        background: url('../img/tema/Luxury-body.jpg');
+        background: url('../img/tema/beautiful-blooming-flower-and-leaves-body.jpg');
         background-size: 404px;
         background-position: center top;
         width: 400px;
@@ -454,19 +463,17 @@ video {
     }
 
     .navbar {
-        width: 400px;
+        width: 404px;
         position: fixed;
         bottom: 0;
-        left: 50%;
+        left: 49.8%;
         margin-left: -200px;
         height: 50px;
         z-index: 999;
     }
 
     .foot {
-        width: 101%;
-        margin-left: -0.5%;
-        margin-bottom: -4%;
+        width: 100.5%;
     }
 
     .guest {

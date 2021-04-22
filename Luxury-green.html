@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+	<title>Hello, world!</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- font-awesome -->
+	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+	<!-- rimixion -->
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+	<!-- google font -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="assets/css/fontgoogle.css" rel="stylesheet">
+	<link href="assets/css/fontgoogle2.css" rel="stylesheet">
+	<!-- style templatena -->
+	<link href="assets/css/Luxury-green.css" rel="stylesheet">
+</head>
+
+<body oncontextmenu="return false">
+
+	<!-- <body> -->
+
+	<div class="preloader">
+		<div class="loading" id="loading">
+			<div>
+				<p style="margin-top: 0%; font-size: 55px;">Dewi</p>
+				<p class="text-center" style="margin-top: -35%; margin-right: 10%; font-size: 40px;">&</p>
+				<p class="pull-right" style="margin-top: -30%; margin-right: 10%; font-size: 55px;">Putra</p>
+			</div>
+			<div class="text-load" style="margin-top: 45%;">
+				Loading<span id="loadpoint"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="bodi">
+
+
+		<!-- <div id="preloader"></div> -->
+
+		<!-- sound on off -->
+		<a class="sound on-sound" onclick="onsound()">
+			<h6><i class="fas fa-music"></i></h6>
+		</a>
+		<a class="sound off-sound" onclick="offsound()">
+			<h6><i class="fas fa-volume-mute"></i></h6>
+		</a>
+		<audio autoplay loop id="audiona">
+			<source src="assets/audio/Tangled - I See The Light (Piano Cover by Riyandi Kusuma) (128  kbps).mp3"
+				type="audio/mpeg" />
+		</audio>
+		<!-- home -->
+		<section id="home" class="home">
+			<div class="text-center">
+				<img src="assets/img/tema/Luxury-green.png" class="tema" alt="">
+			</div>
+			<div class="awal col-md-12">
+				<!-- <div class="container"> -->
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<h5 class="judul-1">Undangan Pernikahan</h5>
+					</div>
+					<div class="col-md-12 text-center">
+						<img src="assets/img/profil/nathan-dumlao-H_cZqryUuok-unsplash.jpg" class="profil-pengantin"
+							alt="Profil pengantin">
+					</div>
+					<div class="col-md-12 text-center">
+						<img src="assets/img/tema/frame/profil-bottom-2.png" class="frame-pengantin"
+							alt="Profil pengantin">
+					</div>
+					<div class="col-md-12 text-center pengantin">
+						<hr>
+						<h2>Dewi & Putra</h2>
+						<hr>
+						<small class="judul-3">Sabtu, 26 Januari 2022</small>
+						<small>
+							<small>
+								<div class="countdown d-flex justify-content-center" data-count="2022/4/3">
+
+								</div>
+							</small>
+						</small>
+					</div>
+					<!-- </div>-->
+				</div>
+			</div>
+		</section>
+		<!-- home end -->
+		<!-- couple -->
+		<section id="couple" class="couple">
+			<div class="container">
+
+				<div class="row" style="margin-top: -20%;">
+					<div class="col-md-12 text-center">
+						<img src="assets/img/profil/ae6f153ee7d23b0d4c10424897a3b11c.jpg" class="profil"
+							alt="Profil pengantin">
+					</div>
+
+					<div class="col-md-12 text-center">
+						<img src="assets/img/tema/frame/profil-bottom-2.png" class="profil-pengantin-bottom"
+							alt="profil-pengantin-bottom">
+					</div>
+					<div class="col-md-12 text-center judul">
+						<h2>Dewi Ratnasari</h2>
+						<hr>
+						<div class="container">
+							<h6>Putri dari pasangan Bpk. Roberto Dimario & Ibu. Ariana Grande</h6>
+						</div>
+					</div>
+					<h3 class="text-center judul">&</h3>
+					<div class="col-md-12 text-center">
+						<img src="assets/img/profil/Aditya Pangestu.png" class="profil" alt="Profil pengantin">
+					</div>
+
+					<div class="col-md-12 text-center">
+						<img src="assets/img/tema/frame/profil-bottom-2.png" class="profil-pengantin-bottom"
+							alt="profil-pengantin-bottom">
+					</div>
+					<div class="col-md-12 text-center judul">
+						<h2>Putra Agustian</h2>
+						<hr>
+						<div class="container">
+							<h6>Putra dari pasangan Bpk. Wiliam Costarica & Ibu. Marelina Mikasa</h6>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+		<!-- couple end -->
+		<!-- ayat -->
+		<section id="ayat" class="ayat">
+			<div class="endctn"></div>
+			<!-- <img src="assets/img/tema/frame/Luxury-green-a.jpg" class="frame quran"> -->
+			<div class="isi-ayat">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<h3><i class="ri-book-open-fill ikon"></i></h3>
+						<i class="ri-double-quotes-l"></i>Dan diantara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
+						pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram
+						kepadanya, dan Da menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu
+						benar-benar terdapat tanda-tanda(kebesaran Allah) bagi kaum yang berfikir.<i
+							class="ri-double-quotes-r"></i><br>
+						<b>(QS Ar-Ruum : 21)</b>
+					</div>
+				</div>
+			</div>
+			<!-- <img src="assets/img/tema/frame/Luxury-green-b.jpg" class="frame quran"> -->
+			<!-- <div class="endctn"></div> -->
+		</section>
+		<!-- ayat end -->
+		<img src="assets/img/tema/Luxury-green-batas.png" class="batas">
+		<!-- event -->
+		<section id="event" class="event">
+			<div class="container">
+				<div class="col-md-12 text-center">
+					<img src="assets/img/tema/frame/event-top-3.png" class="frame couple-top" alt="Profil pengantin">
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center judul">
+						<h6>Assalamu’alaikum Warahmatullahi Wabrakatuh</h6>
+					</div>
+					<div class="col-md-12 text-center isi-ayat">
+						<p>
+							Dengan memohon rakhmat serta ridho Allah SWT, kami bermaksud menyelenggarakan syukuran
+							pernikahan putra putri kami yang insya Allah akan di selenggarakan pada :
+						</p>
+						<small>
+							<table width="100%">
+								<tr>
+									<td>
+										<b>Akad Nikah</b>
+										<hr>
+										<p>
+											<b>Hari dan Tanggal :</b>
+										</p>
+										<p>
+											Selasa, 26 Februari 2021
+										</p>
+										<p>
+											<b>Waktu:</b>
+										</p>
+										<p>
+											10.00 WIB - Selesai
+										</p>
+										<p>
+											<b>Lokasi:</b>
+										</p>
+										<p>
+											Kp. Kaca-kaca dua, Rt.01, Rw.03 Desa. Pasirmulya, Kec. Banjaran, Kab.
+											Bandung
+										</p>
+									</td>
+									<td>
+										<b>Resepsi</b>
+										<hr>
+										<p>
+											<b>Hari dan Tanggal :</b>
+										</p>
+										<p>
+											Selasa, 26 Februari 2021
+										</p>
+										<p>
+											<b>Waktu:</b>
+										</p>
+										<p>
+											10.00 WIB - Selesai
+										</p>
+										<p>
+											<b>Lokasi:</b>
+										</p>
+										<p>
+											Kp. Kaca-kaca dua, Rt.01, Rw.03 Desa. Pasirmulya, Kec. Banjaran, Kab.
+											Bandung
+										</p>
+									</td>
+								</tr>
+							</table>
+						</small>
+						<p>
+							Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan
+							hadir untuk memberikan Do’a Restu kepada kedua mmpelai
+						</p>
+						<div class="col-md-12 text-center judul">
+							<h6>Wassalamualaikum WarahmatuLLahi Wabarakatuh</h6>
+							<hr>
+						</div>
+						<!-- Button trigger modal -->
+						<button type="button" onclick="navhide()" class="btn btn-dark" data-bs-toggle="modal"
+							data-bs-target="#mapsmodal">
+							<i class="fas fa-map-marked-alt"></i><br><small>Maps</small>
+						</button>
+						<a href="#live" id="live">
+							<button type="button" class="btn btn-dark">
+								<i class="fab fa-youtube"></i><br><small>&nbsp;Live&nbsp;</small>
+							</button>
+						</a>
+
+						<div id="live-frame" class="live-frame text-center">
+							<!-- <img src="assets/img/tema/frame/Luxury-green-a.jpg" class="frame quran"> -->
+							<br>
+							<br>
+							<div id="yutub"></div>
+							<br>
+							<br>
+							<!-- <img src="assets/img/tema/frame/Luxury-green-b.jpg" class="frame quran"> -->
+						</div>
+
+						<!-- Modal -->
+						<div class="modal fade" id="mapsmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog  modal-sm modal-dialog-centered">
+								<div class="modal-content text-center">
+
+									<h4 style="color: white;">Akad Nikah</h4>
+									<iframe
+										src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d989.8463015959222!2d107.58304650293607!3d-7.0812627406083735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x9e7898641a7f475f!2sRorompok%20Arya%20De&#39;borgies!5e0!3m2!1sen!2sid!4v1616825293784!5m2!1sen!2sid"
+										style="border:1;" allowfullscreen="" loading="lazy">
+									</iframe>
+									<br>
+									<h4 style="color: white;">Resepsi</h4>
+									<iframe
+										src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d989.8463015959222!2d107.58304650293607!3d-7.0812627406083735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x9e7898641a7f475f!2sRorompok%20Arya%20De&#39;borgies!5e0!3m2!1sen!2sid!4v1616825293784!5m2!1sen!2sid"
+										style="border:1;" allowfullscreen="" loading="lazy">
+									</iframe>
+									<!-- </div> -->
+
+									<br>
+									<div class="text-center">
+										<button type="button" class="btn btn-light btn-close text-center"
+											data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="row turut-undang">
+						<div class="col-sm-12 text-center">Turut Mengundang
+							<div class="container">
+								<hr>
+								<small>
+									<table width="100%">
+										<tr>
+											<td>-Cristiano Ronaldo</td>
+											<td>-Lionel Messi</td>
+										</tr>
+										<tr>
+											<td>-Cristiano Ronaldo</td>
+											<td>-Lionel Messi</td>
+										</tr>
+										<tr>
+											<td>-Cristiano Ronaldo</td>
+											<td>-Lionel Messi</td>
+										</tr>
+									</table>
+								</small>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 text-center">
+					<img src="assets/img/tema/frame/event-bottom-3.png" class="frame couple-top" alt="Profil pengantin">
+				</div>
+			</div>
+		</section>
+		<!-- event end -->
+		<img src="assets/img/tema/Luxury-green-batas.png" class="batas">
+		<!-- gallery -->
+		<section id="gallery" class="gallery">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center judul">
+						<h3>Galeri</h3>
+						<hr>
+					</div>
+					<div class="col-sm-12 text-center thumbnail">
+						<img class="img-thumbnail"
+							src="assets/img/gallery/mr-autthaporn-pradidpong-ZS0owpdzOoU-unsplash.jpg" alt="" srcset="">
+					</div>
+					<div class="col-md-12 text-center">
+						<img class="img-thumbnail" src="assets/img/gallery/muchammad-rizky-lHX_70Qd4uU-unsplash.jpg"
+							alt="" srcset="">
+					</div>
+					<div class="col-md-12 text-center thumbnail">
+						<img class="img-thumbnail" src="assets/img/gallery/nathan-mcbride-YLkBly2HVHY-unsplash.jpg"
+							alt="" srcset="">
+					</div>
+					<div class="col-md-12 text-center thumbnail">
+						<img class="img-thumbnail" src="assets/img/gallery/victoria-priessnitz-5Owo_BFPjtE-unsplash.jpg"
+							alt="" srcset="">
+					</div>
+					<div class="col-md-12 text-center thumbnail">
+						<img class="img-thumbnail" src="assets/img/gallery/fahmi-ramadhan-bqFZznf6eVc-unsplash.jpg"
+							alt="" srcset="">
+					</div>
+					<div class="col-md-12 text-center judul">
+						<hr>
+					</div>
+					<div class="col-md-12 text-center thumbnail">
+						<video class="rounded" id="videooffline" src="assets/video/kim.mp4"></video>
+						<a id="play" class="play" onclick="play()">
+							<h1><i class="ri-play-circle-line"></i></h1>
+						</a>
+						<a id="pause" class="pause" onclick="pause()">
+							<h1><i class="ri-pause-circle-line"></i></h1>
+						</a>
+						<a id="play2" class="play" onclick="play()">
+							<h1><i class="ri-play-circle-line"></i></h1>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="endctn"></div>
+		</section>
+		<!-- gallery end -->
+		<!-- Kisah -->
+		<section id="kisah" class="kisah">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center judul">
+						<h3>Kisah Kami</h3>
+						<hr>
+					</div>
+					<div class="kisah-mempelai">
+						<p>
+							Pertemuan pertama kami terjadi ketika Sekolah Menengah Atas, karena kegiatan
+							ekstrakullikuler yang kami ikuti sama kami semakin dekat dan akhirnya memutuskan untuk
+							menjalin hubungan pada tanggal 27 Januari 2021. Setelah 10 tahun kami menjalin hubungan kami
+							berniat untuk melanjutkan ke jenjang berikutnya, dan atas restu Allah SWT kami akan
+							melangsungkan pernikahan pada tanggal 27 Januari 2031.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="endctn"></div>
+		</section>
+		<!-- Kisah end -->
+		<!-- foot -->
+		<section class="foot" id="foot">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<h3 class="judul"><i class="fas fa-praying-hands"></i>
+							<hr>Terimakasih</h3>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- foot end -->
+
+		<!-- guest -->
+		<section class="guest">
+			<br>
+			<div class="col-md-12 text-center judul">
+				<h3 id="guest">Buku Tamu</h3>
+				<hr>
+			</div>
+			<div id="carouselExampleDark" class="carousel carousel-light slide" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active" data-bs-interval="5000">
+						<div class="carousel-caption d-md-block">
+							<h5><b>Aditya Pangestu</b></h5>
+							<small>Rekan Kerja</small>
+							<p>
+								<i><i class="ri-double-quotes-l"></i>Selamat kepada Putra dan Dewi, semoga menjadi
+									Keluarga yang Samawa.<i class="ri-double-quotes-r"></i></i>
+							</p>
+						</div>
+					</div>
+					<div class="carousel-item" data-bs-interval="5000">
+						<div class="carousel-caption d-md-block">
+							<h5><b>Rini</b></h5>
+							<small>Sahabat</small>
+							<p>
+								<i><i class="ri-double-quotes-l"></i>Alhamdulillah dewi sayang akhirnya udah halal juga
+									wkwkwk, temen aku dari kecil gak nyangka udah nikah aja :') Selamat...<i
+										class="ri-double-quotes-r"></i></i>
+							</p>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="carousel-caption d-md-block">
+							<h5><b>Amel</b></h5>
+							<small>Temen SMA</small>
+							<p>
+								<i><i class="ri-double-quotes-l"></i>Dewiiiiii, Putraaaa udah lama banget kita gak
+									ketemuuu, tiba-tiba dapet kabar kalian mau nikah. Selamat ya :* Semoga lancar sampai
+									hari H.<i class="ri-double-quotes-r"></i></i>
+							</p>
+						</div>
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+					data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+					data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<h5 class="judul-2">Kirim Pesan</h5>
+						<hr>
+					</div>
+					<div class="col-md-12">
+						<form class="form-floating" style="color: black;">
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" id="floatingInput"
+									placeholder="name@example.com">
+								<label for="floatingInput">Nama</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" id="floatingInput"
+									placeholder="name@example.com">
+								<label for="floatingInput">Hubungan</label>
+							</div>
+							<div class="form-floating">
+								<textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+									style="height: 100px"></textarea>
+								<label for="floatingTextarea2">Pesan</label>
+							</div>
+							<div class="form-floating text-center">
+								<button type="button" class="btn btn-primary kirimpesan"><i
+										class="ri-send-plane-fill"></i>
+									Kirim</button>
+							</div>
+						</form>
+						<div></div>
+					</div>
+					<div class="container">
+						<div class="row text-center">
+							<div class="col-md-12">
+								<h5 class="judul">Kirim Pesan Whatsapp</h5>
+								<hr>
+							</div>
+							<div class="col-sm-6">
+								<a href="https://wa.me/6282317994353" class="btn btn-outline-success"><i
+										class="fab fa-whatsapp"></i> Dewi</a>
+							</div>
+							<div class="col-sm-6">
+								<a href="https://wa.me/6282317994353" class="btn btn-outline-success"><i
+										class="fab fa-whatsapp"></i> Putra</a>
+							</div>
+						</div>
+					</div>
+					<div class="endctn"></div>
+					<div class="text-center">
+						<h1><a href="index.html" target="_blank"
+								style="font-family: 'Dancing Script', cursive;"><span>dit<span
+										style="color:#ff3974;">i</span>UP</span>.com</a></h1>
+						<div class="endctn"></div>
+					</div>
+		</section>
+		<!-- guest end -->
+		<!-- credit -->
+		<section id="credit" class="credit">
+			<div class="container">
+				<small>
+					Credit and Support : ditiUP.com,
+					<!-- <a href='https://www.freepik.com/vectors/background'>Background
+						vector created by mariadetarosarinda - www.freepik.com</a>, -->
+					<a href="https://fonts.google.com/">Google Font</a>, <a
+						href="https://getbootstrap.com/docs/5.0/components/carousel/">Bootstrap,</a>
+					<a href="http://www.freepik.com">Frame Designed by mokoland / Freepik</a>
+				</small>
+			</div>
+			<br>
+			<br>
+		</section>
+		<!-- credit end -->
+		<!-- Bottom Navbar-->
+		<nav class="navbar navbar-dark navbar-expand" style="background: black;">
+			<ul class="navbar-nav nav-justified w-100">
+				<li class="nav-item">
+					<a href="#home" class="nav-link"><i class="ri-home-heart-line"></i><small>
+							<p>Home</p>
+						</small></a>
+				</li>
+				<li class="nav-item">
+					<a href="#couple" class="nav-link"><i class="ri-hearts-line"></i><small>
+							<p>Couple</p>
+						</small></a>
+				</li>
+				<li class="nav-item">
+					<a href="#event" class="nav-link"><i class="ri-calendar-event-fill"></i><small>
+							<p>Event</p>
+						</small></a>
+				</li>
+				<li class="nav-item">
+					<a href="#gallery" class="nav-link"><i class="ri-gallery-fill"></i><small>
+							<p>Gallery</p>
+						</small></a>
+				</li>
+				<li class="nav-item">
+					<a href="#guest" class="nav-link"><i class="ri-mail-send-fill"></i><small>
+							<p>Message</p>
+						</small></a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<!-- end konten -->
+	<!-- Optional JavaScript; choose one of the two! -->
+	<!-- Option 1: Bootstrap Bundle with Popper -->
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	<script src="assets/js/undangan.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+	</script>
+	<!-- <script src="assets/vendor/jquery-countdown/jquery.countdown.min.js"></script> -->
+	<!-- font font-awesome -->
+	<script src="https://kit.fontawesome.com/6a2f2ec9f0.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

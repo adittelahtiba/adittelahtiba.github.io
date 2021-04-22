@@ -10,6 +10,13 @@ h2 {
     color: #ba9346;
 }
 
+.bodi {
+    background: url('../img/tema/beautiful-blooming-flower-and-leaves-body.jpg');
+    background-size: 100%;
+    background-position: center top;
+    width: 100%;
+}
+
 .btn-dark {
     color: #ba9346;
 }
@@ -143,8 +150,8 @@ hr {
     /* background-attachment: fixed; */
     background-size: 100%;
     background-position: right top;
-    margin-bottom: -1%;
-    margin-top: -1%;
+    /* margin-top: -40%;
+    margin-bottom: -40%; */
     /* background-repeat: no-repeat; */
 }
 
@@ -185,6 +192,7 @@ hr {
 }
 
 .foot {
+    background: none;
     background: url('../img/tema/beautiful-blooming-flower-and-leaves-foot.png');
     background-size: 100%;
     background-position: center bottom;
@@ -440,12 +448,18 @@ video {
     .ayat {
         /* background-size: 404px; */
         background: none;
+        margin-top: 0%;
+        margin-bottom: 0%;
+    }
+
+    .couple .container {
+        margin-top: 20%;
     }
 
     .preloader {
-        width: 400px;
+        width: 404px;
         bottom: 0;
-        left: 50%;
+        left: 49.8%;
         margin-left: -200px;
     }
 
@@ -471,7 +485,8 @@ video {
     }
 
     .foot {
-        width: 100%;
+        width: 101.25%;
+        margin-left: -0.5%;
     }
 
     .guest {
@@ -486,6 +501,7 @@ video {
         width: 101.25%;
         margin-left: -0.5%;
     }
+
 }
 
 

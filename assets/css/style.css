@@ -21,8 +21,8 @@ a {
 }
 
 /* a:hover {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
+color: rgb(255, 255, 255);
+text-decoration: none;
 } */
 
 h1 {
@@ -96,8 +96,9 @@ h6 {
 .pilih {
   border-color: rgb(255, 57, 116);
   color: rgb(255, 57, 116);
-  width: 80px;
+  width: 40%;
   padding: 0%;
+  font-size: 100%;
 }
 
 /* promo coutdown */
@@ -627,9 +628,9 @@ h6 {
   }
 
   /* #hero .animated {
-    -webkit-animation: none;
-    animation: none;
-  } */
+  -webkit-animation: none;
+  animation: none;
+} */
   #hero .hero-img {
     text-align: center;
   }

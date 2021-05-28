@@ -76,15 +76,15 @@ font-family: 'Tangerine', cursive; -->
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
-        <h1><a href="index.html" style="font-family: 'Dancing Script', cursive;"><span>dit<span
+        <h1><a href="{{url('/')}}" style="font-family: 'Dancing Script', cursive;"><span>dit<span
                 style="color:#ff3974;">i</span>UP</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <!-- <a href="{{url('/')}}"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="{{url('/')}}">Home</a></li>
           <li><a href="#features">Fitur</a></li>
           <li><a href="#template">Undangan</a></li>
           <li><a href="#alur">Panduan</a></li>
@@ -131,8 +131,8 @@ font-family: 'Tangerine', cursive; -->
         </div>
         <div class="col-lg-4 order-1 order-lg-2 hero-img mt-4" data-aos="zoom-out" data-aos-delay="300">
           <div class="ratio img-fluid animated frame-undangan">
-            <iframe src="rose-mb.html" title="YouTube video" id="frame-udg"
-              style=" border-radius:5%; overflow:hidden;"></iframe>
+            <iframe src="" title="YouTube video" id="frame-udg"
+              style=" border-radius:5%; overflow:hidden; background:#ff3974;"></iframe>
           </div>
         </div>
       </div>
@@ -276,7 +276,7 @@ font-family: 'Tangerine', cursive; -->
 
         <div class="row" data-aos="fade-left">
 
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-3 col-md-6 col-6  mt-5 mt-lg-0">
             <div class="member" data-aos="zoom-in" data-aos-delay="100">
               <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
@@ -291,7 +291,7 @@ font-family: 'Tangerine', cursive; -->
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+          <div class="col-lg-3 col-md-6 col-6 mt-5 mt-lg-0">
             <div class="member" data-aos="zoom-in" data-aos-delay="200">
               <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
@@ -306,7 +306,7 @@ font-family: 'Tangerine', cursive; -->
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+          <div class="col-lg-3 col-md-6 col-6 mt-5 mt-lg-0">
             <div class="member" data-aos="zoom-in" data-aos-delay="300">
               <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
@@ -321,7 +321,7 @@ font-family: 'Tangerine', cursive; -->
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+          <div class="col-lg-3 col-md-6 col-6 mt-5 mt-lg-0">
             <div class="member" data-aos="zoom-in" data-aos-delay="400">
               <div class="pic"><img src="assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
@@ -386,8 +386,8 @@ font-family: 'Tangerine', cursive; -->
               <div class="icon"><i class="bx">3</i></div>
               <h4 class="title">Konfirmasi Undagan</h4>
               <p class="description">Setelah mengisi form undangan, kami akan segera menghubingi anda untuk
-                konfirmasi atau hubungi kami melalui Whatsapp pada nomor <a
-                  href="https://wa.me/6282317994353">082317994353 <i class="fab fa-whatsapp"></i></a>.</p>
+                konfirmasi atau hubungi kami melalui Whatsapp pada nomor <a data-nowa="082317994353"
+                  class="btn wa">082317994353 <i class="fab fa-whatsapp"></i></a>.</p>
             </div>
 
             <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
@@ -658,7 +658,7 @@ font-family: 'Tangerine', cursive; -->
               <div class="social-links mt-3">
                 <a href="https://www.twitter.com/diti_up" class="twitter"><i class="bx bxl-twitter"></i></a>
                 <a href="https://www.instagram.com/diti.up" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="6282317994353" class="linkedin"><i class="bx bxl-whatsapp"></i></a>
+                <a data-nowa="082317994353" class="linkedin wa"><i class="bx bxl-whatsapp"></i></a>
               </div>
             </div>
           </div>
@@ -666,7 +666,7 @@ font-family: 'Tangerine', cursive; -->
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Tautan</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="index.html">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{url('/')}}">Home</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#features">Fitur</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#template">Undangan</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#alur">Panduan</a></li>
@@ -728,7 +728,7 @@ font-family: 'Tangerine', cursive; -->
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-  <a href="https://wa.me/6282317994353" target="_blank" class="whatsapp"><i class="bx bxl-whatsapp"></i></a>
+  <a data-nowa="082317994353" target="_blank" class="whatsapp wa"><i class="bx bxl-whatsapp"></i></a>
   <div id="preloader"></div>
 
   <!-- facebook -->
@@ -757,6 +757,7 @@ font-family: 'Tangerine', cursive; -->
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/wa.js"></script>
 
 
 

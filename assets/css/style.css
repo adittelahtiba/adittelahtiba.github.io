@@ -196,6 +196,60 @@ h6 {
   color: #fff;
 }
 
+.frame-undangan {
+  height: 530px;
+  width: 300px;
+  border-radius: 5%;
+  box-shadow: -3px -3px 2px rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border: 1px dashed grey;
+}
+
+@media (max-width: 992px) {
+  .frame-undangan {
+    height: 350px;
+    width: 200px;
+    margin-left: 250px;
+  }
+
+}
+
+@media (max-width: 800px) {
+  .frame-undangan {
+    margin-left: 250px;
+  }
+}
+
+@media (max-width: 750px) {
+  .frame-undangan {
+    margin-left: 150px;
+  }
+}
+
+@media (max-width: 500px) {
+  .frame-undangan {
+    margin-left: 125px;
+  }
+}
+
+@media (max-width: 450px) {
+  .frame-undangan {
+    margin-left: 100px;
+  }
+}
+
+@media (max-width: 400px) {
+  .frame-undangan {
+    margin-left: 75px;
+  }
+}
+
+@media (max-width: 350px) {
+  .frame-undangan {
+    margin-left: 50px;
+  }
+}
+
 /*--------------------------------------------------------------
 # Disable AOS delay on mobile
 --------------------------------------------------------------*/

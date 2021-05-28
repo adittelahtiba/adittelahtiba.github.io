@@ -1,9 +1,9 @@
 /**
-* Template Name: Bootslander - v3.0.0
-* Template URL: https://bootstrapmade.com/bootslander-free-bootstrap-landing-page-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+ * Template Name: Bootslander - v3.0.0
+ * Template URL: https://bootstrapmade.com/bootslander-free-bootstrap-landing-page-template/
+ * Author: BootstrapMade.com
+ * License: https://bootstrapmade.com/license/
+ */
 
 
 
@@ -12,9 +12,18 @@
 
 
   // <script>
-  {/* </script> */ }
+  {
+    /* </script> */
+  }
 
 
+  let lebar = $(document).width()
+  console.log(lebar);
+  if (lebar < 975) {
+    $('#frame-udg').attr('src', 'http://adittelahtiba.github.io/rose-mb.html')
+  } else {
+    $('#frame-udg').attr('src', 'http://adittelahtiba.github.io/rose.html')
+  }
   //countdown
   if ($('.countdown').length) {
     var count = $('.countdown').data('count');

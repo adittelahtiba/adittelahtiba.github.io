@@ -20,9 +20,9 @@
   let lebar = $(document).width()
   console.log(lebar);
   if (lebar < 975) {
-    $('#frame-udg').attr('src', 'https://adittelahtiba.github.io/rose-mb.html')
+    $('#frame-udg').attr('src', 'rose-mb.html')
   } else {
-    $('#frame-udg').attr('src', 'https://adittelahtiba.github.io/rose.html')
+    $('#frame-udg').attr('src', 'rose.html')
   }
   //countdown
   if ($('.countdown').length) {

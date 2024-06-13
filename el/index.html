@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <title>Pernikahan Kami</title>
+    <style>
+      body {
+        background-color: #b6e8e3;
+        font-family: 'Arial', sans-serif;
+        font-size: 24px;
+        padding-bottom: 70px; /* Ensure there's space for the fixed navbar */
+      }
+      .navbar {
+        background-color: #fff;
+        border-radius: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-around;
+        z-index: 1000; /* Ensure it's above other content */
+      }
+      .navbar .nav-item {
+        text-align: center;
+        flex: 1;
+      }
+      .navbar .nav-link {
+        color: #163e3a !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+      }
+      .navbar .nav-link.active {
+        color: #163e3a;
+      }
+      .navbar .nav-link i {
+        font-size: 20px;
+        margin-bottom: 2px;
+      }
+      .section {
+        padding: 60px 0;
+        display: none;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .section.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .footer {
+        background-color: #163e3a;
+        color: #ffffff;
+        padding: 20px 0;
+        text-align: center;
+      }
+      .music-control {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #163e3a;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+      }
+      .initial-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        cursor: pointer;
+      }
+      #home, #couple, #story, #gallery, #rsvp {
+        /* background-image: url('assets/img/5525907.jpg'); */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100vh;
+        padding-top: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Initial Screen -->
+    <div id="initial-screen" class="initial-screen">
+      <div class="text-center">
+        <h1>Selamat Datang di Pernikahan Kami</h1>
+        <p id="invited-name">Klik untuk memulai</p>
+      </div>
+    </div>
+
+    <!-- Music Player -->
+    <audio id="background-music" loop>
+      <source src="videoplayback.m4a" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Control Button -->
+    <div class="music-control" onclick="toggleMusic()">
+      <span id="music-icon">🔊</span>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="navbar navbar-dark">
+      <ul class="navbar-nav d-flex flex-row w-100">
+        <li class="nav-item">
+          <a class="nav-link active" href="#home" onclick="showSection(event, 'home')"><i class="fas fa-home"></i><span>Beranda</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#couple" onclick="showSection(event, 'couple')"><i class="fas fa-user-friends"></i><span>Profil</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#story" onclick="showSection(event, 'story')"><i class="fas fa-calendar-alt"></i><span>Acara</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#gallery" onclick="showSection(event, 'gallery')"><i class="fas fa-comment"></i><span>Ucapan</span></a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+      <div class="container text-center">
+        <h1>Selamat Datang di Pernikahan Kami</h1>
+        <p>Kami mengundang Anda untuk merayakan hari bahagia kami.</p>
+      </div>
+    </section>
+
+    <!-- Couple Section -->
+    <section id="couple" class="section">
+      <div class="container text-center">
+        <h2>Pengantin</h2>
+        <p>Nama Pengantin Pria dan Nama Pengantin Wanita</p>
+      </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story" class="section">
+      <div class="container text-center">
+        <h2>Cerita Kami</h2>
+        <p>Cerita bagaimana kami bertemu dan perjalanan cinta kami.</p>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section">
+      <div class="container text-center">
+        <h2>Galeri</h2>
+        <p>Beberapa kenangan indah kami bersama.</p>
+        <!-- Add your images here -->
+      </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section id="rsvp" class="section">
+      <div class="container text-center">
+        <h2>RSVP</h2>
+        <p>Silakan konfirmasi kehadiran Anda di sini.</p>
+        <!-- Add your RSVP form here -->
+      </div>
+    </section>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        // Show home section on page load
+        const homeSection = $('#home');
+        homeSection.show().addClass('active');
+
+        // Function to show section
+        window.showSection = function(event, sectionId) {
+          event.preventDefault();
+
+          $('.section').removeClass('active').hide();
+
+          const activeSection = $('#' + sectionId);
+          activeSection.show();
+
+          setTimeout(() => {
+            activeSection.addClass('active');
+          }, 10);
+
+          // Update active link
+          $('.nav-link').removeClass('active');
+          $('a[href="#' + sectionId + '"]').addClass('active');
+        }
+
+        // Function to toggle music
+        window.toggleMusic = function() {
+          const music = $('#background-music')[0];
+          const musicIcon = $('#music-icon');
+
+          if (music.paused) {
+            music.play();
+            musicIcon.text('🔊');
+          } else {
+            music.pause();
+            musicIcon.text('🔇');
+          }
+        }
+
+        // Function to get query param and replace characters
+        function getQueryParam(param) {
+          const urlParams = new URLSearchParams(window.location.search);
+          let paramValue = urlParams.get(param);
+
+          if (paramValue) {
+            paramValue = paramValue.replace(/%20|_|-/g, ' ');
+          }
+
+          return paramValue;
+        }
+
+        // Display invited name
+        const invitedName = getQueryParam('to');
+        if (invitedName) {
+          $('#invited-name').text(`Halo ${invitedName}, klik untuk memulai`);
+        }
+
+        // Attach click event to nav links
+        $('.nav-link').on('click', function(event) {
+          const sectionId = $(this).attr('href').substring(1);
+          showSection(event, sectionId);
+        });
+
+        // Initial screen click event
+        $('#initial-screen').on('click', function() {
+          $(this).fadeOut(500, function() {
+            $(this).remove();
+            $('#background-music')[0].play();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -9,16 +9,30 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <title>Pernikahan Kami</title>
+    
+	<link href="assets/css/fontgoogle.css" rel="stylesheet">
     <style>
+
+
+
+
       body {
         background-color: #b6e8e3;
-        font-family: 'Arial', sans-serif;
+        font-family: 'Handlee', cursive;
         font-size: 24px;
         padding-bottom: 70px; /* Ensure there's space for the fixed navbar */
-        overflow: hidden; /* Prevents body scroll due to moving images */
+        overflow-x: hidden; /* Prevents body scroll due to moving images */
+        overflow-y: auto; /* Prevents body scroll due to moving images */
+        color: #163e3a; /* Text color */
       }
+      h1,
+h2 {
+    font-family: 'Rouge Script', cursive;
+}
       .navbar {
         background-color: #fff;
         border-radius: 30px;
@@ -27,7 +41,7 @@
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        width: 80%;
+        width: 300px;
         padding: 10px 20px;
         display: flex;
         justify-content: space-around;
@@ -46,6 +60,7 @@
       }
       .navbar .nav-link.active {
         color: #163e3a;
+        border-bottom: 2px solid #163e3a; /* Underline for active link */
       }
       .navbar .nav-link i {
         font-size: 20px;
@@ -112,6 +127,7 @@
         align-items: center;
         z-index: 9999;
         cursor: pointer;
+        font-family: 'Playfair Display', serif;
       }
       #home {
         height: 100vh;
@@ -120,21 +136,23 @@
         color: white;
       }
       #home .save-the-date {
-        font-size: 13px;
+        font-size: 4vw;
         margin-bottom: 20px;
         color: #163e3a;
+        font-family: 'Playfair Display', serif;
       }
       #home .couple-names {
-        font-size: 35px;
+        font-size: 10vw;
         font-weight: bold;
-        padding-top: 10%;
         margin-bottom: 20px;
         color: #163e3a;
+        font-family: 'Playfair Display', serif;
       }
       #home .wedding-date {
-        font-size: 24px;
+        font-size: 6vw;
         margin-bottom: 20px;
         color: #163e3a;
+        font-family: 'Playfair Display', serif;
       }
       #home .couple-image-container {
         position: relative;
@@ -215,14 +233,53 @@
           transform: translate(-20px, -20px);
         }
       }
+      /* RSVP Form Styles */
+      .rsvp-form {
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: left;
+      }
+      .rsvp-form label {
+        font-size: 16px;
+        color: #163e3a;
+      }
+      .rsvp-form input,
+      .rsvp-form textarea,
+      .rsvp-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .rsvp-form button {
+        background-color: #163e3a;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .isi-ayat {
+    text-align: justify;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-family: 'Handlee', cursive;
+}
+.judul {
+    margin-top: 10%;
+    font-family: 'Bad Script', cursive;
+}
     </style>
   </head>
   <body>
     <!-- Initial Screen -->
     <div id="initial-screen" class="initial-screen">
       <div class="text-center">
-        <h1>Selamat Datang di Pernikahan Kami</h1>
-        <p id="invited-name">Klik untuk memulai</p>
+        <h1>Dear <span id="invited-name"></span>, di tempat</h1>
+        <button class="btn btn-primary" onclick="startWebsite()">Buka</button>
       </div>
     </div>
 
@@ -247,19 +304,19 @@
           <a class="nav-link" href="#couple" onclick="showSection(event, 'couple')"><i class="fas fa-user-friends"></i><span>Profil</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#story" onclick="showSection(event, 'story')"><i class="fas fa-calendar-alt"></i><span>Acara</span></a>
+          <a class="nav-link" href="#event" onclick="showSection(event, 'event')"><i class="fas fa-calendar-alt"></i><span>Acara</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#gallery" onclick="showSection(event, 'gallery')"><i class="fas fa-comment"></i><span>Ucapan</span></a>
+          <a class="nav-link" href="#rsvp" onclick="showSection(event, 'rsvp')"><i class="fas fa-envelope"></i><span>RSVP</span></a>
         </li>
       </ul>
     </nav>
 
     <!-- Home Section -->
-    <section id="home" class="section active">
-      <div class="container text-center">
-        <div class="couple-names">HELENEA & JOHN</div>
-        <div class="save-the-date">ARE GETTING MARRIED</div>
+    <section id="home" class="section">
+      <div class="container">
+        <div class="save-the-date">Save The Date</div>
+        <div class="couple-names">Arif & Nina</div>
         <div class="wedding-date">09 DECEMBER 2024</div>
         <div class="couple-image-container">
           <img id="home-image" class="couple-image rotating" src="assets/img/couple.png" alt="Couple">
@@ -270,26 +327,122 @@
 
     <!-- Couple Section -->
     <section id="couple" class="section">
-      <div class="container text-center">
-        <h2>Pengantin</h2>
-        <p>Nama Pengantin Pria dan Nama Pengantin Wanita</p>
-      </div>
+      <div class="container">
+				<div class="row">
+          <div class="col-md-12 text-center judul">
+            <h6>Assalamu’alaikum Warahmatullahi Wabrakatuh</h6>
+          </div>
+          <div class="col-md-12 text-center isi-ayat">
+            <p>
+              Dengan memohon rakhmat serta ridho Allah SWT, kami bermaksud menyelenggarakan syukuran
+              pernikahan putra putri kami :
+            </p>
+              </div>
+					<div class="col-md-12 text-center judul">
+						<h2>Dewi Ratnasari</h2>
+						<hr>
+						<div class="container">
+							<h6>Putri dari pasangan Bpk. Roberto Dimario & Ibu. Ariana Grande</h6>
+						</div>
+					</div>
+					<h3 class="text-center judul">&</h3>
+					<div class="col-md-12 text-center judul">
+						<h2>Putra Agustian</h2>
+						<hr>
+						<div class="container">
+							<h6>Putra dari pasangan Bpk. Wiliam Costarica & Ibu. Marelina Mikasa</h6>
+						</div>
+					</div>
+
+          <div class="isi-ayat">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h3><i class="ri-book-open-fill ikon"></i></h3>
+                <i class="ri-double-quotes-l"></i>Dan diantara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
+                pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram
+                kepadanya, dan Da menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu
+                benar-benar terdapat tanda-tanda(kebesaran Allah) bagi kaum yang berfikir.<i
+                  class="ri-double-quotes-r"></i><br>
+                <b>(QS Ar-Ruum : 21)</b>
+              </div>
+            </div>
+          </div>
+				</div>
+			</div>
     </section>
 
-    <!-- Story Section -->
-    <section id="story" class="section">
-      <div class="container text-center">
-        <h2>Cerita Kami</h2>
-        <p>Cerita bagaimana kami bertemu dan perjalanan cinta kami.</p>
-      </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="section">
-      <div class="container text-center">
-        <h2>Galeri</h2>
-        <p>Beberapa kenangan indah kami bersama.</p>
-        <!-- Add your images here -->
+    <!-- Event Section -->
+    <section id="event" class="section">
+      <div class="row">
+        <div class="col-md-12 text-center isi-ayat">
+          <small>
+            <table width="100%">
+              <tr>
+                <td>
+                  <b>Akad Nikah</b>
+                  <hr>
+                  <p>
+                    <b>Hari dan Tanggal :</b>
+                  </p>
+                  <p>
+                    Selasa, 26 Februari 2021
+                  </p>
+                  <p>
+                    <b>Waktu:</b>
+                  </p>
+                  <p>
+                    10.00 WIB - Selesai
+                  </p>
+                  <p>
+                    <b>Lokasi:</b>
+                  </p>
+                  <p>
+                    Kp. Kaca-kaca dua, Rt.01, Rw.03 Desa. Pasirmulya, Kec. Banjaran, Kab.
+                    Bandung
+                  </p>
+                </td>
+                <td>
+                  <b>Resepsi</b>
+                  <hr>
+                  <p>
+                    <b>Hari dan Tanggal :</b>
+                  </p>
+                  <p>
+                    Selasa, 26 Februari 2021
+                  </p>
+                  <p>
+                    <b>Waktu:</b>
+                  </p>
+                  <p>
+                    10.00 WIB - Selesai
+                  </p>
+                  <p>
+                    <b>Lokasi:</b>
+                  </p>
+                  <p>
+                    Kp. Kaca-kaca dua, Rt.01, Rw.03 Desa. Pasirmulya, Kec. Banjaran, Kab.
+                    Bandung
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </small>
+          <p>
+            Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan
+            hadir untuk memberikan Do’a Restu kepada kedua mmpelai
+          </p>
+          <div class="col-md-12 text-center judul">
+            <h6>Wassalamualaikum WarahmatuLLahi Wabarakatuh</h6>
+            <hr>
+          </div>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-dark">
+            <i class="fas fa-map-marked-alt"></i><br><small>Maps</small>
+          </button>
+            <button type="button" class="btn btn-dark">
+              <i class="fab fa-youtube"></i><br><small>&nbsp;Live&nbsp;</small>
+            </button>
+        </div>
       </div>
     </section>
 
@@ -298,7 +451,20 @@
       <div class="container text-center">
         <h2>RSVP</h2>
         <p>Silakan konfirmasi kehadiran Anda di sini.</p>
-        <!-- Add your RSVP form here -->
+        <form class="rsvp-form">
+          <label for="name">Nama:</label>
+          <input type="text" id="name" name="name" required>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="attendance">Kehadiran:</label>
+          <select id="attendance" name="attendance" required>
+            <option value="yes">Hadir</option>
+            <option value="no">Tidak Hadir</option>
+          </select>
+          <label for="message">Pesan:</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+          <button type="submit">Kirim</button>
+        </form>
       </div>
     </section>
 
@@ -361,7 +527,7 @@
           let paramValue = urlParams.get(param);
 
           if (paramValue) {
-            paramValue = paramValue.replace(/%20|_|-/g, ' ');
+            paramValue = paramValue.replace(/%20|_|-|\+/g, ' ');
           }
 
           return paramValue;
@@ -370,7 +536,7 @@
         // Display invited name
         const invitedName = getQueryParam('to');
         if (invitedName) {
-          $('#invited-name').text(`Halo ${invitedName}, klik untuk memulai`);
+          $('#invited-name').text(invitedName);
         }
 
         // Attach click event to nav links
@@ -392,6 +558,43 @@
             $('.corner-image').css('opacity', 1);
           }, 500);
         });
+
+        // Countdown function
+        function countdown() {
+          const eventDate = new Date('December 9, 2024 09:00:00').getTime();
+          const now = new Date().getTime();
+          const distance = eventDate - now;
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          $('#countdown').html(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
+
+          if (distance < 0) {
+            clearInterval(x);
+            $('#countdown').html("The event has started");
+          }
+        }
+
+        setInterval(countdown, 1000);
+      });
+
+      // Disable zoom and right-click
+      document.addEventListener('keydown', function(event) {
+        if (event.ctrlKey || event.metaKey) {
+          switch (String.fromCharCode(event.which).toLowerCase()) {
+            case 's':
+            case 'p':
+              event.preventDefault();
+              break;
+          }
+        }
+      });
+
+      document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
       });
     </script>
   </body>

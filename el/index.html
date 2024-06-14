@@ -17,6 +17,7 @@
         font-family: 'Arial', sans-serif;
         font-size: 24px;
         padding-bottom: 70px; /* Ensure there's space for the fixed navbar */
+        overflow: hidden; /* Prevents body scroll due to moving images */
       }
       .navbar {
         background-color: #fff;
@@ -51,7 +52,7 @@
         margin-bottom: 2px;
       }
       .section {
-        padding: 60px 0;
+        padding: 60px 20px; /* Add padding to avoid corner images */
         display: none;
         opacity: 0;
         transform: translateY(50px);
@@ -70,7 +71,7 @@
       }
       .music-control {
         position: fixed;
-        top: 20px;
+        bottom: 80px; /* Move the button lower */
         right: 20px;
         width: 50px;
         height: 50px;
@@ -83,6 +84,20 @@
         cursor: pointer;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         z-index: 9999;
+      }
+      .music-control .spinning {
+        animation: spin 2s linear infinite;
+      }
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes rotateY {
+        from { transform: rotateY(0deg); }
+        to { transform: rotateY(360deg); }
+      }
+      .rotating {
+        animation: rotateY 10s linear infinite;
       }
       .initial-screen {
         position: fixed;
@@ -98,13 +113,107 @@
         z-index: 9999;
         cursor: pointer;
       }
-      #home, #couple, #story, #gallery, #rsvp {
-        /* background-image: url('assets/img/5525907.jpg'); */
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+      #home {
         height: 100vh;
         padding-top: 80px;
+        text-align: center;
+        color: white;
+      }
+      #home .save-the-date {
+        font-size: 13px;
+        margin-bottom: 20px;
+        color: #163e3a;
+      }
+      #home .couple-names {
+        font-size: 35px;
+        font-weight: bold;
+        padding-top: 10%;
+        margin-bottom: 20px;
+        color: #163e3a;
+      }
+      #home .wedding-date {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #163e3a;
+      }
+      #home .couple-image-container {
+        position: relative;
+        display: inline-block;
+      }
+      #home .couple-image {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        z-index: 1;
+        position: relative;
+      }
+      #home .flower-image {
+        position: absolute;
+        bottom: -20px; /* Adjust this value to control the overlap */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        z-index: 2; /* Ensure the flower image is above the couple image */
+      }
+      .corner-image {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+      .corner-image.top-left {
+        top: 0;
+        left: 0;
+        animation: moveTopLeft 10s infinite alternate;
+      }
+      .corner-image.top-right {
+        top: 0;
+        right: 0;
+        animation: moveTopRight 10s infinite alternate;
+      }
+      .corner-image.bottom-left {
+        bottom: 0;
+        left: 0;
+        animation: moveBottomLeft 10s infinite alternate;
+      }
+      .corner-image.bottom-right {
+        bottom: 0;
+        right: 0;
+        animation: moveBottomRight 10s infinite alternate;
+      }
+      @keyframes moveTopLeft {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(20px, 20px);
+        }
+      }
+      @keyframes moveTopRight {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(-20px, 20px);
+        }
+      }
+      @keyframes moveBottomLeft {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(20px, -20px);
+        }
+      }
+      @keyframes moveBottomRight {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(-20px, -20px);
+        }
       }
     </style>
   </head>
@@ -125,7 +234,7 @@
 
     <!-- Music Control Button -->
     <div class="music-control" onclick="toggleMusic()">
-      <span id="music-icon">🔊</span>
+      <i id="music-icon" class="fas fa-compact-disc"></i>
     </div>
 
     <!-- Navigation Menu -->
@@ -149,8 +258,13 @@
     <!-- Home Section -->
     <section id="home" class="section active">
       <div class="container text-center">
-        <h1>Selamat Datang di Pernikahan Kami</h1>
-        <p>Kami mengundang Anda untuk merayakan hari bahagia kami.</p>
+        <div class="couple-names">HELENEA & JOHN</div>
+        <div class="save-the-date">ARE GETTING MARRIED</div>
+        <div class="wedding-date">09 DECEMBER 2024</div>
+        <div class="couple-image-container">
+          <img id="home-image" class="couple-image rotating" src="assets/img/couple.png" alt="Couple">
+          <img id="flower-image" class="flower-image" src="assets/img/bottom-flower.png" alt="Flower">
+        </div>
       </div>
     </section>
 
@@ -188,6 +302,11 @@
       </div>
     </section>
 
+    <!-- Corner Images -->
+    <img src="assets/img/leaf1.png" class="corner-image top-left" alt="Leaf Top Left">
+    <img src="assets/img/flower1.png" class="corner-image top-right" alt="Flower Top Right">
+    <img src="assets/img/leaf2.png" class="corner-image bottom-left" alt="Leaf Bottom Left">
+    <img src="assets/img/flower2.png" class="corner-image bottom-right" alt="Flower Bottom Right">
 
     <!-- Optional JavaScript -->
     <!-- jQuery -->
@@ -223,13 +342,16 @@
         window.toggleMusic = function() {
           const music = $('#background-music')[0];
           const musicIcon = $('#music-icon');
+          const homeImage = $('#home-image');
 
           if (music.paused) {
             music.play();
-            musicIcon.text('🔊');
+            musicIcon.addClass('spinning');
+            homeImage.addClass('rotating');
           } else {
             music.pause();
-            musicIcon.text('🔇');
+            musicIcon.removeClass('spinning');
+            homeImage.removeClass('rotating');
           }
         }
 
@@ -262,7 +384,13 @@
           $(this).fadeOut(500, function() {
             $(this).remove();
             $('#background-music')[0].play();
+            $('#music-icon').addClass('spinning');
+            $('#home-image').addClass('rotating');
           });
+          // Show corner images with a delay
+          setTimeout(function() {
+            $('.corner-image').css('opacity', 1);
+          }, 500);
         });
       });
     </script>

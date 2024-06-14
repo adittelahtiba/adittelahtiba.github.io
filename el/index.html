@@ -23,7 +23,7 @@
       body {
         background-color: #b6e8e3;
         font-family: 'Handlee', cursive;
-        font-size: 24px;
+        font-size: 16px;
         padding-bottom: 70px; /* Ensure there's space for the fixed navbar */
         overflow-x: hidden; /* Prevents body scroll due to moving images */
         overflow-y: auto; /* Prevents body scroll due to moving images */
@@ -130,7 +130,7 @@ h2 {
         font-family: 'Playfair Display', serif;
       }
       #home {
-        height: 100vh;
+        height: 10vh;
         padding-top: 80px;
         text-align: center;
         color: white;
@@ -153,6 +153,7 @@ h2 {
         margin-bottom: 20px;
         color: #163e3a;
         font-family: 'Playfair Display', serif;
+        font-size: 16px;
       }
       #home .couple-image-container {
         position: relative;
@@ -309,7 +310,9 @@ h2 {
         <li class="nav-item">
           <a class="nav-link" href="#rsvp" onclick="showSection(event, 'rsvp')"><i class="fas fa-envelope"></i><span>RSVP</span></a>
         </li>
-      </ul>
+        <li class="nav-item">
+          <a class="nav-link" onclick="showSection(event, 'maps')"><i class="fas fa-map-marked-alt"></i><span>Maps</span></a>
+        </li>
     </nav>
 
     <!-- Home Section -->
@@ -451,20 +454,10 @@ h2 {
       <div class="container text-center">
         <h2>RSVP</h2>
         <p>Silakan konfirmasi kehadiran Anda di sini.</p>
-        <form class="rsvp-form">
-          <label for="name">Nama:</label>
-          <input type="text" id="name" name="name" required>
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-          <label for="attendance">Kehadiran:</label>
-          <select id="attendance" name="attendance" required>
-            <option value="yes">Hadir</option>
-            <option value="no">Tidak Hadir</option>
-          </select>
-          <label for="message">Pesan:</label>
-          <textarea id="message" name="message" rows="4" required></textarea>
-          <button type="submit">Kirim</button>
-        </form>
+        <div class="row text-center">
+          <div class="fb-comments" data-href="https://adittelahtiba.github.io/" data-width="" data-numposts="5"></div>
+          <div id="fb-root"></div>
+      </div>
       </div>
     </section>
 
@@ -480,6 +473,11 @@ h2 {
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+  	<!-- facebook -->
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0"
+  nonce="FijU3Z6V"></script>
+
     <script>
       $(document).ready(function() {
         // Show home section on page load
@@ -488,20 +486,25 @@ h2 {
 
         // Function to show section
         window.showSection = function(event, sectionId) {
-          event.preventDefault();
+          if (sectionId == 'maps'){
+            window.open('https://maps.app.goo.gl/6S9C79y9dkNjqWt46', '_blank');
+          }else{
+            
+            event.preventDefault();
 
-          $('.section').removeClass('active').hide();
+            $('.section').removeClass('active').hide();
 
-          const activeSection = $('#' + sectionId);
-          activeSection.show();
+            const activeSection = $('#' + sectionId);
+            activeSection.show();
 
-          setTimeout(() => {
-            activeSection.addClass('active');
-          }, 10);
+            setTimeout(() => {
+              activeSection.addClass('active');
+            }, 10);
 
-          // Update active link
-          $('.nav-link').removeClass('active');
-          $('a[href="#' + sectionId + '"]').addClass('active');
+            // Update active link
+            $('.nav-link').removeClass('active');
+            $('a[href="#' + sectionId + '"]').addClass('active');
+          }
         }
 
         // Function to toggle music
@@ -538,6 +541,7 @@ h2 {
         if (invitedName) {
           $('#invited-name').text(invitedName);
         }
+        $('#placeholder-fh0l7').text('Tulisakan ucapan');
 
         // Attach click event to nav links
         $('.nav-link').on('click', function(event) {

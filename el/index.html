@@ -8,11 +8,14 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    
+	<!-- rimixion -->
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
-    <title>Pernikahan Kami</title>
+    <title>Arif & Nina</title>
     
 	<link href="assets/css/fontgoogle.css" rel="stylesheet">
     <style>
@@ -31,7 +34,7 @@
       }
       h1,
 h2 {
-    font-family: 'Rouge Script', cursive;
+  font-family: 'Handlee', cursive;
 }
       .navbar {
         background-color: #fff;
@@ -98,7 +101,7 @@ h2 {
         align-items: center;
         cursor: pointer;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        z-index: 9999;
+        z-index: 8999;
       }
       .music-control .spinning {
         animation: spin 2s linear infinite;
@@ -171,8 +174,10 @@ h2 {
         bottom: -20px; /* Adjust this value to control the overlap */
         left: 50%;
         transform: translateX(-50%);
-        width: 50%;
+        width: 100%;
         z-index: 2; /* Ensure the flower image is above the couple image */
+        
+        animation: moveUpDown 10s infinite alternate;
       }
       .corner-image {
         position: fixed;
@@ -234,6 +239,14 @@ h2 {
           transform: translate(-20px, -20px);
         }
       }
+      @keyframes moveUpDown {
+        from {
+          transform: translate(-52%);
+        }
+        to {
+          transform: translate(-48%);
+        }
+      }
       /* RSVP Form Styles */
       .rsvp-form {
         max-width: 500px;
@@ -270,17 +283,51 @@ h2 {
     font-family: 'Handlee', cursive;
 }
 .judul {
-    margin-top: 10%;
-    font-family: 'Bad Script', cursive;
+    /* margin-top: 10%; */
+    font-family: 'Handlee', cursive;
 }
+.nav-link {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-dot {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    height: 8px;
+    width: 8px;
+    background-color: #98dcd5;
+    border-radius: 50%;
+    /* animation: blink 1s infinite; */
+}
+
+/* @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+} */
+ .bismillah{
+  padding-top: 15%;
+  width: 70%;
+ }
+ .icon-text a {
+      color: inherit; /* Mengambil warna dari elemen induk */
+      text-decoration: none; /* Menghilangkan underline */
+    }
+    .icon-text a:hover {
+      color: inherit; /* Tetap mempertahankan warna saat hover */
+      text-decoration: none; /* Tetap menghilangkan underline saat hover */
+    }
+
     </style>
   </head>
   <body>
     <!-- Initial Screen -->
     <div id="initial-screen" class="initial-screen">
-      <div class="text-center">
-        <h1>Dear <span id="invited-name"></span>, di tempat</h1>
-        <button class="btn btn-primary" onclick="startWebsite()">Buka</button>
+      <div class="text-center" style="font-family: Bad Script;">
+        <h4 style="font-family: Bad Script;">Dear</h4>
+        <h2 style="font-family: Bad Script;"><span id="invited-name"></span></h2>
+        <button class="btn btn-primary" onclick="startWebsite()">Open</button>
       </div>
     </div>
 
@@ -299,16 +346,16 @@ h2 {
     <nav class="navbar navbar-dark">
       <ul class="navbar-nav d-flex flex-row w-100">
         <li class="nav-item">
-          <a class="nav-link active" href="#home" onclick="showSection(event, 'home')"><i class="fas fa-home"></i><span>Beranda</span></a>
+          <a class="nav-link active" href="#home" onclick="showSection(event, 'home')"><i class="fas fa-home"></i><span>Home</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#couple" onclick="showSection(event, 'couple')"><i class="fas fa-user-friends"></i><span>Profil</span></a>
+          <a class="nav-link" href="#couple" onclick="showSection(event, 'couple')"><i class="fas fa-user-friends"></i><span>Profile</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#event" onclick="showSection(event, 'event')"><i class="fas fa-calendar-alt"></i><span>Acara</span></a>
+          <a class="nav-link" href="#event" onclick="showSection(event, 'event')"><i class="fas fa-calendar-alt"></i><span>Event</span><span class="notification-dot"></span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#rsvp" onclick="showSection(event, 'rsvp')"><i class="fas fa-envelope"></i><span>RSVP</span></a>
+          <a class="nav-link" href="#rsvp" onclick="showSection(event, 'rsvp')"><i class="fas fa-envelope"></i><span>Message</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" onclick="showSection(event, 'maps')"><i class="fas fa-map-marked-alt"></i><span>Maps</span></a>
@@ -332,9 +379,12 @@ h2 {
     <section id="couple" class="section">
       <div class="container">
 				<div class="row">
-          <div class="col-md-12 text-center judul">
-            <h6>Assalamu’alaikum Warahmatullahi Wabrakatuh</h6>
+          <div class="col-12 text-center">
+            <img class="bismillah" src="assets/img/bismillah.png" alt="" srcset="">
           </div>
+          <!-- <div class="col-md-12 text-center judul">
+            <h6>Assalamu’alaikum Warahmatullahi Wabrakatuh</h6>
+          </div> -->
           <div class="col-md-12 text-center isi-ayat">
             <p>
               Dengan memohon rakhmat serta ridho Allah SWT, kami bermaksud menyelenggarakan syukuran
@@ -348,7 +398,9 @@ h2 {
 							<h6>Putri dari pasangan Bpk. Roberto Dimario & Ibu. Ariana Grande</h6>
 						</div>
 					</div>
+					<div class="col-md-12 text-center judul">
 					<h3 class="text-center judul">&</h3>
+          </div>
 					<div class="col-md-12 text-center judul">
 						<h2>Putra Agustian</h2>
 						<hr>
@@ -377,7 +429,8 @@ h2 {
     <!-- Event Section -->
     <section id="event" class="section">
       <div class="row">
-        <div class="col-md-12 text-center isi-ayat">
+        <div class="col-md-12 text-center isi-ayat"><br><br>
+          <h3  style="font-family: Bad Script;">InsyaAllah akan dilakasanakan pada :</h4><br><br>
           <small>
             <table width="100%">
               <tr>
@@ -428,44 +481,60 @@ h2 {
                   </p>
                 </td>
               </tr>
-            </table>
+            </table>`
+            <!-- Button trigger modal -->
+            <div class="container d-flex justify-content-center align-items-center">
+              <div class="row">
+                <div class="col-6 icon-text">
+                    <a href="https://maps.app.goo.gl/6S9C79y9dkNjqWt46" target="_blank">
+                      <i class="fas fa-map-marked-alt icon"></i>
+                      <div>Maps</div>
+                    </a>
+                  </div>
+                  <div class="col-6 icon-text">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;dates=20240622T003000Z/20240622T030000Z&amp;ctz=Asia/Jakarta&amp;text=Ratu+%26+Reivan&amp;details=Ratu+%26+Reivan+on+Saturday%2C+22+June+2024&amp;location=Villa+Hanjuang+Siang+%7C+Cimaung%2C+Bandung+%28Masuk+via+Makam+Eril%29" target="_blank">
+                    <i class="fas fa-calendar-alt icon"></i>
+                      <div>Calendar</div>
+                      </a>
+                  </div>
+              </div>
+          </div>
           </small>
+          <br>
           <p>
             Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan
             hadir untuk memberikan Do’a Restu kepada kedua mmpelai
           </p>
-          <div class="col-md-12 text-center judul">
-            <h6>Wassalamualaikum WarahmatuLLahi Wabarakatuh</h6>
-            <hr>
-          </div>
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-dark">
-            <i class="fas fa-map-marked-alt"></i><br><small>Maps</small>
-          </button>
-            <button type="button" class="btn btn-dark">
-              <i class="fab fa-youtube"></i><br><small>&nbsp;Live&nbsp;</small>
-            </button>
+          
         </div>
       </div>
     </section>
 
     <!-- RSVP Section -->
     <section id="rsvp" class="section">
+     
       <div class="container text-center">
-        <h2>RSVP</h2>
-        <p>Silakan konfirmasi kehadiran Anda di sini.</p>
+        <br><br>
+        <h2 style="font-family: Bad Script;">Ucapan dan Doa</h2>
         <div class="row text-center">
           <div class="fb-comments" data-href="https://adittelahtiba.github.io/" data-width="" data-numposts="5"></div>
           <div id="fb-root"></div>
       </div>
       </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h3 class="judul"><i class="fas fa-praying-hands" aria-hidden="true"></i>
+            <hr>Terimakasih</h3>
+          <div></div>
+        </div>
+  </div>
     </section>
 
     <!-- Corner Images -->
-    <img src="assets/img/leaf1.png" class="corner-image top-left" alt="Leaf Top Left">
-    <img src="assets/img/flower1.png" class="corner-image top-right" alt="Flower Top Right">
-    <img src="assets/img/leaf2.png" class="corner-image bottom-left" alt="Leaf Bottom Left">
-    <img src="assets/img/flower2.png" class="corner-image bottom-right" alt="Flower Bottom Right">
+    <img src="assets/img/flower2.png" class="corner-image top-left" alt="Leaf Top Left">
+    <img src="assets/img/flower2.png" class="corner-image top-right" alt="Flower Top Right">
+    <!-- <img src="assets/img/leaf2.png" class="corner-image bottom-left" alt="Leaf Bottom Left"> -->
+    <!-- <img src="assets/img/flower2.png" class="corner-image bottom-right" alt="Flower Bottom Right"> -->
 
     <!-- Optional JavaScript -->
     <!-- jQuery -->
@@ -491,7 +560,9 @@ h2 {
           }else{
             
             event.preventDefault();
-
+            if (sectionId == 'event'){
+              document.querySelector('.nav-link[href="#event"] .notification-dot').style.display = 'none';
+            }
             $('.section').removeClass('active').hide();
 
             const activeSection = $('#' + sectionId);
@@ -530,7 +601,9 @@ h2 {
           let paramValue = urlParams.get(param);
 
           if (paramValue) {
-            paramValue = paramValue.replace(/%20|_|-|\+/g, ' ');
+            paramValue = paramValue.replace(/%20|_|-|\+/g, ' ').toLowerCase().replace(/(?:^|\s+)\w/g, function(match) {
+                                return match.toUpperCase();
+                            });
           }
 
           return paramValue;
@@ -539,7 +612,7 @@ h2 {
         // Display invited name
         const invitedName = getQueryParam('to');
         if (invitedName) {
-          $('#invited-name').text(invitedName);
+          $('#invited-name').html(`<b>${invitedName}</b><br><br>`);
         }
         $('#placeholder-fh0l7').text('Tulisakan ucapan');
 
@@ -601,5 +674,6 @@ h2 {
         event.preventDefault();
       });
     </script>
+    <script src="https://kit.fontawesome.com/6a2f2ec9f0.js" crossorigin="anonymous"></script>
   </body>
 </html>

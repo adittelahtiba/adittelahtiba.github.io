@@ -182,15 +182,15 @@ h2 {
       .corner-image {
         position: fixed;
         width: 100%;
+        /* height: 100px; */
         z-index: 1;
-        /* opacity: 0; */
+        opacity: 1;
         transition: opacity 1s ease-in-out;
       }
       .corner-image.top-left {
         top: 0;
         left: 0;
-        z-index: -10;
-        animation: moveTopLeft 8s infinite alternate;
+        animation: moveTopLeft 10s infinite alternate;
       }
       .corner-image.top-right {
         top: 0;
@@ -200,7 +200,7 @@ h2 {
       .corner-image.bottom-left {
         bottom: 0;
         left: 0;
-        animation: moveBottomLeft 8s infinite alternate;
+        animation: moveBottomLeft 10s infinite alternate;
       }
       .corner-image.bottom-right {
         bottom: 0;
@@ -228,7 +228,7 @@ h2 {
           transform: translate(0, 0);
         }
         to {
-          transform: translate(0px, 20px);
+          transform: translate(20px, -20px);
         }
       }
       @keyframes moveBottomRight {
@@ -297,7 +297,7 @@ h2 {
     right: 10px;
     height: 8px;
     width: 8px;
-    background-color: #98dcd5;
+    background-color: #a0e6df;
     border-radius: 50%;
     /* animation: blink 1s infinite; */
 }
@@ -370,7 +370,7 @@ h2 {
         <div class="wedding-date">09 DECEMBER 2024</div>
         <div class="couple-image-container">
           <img id="home-image" class="couple-image rotating" src="assets/img/couple.png" alt="Couple">
-          <!-- <img id="flower-image" class="flower-image" src="assets/img/bottom-flower.png" alt="Flower"> -->
+          <img id="flower-image" class="flower-image" src="assets/img/bottom-flower.png" alt="Flower">
         </div>
       </div>
     </section>
@@ -531,9 +531,12 @@ h2 {
     </section>
 
     <!-- Corner Images -->
-    <img src="assets/img/flower2.png" class="corner-image top-left" alt="Leaf Top Left">
-    <img src="assets/img/flower1.png" class="corner-image bottom-left" alt="Leaf Bottom Left"> 
+    <img src="assets/img/just-left-top.png" class="corner-image top-left" alt="Leaf Top Left">
+    <!-- <img src="assets/img/flower2.png" class="corner-image top-right" alt="Flower Top Right"> -->
+    <!-- <img src="assets/img/leaf2.png" class="corner-image bottom-left" alt="Leaf Bottom Left"> -->
+    <!-- <img src="assets/img/flower2.png" class="corner-image bottom-right" alt="Flower Bottom Right"> -->
 
+    <!-- Optional JavaScript -->
     <!-- jQuery -->
     <script src="assets/vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Bundle with Popper -->
@@ -628,9 +631,9 @@ h2 {
             $('#home-image').addClass('rotating');
           });
           // Show corner images with a delay
-          // setTimeout(function() {
-          //   $('.corner-image').css('opacity', 1);
-          // }, 500);
+          setTimeout(function() {
+            $('.corner-image').css('opacity', 1);
+          }, 500);
         });
 
         // Countdown function

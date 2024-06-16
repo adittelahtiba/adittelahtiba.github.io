@@ -21,10 +21,23 @@
     <style>
 
 
+@media screen and (max-width: 767px) {
+  .corner-image {
+    display: block;
+  }
+}
 
+/* Gambar akan tersembunyi di layar dengan lebar 768px atau lebih (tablet dan komputer) */
+@media screen and (min-width: 768px) {
+  .corner-image {
+    display: none;
+  }
+}
 
       body {
-        background-color: #b6e8e3;
+        background-image: url('assets/img/5567325.jpg');
+        background-repeat:no-repeat;
+/* background-position: center top; */
         font-family: 'Handlee', cursive;
         font-size: 16px;
         padding-bottom: 70px; /* Ensure there's space for the fixed navbar */
@@ -139,13 +152,11 @@ h2 {
         color: white;
       }
       #home .save-the-date {
-        font-size: 4vw;
         margin-bottom: 20px;
         color: #163e3a;
         font-family: 'Playfair Display', serif;
       }
       #home .couple-names {
-        font-size: 10vw;
         font-weight: bold;
         margin-bottom: 20px;
         color: #163e3a;
@@ -308,7 +319,7 @@ h2 {
 } */
  .bismillah{
   padding-top: 15%;
-  width: 70%;
+  width: 20vh;
  }
  .icon-text a {
       color: inherit; /* Mengambil warna dari elemen induk */
@@ -365,8 +376,10 @@ h2 {
     <!-- Home Section -->
     <section id="home" class="section">
       <div class="container">
-        <div class="save-the-date">Save The Date</div>
-        <div class="couple-names">Arif & Nina</div>
+        <h4><div class="save-the-date">Save The Date</div></h4>
+        <h1><div class="couple-names">Arif & Nina</div></h1>
+        
+        
         <div class="wedding-date">09 DECEMBER 2024</div>
         <div class="couple-image-container">
           <img id="home-image" class="couple-image rotating" src="assets/img/couple.png" alt="Couple">

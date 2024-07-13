@@ -572,7 +572,8 @@ a:focus {
 }
 
 .freelance_section .tab_container .t-link-box .detail-box h3 {
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-size: small;
   color: #252525;
 }
 

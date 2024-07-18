@@ -466,7 +466,7 @@
 
   @media screen and (max-width: 767px) {
 		.alert-container {
-			width: 100%;
+			width: 90%;
 		}
 	}
 
@@ -838,11 +838,15 @@
 			event.preventDefault();
 		});
 		$('#createdata').on('click', () => {
-			if(invitedName) {
+			if(invitedName && document.getElementById('dataInput').value != '') {
         $('#createdata').addClass('disabled')
         $('#createdata').html('Loading')
 				createData()
-			}
+			} else {
+        if (invitedName){
+          showAlert(`Dear <strong>${invitedName}</strong>, Pesan anda kosong :)`, 'warning')
+        }
+      }
 		})
 		const apiUrl = 'https://observant-childish-edam.glitch.me';
 		readData();

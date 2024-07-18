@@ -31,7 +31,7 @@
 	}
 
 	body {
-		background-image: url('assets/img/bg.png');
+		background-image: url('assets/img/bg.jpg');
     background-size: 100% auto; 
 		background-repeat: repeat-y;
 		background-position: center top;
@@ -428,34 +428,49 @@
 	}
 
 	.comment-list {
-		list-style-type: none;
-		padding: 0;
-	}
+    list-style-type: none;
+    padding: 0;
+}
 
-	.comment-item {
-		padding: 10px;
-		border-bottom: 1px solid #ccc;
-		width: 330px;
-		background: lightblue;
-		border-radius: 20px;
-		margin-top: 10px;
-	}
+.comment-item {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
 
-	.comment-name {
-		font-weight: bold;
-		text-align: left;
-	}
+.comment-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
-	.comment-message {
-		margin-top: 1em;
-		text-align: justify;
-	}
+.comment-card {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    width: 330px;
+    background: lightblue;
+    border-radius: 10px;
+    flex-grow: 1;
+}
 
-	.comment-time {
-		font-size: 0.8em;
-		color: #999;
-		text-align: right;
-	}
+.comment-name {
+    font-weight: bold;
+    text-align: left;
+}
+
+.comment-message {
+    font-size: 1em;
+    text-align: justify;
+}
+
+.comment-time {
+    font-size: 0.8em;
+    color: #181515;
+    text-align: right;
+}
+
+
 
 	.alert-container {
 		position: fixed;
@@ -741,7 +756,7 @@
 				if(sectionId == 'event') {
 					document.querySelector('.nav-link[href="#event"] .notification-dot').style.display = 'none';
 				}
-				$('.section').removeClass('active').hide();
+				// $('.section').removeClass('active').hide();
 				const activeSection = $('#' + sectionId);
 				activeSection.show();
 				setTimeout(() => {
@@ -750,6 +765,9 @@
 				// Update active link
 				$('.nav-link').removeClass('active');
 				$('a[href="#' + sectionId + '"]').addClass('active');
+        $('html, body').animate({
+                    scrollTop: $('#'+sectionId).offset().top
+                }, 1000); 
 			}
 		}
 		// Function to toggle music
@@ -882,22 +900,27 @@
 		}
 
 		function readData() {
-			fetch(apiUrl).then(response => response.json()).then(data => {
-				const dataList = document.getElementById('dataList');
-				dataList.innerHTML = '';
-				data.reverse()
-				data.forEach(item => {
-					const li = document.createElement('li');
-					li.classList.add('comment-item');
-					li.innerHTML = `
-                            <div class="comment-name">${item.data.name}</div>
-                            <div class="comment-message">${item.data.message}</div>
-                            <div class="comment-time">${timeAgo(item.data.created_at)}</div>
-                        `;
-					dataList.appendChild(li);
-				});
-			});
-		}
+    fetch(apiUrl).then(response => response.json()).then(data => {
+        const dataList = document.getElementById('dataList');
+        dataList.innerHTML = '';
+        data.reverse();
+        data.forEach(item => {
+            const li = document.createElement('li');
+            li.classList.add('comment-item');
+            li.innerHTML = `
+                <img class="comment-img" src="assets/img/user_6994705.png">
+                <div class="comment-card">
+                    <div class="comment-name">${item.data.name}</div>
+                    <div class="comment-message">${item.data.message}</div>
+                    <div class="comment-time">${timeAgo(item.data.created_at)}</div>
+                </div>
+            `;
+            dataList.appendChild(li);
+        });
+    });
+}
+
+setInterval(readData, 60000);
 
 		function getCurrentTime() {
 			let now = new Date();

@@ -1,720 +1,942 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="icon" href="assets/img/icon.png" type="image/x-icon">
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-    
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="icon" href="assets/img/icon.png" type="image/x-icon">
+	<!-- Bootstrap CSS -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
 	<!-- rimixion -->
 	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
-    <title>Arif & Nina</title>
-    
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+	<title>Arif & Nina</title>
 	<link href="assets/css/fontgoogle.css" rel="stylesheet">
-    <style>
+	<style>
+	@media screen and (max-width: 767px) {
+		.corner-image {
+			display: block;
+		}
+	}
 
+	/* Gambar akan tersembunyi di layar dengan lebar 768px atau lebih (tablet dan komputer) */
+	@media screen and (min-width: 768px) {
+		.corner-image {
+			display: none;
+		}
+	}
 
-@media screen and (max-width: 767px) {
-  .corner-image {
-    display: block;
-  }
-}
+	body {
+		background-image: url('assets/img/bg.png');
+    background-size: 100% auto; 
+		background-repeat: repeat-y;
+		background-position: center top;
+		font-family: 'Handlee', cursive;
+		font-size: 16px;
+		padding-bottom: 70px;
+		/* Ensure there's space for the fixed navbar */
+		overflow-x: hidden;
+		/* Prevents body scroll due to moving images */
+		overflow-y: auto;
+		/* Prevents body scroll due to moving images */
+		color: #163e3a;
+		/* Text color */
+		/* background-size: cover;  */
+	}
 
-/* Gambar akan tersembunyi di layar dengan lebar 768px atau lebih (tablet dan komputer) */
-@media screen and (min-width: 768px) {
-  .corner-image {
-    display: none;
-  }
-}
+	.overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		z-index: 0;
+	}
 
-      body {
-        background-image: url('assets/img/bg.jpg');
-        /* background-repeat:no-repeat; */
-background-position: center bottom;
-        font-family: 'Handlee', cursive;
-        font-size: 16px;
-        padding-bottom: 70px; /* Ensure there's space for the fixed navbar */
-        overflow-x: hidden; /* Prevents body scroll due to moving images */
-        overflow-y: auto; /* Prevents body scroll due to moving images */
-        color: #163e3a; /* Text color */
-        background-size: cover; 
-      }
-      .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 1;
-}
+	.overlay .particles {
+		height: 100vh;
+	}
 
-.overlay .particles{
-  height: 100vh;
-}
+	h1,
+	h2 {
+		font-family: 'Handlee', cursive;
+	}
 
-      h1,
-h2 {
-  font-family: 'Handlee', cursive;
-}
-      .navbar {
-        background-color: #fff;
-        border-radius: 30px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 300px;
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-around;
-        z-index: 1000; /* Ensure it's above other content */
-      }
-      .navbar .nav-item {
-        text-align: center;
-        flex: 1;
-      }
-      .navbar .nav-link {
-        color: #163e3a !important;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 12px;
-      }
-      .navbar .nav-link.active {
-        color: #163e3a;
-        border-bottom: 2px solid #163e3a; /* Underline for active link */
-      }
-      .navbar .nav-link i {
-        font-size: 20px;
-        margin-bottom: 2px;
-      }
-      .section {
-        padding: 60px 20px; /* Add padding to avoid corner images */
-        display: none;
-        opacity: 0;
-        transform: translateY(50px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-      }
-      .section.active {
-        display: block;
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .footer {
-        background-color: #163e3a;
-        color: #ffffff;
-        padding: 20px 0;
-        text-align: center;
-      }
-      .music-control {
-        position: fixed;
-        bottom: 80px; /* Move the button lower */
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #163e3a;
-        color: #ffffff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        z-index: 8999;
-      }
-      .music-control .spinning {
-        animation: spin 2s linear infinite;
-      }
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      @keyframes rotateY {
-        from { transform: rotateY(0deg); }
-        to { transform: rotateY(360deg); }
-      }
-      .rotating {
-        animation: rotateY 10s linear infinite;
-      }
-      .initial-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: #ffffff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        cursor: pointer;
-        font-family: 'Playfair Display', serif;
-      }
-      #home {
-        height: 100vh;
-        padding-top: 80px;
-        text-align: center;
-        color: white;
-      }
-      #home .save-the-date {
-        margin-bottom: 20px;
-        color: #163e3a;
-        font-family: 'Playfair Display', serif;
-      }
-      #home .couple-names {
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #163e3a;
-        font-family: 'Playfair Display', serif;
-      }
-      #home .wedding-date {
-        font-size: 6vw;
-        margin-bottom: 20px;
-        color: #163e3a;
-        font-family: 'Playfair Display', serif;
-        font-size: 16px;
-      }
-      #home .couple-image-container {
-        position: relative;
-        display: inline-block;
-      }
-      #home .couple-image {
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-        z-index: 1;
-        position: relative;
-      }
-      #home .flower-image {
-        position: absolute;
-        bottom: -50px; /* Adjust this value to control the overlap */
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        z-index: 2; /* Ensure the flower image is above the couple image */
-        
-        animation: moveUpDown 10s infinite alternate;
-      }
-      .corner-image {
-        position: fixed;
-        width: 60%;
-        /* height: 100px; */
-        z-index: 1;
-        opacity: 1;
-        transition: opacity 1s ease-in-out;
-      }
-      .corner-image.top-left {
-        top: 0;
-        left: 0;
-        z-index: -1;
-        animation: moveTopLeft 10s infinite alternate;
-      }
-      .corner-image.top-right {
-        top: 0;
-        right: 0;
-        animation: moveTopRight 10s infinite alternate;
-      }
-      .corner-image.bottom-left {
-        bottom: 0;
-        left: 0;
-        animation: moveBottomLeft 10s infinite alternate;
-      }
-      .corner-image.bottom-right {
-        bottom: 0;
-        right: 0;
-        animation: moveBottomRight 10s infinite alternate;
-      }
-      @keyframes moveTopLeft {
-        from {
-          transform: translate(0, 0);
-        }
-        to {
-          transform: translate(-20px,-20px);
-        }
-      }
-      @keyframes moveTopRight {
-        from {
-          transform: translate(0, 0);
-        }
-        to {
-          transform: translate(-20px, 20px);
-        }
-      }
-      @keyframes moveBottomLeft {
-        from {
-          transform: translate(0, 0);
-        }
-        to {
-          transform: translate(20px, -20px);
-        }
-      }
-      @keyframes moveBottomRight {
-        from {
-          transform: translate(0, 0);
-        }
-        to {
-          transform: translate(-20px, -20px);
-        }
-      }
-      @keyframes moveUpDown {
-        from {
-          transform: translate(-52%);
-        }
-        to {
-          transform: translate(-48%);
-        }
-      }
-      /* RSVP Form Styles */
-      .rsvp-form {
-        max-width: 500px;
-        margin: 0 auto;
-        text-align: left;
-      }
-      .rsvp-form label {
-        font-size: 16px;
-        color: #163e3a;
-      }
-      .rsvp-form input,
-      .rsvp-form textarea,
-      .rsvp-form select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      .rsvp-form button {
-        background-color: #163e3a;
-        color: #ffffff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      .isi-ayat {
-    text-align: justify;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    font-family: 'Handlee', cursive;
-}
-.judul {
-    /* margin-top: 10%; */
-    font-family: 'Handlee', cursive;
-}
-.nav-link {
-    position: relative;
-    display: inline-block;
-}
+	.navbar {
+		background-color: #fff;
+		border-radius: 30px;
+		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+		position: fixed;
+		bottom: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 300px;
+		padding: 10px 20px;
+		display: flex;
+		justify-content: space-around;
+		z-index: 1000;
+		/* Ensure it's above other content */
+	}
 
-.notification-dot {
-    position: absolute;
-    top: 6px;
-    right: 10px;
-    height: 8px;
-    width: 8px;
-    background-color: #c85f86;
-    border-radius: 50%;
-    /* animation: blink 2s infinite; */
-}
+	.navbar .nav-item {
+		text-align: center;
+		flex: 1;
+	}
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
- .bismillah{
-  padding-top: 15%;
-  width: 20vh;
- }
- .icon-text a {
-      color: inherit; /* Mengambil warna dari elemen induk */
-      text-decoration: none; /* Menghilangkan underline */
-    }
-    .icon-text a:hover {
-      color: inherit; /* Tetap mempertahankan warna saat hover */
-      text-decoration: none; /* Tetap menghilangkan underline saat hover */
-    }
+	.navbar .nav-link {
+		color: #163e3a !important;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 12px;
+	}
 
-    </style>
-  </head>
-  <body>
-    <!-- Initial Screen -->
-    <div id="initial-screen" class="initial-screen">
-      <div class="text-center" style="font-family: Bad Script;">
-        <h4 style="font-family: Bad Script;">Dear</h4>
-        <h2 style="font-family: Bad Script;"><span id="invited-name"></span></h2>
-        <button class="btn btn-primary" id="start-website">Open</button>
-      </div>
-    </div>
+	.navbar .nav-link.active {
+		color: #163e3a;
+		border-bottom: 2px solid #163e3a;
+		/* Underline for active link */
+	}
 
-    
-<div class="overlay">
-	<div id="particles-stars" class="particles"></div>
-</div>
+	.navbar .nav-link i {
+		font-size: 20px;
+		margin-bottom: 2px;
+	}
 
-    <!-- Music Player -->
-    <audio id="background-music" loop>
-      <source src="videoplayback.m4a" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
+	.section {
+		padding: 60px 20px;
+		/* Add padding to avoid corner images */
+		display: none;
+		opacity: 0;
+		transform: translateY(50px);
+		transition: opacity 0.5s ease, transform 0.5s ease;
+	}
 
-    <!-- Music Control Button -->
-    <div class="music-control" onclick="toggleMusic()">
-      <i id="music-icon" class="fas fa-compact-disc"></i>
-    </div>
+	.section.active {
+		display: block;
+		opacity: 1;
+		transform: translateY(0);
+	}
 
-    <!-- Navigation Menu -->
-    <nav class="navbar navbar-dark">
-      <ul class="navbar-nav d-flex flex-row w-100">
-        <li class="nav-item">
-          <a class="nav-link active" href="#home" onclick="showSection(event, 'home')"><i class="fas fa-home"></i><span>Home</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#couple" onclick="showSection(event, 'couple')"><i class="fas fa-user-friends"></i><span>Profile</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#event" onclick="showSection(event, 'event')"><i class="fas fa-calendar-alt"></i><span>Event</span><span class="notification-dot"></span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#rsvp" onclick="showSection(event, 'rsvp')"><i class="fas fa-envelope"></i><span>Message</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" onclick="showSection(event, 'maps')"><i class="fas fa-map-marked-alt"></i><span>Maps</span></a>
-        </li>
-    </nav>
+	.footer {
+		background-color: #163e3a;
+		color: #ffffff;
+		padding: 20px 0;
+		text-align: center;
+	}
 
-    <!-- Home Section -->
-    <section id="home" class="section active">
-      <div class="container">
-        <h4><div class="save-the-date">Save The Date</div></h4>
-        <h1><div class="couple-names">Arif & Nina</div></h1>
-        
-        
-        <div class="wedding-date">09 DECEMBER 2024</div>
-        <div class="couple-image-container">
-          <img id="home-image" class="couple-image" src="assets/img/couple.png" alt="Couple">
-          <img id="flower-image" class="flower-image" src="assets/img/bottom-flower.png" alt="Flower">
-        </div>
-      </div>
-    </section>
+	.music-control {
+		position: fixed;
+		bottom: 80px;
+		/* Move the button lower */
+		right: 20px;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background-color: #163e3a;
+		color: #ffffff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+		z-index: 8999;
+	}
 
-    <!-- Couple Section -->
-    <section id="couple" class="section active">
-      <div class="container">
-				<div class="row">
-          <div class="col-12 text-center">
-            <img class="bismillah" src="assets/img/bismillah.png" alt="" srcset="">
-          </div>
-          <!-- <div class="col-md-12 text-center judul">
+	.music-control .spinning {
+		animation: spin 2s linear infinite;
+	}
+
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes rotateY {
+		from {
+			transform: rotateY(0deg);
+		}
+
+		to {
+			transform: rotateY(360deg);
+		}
+	}
+
+	.rotating {
+		animation: rotateY 10s linear infinite;
+	}
+
+	.initial-screen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.8);
+		color: #ffffff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 9999;
+		cursor: pointer;
+		font-family: 'Playfair Display', serif;
+	}
+
+	#home {
+		height: 100vh;
+		padding-top: 80px;
+		text-align: center;
+		color: white;
+	}
+
+	#home .save-the-date {
+		margin-bottom: 20px;
+		color: #163e3a;
+		font-family: 'Playfair Display', serif;
+	}
+
+	#home .couple-names {
+		font-weight: bold;
+		margin-bottom: 20px;
+		color: #163e3a;
+		font-family: 'Playfair Display', serif;
+	}
+
+	#home .wedding-date {
+		font-size: 6vw;
+		margin-bottom: 20px;
+		color: #163e3a;
+		font-family: 'Playfair Display', serif;
+		font-size: 16px;
+	}
+
+	#home .couple-image-container {
+		position: relative;
+		display: inline-block;
+	}
+
+	#home .couple-image {
+		width: 100%;
+		max-width: 400px;
+		height: auto;
+		z-index: 1;
+		position: relative;
+	}
+
+	#home .flower-image {
+		position: absolute;
+		bottom: -50px;
+		/* Adjust this value to control the overlap */
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100%;
+		z-index: 2;
+		/* Ensure the flower image is above the couple image */
+		animation: moveUpDown 10s infinite alternate;
+	}
+
+	.corner-image {
+		position: fixed;
+		width: 60%;
+		/* height: 100px; */
+		z-index: 1000;
+		opacity: 1;
+		transition: opacity 1s ease-in-out;
+	}
+
+	.corner-image.top-left {
+		top: 0;
+		left: 0;
+		z-index: -1;
+		animation: moveTopLeft 10s infinite alternate;
+	}
+
+	.corner-image.top-right {
+		top: 0;
+		right: 0;
+		animation: moveTopRight 10s infinite alternate;
+	}
+
+	.corner-image.bottom-left {
+		bottom: 0;
+		left: 0;
+		animation: moveBottomLeft 10s infinite alternate;
+	}
+
+	.corner-image.bottom-right {
+		bottom: 0;
+		right: 0;
+		animation: moveBottomRight 10s infinite alternate;
+	}
+
+	@keyframes moveTopLeft {
+		from {
+			transform: translate(0, 0);
+		}
+
+		to {
+			transform: translate(-20px, -20px);
+		}
+	}
+
+	@keyframes moveTopRight {
+		from {
+			transform: translate(0, 0);
+		}
+
+		to {
+			transform: translate(-20px, 20px);
+		}
+	}
+
+	@keyframes moveBottomLeft {
+		from {
+			transform: translate(0, 0);
+		}
+
+		to {
+			transform: translate(20px, -20px);
+		}
+	}
+
+	@keyframes moveBottomRight {
+		from {
+			transform: translate(0, 0);
+		}
+
+		to {
+			transform: translate(-20px, -20px);
+		}
+	}
+
+	@keyframes moveUpDown {
+		from {
+			transform: translate(-52%);
+		}
+
+		to {
+			transform: translate(-48%);
+		}
+	}
+
+	/* RSVP Form Styles */
+	.rsvp-form {
+		max-width: 500px;
+		margin: 0 auto;
+		text-align: left;
+	}
+
+	.rsvp-form label {
+		font-size: 16px;
+		color: #163e3a;
+	}
+
+	.rsvp-form input,
+	.rsvp-form textarea,
+	.rsvp-form select {
+		width: 100%;
+		padding: 10px;
+		margin-bottom: 15px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+	}
+
+	.rsvp-form button {
+		background-color: #163e3a;
+		color: #ffffff;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.isi-ayat {
+		text-align: justify;
+		padding-left: 10%;
+		padding-right: 10%;
+		padding-top: 5%;
+		padding-bottom: 5%;
+		font-family: 'Handlee', cursive;
+	}
+
+	.judul {
+		/* margin-top: 10%; */
+		font-family: 'Handlee', cursive;
+	}
+
+	.nav-link {
+		position: relative;
+		display: inline-block;
+	}
+
+	.notification-dot {
+		position: absolute;
+		top: 6px;
+		right: 10px;
+		height: 8px;
+		width: 8px;
+		background-color: #c85f86;
+		border-radius: 50%;
+		/* animation: blink 2s infinite; */
+	}
+
+	@keyframes blink {
+
+		0%,
+		100% {
+			opacity: 1;
+		}
+
+		50% {
+			opacity: 0;
+		}
+	}
+
+	.bismillah {
+		padding-top: 15%;
+		width: 20vh;
+	}
+
+	.icon-text a {
+		color: inherit;
+		/* Mengambil warna dari elemen induk */
+		text-decoration: none;
+		/* Menghilangkan underline */
+	}
+
+	.icon-text a:hover {
+		color: inherit;
+		/* Tetap mempertahankan warna saat hover */
+		text-decoration: none;
+		/* Tetap menghilangkan underline saat hover */
+	}
+
+	#rsvp .comments-section {
+		width: 300px;
+		margin: auto;
+		background: #f0f0f0;
+		padding: 20px;
+		border-radius: 8px;
+	}
+
+	.comment-list {
+		list-style-type: none;
+		padding: 0;
+	}
+
+	.comment-item {
+		padding: 10px;
+		border-bottom: 1px solid #ccc;
+		width: 330px;
+		background: lightblue;
+		border-radius: 20px;
+		margin-top: 10px;
+	}
+
+	.comment-name {
+		font-weight: bold;
+		text-align: left;
+	}
+
+	.comment-message {
+		margin-top: 5px;
+		text-align: justify;
+	}
+
+	.comment-time {
+		font-size: 0.8em;
+		color: #999;
+		text-align: right;
+	}
+
+	.alert-container {
+		position: fixed;
+		top: 20px;
+		z-index: 1050;
+		margin: 15px;
+	}
+
+	#countdown {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		z-index: 0;
+	}
+
+	#countdown .time-box {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: #ccd7eb;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 5px;
+		width: 70px;
+	}
+
+	#countdown .time {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	#countdown .label {
+		font-size: xx-small;
+	}
+	</style>
+</head>
+
+<body>
+	<!-- Initial Screen -->
+	<div id="initial-screen" class="initial-screen">
+		<div class="text-center" style="font-family: Bad Script;">
+			<h4 style="font-family: Bad Script;">Dear</h4>
+			<h2 style="font-family: Bad Script;"><span id="invited-name"></span></h2>
+			<button class="btn btn-primary" id="start-website">Open</button>
+		</div>
+	</div>
+	<div id="alertContainer" class="alert-container"></div>
+	<div class="overlay">
+		<div id="particles-stars" class="particles"></div>
+	</div>
+	<!-- Music Player -->
+	<audio id="background-music" loop>
+		<source src="videoplayback.m4a" type="audio/mpeg"> Your browser does not support the audio element. </audio>
+	<!-- Music Control Button -->
+	<div class="music-control" onclick="toggleMusic()">
+		<i id="music-icon" class="fas fa-compact-disc"></i>
+	</div>
+	<!-- Navigation Menu -->
+	<nav class="navbar navbar-dark">
+		<ul class="navbar-nav d-flex flex-row w-100">
+			<li class="nav-item">
+				<a class="nav-link active" href="#home" onclick="showSection(event, 'home')"><i class="fas fa-home"></i><span>Home</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#couple" onclick="showSection(event, 'couple')"><i class="fas fa-user-friends"></i><span>Profile</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#event" onclick="showSection(event, 'event')"><i class="fas fa-calendar-alt"></i><span>Event</span><span class="notification-dot"></span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#rsvp" onclick="showSection(event, 'rsvp')"><i class="fas fa-envelope"></i><span>Message</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" onclick="showSection(event, 'maps')"><i class="fas fa-map-marked-alt"></i><span>Maps</span></a>
+			</li>
+	</nav>
+	<!-- Home Section -->
+	<section id="home" class="section active">
+		<div class="container">
+			<h4>
+				<div class="save-the-date">Save The Date</div>
+			</h4>
+			<h1>
+				<div class="couple-names">Arif & Nina</div>
+			</h1>
+			<div class="wedding-date">09 DECEMBER 2024</div>
+			<div class="couple-image-container">
+				<img id="home-image" class="couple-image" src="assets/img/couple.png" alt="Couple">
+				<img id="flower-image" class="flower-image" src="assets/img/bottom-flower.png" alt="Flower">
+			</div>
+		</div>
+	</section>
+	<div id="countdown">
+		<div class="time-box">
+			<span id="days" class="time"></span>
+			<span class="label">DAYS</span>
+		</div>
+		<div class="time-box">
+			<span id="hours" class="time"></span>
+			<span class="label">HOURS</span>
+		</div>
+		<div class="time-box">
+			<span id="minutes" class="time"></span>
+			<span class="label">MINUTES</span>
+		</div>
+		<div class="time-box">
+			<span id="seconds" class="time"></span>
+			<span class="label">SECONDS</span>
+		</div>
+	</div>
+	<!-- Couple Section -->
+	<section id="couple" class="section active">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<img class="bismillah" src="assets/img/bismillah.png" alt="" srcset="">
+				</div>
+				<!-- <div class="col-md-12 text-center judul">
             <h6>Assalamu’alaikum Warahmatullahi Wabrakatuh</h6>
           </div> -->
-          <div class="col-md-12 text-center isi-ayat">
-            <p>
-              Dengan memohon rakhmat serta ridho Allah SWT, kami bermaksud menyelenggarakan syukuran
-              pernikahan putra putri kami :
-            </p>
-              </div>
-					<div class="col-md-12 text-center judul">
-						<h2>Dewi Ratnasari</h2>
-						<hr>
-						<div class="container">
-							<h6>Putri dari pasangan Bpk. Roberto Dimario & Ibu. Ariana Grande</h6>
-						</div>
+				<div class="col-md-12 text-center isi-ayat">
+					<p> Dengan memohon rakhmat serta ridho Allah SWT, kami bermaksud menyelenggarakan syukuran pernikahan putra putri kami : </p>
+				</div>
+				<div class="col-md-12 text-center judul">
+					<h2>Dewi Ratnasari</h2>
+					<hr>
+					<div class="container">
+						<h6>Putri dari pasangan Bpk. Roberto Dimario & Ibu. Ariana Grande</h6>
 					</div>
-					<div class="col-md-12 text-center judul">
+				</div>
+				<div class="col-md-12 text-center judul">
 					<h3 class="text-center judul">&</h3>
-          </div>
-					<div class="col-md-12 text-center judul">
-						<h2>Putra Agustian</h2>
-						<hr>
-						<div class="container">
-							<h6>Putra dari pasangan Bpk. Wiliam Costarica & Ibu. Marelina Mikasa</h6>
+				</div>
+				<div class="col-md-12 text-center judul">
+					<h2>Putra Agustian</h2>
+					<hr>
+					<div class="container">
+						<h6>Putra dari pasangan Bpk. Wiliam Costarica & Ibu. Marelina Mikasa</h6>
+					</div>
+				</div>
+				<div class="isi-ayat">
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<h3><i class="ri-book-open-fill ikon"></i></h3>
+							<i class="ri-double-quotes-l"></i>Dan diantara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Da menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda(kebesaran Allah) bagi kaum yang berfikir.<i class="ri-double-quotes-r"></i><br>
+							<b>(QS Ar-Ruum : 21)</b>
 						</div>
 					</div>
-
-          <div class="isi-ayat">
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <h3><i class="ri-book-open-fill ikon"></i></h3>
-                <i class="ri-double-quotes-l"></i>Dan diantara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
-                pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram
-                kepadanya, dan Da menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu
-                benar-benar terdapat tanda-tanda(kebesaran Allah) bagi kaum yang berfikir.<i
-                  class="ri-double-quotes-r"></i><br>
-                <b>(QS Ar-Ruum : 21)</b>
-              </div>
-            </div>
-          </div>
 				</div>
 			</div>
-    </section>
+		</div>
+	</section>
+	<!-- Event Section -->
+	<section id="event" class="section active">
+		<div class="row">
+			<div class="col-md-12 text-center isi-ayat"><br><br>
+				<h3 style="font-family: Bad Script;">InsyaAllah akan dilakasanakan pada :</h4><br><br>
+					<small>
+						<table width="100%">
+							<tr>
+								<td>
+									<b>Akad Nikah</b>
+									<hr>
+									<p>
+										<b>Hari dan Tanggal :</b>
+									</p>
+									<p> Selasa, 26 Februari 2021 </p>
+									<p>
+										<b>Waktu:</b>
+									</p>
+									<p> 10.00 WIB - Selesai </p>
+									<p>
+										<b>Lokasi:</b>
+									</p>
+									<p> Kp. Kaca-kaca dua, Rt.01, Rw.03 Desa. Pasirmulya, Kec. Banjaran, Kab. Bandung </p>
+								</td>
+								<td>
+									<b>Resepsi</b>
+									<hr>
+									<p>
+										<b>Hari dan Tanggal :</b>
+									</p>
+									<p> Selasa, 26 Februari 2021 </p>
+									<p>
+										<b>Waktu:</b>
+									</p>
+									<p> 10.00 WIB - Selesai </p>
+									<p>
+										<b>Lokasi:</b>
+									</p>
+									<p> Kp. Kaca-kaca dua, Rt.01, Rw.03 Desa. Pasirmulya, Kec. Banjaran, Kab. Bandung </p>
+								</td>
+							</tr>
+						</table>`
+						<!-- Button trigger modal -->
+						<div class="container d-flex justify-content-center align-items-center">
+							<div class="row">
+								<div class="col-6 icon-text">
+									<a href="https://maps.app.goo.gl/6S9C79y9dkNjqWt46" target="_blank">
+										<i class="fas fa-map-marked-alt icon"></i>
+										<div>Maps</div>
+									</a>
+								</div>
+								<div class="col-6 icon-text">
+									<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;dates=20240622T003000Z/20240622T030000Z&amp;ctz=Asia/Jakarta&amp;text=Ratu+%26+Reivan&amp;details=Ratu+%26+Reivan+on+Saturday%2C+22+June+2024&amp;location=Villa+Hanjuang+Siang+%7C+Cimaung%2C+Bandung+%28Masuk+via+Makam+Eril%29" target="_blank">
+										<i class="fas fa-calendar-alt icon"></i>
+										<div>Calendar</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</small>
+					<br>
+					<p> Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan Do’a Restu kepada kedua mmpelai </p>
+			</div>
+		</div>
+	</section>
+	<!-- RSVP Section -->
+	<section id="rsvp" class="section active">
+		<div class="container text-center">
+			<br><br>
+			<h2 style="font-family: Bad Script;">Ucapan dan Doa</h2>
+			<div class="container-parent" style="position: relative; z-index: 10000;">
+				<div class="container" style="z-index: 9999; position: relative;">
+					<div class="form-floating">
+						<textarea class="form-control" placeholder="Masukan pesan" id="dataInput" style="height: 100px"></textarea>
+						<button class="btn btn-success mt-1" id="createdata">Kirim</button>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row text-center" style="height: 45vh; overflow-y: auto;">
+				<div id="commentSection">
+					<ul id="dataList" class="comment-list"></ul>
+				</div>
+			</div>
+		</div>
+		<hr>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h3 class="judul"><i class="fas fa-praying-hands" aria-hidden="true"></i>
+					<br>Terimakasih</h3>
+				<div></div>
+			</div>
+		</div>
+		<div class="row">
+			<br>
+			<div class="col-md-12 text-center"> Design by <img src="assets/img/logo.png" width="70px"></div>
+		</div>
+		</div>
+	</section>
+	<!-- Corner Images -->
+	<img src="assets/img/just-left-top.png" class="corner-image top-left" alt="Leaf Top Left">
+	<!-- <img src="assets/img/flower2.png" class="corner-image top-right" alt="Flower Top Right"> -->
+	<!-- <img src="assets/img/leaf2.png" class="corner-image bottom-left" alt="Leaf Bottom Left"> -->
+	<!-- <img src="assets/img/flower2.png" class="corner-image bottom-right" alt="Flower Bottom Right"> -->
+	<!-- Optional JavaScript -->
+	<!-- jQuery -->
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	<!-- Bootstrap Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- facebook -->
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="FijU3Z6V"></script>
+	<script>
+	$(document).ready(function() {
+		// Show home section on page load
+		// Function to show section
+		window.showSection = function(event, sectionId) {
+			if(sectionId == 'maps') {
+				window.open('https://maps.app.goo.gl/6S9C79y9dkNjqWt46', '_blank');
+			} else {
+				event.preventDefault();
+				if(sectionId == 'event') {
+					document.querySelector('.nav-link[href="#event"] .notification-dot').style.display = 'none';
+				}
+				$('.section').removeClass('active').hide();
+				const activeSection = $('#' + sectionId);
+				activeSection.show();
+				setTimeout(() => {
+					activeSection.addClass('active');
+				}, 10);
+				// Update active link
+				$('.nav-link').removeClass('active');
+				$('a[href="#' + sectionId + '"]').addClass('active');
+			}
+		}
+		// Function to toggle music
+		window.toggleMusic = function() {
+			const music = $('#background-music')[0];
+			const musicIcon = $('#music-icon');
+			const homeImage = $('#home-image');
+			if(music.paused) {
+				music.play();
+				musicIcon.addClass('spinning');
+				homeImage.addClass('rotating');
+			} else {
+				music.pause();
+				musicIcon.removeClass('spinning');
+				homeImage.removeClass('rotating');
+			}
+		}
+		// Function to get query param and replace characters
+		function getQueryParam(param) {
+			const urlParams = new URLSearchParams(window.location.search);
+			let paramValue = urlParams.get(param);
+			if(paramValue) {
+				paramValue = paramValue.replace(/%20|_|-|\+/g, ' ').toLowerCase().replace(/(?:^|\s+)\w/g, function(match) {
+					return match.toUpperCase();
+				});
+			}
+			return paramValue;
+		}
+		// Display invited name
+		const invitedName = getQueryParam('to');
+		if(invitedName) {
+			$('#invited-name').html(`<b>${invitedName}</b><br><br>`);
+		} else {
+			$('#createdata').addClass('disabled')
+		}
+		$('#placeholder-fh0l7').text('Tulisakan ucapan');
+		// Attach click event to nav links
+		$('.nav-link').on('click', function(event) {
+			const sectionId = $(this).attr('href').substring(1);
+			showSection(event, sectionId);
+		});
+		// Initial screen click event
+		$('#initial-screen').on('click', function() {
+			$(this).fadeOut(500, function() {
+				$(this).remove();
+				$('#background-music')[0].play();
+				$('#music-icon').addClass('spinning');
+				$('#home-image').addClass('rotating');
+			});
+			// Show corner images with a delay
+			setTimeout(function() {
+				$('.corner-image').css('opacity', 1);
+			}, 500);
+		});
 
-    <!-- Event Section -->
-    <section id="event" class="section active">
-      <div class="row">
-        <div class="col-md-12 text-center isi-ayat"><br><br>
-          <h3  style="font-family: Bad Script;">InsyaAllah akan dilakasanakan pada :</h4><br><br>
-          <small>
-            <table width="100%">
-              <tr>
-                <td>
-                  <b>Akad Nikah</b>
-                  <hr>
-                  <p>
-                    <b>Hari dan Tanggal :</b>
-                  </p>
-                  <p>
-                    Selasa, 26 Februari 2021
-                  </p>
-                  <p>
-                    <b>Waktu:</b>
-                  </p>
-                  <p>
-                    10.00 WIB - Selesai
-                  </p>
-                  <p>
-                    <b>Lokasi:</b>
-                  </p>
-                  <p>
-                    Kp. Kaca-kaca dua, Rt.01, Rw.03 Desa. Pasirmulya, Kec. Banjaran, Kab.
-                    Bandung
-                  </p>
-                </td>
-                <td>
-                  <b>Resepsi</b>
-                  <hr>
-                  <p>
-                    <b>Hari dan Tanggal :</b>
-                  </p>
-                  <p>
-                    Selasa, 26 Februari 2021
-                  </p>
-                  <p>
-                    <b>Waktu:</b>
-                  </p>
-                  <p>
-                    10.00 WIB - Selesai
-                  </p>
-                  <p>
-                    <b>Lokasi:</b>
-                  </p>
-                  <p>
-                    Kp. Kaca-kaca dua, Rt.01, Rw.03 Desa. Pasirmulya, Kec. Banjaran, Kab.
-                    Bandung
-                  </p>
-                </td>
-              </tr>
-            </table>`
-            <!-- Button trigger modal -->
-            <div class="container d-flex justify-content-center align-items-center">
-              <div class="row">
-                <div class="col-6 icon-text">
-                    <a href="https://maps.app.goo.gl/6S9C79y9dkNjqWt46" target="_blank">
-                      <i class="fas fa-map-marked-alt icon"></i>
-                      <div>Maps</div>
-                    </a>
-                  </div>
-                  <div class="col-6 icon-text">
-                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;dates=20240622T003000Z/20240622T030000Z&amp;ctz=Asia/Jakarta&amp;text=Ratu+%26+Reivan&amp;details=Ratu+%26+Reivan+on+Saturday%2C+22+June+2024&amp;location=Villa+Hanjuang+Siang+%7C+Cimaung%2C+Bandung+%28Masuk+via+Makam+Eril%29" target="_blank">
-                    <i class="fas fa-calendar-alt icon"></i>
-                      <div>Calendar</div>
-                      </a>
-                  </div>
-              </div>
-          </div>
-          </small>
-          <br>
-          <p>
-            Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan
-            hadir untuk memberikan Do’a Restu kepada kedua mmpelai
-          </p>
-          
-        </div>
-      </div>
-    </section>
+		function countdown() {
+			const eventDate = new Date('December 9, 2024 09:00:00').getTime();
+			const now = new Date().getTime();
+			const distance = eventDate - now;
+			const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			document.getElementById('days').innerHTML = days;
+			document.getElementById('hours').innerHTML = hours;
+			document.getElementById('minutes').innerHTML = minutes;
+			document.getElementById('seconds').innerHTML = seconds;
+			if(distance < 0) {
+				clearInterval(x);
+				document.getElementById('countdown').innerHTML = "The event has started";
+			}
+		}
+		const x = setInterval(countdown, 1000);
+		// Disable zoom and right-click
+		document.addEventListener('keydown', function(event) {
+			if(event.ctrlKey || event.metaKey) {
+				switch (String.fromCharCode(event.which).toLowerCase()) {
+					case 's':
+					case 'p':
+						event.preventDefault();
+						break;
+				}
+			}
+		});
+		document.addEventListener('contextmenu', function(event) {
+			event.preventDefault();
+		});
+		$('#createdata').on('click', () => {
+			if(invitedName) {
+				createData()
+			}
+		})
+		const apiUrl = 'https://observant-childish-edam.glitch.me';
+		readData();
 
-    <!-- RSVP Section -->
-    <section id="rsvp" class="section active">
-     
-      <div class="container text-center">
-        <br><br>
-        <h2 style="font-family: Bad Script;">Ucapan dan Doa</h2>
-        <hr>
-        <div class="row text-center"  style="height: 45vh; overflow-y: auto;">
-          <div class="fb-comments" data-href="https://adittelahtiba.github.io/" data-width="" data-numposts="5"></div>
-          <div id="fb-root"></div>
-      </div>
-      <hr>
-      </div>
-      <div class="row">
-        <div class="col-md-12 text-center">
-          <h3 class="judul"><i class="fas fa-praying-hands" aria-hidden="true"></i>
-            <br>Terimakasih</h3>
-          <div></div>
-        </div>
-      </div>
-      <div class="row">
-        <br>
-        <div class="col-md-12 text-center">
-        Design by <img src="assets/img/logo.png" width="70px"></div>
-      </div>
-  </div>
-    </section>
+		function createData() {
+			const data = {
+				"name": invitedName,
+				"created_at": getCurrentTime(),
+				"message": document.getElementById('dataInput').value
+			};
+			fetch(apiUrl, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					data: data
+				})
+			}).then(response => {
+				if(response.status === 201) {
+					$('#dataInput').val('')
+					showAlert(`Dear <strong>${invitedName}</strong>, Terimakasih atas ucapanya`, 'success')
+					readData(); // Untuk memuat ulang daftar komentar setelah berhasil menambahkan data baru
+				} else {
+					showAlert(`Terjadi kesalahan`, 'danger')
+				}
+				return response.json()
+			}).then(data => {
+				console.log(data);
+			});
+		}
 
-    <!-- Corner Images -->
-    <img src="assets/img/just-left-top.png" class="corner-image top-left" alt="Leaf Top Left">
-    <!-- <img src="assets/img/flower2.png" class="corner-image top-right" alt="Flower Top Right"> -->
-    <!-- <img src="assets/img/leaf2.png" class="corner-image bottom-left" alt="Leaf Bottom Left"> -->
-    <!-- <img src="assets/img/flower2.png" class="corner-image bottom-right" alt="Flower Bottom Right"> -->
+		function readData() {
+			fetch(apiUrl).then(response => response.json()).then(data => {
+				const dataList = document.getElementById('dataList');
+				dataList.innerHTML = '';
+				data.reverse()
+				data.forEach(item => {
+					const li = document.createElement('li');
+					li.classList.add('comment-item');
+					li.innerHTML = `
+                            <div class="comment-name">${item.data.name}</div>
+                            <div class="comment-message">${item.data.message}</div>
+                            <div class="comment-time">${timeAgo(item.data.created_at)}</div>
+                        `;
+					dataList.appendChild(li);
+				});
+			});
+		}
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery -->
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-  	<!-- facebook -->
-	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0"
-  nonce="FijU3Z6V"></script>
+		function getCurrentTime() {
+			let now = new Date();
+			now.setHours(now.getHours() + 7);
+			return now.toISOString().slice(0, 19).replace('T', ' ');
+		}
+		// Fungsi untuk menampilkan waktu yang lalu
+		function timeAgo(time) {
+			let now = new Date();
+			let then = new Date(time);
+			let seconds = Math.floor((now - then) / 1000);
+			let interval = Math.floor(seconds / 31536000);
+			if(interval >= 1) {
+				return interval + " tahun yang lalu";
+			}
+			interval = Math.floor(seconds / 2592000);
+			if(interval >= 1) {
+				return interval + " bulan yang lalu";
+			}
+			interval = Math.floor(seconds / 86400);
+			if(interval >= 1) {
+				return interval + " hari yang lalu";
+			}
+			interval = Math.floor(seconds / 3600);
+			if(interval >= 1) {
+				return interval + " jam yang lalu";
+			}
+			interval = Math.floor(seconds / 60);
+			if(interval >= 1) {
+				return interval + " menit yang lalu";
+			}
+			return Math.floor(seconds) + " detik yang lalu";
+		}
+		// Initial read of data when page loads
+		document.addEventListener('DOMContentLoaded', readData);
 
-    <script>
-      $(document).ready(function() {
-        // Show home section on page load
+		function showAlert(message, cls) {
+			const alertContainer = document.getElementById('alertContainer');
+			const alertDiv = document.createElement('div');
+			alertDiv.className = `alert alert-${cls} alert-dismissible fade show`;
+			alertDiv.role = 'alert';
+			alertDiv.innerHTML = message;
+			alertContainer.appendChild(alertDiv);
+			setTimeout(() => {
+				alertDiv.classList.remove('show');
+				alertDiv.classList.add('hide');
+				alertDiv.addEventListener('transitionend', () => alertDiv.remove());
+			}, 4000);
+		}
+	});
+	</script>
+	<script src="https://kit.fontawesome.com/6a2f2ec9f0.js" crossorigin="anonymous"></script>
+	<script src="assets/particles/particles.js" type="text/javascript"></script>
+	<script src="assets/particles/particles-stars.js" type="text/javascript"></script>
+</body>
 
-        // Function to show section
-        window.showSection = function(event, sectionId) {
-          if (sectionId == 'maps'){
-            window.open('https://maps.app.goo.gl/6S9C79y9dkNjqWt46', '_blank');
-          }else{
-            
-            event.preventDefault();
-            if (sectionId == 'event'){
-              document.querySelector('.nav-link[href="#event"] .notification-dot').style.display = 'none';
-            }
-            $('.section').removeClass('active').hide();
-
-            const activeSection = $('#' + sectionId);
-            activeSection.show();
-
-            setTimeout(() => {
-              activeSection.addClass('active');
-            }, 10);
-
-            // Update active link
-            $('.nav-link').removeClass('active');
-            $('a[href="#' + sectionId + '"]').addClass('active');
-          }
-        }
-
-        // Function to toggle music
-        window.toggleMusic = function() {
-          const music = $('#background-music')[0];
-          const musicIcon = $('#music-icon');
-          const homeImage = $('#home-image');
-
-          if (music.paused) {
-            music.play();
-            musicIcon.addClass('spinning');
-            homeImage.addClass('rotating');
-          } else {
-            music.pause();
-            musicIcon.removeClass('spinning');
-            homeImage.removeClass('rotating');
-          }
-        }
-
-        // Function to get query param and replace characters
-        function getQueryParam(param) {
-          const urlParams = new URLSearchParams(window.location.search);
-          let paramValue = urlParams.get(param);
-
-          if (paramValue) {
-            paramValue = paramValue.replace(/%20|_|-|\+/g, ' ').toLowerCase().replace(/(?:^|\s+)\w/g, function(match) {
-                                return match.toUpperCase();
-                            });
-          }
-
-          return paramValue;
-        }
-
-        // Display invited name
-        const invitedName = getQueryParam('to');
-        if (invitedName) {
-          $('#invited-name').html(`<b>${invitedName}</b><br><br>`);
-        }
-        $('#placeholder-fh0l7').text('Tulisakan ucapan');
-
-        // Attach click event to nav links
-        $('.nav-link').on('click', function(event) {
-          const sectionId = $(this).attr('href').substring(1);
-          showSection(event, sectionId);
-        });
-
-        // Initial screen click event
-        $('#initial-screen').on('click', function() {
-          $(this).fadeOut(500, function() {
-            $(this).remove();
-            $('#background-music')[0].play();
-            $('#music-icon').addClass('spinning');
-            $('#home-image').addClass('rotating');
-          });
-          // Show corner images with a delay
-          setTimeout(function() {
-            $('.corner-image').css('opacity', 1);
-          }, 500);
-        });
-
-        // Countdown function
-        function countdown() {
-          const eventDate = new Date('December 9, 2024 09:00:00').getTime();
-          const now = new Date().getTime();
-          const distance = eventDate - now;
-
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          $('#countdown').html(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
-
-          if (distance < 0) {
-            clearInterval(x);
-            $('#countdown').html("The event has started");
-          }
-        }
-
-        setInterval(countdown, 1000);
-      });
-
-      // Disable zoom and right-click
-      document.addEventListener('keydown', function(event) {
-        if (event.ctrlKey || event.metaKey) {
-          switch (String.fromCharCode(event.which).toLowerCase()) {
-            case 's':
-            case 'p':
-              event.preventDefault();
-              break;
-          }
-        }
-      });
-
-      document.addEventListener('contextmenu', function(event) {
-        event.preventDefault();
-      });
-    </script>
-    <script src="https://kit.fontawesome.com/6a2f2ec9f0.js" crossorigin="anonymous"></script>
-    <script src="assets/particles/particles.js" type="text/javascript"></script>
-    <script src="assets/particles/particles-stars.js" type="text/javascript"></script>
-  </body>
 </html>

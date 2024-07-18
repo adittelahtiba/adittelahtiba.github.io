@@ -20,7 +20,7 @@ function getCurrentYear() {
 getCurrentYear();
 
 
-const apiUrl = 'https://radical-hickory-swordtail.glitch.me';
+const apiUrl = 'https://acidic-calm-elf.glitch.me';
 
 function createData() {
     const data = document.getElementById('dataInput').value;
@@ -28,7 +28,13 @@ function createData() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: data })
-    }).then(response => response.json())
+    }).then(response => {
+        if (response.status === 201) {
+            alert('Berhasil');
+            readData(); // Untuk memuat ulang daftar komentar setelah berhasil menambahkan data baru
+        }
+        return response.json();
+    })
     .then(data => console.log(data));
 }
 

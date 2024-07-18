@@ -655,6 +655,26 @@
   <!-- footer section -->
   <footer class="container-fluid footer_section ">
     <div class="container">
+      <h1>CRUD App</h1>
+    <div>
+        <input type="text" id="dataInput" placeholder="Enter data">
+        <button onclick="createData()">Create</button>
+    </div>
+    <div>
+        <button onclick="readData()">Read</button>
+        <ul id="dataList"></ul>
+    </div>
+    <div>
+        <input type="text" id="updateInput" placeholder="Enter new data">
+        <input type="number" id="updateId" placeholder="Enter ID">
+        <button onclick="updateData()">Update</button>
+    </div>
+    <div>
+        <input type="number" id="deleteId" placeholder="Enter ID">
+        <button onclick="deleteData()">Delete</button>
+    </div>
+    </div>
+    <div class="container">
       <p>
         &copy; <span id="displayDate"></span> All Rights Reserved By
         <a href="https://html.design/">Free Html Templates</a>

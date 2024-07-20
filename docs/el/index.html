@@ -11,9 +11,9 @@
 	<!-- Font Awesome -->
 	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
 	<!-- rimixion -->
-	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+	<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet"> -->
 	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet"> -->
 	<title>Arif & Nina</title>
 	<link href="assets/css/fontgoogle.css" rel="stylesheet">
 	<style>
@@ -32,7 +32,8 @@
 
 	body {
 		background-image: url('assets/img/bg.jpg');
-    background-size: 100% auto; 
+		background-size: 100% auto;
+		background-attachment: fixed;
 		background-repeat: repeat-y;
 		background-position: center top;
 		font-family: 'Handlee', cursive;
@@ -195,6 +196,10 @@
 		padding-top: 80px;
 		text-align: center;
 		color: white;
+		background-image: url('assets/img/just-left-top.png');
+		background-position: left top;
+		background-repeat: no-repeat;
+		background-size: 250px;
 	}
 
 	#home .save-the-date {
@@ -244,7 +249,7 @@
 	}
 
 	.corner-image {
-		position: fixed;
+		position: relative;
 		width: 60%;
 		/* height: 100px; */
 		z-index: 1000;
@@ -419,6 +424,14 @@
 		/* Tetap menghilangkan underline saat hover */
 	}
 
+	#rsvp {
+		background-image: url('assets/img/footer-removebg-preview.png');
+		background-repeat: no-repeat;
+		background-position: center bottom;
+		background-size: 100% auto;
+		margin-bottom: -100px;
+	}
+
 	#rsvp .comments-section {
 		width: 300px;
 		margin: auto;
@@ -428,49 +441,47 @@
 	}
 
 	.comment-list {
-    list-style-type: none;
-    padding: 0;
-}
+		list-style-type: none;
+		padding: 0;
+	}
 
-.comment-item {
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
-}
+	.comment-item {
+		display: flex;
+		align-items: center;
+		margin-top: 15px;
+	}
 
-.comment-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+	.comment-img {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
 
-.comment-card {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    width: 310px;
-    background: lightblue;
-    border-radius: 10px;
-    flex-grow: 1;
-}
+	.comment-card {
+		padding: 10px;
+		border-bottom: 1px solid #ccc;
+		width: 310px;
+		background: lightblue;
+		border-radius: 10px;
+		flex-grow: 1;
+	}
 
-.comment-name {
-    font-weight: bold;
-    text-align: left;
-}
+	.comment-name {
+		font-weight: bold;
+		text-align: left;
+	}
 
-.comment-message {
-    font-size: 1em;
-    text-align: justify;
-}
+	.comment-message {
+		font-size: 1em;
+		text-align: justify;
+	}
 
-.comment-time {
-    font-size: 0.8em;
-    color: #181515;
-    text-align: right;
-}
-
-
+	.comment-time {
+		font-size: 0.8em;
+		color: #181515;
+		text-align: right;
+	}
 
 	.alert-container {
 		position: fixed;
@@ -479,12 +490,11 @@
 		margin: 15px;
 	}
 
-  @media screen and (max-width: 767px) {
+	@media screen and (max-width: 767px) {
 		.alert-container {
 			width: 90%;
 		}
 	}
-
 
 	#countdown {
 		display: flex;
@@ -512,6 +522,23 @@
 
 	#countdown .label {
 		font-size: xx-small;
+	}
+
+	#couple {
+		background-color: white;
+		background-image: url('assets/img//bottom.png');
+		background-size: 100% auto;
+		background-repeat: no-repeat;
+		background-position: center bottom;
+		padding-bottom: 100px;
+	}
+	#event {
+		padding-top: 100px;
+		background-color: white;
+		background-image: url('assets/img//top.png');
+		background-size: 100% auto;
+		background-repeat: no-repeat;
+		background-position: center top;
 	}
 	</style>
 </head>
@@ -717,7 +744,6 @@
 			</div>
 		</div>
 		<hr>
-		</div>
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<h3 class="judul"><i class="fas fa-praying-hands" aria-hidden="true"></i>
@@ -725,17 +751,18 @@
 				<div></div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row ">
 			<br>
 			<div class="col-md-12 text-center"> Design by <img src="assets/img/logo.png" width="70px"></div>
-		</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
 		</div>
 	</section>
-	<!-- Corner Images -->
-	<img src="assets/img/just-left-top.png" class="corner-image top-left" alt="Leaf Top Left">
-	<!-- <img src="assets/img/flower2.png" class="corner-image top-right" alt="Flower Top Right"> -->
-	<!-- <img src="assets/img/leaf2.png" class="corner-image bottom-left" alt="Leaf Bottom Left"> -->
-	<!-- <img src="assets/img/flower2.png" class="corner-image bottom-right" alt="Flower Bottom Right"> -->
 	<!-- Optional JavaScript -->
 	<!-- jQuery -->
 	<script src="assets/vendor/jquery/jquery.min.js"></script>
@@ -765,9 +792,9 @@
 				// Update active link
 				$('.nav-link').removeClass('active');
 				$('a[href="#' + sectionId + '"]').addClass('active');
-        $('html, body').animate({
-                    scrollTop: $('#'+sectionId).offset().top
-                }, 400); 
+				$('html, body').animate({
+					scrollTop: $('#' + sectionId).offset().top
+				}, 400);
 			}
 		}
 		// Function to toggle music
@@ -857,14 +884,14 @@
 		});
 		$('#createdata').on('click', () => {
 			if(invitedName && document.getElementById('dataInput').value != '') {
-        $('#createdata').addClass('disabled')
-        $('#createdata').html('Loading')
+				$('#createdata').addClass('disabled')
+				$('#createdata').html('Loading')
 				createData()
 			} else {
-        if (invitedName){
-          showAlert(`Dear <strong>${invitedName}</strong>, Pesan anda kosong :)`, 'warning')
-        }
-      }
+				if(invitedName) {
+					showAlert(`Dear <strong>${invitedName}</strong>, Pesan anda kosong :)`, 'warning')
+				}
+			}
 		})
 		const apiUrl = 'https://observant-childish-edam.glitch.me';
 		readData();
@@ -891,8 +918,8 @@
 				} else {
 					showAlert(`Terjadi kesalahan`, 'danger')
 				}
-        $('#createdata').removeClass('disabled')
-        $('#createdata').html('Kirim')
+				$('#createdata').removeClass('disabled')
+				$('#createdata').html('Kirim')
 				return response.json()
 			}).then(data => {
 				console.log(data);
@@ -900,14 +927,14 @@
 		}
 
 		function readData() {
-    fetch(apiUrl).then(response => response.json()).then(data => {
-        const dataList = document.getElementById('dataList');
-        dataList.innerHTML = '';
-        data.reverse();
-        data.forEach(item => {
-            const li = document.createElement('li');
-            li.classList.add('comment-item');
-            li.innerHTML = `
+			fetch(apiUrl).then(response => response.json()).then(data => {
+				const dataList = document.getElementById('dataList');
+				dataList.innerHTML = '';
+				data.reverse();
+				data.forEach(item => {
+					const li = document.createElement('li');
+					li.classList.add('comment-item');
+					li.innerHTML = `
                 <img class="comment-img" src="assets/img/user_6994705.png">
                 <div class="comment-card">
                     <div class="comment-name">${item.data.name}</div>
@@ -915,12 +942,11 @@
                     <div class="comment-time">${timeAgo(item.data.created_at)}</div>
                 </div>
             `;
-            dataList.appendChild(li);
-        });
-    });
-}
-
-setInterval(readData, 60000);
+					dataList.appendChild(li);
+				});
+			});
+		}
+		setInterval(readData, 60000);
 
 		function getCurrentTime() {
 			let now = new Date();

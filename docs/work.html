@@ -73,8 +73,8 @@
                 { hour: 12, minute: 0, time: "12:00 - 13:00", activity: "Makan Siang", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
                 { hour: 13, minute: 0, time: "13:00 - 15:00", activity: "Hapalan dan Kajian", tooltip: "Optional ketika tidak ada kerjaan, nonton kajian atau hapalan alquran" },
                 { hour: 15, minute: 0, time: "15:00 - 15:15", activity: "Sholat Ashar", tooltip: "Sholat Ashar" },
-                { hour: 15, minute: 26, time: "15:00 - 17:45", activity: "Olahraga / Aktivitas Fisik", tooltip: "Optional tidak ada kegiatan kerja, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
-                { hour: 15, minute: 27, time: "16:00 - 16:20", activity: "Cemilan Sore", tooltip: "Buah potong (mangga, semangka, atau melon), Teh hijau tanpa gula, Keripik singkong atau keripik pisang, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 15, minute: 0, time: "15:00 - 17:45", activity: "Olahraga / Aktivitas Fisik", tooltip: "Optional tidak ada kegiatan kerja, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 16, minute: 0, time: "16:00 - 16:20", activity: "Cemilan Sore", tooltip: "Buah potong (mangga, semangka, atau melon), Teh hijau tanpa gula, Keripik singkong atau keripik pisang, 1 gelas air mineral, teh hijau, atau kopi" },
                 { hour: 16, minute: 20, time: "16:20 - 17:45", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
                 { hour: 17, minute: 45, time: "17:45 - 18:00", activity: "Sholat Magrib", tooltip: "Sholat Magrib" },
                 { hour: 18, minute: 0, time: "18:00 - 19:00", activity: "Istirahat dan Hapalan Quran", tooltip: "Istirahat dan hapalan quran" },
@@ -312,7 +312,6 @@ requestNotificationPermission();
 
 // Fungsi untuk menampilkan notifikasi
 function showNotification(title, body) {
-    console.log(Notification.permission);
     if (Notification.permission === "granted") {
         new Notification(title, { body: body, icon: "icon.png" });
     }
@@ -329,7 +328,11 @@ function checkTime() {
         schedules[day].forEach(item => {
             if (hours === item.hour) {
                 showNotification(item.activity, item.time + " - " + item.tooltip);
-                document.getElementById('notifna').innerHTML = item.activity;
+
+                let para = document.createElement("p"); // Create the paragraph element
+                let node = document.createTextNode(item.activity+" - " + Notification.permission); // Create a text node
+                para.appendChild(node); // Append the text node to the paragraph
+                document.getElementById("notifna").appendChild(para);
             }
         });
     }

@@ -42,6 +42,7 @@
 <body>
     <div class="container">
         <h1 class="text-center mt-4">Jadwal Harian</h1>
+        <div id="notifna"></div>
         <select id="daySelect" class="form-control mt-4">
             <option value="Senin">Senin</option>
             <option value="Selasa">Selasa</option>
@@ -234,11 +235,11 @@
                 row.className = 'row mt-2';
 
                 const timeCol = document.createElement('div');
-                timeCol.className = 'col-3';
+                timeCol.className = 'col-4';
                 timeCol.textContent = item.time;
 
                 const activityCol = document.createElement('div');
-                activityCol.className = 'col-9';
+                activityCol.className = 'col-8';
                 activityCol.innerHTML = `
                     <div class="tooltip-text">
                         ${item.activity}
@@ -261,8 +262,32 @@
         const days = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
         const today = new Date().getDay();
         const todayIndex = (today === 0) ? 6 : today - 1; // Adjust for Monday start
-        document.getElementById('daySelect').value = days[todayIndex];
-        showSchedule(days[todayIndex]);
+        const selectedDay = days[todayIndex];
+            const scheduleContainer = document.getElementById('scheduleContainer');
+            scheduleContainer.innerHTML = '';
+
+            const selectedSchedule = schedules[selectedDay] || [];
+            selectedSchedule.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'row mt-2';
+
+                const timeCol = document.createElement('div');
+                timeCol.className = 'col-4';
+                timeCol.textContent = item.time;
+
+                const activityCol = document.createElement('div');
+                activityCol.className = 'col-8';
+                activityCol.innerHTML = `
+                    <div class="tooltip-text">
+                        ${item.activity}
+                        <span class="tooltip-content">${item.tooltip}</span>
+                    </div>
+                `;
+
+                row.appendChild(timeCol);
+                row.appendChild(activityCol);
+                scheduleContainer.appendChild(row);
+            });
     });
 
     // Memeriksa apakah Notification API didukung oleh browser
@@ -304,6 +329,7 @@ function checkTime() {
         schedules[day].forEach(item => {
             if (hours === item.hour) {
                 showNotification(item.activity, item.time + " - " + item.tooltip);
+                document.getElementById('notifna').innerHTML = item.activity;
             }
         });
     }

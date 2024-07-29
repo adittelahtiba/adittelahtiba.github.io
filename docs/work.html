@@ -1,350 +1,320 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Harian</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .tooltip-text {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
 
-  <title>Spering</title>
+        .tooltip-text .tooltip-content {
+            visibility: hidden;
+            width: 200px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            border-radius: 6px;
 
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the text */
+            left: 50%;
+            margin-left: -100px;
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
+            /* Fade in tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip-text:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
 </head>
-
-<body class="sub_page">
-  <div class="hero_area">
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container">
-          <a class="navbar-brand" href="index.html">
-            <img src="images/logo.png" alt="" />
-            <span>
-              Spering
-            </span>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav  ">
-              <li class="nav-item ">
-                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html"> About</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="work.html">Work </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="category.html"> Category </a>
-              </li>
-            </ul>
-            <div class="user_option">
-              <a href="">
-                <span>
-                  Login
-                </span>
-              </a>
-              <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-              </form>
-            </div>
-          </div>
-          <div>
-            <div class="custom_menu-btn ">
-              <button>
-                <span class=" s-1">
-
-                </span>
-                <span class="s-2">
-
-                </span>
-                <span class="s-3">
-
-                </span>
-              </button>
-            </div>
-          </div>
-
-        </nav>
-      </div>
-    </header>
-    <!-- end header section -->
-  </div>
-
-
-  <!-- freelance section -->
-
-  <section class="freelance_section layout_padding">
-    <div id="accordion">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-5 offset-md-1">
-            <div class="detail-box">
-              <div class="heading_container">
-                <h2>
-                  Work Freelaner Has Done
-                </h2>
-              </div>
-              <div class="tab_container">
-                <div class="t-link-box" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  <div class="img-box">
-                    <img src="images/f1.png" alt="">
-                  </div>
-                  <div class="detail-box">
-                    <h5>
-                      $250 Million
-                    </h5>
-                    <h3>
-                      Paid to Freelancers
-                    </h3>
-                  </div>
-                </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  <div class="img-box">
-                    <img src="images/f2.png" alt="">
-                  </div>
-                  <div class="detail-box">
-                    <h5>
-                      2 Million
-                    </h5>
-                    <h3>
-                      Paid Invoices
-                    </h3>
-                  </div>
-                </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  <div class="img-box">
-                    <img src="images/f3.png" alt="">
-                  </div>
-                  <div class="detail-box">
-                    <h5>
-                      700,000
-                    </h5>
-                    <h3>
-                      Worldwide Freelancer
-                    </h3>
-                  </div>
-                </div>
-                <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  <div class="img-box">
-                    <img src="images/f4.png" alt="">
-                  </div>
-                  <div class="detail-box">
-                    <h5>
-                      98%
-                    </h5>
-                    <h3>
-                      Customer <br>
-                      Satisfaction Rate
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="collapse show" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion">
-              <div class="img-box">
-                <img src="images/freelance-img.jpg" alt="">
-              </div>
-            </div>
-            <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">
-              <div class="img-box">
-                <img src="images/freelance-img.jpg" alt="">
-              </div>
-            </div>
-            <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion">
-              <div class="img-box">
-                <img src="images/freelance-img.jpg" alt="">
-              </div>
-            </div>
-            <div class="collapse" id="collapseFour" aria-labelledby="headingfour" data-parent="#accordion">
-              <div class="img-box">
-                <img src="images/freelance-img.jpg" alt="">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end freelance section -->
-
-  <!-- info section -->
-
-  <section class="info_section ">
-    <div class="info_container layout_padding-top">
-      <div class="container">
-        <div class="info_top">
-          <div class="info_logo">
-            <img src="images/logo.png" alt="" />
-            <span>
-              Spering
-            </span>
-          </div>
-          <div class="social_box">
-            <a href="#">
-              <img src="images/fb.png" alt="">
-            </a>
-            <a href="#">
-              <img src="images/twitter.png" alt="">
-            </a>
-            <a href="#">
-              <img src="images/linkedin.png" alt="">
-            </a>
-            <a href="#">
-              <img src="images/instagram.png" alt="">
-            </a>
-            <a href="#">
-              <img src="images/youtube.png" alt="">
-            </a>
-          </div>
-        </div>
-
-        <div class="info_main">
-          <div class="row">
-            <div class="col-md-3 col-lg-2">
-              <div class="info_link-box">
-                <h5>
-                  Useful Link
-                </h5>
-                <ul>
-                  <li class=" active">
-                    <a class="" href="index.html">Home <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="">
-                    <a class="" href="about.html">About </a>
-                  </li>
-                  <li class="">
-                    <a class="" href="work.html">Work </a>
-                  </li>
-                  <li class="">
-                    <a class="" href="category.html">Category </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-3 ">
-              <h5>
-                Offices
-              </h5>
-              <p>
-                Readable content of a page when looking at its layoutreadable content of a page when looking at its layout
-              </p>
-            </div>
-
-            <div class="col-md-3 col-lg-2 offset-lg-1">
-              <h5>
-                Information
-              </h5>
-              <p>
-                Readable content of a page when looking at its layoutreadable content of a page when looking at its layout
-              </p>
-            </div>
-
-            <div class="col-md-3  offset-lg-1">
-              <div class="info_form ">
-                <h5>
-                  Newsletter
-                </h5>
-                <form action="">
-                  <input type="email" placeholder="Email">
-                  <button>
-                    Subscribe
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-9 col-md-10 mx-auto">
-            <div class="info_contact layout_padding2">
-              <div class="row">
-                <div class="col-md-3">
-                  <a href="#" class="link-box">
-                    <div class="img-box">
-                      <img src="images/location.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                      <h6>
-                        Location
-                      </h6>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-md-4">
-                  <a href="#" class="link-box">
-                    <div class="img-box">
-                      <img src="images/mail.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                      <h6>
-                        demo@gmail.com
-                      </h6>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-md-5">
-                  <a href="#" class="link-box">
-                    <div class="img-box">
-                      <img src="images/call.png" alt="">
-                    </div>
-                    <div class="detail-box">
-                      <h6>
-                        Call +01 1234567890
-                      </h6>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- end info section -->
-
-  <!-- footer section -->
-  <footer class="container-fluid footer_section ">
+<body>
     <div class="container">
-      <p>
-        &copy; <span id="displayDate"></span> All Rights Reserved By
-        <a href="https://html.design/">Free Html Templates</a>
-      </p>
+        <h1 class="text-center mt-4">Jadwal Harian</h1>
+        <select id="daySelect" class="form-control mt-4">
+            <option value="Senin">Senin</option>
+            <option value="Selasa">Selasa</option>
+            <option value="Rabu">Rabu</option>
+            <option value="Kamis">Kamis</option>
+            <option value="Jumat">Jumat</option>
+            <option value="Sabtu">Sabtu</option>
+            <option value="Minggu">Minggu</option>
+        </select>
+        <div id="scheduleContainer"></div>
     </div>
-  </footer>
-  <!-- end  footer section -->
 
+    <script>
+        const schedules = {
+            Senin: [
+                { hour: 3, minute: 30, time: "03:30 - 04:30", activity: "Sholat Tahajud", tooltip: "Sholat Tahajud" },
+                { hour: 4, minute: 30, time: "04:30 - 04:45", activity: "Sholat Subuh", tooltip: "Sholat Subuh" },
+                { hour: 4, minute: 45, time: "04:45 - 05:00", activity: "Baca Al-Qur'an", tooltip: "Baca Al-Qur'an" },
+                { hour: 5, minute: 0, time: "05:00 - 05:30", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 5, minute: 30, time: "05:30 - 06:45", activity: "Bersepeda", tooltip: "Bersepeda (Optional)" },
+                { hour: 6, minute: 45, time: "06:45 - 07:00", activity: "Istirahat", tooltip: "Istirahat" },
+                { hour: 7, minute: 0, time: "07:00 - 07:30", activity: "Sarapan", tooltip: "Nasi putih dengan telur dadar dan sayur bayam, Bubur ayam tanpa krupuk, Nasi uduk dengan tahu dan tempe goreng, 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 7, minute: 30, time: "07:30 - 08:00", activity: "Mandi Pagi", tooltip: "Mandi Pagi" },
+                { hour: 8, minute: 0, time: "08:00 - 17:00", activity: "Kerja (WFH)", tooltip: "Kerja dari rumah" },
+                { hour: 8, minute: 0, time: "08:00 - 12:00", activity: "Sholat Dhuha + olahraga", tooltip: "Optional tidak ada kegiatan kerja, Sholat Dhuha, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 10, minute: 0, time: "10:00 - 10:20", activity: "Cemilan Pagi", tooltip: "Buah segar (pisang, pepaya, atau jeruk), Yogurt dengan madu, Segenggam kacang tanah rebus atau kacang hijau rebus, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 11, minute: 30, time: "11:30 - 12:15", activity: "Sholat Dzuhur", tooltip: "Sholat Dzuhur" },
+                { hour: 12, minute: 0, time: "12:00 - 13:00", activity: "Makan Siang", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 13, minute: 0, time: "13:00 - 15:00", activity: "Hapalan dan Kajian", tooltip: "Optional ketika tidak ada kerjaan, nonton kajian atau hapalan alquran" },
+                { hour: 15, minute: 0, time: "15:00 - 15:15", activity: "Sholat Ashar", tooltip: "Sholat Ashar" },
+                { hour: 15, minute: 26, time: "15:00 - 17:45", activity: "Olahraga / Aktivitas Fisik", tooltip: "Optional tidak ada kegiatan kerja, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 15, minute: 27, time: "16:00 - 16:20", activity: "Cemilan Sore", tooltip: "Buah potong (mangga, semangka, atau melon), Teh hijau tanpa gula, Keripik singkong atau keripik pisang, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 16, minute: 20, time: "16:20 - 17:45", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 17, minute: 45, time: "17:45 - 18:00", activity: "Sholat Magrib", tooltip: "Sholat Magrib" },
+                { hour: 18, minute: 0, time: "18:00 - 19:00", activity: "Istirahat dan Hapalan Quran", tooltip: "Istirahat dan hapalan quran" },
+                { hour: 19, minute: 0, time: "19:00 - 19:15", activity: "Sholat Isya", tooltip: "Sholat Isya" },
+                { hour: 19, minute: 15, time: "19:15 - 19:45", activity: "Makan Malam", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 19, minute: 45, time: "19:45 - 20:40", activity: "Olahraga / Aktivitas Fisik / Hiburan", tooltip: "Olahraga sambil hiburan santai, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 20, minute: 40, time: "20:40 - 21:00", activity: "Cemilan Malam (opsional)", tooltip: "Susu hangat atau teh herbal, Segenggam kacang atau biji-bijian, Buah-buahan seperti pisang atau apel, 1 gelas air mineral" },
+                { hour: 21, minute: 0, time: "21:00 - 21:30", activity: "Mandi dan Persiapan Tidur", tooltip: "Mandi dan persiapan tidur" },
+            ],
+            Kamis: [
+                { hour: 3, minute: 30, time: "03:30 - 04:30", activity: "Sholat Tahajud", tooltip: "Sholat Tahajud" },
+                { hour: 4, minute: 30, time: "04:30 - 04:45", activity: "Sholat Subuh", tooltip: "Sholat Subuh" },
+                { hour: 4, minute: 45, time: "04:45 - 05:00", activity: "Baca Al-Qur'an", tooltip: "Baca Al-Qur'an" },
+                { hour: 5, minute: 0, time: "05:00 - 05:30", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 5, minute: 30, time: "05:30 - 06:45", activity: "Bersepeda", tooltip: "Bersepeda (Optional)" },
+                { hour: 6, minute: 45, time: "06:45 - 07:00", activity: "Istirahat", tooltip: "Istirahat" },
+                { hour: 7, minute: 0, time: "07:00 - 07:30", activity: "Sarapan", tooltip: "Nasi putih dengan telur dadar dan sayur bayam, Bubur ayam tanpa krupuk, Nasi uduk dengan tahu dan tempe goreng, 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 7, minute: 30, time: "07:30 - 08:00", activity: "Mandi Pagi", tooltip: "Mandi Pagi" },
+                { hour: 8, minute: 0, time: "08:00 - 17:00", activity: "Kerja (WFH)", tooltip: "Kerja dari rumah" },
+                { hour: 8, minute: 0, time: "08:00 - 12:00", activity: "Sholat Dhuha + olahraga", tooltip: "Optional tidak ada kegiatan kerja, Sholat Dhuha, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 10, minute: 0, time: "10:00 - 10:20", activity: "Cemilan Pagi", tooltip: "Buah segar (pisang, pepaya, atau jeruk), Yogurt dengan madu, Segenggam kacang tanah rebus atau kacang hijau rebus, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 11, minute: 30, time: "11:30 - 12:15", activity: "Sholat Dzuhur", tooltip: "Sholat Dzuhur" },
+                { hour: 12, minute: 0, time: "12:00 - 13:00", activity: "Makan Siang", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 13, minute: 0, time: "13:00 - 15:00", activity: "Hapalan dan Kajian", tooltip: "Optional ketika tidak ada kerjaan, nonton kajian atau hapalan alquran" },
+                { hour: 15, minute: 0, time: "15:00 - 15:15", activity: "Sholat Ashar", tooltip: "Sholat Ashar" },
+                { hour: 15, minute: 0, time: "15:00 - 17:45", activity: "Olahraga / Aktivitas Fisik", tooltip: "Optional tidak ada kegiatan kerja, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 16, minute: 0, time: "16:00 - 16:20", activity: "Cemilan Sore", tooltip: "Buah potong (mangga, semangka, atau melon), Teh hijau tanpa gula, Keripik singkong atau keripik pisang, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 16, minute: 20, time: "16:20 - 17:45", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 17, minute: 45, time: "17:45 - 18:00", activity: "Sholat Magrib", tooltip: "Sholat Magrib" },
+                { hour: 18, minute: 0, time: "18:00 - 19:00", activity: "Istirahat dan Hapalan Quran", tooltip: "Istirahat dan hapalan quran" },
+                { hour: 19, minute: 0, time: "19:00 - 19:15", activity: "Sholat Isya", tooltip: "Sholat Isya" },
+                { hour: 19, minute: 15, time: "19:15 - 19:45", activity: "Makan Malam", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 19, minute: 45, time: "19:45 - 20:40", activity: "Olahraga / Aktivitas Fisik / Hiburan", tooltip: "Olahraga sambil hiburan santai, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 20, minute: 40, time: "20:40 - 21:00", activity: "Cemilan Malam (opsional)", tooltip: "Susu hangat atau teh herbal, Segenggam kacang atau biji-bijian, Buah-buahan seperti pisang atau apel, 1 gelas air mineral" },
+                { hour: 21, minute: 0, time: "21:00 - 21:30", activity: "Mandi dan Persiapan Tidur", tooltip: "Mandi dan persiapan tidur" },
+            ],
+            Jumat: [
+                { hour: 3, minute: 30, time: "03:30 - 04:30", activity: "Sholat Tahajud", tooltip: "Sholat Tahajud" },
+                { hour: 4, minute: 30, time: "04:30 - 04:45", activity: "Sholat Subuh", tooltip: "Sholat Subuh" },
+                { hour: 4, minute: 45, time: "04:45 - 05:00", activity: "Baca Al-Qur'an", tooltip: "Baca Al-Qur'an" },
+                { hour: 5, minute: 0, time: "05:00 - 05:30", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 5, minute: 30, time: "05:30 - 06:45", activity: "Bersepeda", tooltip: "Bersepeda (Optional)" },
+                { hour: 6, minute: 45, time: "06:45 - 07:00", activity: "Istirahat", tooltip: "Istirahat" },
+                { hour: 7, minute: 0, time: "07:00 - 07:30", activity: "Sarapan", tooltip: "Nasi putih dengan telur dadar dan sayur bayam, Bubur ayam tanpa krupuk, Nasi uduk dengan tahu dan tempe goreng, 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 7, minute: 30, time: "07:30 - 08:00", activity: "Mandi Pagi", tooltip: "Mandi Pagi" },
+                { hour: 8, minute: 0, time: "08:00 - 17:00", activity: "Kerja (WFH)", tooltip: "Kerja dari rumah" },
+                { hour: 8, minute: 0, time: "08:00 - 12:00", activity: "Sholat Dhuha + olahraga", tooltip: "Optional tidak ada kegiatan kerja, Sholat Dhuha, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 10, minute: 0, time: "10:00 - 10:20", activity: "Cemilan Pagi", tooltip: "Buah segar (pisang, pepaya, atau jeruk), Yogurt dengan madu, Segenggam kacang tanah rebus atau kacang hijau rebus, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 11, minute: 30, time: "11:30 - 12:15", activity: "Sholat Dzuhur", tooltip: "Sholat Dzuhur" },
+                { hour: 12, minute: 0, time: "12:00 - 13:00", activity: "Makan Siang", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 13, minute: 0, time: "13:00 - 15:00", activity: "Hapalan dan Kajian", tooltip: "Optional ketika tidak ada kerjaan, nonton kajian atau hapalan alquran" },
+                { hour: 15, minute: 0, time: "15:00 - 15:15", activity: "Sholat Ashar", tooltip: "Sholat Ashar" },
+                { hour: 15, minute: 0, time: "15:00 - 17:45", activity: "Olahraga / Aktivitas Fisik", tooltip: "Optional tidak ada kegiatan kerja, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 16, minute: 0, time: "16:00 - 16:20", activity: "Cemilan Sore", tooltip: "Buah potong (mangga, semangka, atau melon), Teh hijau tanpa gula, Keripik singkong atau keripik pisang, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 16, minute: 20, time: "16:20 - 17:45", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 17, minute: 45, time: "17:45 - 18:00", activity: "Sholat Magrib", tooltip: "Sholat Magrib" },
+                { hour: 18, minute: 0, time: "18:00 - 19:00", activity: "Istirahat dan Hapalan Quran", tooltip: "Istirahat dan hapalan quran" },
+                { hour: 19, minute: 0, time: "19:00 - 19:15", activity: "Sholat Isya", tooltip: "Sholat Isya" },
+                { hour: 19, minute: 15, time: "19:15 - 19:45", activity: "Makan Malam", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 19, minute: 45, time: "19:45 - 20:40", activity: "Olahraga / Aktivitas Fisik / Hiburan", tooltip: "Olahraga sambil hiburan santai, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 20, minute: 40, time: "20:40 - 21:00", activity: "Cemilan Malam (opsional)", tooltip: "Susu hangat atau teh herbal, Segenggam kacang atau biji-bijian, Buah-buahan seperti pisang atau apel, 1 gelas air mineral" },
+                { hour: 21, minute: 0, time: "21:00 - 21:30", activity: "Mandi dan Persiapan Tidur", tooltip: "Mandi dan persiapan tidur" },
+            ],
+            Selasa: [
+                { hour: 3, minute: 30, time: "03:30 - 04:30", activity: "Sholat Tahajud", tooltip: "Sholat Tahajud" },
+                { hour: 4, minute: 30, time: "04:30 - 04:45", activity: "Sholat Subuh", tooltip: "Sholat Subuh" },
+                { hour: 4, minute: 45, time: "04:45 - 05:00", activity: "Baca Al-Qur'an", tooltip: "Baca Al-Qur'an" },
+                { hour: 5, minute: 0, time: "05:00 - 05:30", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 5, minute: 30, time: "05:30 - 06:30", activity: "Olahraga", tooltip: "Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 6, minute: 30, time: "06:30 - 07:00", activity: "Mandi Pagi", tooltip: "Mandi Pagi" },
+                { hour: 7, minute: 0, time: "07:00 - 07:30", activity: "Sarapan", tooltip: "Nasi putih dengan telur dadar dan sayur bayam, Bubur ayam tanpa krupuk, Nasi uduk dengan tahu dan tempe goreng, 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 7, minute: 30, time: "07:30 - 09:00", activity: "Perjalanan Berangkat Kerja", tooltip: "Perjalanan Berangkat Kerja" },
+                { hour: 9, minute: 0, time: "09:00 - 17:00", activity: "Kerja (WFO)", tooltip: "Kerja dari japati" },
+                { hour: 18, minute: 0, time: "18:00 - 19:00", activity: "Istirahat Makan + Sholat (jika mungkin)", tooltip: "Makan sebelum OTW pulang" },
+                { hour: 19, minute: 0, time: "19:00 - 20:30", activity: "Perjalanan Pulang Kerja", tooltip: "Perjalanan Pulang Kerja" },
+                { hour: 20, minute: 30, time: "20:30 - 21:00", activity: "Istirahat", tooltip: "Istirahat" },
+                { hour: 21, minute: 0, time: "21:00 - 21:30", activity: "Mandi, Sholat isya jika belum dan Persiapan Tidur", tooltip: "Mandi, Sholat isya jika belum dan Persiapan Tidur" },
+            ],
+            Rabu: [
+                { hour: 3, minute: 30, time: "03:30 - 04:30", activity: "Sholat Tahajud", tooltip: "Sholat Tahajud" },
+                { hour: 4, minute: 30, time: "04:30 - 04:45", activity: "Sholat Subuh", tooltip: "Sholat Subuh" },
+                { hour: 4, minute: 45, time: "04:45 - 05:00", activity: "Baca Al-Qur'an", tooltip: "Baca Al-Qur'an" },
+                { hour: 5, minute: 0, time: "05:00 - 05:30", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 5, minute: 30, time: "05:30 - 06:30", activity: "Olahraga", tooltip: "Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 6, minute: 30, time: "06:30 - 07:00", activity: "Mandi Pagi", tooltip: "Mandi Pagi" },
+                { hour: 7, minute: 0, time: "07:00 - 07:30", activity: "Sarapan", tooltip: "Nasi putih dengan telur dadar dan sayur bayam, Bubur ayam tanpa krupuk, Nasi uduk dengan tahu dan tempe goreng, 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 7, minute: 30, time: "07:30 - 09:00", activity: "Perjalanan Berangkat Kerja", tooltip: "Perjalanan Berangkat Kerja" },
+                { hour: 9, minute: 0, time: "09:00 - 17:00", activity: "Kerja (WFO)", tooltip: "Kerja dari japati" },
+                { hour: 18, minute: 0, time: "18:00 - 19:00", activity: "Istirahat Makan + Sholat (jika mungkin)", tooltip: "Makan sebelum OTW pulang" },
+                { hour: 19, minute: 0, time: "19:00 - 20:30", activity: "Perjalanan Pulang Kerja", tooltip: "Perjalanan Pulang Kerja" },
+                { hour: 20, minute: 30, time: "20:30 - 21:00", activity: "Istirahat", tooltip: "Istirahat" },
+                { hour: 21, minute: 0, time: "21:00 - 21:30", activity: "Mandi, Sholat isya jika belum dan Persiapan Tidur", tooltip: "Mandi, Sholat isya jika belum dan Persiapan Tidur" },
+            ],
+            Sabtu: [
+                { hour: 3, minute: 30, time: "03:30 - 04:30", activity: "Sholat Tahajud", tooltip: "Sholat Tahajud" },
+                { hour: 4, minute: 30, time: "04:30 - 04:45", activity: "Sholat Subuh", tooltip: "Sholat Subuh" },
+                { hour: 4, minute: 45, time: "04:45 - 05:00", activity: "Baca Al-Qur'an", tooltip: "Baca Al-Qur'an" },
+                { hour: 5, minute: 0, time: "05:00 - 05:30", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 5, minute: 30, time: "05:30 - 06:45", activity: "Bersepeda", tooltip: "Bersepeda (Optional)" },
+                { hour: 6, minute: 45, time: "06:45 - 07:00", activity: "Istirahat", tooltip: "Istirahat" },
+                { hour: 7, minute: 0, time: "07:00 - 07:30", activity: "Sarapan", tooltip: "Nasi putih dengan telur dadar dan sayur bayam, Bubur ayam tanpa krupuk, Nasi uduk dengan tahu dan tempe goreng, 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 7, minute: 30, time: "07:30 - 08:00", activity: "Mandi Pagi", tooltip: "Mandi Pagi" },
+                { hour: 8, minute: 0, time: "08:00 - 17:00", activity: "Kerja (WFH)", tooltip: "Kerja dari rumah" },
+                { hour: 8, minute: 0, time: "08:00 - 12:00", activity: "Sholat Dhuha + olahraga", tooltip: "Optional tidak ada kegiatan kerja, Sholat Dhuha, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 10, minute: 0, time: "10:00 - 10:20", activity: "Cemilan Pagi", tooltip: "Buah segar (pisang, pepaya, atau jeruk), Yogurt dengan madu, Segenggam kacang tanah rebus atau kacang hijau rebus, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 11, minute: 30, time: "11:30 - 12:15", activity: "Sholat Dzuhur", tooltip: "Sholat Dzuhur" },
+                { hour: 12, minute: 0, time: "12:00 - 13:00", activity: "Makan Siang", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 13, minute: 0, time: "13:00 - 15:00", activity: "Hapalan dan Kajian", tooltip: "Optional ketika tidak ada kerjaan, nonton kajian atau hapalan alquran" },
+                { hour: 15, minute: 0, time: "15:00 - 15:15", activity: "Sholat Ashar", tooltip: "Sholat Ashar" },
+                { hour: 15, minute: 0, time: "15:00 - 17:45", activity: "Olahraga / Aktivitas Fisik", tooltip: "Optional tidak ada kegiatan kerja, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 16, minute: 0, time: "16:00 - 16:20", activity: "Cemilan Sore", tooltip: "Buah potong (mangga, semangka, atau melon), Teh hijau tanpa gula, Keripik singkong atau keripik pisang, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 16, minute: 20, time: "16:20 - 17:45", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 17, minute: 45, time: "17:45 - 18:00", activity: "Sholat Magrib", tooltip: "Sholat Magrib" },
+                { hour: 18, minute: 0, time: "18:00 - 19:00", activity: "Istirahat dan Hapalan Quran", tooltip: "Istirahat dan hapalan quran" },
+                { hour: 19, minute: 0, time: "19:00 - 19:15", activity: "Sholat Isya", tooltip: "Sholat Isya" },
+                { hour: 19, minute: 15, time: "19:15 - 19:45", activity: "Makan Malam", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 19, minute: 45, time: "19:45 - 20:40", activity: "Olahraga / Aktivitas Fisik / Hiburan", tooltip: "Olahraga sambil hiburan santai, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 20, minute: 40, time: "20:40 - 21:00", activity: "Cemilan Malam (opsional)", tooltip: "Susu hangat atau teh herbal, Segenggam kacang atau biji-bijian, Buah-buahan seperti pisang atau apel, 1 gelas air mineral" },
+                { hour: 21, minute: 0, time: "21:00 - 21:30", activity: "Mandi dan Persiapan Tidur", tooltip: "Mandi dan persiapan tidur" },
+            ],
+            Minggu: [
+                { hour: 3, minute: 30, time: "03:30 - 04:30", activity: "Sholat Tahajud", tooltip: "Sholat Tahajud" },
+                { hour: 4, minute: 30, time: "04:30 - 04:45", activity: "Sholat Subuh", tooltip: "Sholat Subuh" },
+                { hour: 4, minute: 45, time: "04:45 - 05:00", activity: "Baca Al-Qur'an", tooltip: "Baca Al-Qur'an" },
+                { hour: 5, minute: 0, time: "05:00 - 05:30", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 5, minute: 30, time: "05:30 - 06:45", activity: "Bersepeda", tooltip: "Bersepeda (Optional)" },
+                { hour: 6, minute: 45, time: "06:45 - 07:00", activity: "Istirahat", tooltip: "Istirahat" },
+                { hour: 7, minute: 0, time: "07:00 - 07:30", activity: "Sarapan", tooltip: "Nasi putih dengan telur dadar dan sayur bayam, Bubur ayam tanpa krupuk, Nasi uduk dengan tahu dan tempe goreng, 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 7, minute: 30, time: "07:30 - 08:00", activity: "Mandi Pagi", tooltip: "Mandi Pagi" },
+                { hour: 8, minute: 0, time: "08:00 - 17:00", activity: "Kerja (WFH)", tooltip: "Kerja dari rumah" },
+                { hour: 8, minute: 0, time: "08:00 - 12:00", activity: "Sholat Dhuha + olahraga", tooltip: "Optional tidak ada kegiatan kerja, Sholat Dhuha, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 10, minute: 0, time: "10:00 - 10:20", activity: "Cemilan Pagi", tooltip: "Buah segar (pisang, pepaya, atau jeruk), Yogurt dengan madu, Segenggam kacang tanah rebus atau kacang hijau rebus, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 11, minute: 30, time: "11:30 - 12:15", activity: "Sholat Dzuhur", tooltip: "Sholat Dzuhur" },
+                { hour: 12, minute: 0, time: "12:00 - 13:00", activity: "Makan Siang", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 13, minute: 0, time: "13:00 - 15:00", activity: "Hapalan dan Kajian", tooltip: "Optional ketika tidak ada kerjaan, nonton kajian atau hapalan alquran" },
+                { hour: 15, minute: 0, time: "15:00 - 15:15", activity: "Sholat Ashar", tooltip: "Sholat Ashar" },
+                { hour: 15, minute: 0, time: "15:00 - 17:45", activity: "Olahraga / Aktivitas Fisik", tooltip: "Optional tidak ada kegiatan kerja, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 16, minute: 0, time: "16:00 - 16:20", activity: "Cemilan Sore", tooltip: "Buah potong (mangga, semangka, atau melon), Teh hijau tanpa gula, Keripik singkong atau keripik pisang, 1 gelas air mineral, teh hijau, atau kopi" },
+                { hour: 16, minute: 20, time: "16:20 - 17:45", activity: "Rawat Tanaman", tooltip: "Rawat Tanaman" },
+                { hour: 17, minute: 45, time: "17:45 - 18:00", activity: "Sholat Magrib", tooltip: "Sholat Magrib" },
+                { hour: 18, minute: 0, time: "18:00 - 19:00", activity: "Istirahat dan Hapalan Quran", tooltip: "Istirahat dan hapalan quran" },
+                { hour: 19, minute: 0, time: "19:00 - 19:15", activity: "Sholat Isya", tooltip: "Sholat Isya" },
+                { hour: 19, minute: 15, time: "19:15 - 19:45", activity: "Makan Malam", tooltip: "1 porsi nasi putih, 1 porsi lauk (daging, ayam, ikan), Sayur (seperti brokoli atau wortel), 1 gelas air mineral atau jus buah tanpa gula" },
+                { hour: 19, minute: 45, time: "19:45 - 20:40", activity: "Olahraga / Aktivitas Fisik / Hiburan", tooltip: "Olahraga sambil hiburan santai, Plank: 30-60 detik, Russian Twist: 15-20 repetisi, Bicycle Crunch: 15-20 repetisi, Side Plank: 30-60 detik (setiap sisi), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Squat: 10-12 repetisi, Lunges: 10-12 repetisi (setiap kaki), Deadlift: 8-10 repetisi, Leg Press: 10-12 repetisi, Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi, Push-up: 10-12 repetisi, Pull-up: 8-10 repetisi, Dumbbell Row: 10-12 repetisi (2-5 kg), Shoulder Press: 10-12 repetisi (2-5 kg), Cat-Cow Stretch: 10 repetisi, Thoracic Extension: 10 repetisi" },
+                { hour: 20, minute: 40, time: "20:40 - 21:00", activity: "Cemilan Malam (opsional)", tooltip: "Susu hangat atau teh herbal, Segenggam kacang atau biji-bijian, Buah-buahan seperti pisang atau apel, 1 gelas air mineral" },
+                { hour: 21, minute: 0, time: "21:00 - 21:30", activity: "Mandi dan Persiapan Tidur", tooltip: "Mandi dan persiapan tidur" },
+            ]
+        };
 
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <script src="js/custom.js"></script>
+        document.getElementById('daySelect').addEventListener('change', function() {
+            const selectedDay = this.value;
+            const scheduleContainer = document.getElementById('scheduleContainer');
+            scheduleContainer.innerHTML = '';
 
+            const selectedSchedule = schedules[selectedDay] || [];
+            selectedSchedule.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'row mt-2';
 
+                const timeCol = document.createElement('div');
+                timeCol.className = 'col-3';
+                timeCol.textContent = item.time;
 
+                const activityCol = document.createElement('div');
+                activityCol.className = 'col-9';
+                activityCol.innerHTML = `
+                    <div class="tooltip-text">
+                        ${item.activity}
+                        <span class="tooltip-content">${item.tooltip}</span>
+                    </div>
+                `;
+
+                row.appendChild(timeCol);
+                row.appendChild(activityCol);
+                scheduleContainer.appendChild(row);
+            });
+        });
+
+        // Trigger change event on load to display initial schedule
+        // document.getElementById('daySelect').dispatchEvent(new Event('change'));
+
+        // Show Monday schedule by default
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set default day to today
+        const days = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+        const today = new Date().getDay();
+        const todayIndex = (today === 0) ? 6 : today - 1; // Adjust for Monday start
+        document.getElementById('daySelect').value = days[todayIndex];
+        showSchedule(days[todayIndex]);
+    });
+
+    // Memeriksa apakah Notification API didukung oleh browser
+if (!("Notification" in window)) {
+    alert("Browser ini tidak mendukung notifikasi desktop");
+}
+
+// Meminta izin untuk menampilkan notifikasi
+function requestNotificationPermission() {
+    if (Notification.permission === "default") {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                showNotification("Izin diberikan", "Anda akan menerima notifikasi sesuai jadwal.");
+            } else if (permission === "denied") {
+                alert("Anda telah menolak izin notifikasi. Beberapa fitur mungkin tidak berfungsi.");
+            }
+        });
+    }
+}
+
+requestNotificationPermission();
+
+// Fungsi untuk menampilkan notifikasi
+function showNotification(title, body) {
+    console.log(Notification.permission);
+    if (Notification.permission === "granted") {
+        new Notification(title, { body: body, icon: "icon.png" });
+    }
+}
+
+// Fungsi untuk memeriksa waktu saat ini dan menampilkan notifikasi pada waktu yang ditentukan
+function checkTime() {
+    const now = new Date();
+    const day = now.toLocaleString('id-ID', { weekday: 'long' });
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    if (schedules[day]) {
+        schedules[day].forEach(item => {
+            if (hours === item.hour) {
+                showNotification(item.activity, item.time + " - " + item.tooltip);
+            }
+        });
+    }
+}
+
+// Memeriksa waktu setiap menit
+setInterval(checkTime, 60000);
+
+// Memeriksa waktu saat halaman pertama kali dimuat
+checkTime();
+
+    </script>
 </body>
-</body>
-
 </html>

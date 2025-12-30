@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="INSPIRO" />
+    <meta name="description" content="Themeforest Template Polo, html template">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Document title -->
+    <title>MONETA | register</title>
+    <!-- Stylesheets & Fonts -->
+    <link href="css/plugins.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Body Inner -->
+    <div class="body-inner">
+        <div class="container-fluid">
+            <div class="row min-vh-100">
+                <div class="col-md-8 col-lg-7 d-flex align-items-center">
+                    <div class="w-100 px-3 px-sm-5 py-xl-5 px-xl-7">
+                        <h3>Register New Account</h3>
+                        <p>Create an account by entering the information below. If you are a returning
+                            customer please login at the top of the page.</p>
+
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    This is a danger alert—check it out!
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+
+                        <form id="form1" class="form-validate mt-5">
+    <div class="h5 mb-4">Account details</div>
+
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" placeholder="Enter username" required="">
+    </div>
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" name="email" placeholder="Enter your email" required="">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-group show-hide-password">
+            <input class="form-control" name="password" placeholder="Enter password" type="password" required="">
+            <span class="input-group-text"><i class="icon-eye-off" aria-hidden="true" style="cursor: pointer;"></i></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <div class="input-group show-hide-password">
+            <input class="form-control" name="confirm_password" placeholder="Enter Confirm password" type="password" required="">
+            <span class="input-group-text"><i class="icon-eye-off" aria-hidden="true" style="cursor: pointer;"></i></span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-5">Submit</button>
+</form>
+<script>
+const SUPABASE_URL = 'https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/user';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0'; // ganti dengan anon/public key
+
+document.getElementById('form1').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const username = form.username.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const confirm_password = form.confirm_password.value;
+
+    if(password.length < 8){
+        alert("Password minimal 8 karakter!");
+        return;
+    }
+
+    // Validasi password tidak ada spasi
+    if(/\s/.test(password)){
+        alert("Password tidak boleh mengandung spasi!");
+        return;
+    }
+
+    if(password !== confirm_password){
+        alert("Password dan Confirm Password tidak sama!");
+        return;
+    }
+
+    const body = {
+        name: username,
+        email: email,
+        password: password
+    };
+
+    try {
+        const response = await fetch(SUPABASE_URL, {
+            method: 'POST',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'resolution=merge-duplicates'
+            },
+            body: JSON.stringify(body)
+        });
+
+        const status_code = await response.status;
+        if(status_code < 400){
+            alert("Register berhasil!");
+            form.reset();
+        } else {
+            console.error(data);
+            alert("Register gagal: " + status_code);
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Terjadi error saat register.");
+    }
+});
+</script>
+                        <div class="mt-4"><small>Already have an acocunt?</small> <a href="login.html"
+                                class="small fw-bold">Sign in</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-5 d-none d-md-block bg-cover" style="background-image: url(images/top-view-woman-working-as-economist.jpg);">
+                    <a href="index.html"
+                        class="btn btn-white btn-rounded-only btn-rounded position-absolute left-4 top-4"
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="Go back Homepage"><i
+                            class="icon-home"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: Body Inner -->
+    <!-- Scroll top -->
+    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+    <!--Plugins-->
+    <script src="js/jquery.js"></script>
+    <script src="js/plugins.js"></script>
+    <!--Template functions-->
+    <script src="js/functions.js"></script>
+</body>
+
+</html>

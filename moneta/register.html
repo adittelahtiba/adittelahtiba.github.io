@@ -68,73 +68,104 @@
     <script src="js/plugins.js"></script>
     <script src="js/functions.js"></script>
 
-    <script>
-        const SUPABASE_URL = 'https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/user';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0';
+ <script>
+    const BASE_URL = 'https://worrkhiiwvlinanxsimn.supabase.co/rest/v1';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0';
 
-        // Fungsi untuk menampilkan Alert Bootstrap
-        function showAlert(message, type = 'danger', isCountdown = false) {
-            const container = document.getElementById('alert-container');
-            container.innerHTML = `
-                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                    <span id="alert-message">${message}</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            `;
+    function showAlert(message, type = 'danger') {
+        const container = document.getElementById('alert-container');
+        container.innerHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                <span id="alert-message">${message}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+    }
+
+    document.getElementById('form1').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const btnSubmit = document.getElementById('btnSubmit');
+        const username = form.username.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const confirm_password = form.confirm_password.value;
+
+        // Validasi Client-side
+        if (password.length < 8) {
+            showAlert("Password minimal 8 karakter!");
+            return;
+        }
+        if (/\s/.test(password)) {
+            showAlert("Password tidak boleh mengandung spasi!");
+            return;
+        }
+        if (password !== confirm_password) {
+            showAlert("Password dan Confirm Password tidak sama!");
+            return;
         }
 
-        document.getElementById('form1').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
 
-            const form = e.target;
-            const btnSubmit = document.getElementById('btnSubmit');
-            const username = form.username.value;
-            const email = form.email.value;
-            const password = form.password.value;
-            const confirm_password = form.confirm_password.value;
+        try {
+            // --- LANGKAH 1: POST REGISTER USER ---
+            const regResponse = await fetch(`${BASE_URL}/user`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation' // Agar return data user baru (id)
+                },
+                body: JSON.stringify({ name: username, email: email, password: password })
+            });
 
-            // Validasi
-            if (password.length < 8) {
-                showAlert("Password minimal 8 karakter!");
-                return;
-            }
-            if (/\s/.test(password)) {
-                showAlert("Password tidak boleh mengandung spasi!");
-                return;
-            }
-            if (password !== confirm_password) {
-                showAlert("Password dan Confirm Password tidak sama!");
-                return;
-            }
+            const userData = await regResponse.json();
 
-            btnSubmit.disabled = true; // Disable button saat proses
+            if (regResponse.ok && userData.length > 0) {
+                const newUserId = userData[0].id;
 
-            try {
-                const response = await fetch(SUPABASE_URL, {
+                // --- LANGKAH 2: GET SEMUA MENU ---
+                const menuResponse = await fetch(`${BASE_URL}/menu?select=*`, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    }
+                });
+                const allMenus = await menuResponse.json();
+
+                // --- LANGKAH 3: PREPARE PAYLOAD MENU_USER ---
+                const menuUserPayload = allMenus.map(menu => ({
+                    user_id: newUserId,
+                    menu_id: menu.id
+                }));
+
+                // --- LANGKAH 4: POST KE MENU_USER ---
+                const assignResponse = await fetch(`${BASE_URL}/menu_user`, {
                     method: 'POST',
                     headers: {
                         'apikey': SUPABASE_KEY,
                         'Authorization': `Bearer ${SUPABASE_KEY}`,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'resolution=merge-duplicates'
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ name: username, email: email, password: password })
+                    body: JSON.stringify(menuUserPayload)
                 });
 
-                if (response.ok) {
+                if (assignResponse.ok) {
                     form.reset();
                     let countdown = 10;
                     
-                    // Tampilkan alert sukses dengan hitung mundur
                     const updateMessage = () => {
                         showAlert(
-                            `Register berhasil! Mengalihkan ke login dalam <b>${countdown}</b> detik... atau <a href="login.html" class="alert-link">klik di sini</a>.`, 
+                            `Register & Setup Menu Berhasil! Mengalihkan ke login dalam <b>${countdown}</b> detik... atau <a href="login.html" class="alert-link">klik di sini</a>.`, 
                             'success'
                         );
                     };
 
                     updateMessage();
-
                     const timer = setInterval(() => {
                         countdown--;
                         if (countdown <= 0) {
@@ -144,22 +175,27 @@
                             updateMessage();
                         }
                     }, 1000);
-
                 } else {
-                    const status_code = response.status;
-                    if (status_code === 409){
-                        showAlert("Email sudah terdaftar!");
-                    }else{
-                        showAlert("Register gagal dengan status: " + status_code);
-                    }
+                    showAlert("User terdaftar tapi gagal konfigurasi menu akses.");
                     btnSubmit.disabled = false;
                 }
-            } catch (err) {
-                console.error(err);
-                showAlert("Terjadi error koneksi saat register.");
+
+            } else {
+                if (regResponse.status === 409) {
+                    showAlert("Email sudah terdaftar!");
+                } else {
+                    showAlert("Register gagal. Silakan coba lagi.");
+                }
                 btnSubmit.disabled = false;
+                btnSubmit.innerText = "Register account";
             }
-        });
-    </script>
+        } catch (err) {
+            console.error(err);
+            showAlert("Terjadi error koneksi atau sistem.");
+            btnSubmit.disabled = false;
+            btnSubmit.innerText = "Register account";
+        }
+    });
+</script>
 </body>
 </html>

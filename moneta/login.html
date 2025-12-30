@@ -8,61 +8,119 @@
     <meta name="description" content="Themeforest Template Polo, html template">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Document title -->
     <title>MONETA | login</title>
-    <!-- Stylesheets & Fonts -->
     <link href="css/plugins.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Body Inner -->
     <div class="body-inner">
         <div class="container-fluid">
             <div class="row min-vh-100">
                 <div class="col-md-8 col-lg-7 d-flex align-items-center">
                     <div class="w-100 px-3 px-sm-5 px-xl-7">
- 
-                            <div class="mb-5"><h6 class="h3 mb-1">Welcome back!</h6><p class="text-muted mb-0">Login to manage your account.</p></div>  
-                            <form class="form-validate">
-                                <div class="form-group">
-                                    <label for="email">Email address</label>
-                                    <div class="input-group">
-                                        <input type="email" class="form-control" name="email" placeholder="Enter your email" required="">
-                                        <span class="input-group-text"><i class="icon-user"></i></span>
-                                    </div>
+
+                        <div class="mb-5">
+                            <h6 class="h3 mb-1">Welcome back!</h6>
+                            <p class="text-muted mb-0">Login to manage your account.</p>
+                        </div>
+
+                        <div id="alert-container"></div>
+
+                        <form id="loginForm" class="form-validate">
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <div class="input-group">
+                                    <input type="email" class="form-control" name="email" placeholder="Enter your email" required="">
+                                    <span class="input-group-text"><i class="icon-user"></i></span>
                                 </div>
-                                <div class="form-group ">
-                                    <label for="password">Password</label>
-                                    <div class="input-group show-hide-password">
-                                        <input class="form-control" name="password" placeholder="Enter password" type="password" required="">
-                                        <span class="input-group-text"><i class="icon-eye-off" aria-hidden="true" style="cursor: pointer;"></i></span>
-                                    </div>
-                                </div>
-                                <div class="mt-4"><button type="submit" class="btn btn-primary btn-block btn-primary">Sign in</button>
-                                </div>
-                            </form>
-                            <div class="mt-4 text-center"><small>Not registered?</small> <a href="register.html" class="small fw-bold">Create account</a>
                             </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="input-group show-hide-password">
+                                    <input class="form-control" name="password" placeholder="Enter password" type="password" required="">
+                                    <span class="input-group-text"><i class="icon-eye-off" aria-hidden="true" style="cursor: pointer;"></i></span>
+                                </div>
                             </div>
+                            <div class="mt-4">
+                                <button type="submit" id="btnSubmit" class="btn btn-primary btn-block">Sign in</button>
+                            </div>
+                        </form>
+
+                        <div class="mt-4 text-center">
+                            <small>Not registered?</small> 
+                            <a href="register.html" class="small fw-bold">Create account</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4 col-lg-5 d-none d-md-block bg-cover" style="background-image: url(images/top-view-woman-working-as-economist.jpg);">
-                    <a href="index.html"
-                    class="btn btn-white btn-rounded-only btn-rounded position-absolute left-4 top-4"
-                    data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="Go back Homepage"><i
-                        class="icon-home"></i></a>
+                    <a href="index.html" class="btn btn-white btn-rounded-only btn-rounded position-absolute left-4 top-4" title="Go back Homepage"><i class="icon-home"></i></a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end: Body Inner -->
-    <!-- Scroll top -->
-    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
-    <!--Plugins-->
+
     <script src="js/jquery.js"></script>
     <script src="js/plugins.js"></script>
-    <!--Template functions-->
     <script src="js/functions.js"></script>
-</body>
 
+    <script>
+        const SUPABASE_BASE_URL = 'https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/user';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0';
+
+        function showAlert(message, type = 'danger') {
+            const container = document.getElementById('alert-container');
+            container.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    <span>${message}</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+            const btnSubmit = document.getElementById('btnSubmit');
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = 'Checking...'; // Memberikan feedback visual
+
+            // Mencari data user berdasarkan email DAN password
+            const loginUrl = `${SUPABASE_BASE_URL}?select=id,name&email=eq.${email}&password=eq.${password}`;
+
+            try {
+                const response = await fetch(loginUrl, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.length > 0) {
+                    // Simpan data user agar bisa digunakan di dashboard
+                    localStorage.setItem('user_session', JSON.stringify(data[0]));
+                    
+                    // LANGSUNG REDIRECT
+                    window.location.href = 'dashboard.html';
+                } else {
+                    showAlert("Login gagal! Email atau Password salah.");
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = 'Sign in';
+                }
+            } catch (err) {
+                console.error(err);
+                showAlert("Terjadi kesalahan sistem saat mencoba login.");
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Sign in';
+            }
+        });
+    </script>
+</body>
 </html>

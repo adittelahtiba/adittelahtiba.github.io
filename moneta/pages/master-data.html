@@ -7,9 +7,9 @@
             </div>
             <div class="col-lg-6 text-end">
                 <div id="export_buttons" class="d-inline-block me-2"></div>
-                <button type="button" class="btn btn-primary btn-shadow">
+                <a  class="btn btn-primary btn-shadow" data-bs-target="#modal" data-bs-toggle="modal" href="#">
                     <i class="icon-plus"></i> Add New User
-                </button>
+                </a>
             </div>
         </div>
 
@@ -29,5 +29,338 @@
                 </table>
             </div>
         </div>
+    </div>
+
+    <!-- Wallets Section -->
+    <div class="container mt-5">
+        <div class="row mb-4 align-items-center">
+            <div class="col-lg-6">
+                <h4 class="mb-0">Wallets</h4>
+                <p class="text-muted">Manage your financial wallets</p>
+            </div>
+            <div class="col-lg-6 text-end">
+                <div id="wallet_export_buttons" class="d-inline-block me-2"></div>
+                <a class="btn btn-success btn-shadow" data-bs-target="#walletModal" data-bs-toggle="modal" href="#">
+                    <i class="icon-plus"></i> Add New Wallet
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <table id="wallet_datatable" class="table table-bordered table-hover" style="width:100%">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Created Date</th>
+                            <th class="noExport">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="container mt-5">
+        <div class="row mb-4 align-items-center">
+            <div class="col-lg-6">
+                <h4 class="mb-0">Categories</h4>
+                <p class="text-muted">Manage your transaction categories</p>
+            </div>
+            <div class="col-lg-6 text-end">
+                <div id="category_export_buttons" class="d-inline-block me-2"></div>
+                <a class="btn btn-info btn-shadow" data-bs-target="#categoryModal" data-bs-toggle="modal" href="#">
+                    <i class="icon-plus"></i> Add New Category
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <table id="category_datatable" class="table table-bordered table-hover" style="width:100%">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Created Date</th>
+                            <th class="noExport">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--Modal -->
+        <div class="modal fade" id="modal" tabindex="1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <form id="form1" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-label">Add User</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div id="alert-container"></div>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" name="username" placeholder="Enter username" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" name="email" placeholder="Enter your email" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="input-group show-hide-password">
+                                    <input class="form-control" name="password" placeholder="Enter password" type="password" required="">
+                                    <span class="input-group-text"><i class="icon-eye-off" aria-hidden="true" style="cursor: pointer;"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm_password">Confirm Password</label>
+                                <div class="input-group show-hide-password">
+                                    <input class="form-control" name="confirm_password" placeholder="Enter Confirm password" type="password" required="">
+                                    <span class="input-group-text"><i class="icon-eye-off" aria-hidden="true" style="cursor: pointer;"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-b" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-b" form="form1">Save</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        <!-- end: Modal -->
+        
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form id="editForm" class="form-validate mt-5">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="editModalLabel">Edit User</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="edit-alert-container"></div>
+                            <input type="hidden" name="id" id="editUserId">
+                            <div class="form-group">
+                                <label for="editUsername">Username</label>
+                                <input type="text" class="form-control" name="username" id="editUsername" placeholder="Enter username" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="editEmail">Email address</label>
+                                <input type="email" class="form-control" name="email" id="editEmail" placeholder="Enter your email" required="">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="deleteModalLabel">Confirm Delete</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this user? This action cannot be undone.</p>
+                        <input type="hidden" id="deleteUserId">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-danger" id="confirmDelete">Yes, Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Modal -->
+        <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="settingsModalLabel">User Access Control Settings</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="settings-alert-container"></div>
+                        <input type="hidden" id="settingsUserId">
+                        <p>Select menus and permissions for this user:</p>
+                        <div id="menuList" class="row">
+                            <!-- Menu checkboxes will be populated here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="saveSettings">Save Settings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Wallet Modal -->
+    <div class="modal fade" id="walletModal" tabindex="1" role="modal" aria-labelledby="wallet-modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <form id="addWalletForm" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="wallet-modal-label">Add Wallet</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div id="wallet-alert-container"></div>
+                            <div class="form-group">
+                                <label for="wallet_name">Wallet Name</label>
+                                <input type="text" class="form-control" name="name" id="wallet_name" placeholder="Enter wallet name" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-b" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-b" form="addWalletForm">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Wallet Modal -->
+    <div class="modal fade" id="editWalletModal" tabindex="-1" role="dialog" aria-labelledby="editWalletModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="editWalletForm" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="editWalletModalLabel">Edit Wallet</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="edit-wallet-alert-container"></div>
+                        <input type="hidden" name="id" id="editWalletId">
+                        <div class="form-group">
+                            <label for="edit_wallet_name">Wallet Name</label>
+                            <input type="text" class="form-control" name="name" id="edit_wallet_name" placeholder="Enter wallet name" required="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Wallet Modal -->
+    <div class="modal fade" id="deleteWalletModal" tabindex="-1" role="dialog" aria-labelledby="deleteWalletModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="deleteWalletModalLabel">Confirm Delete</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this wallet? This action cannot be undone.</p>
+                    <input type="hidden" id="deleteWalletId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteWallet">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div class="modal fade" id="categoryModal" tabindex="1" role="modal" aria-labelledby="category-modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <form id="addCategoryForm" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="category-modal-label">Add Category</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div id="category-alert-container"></div>
+                            <div class="form-group">
+                                <label for="category_name">Category Name</label>
+                                <input type="text" class="form-control" name="name" id="category_name" placeholder="Enter category name" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-b" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-b" form="addCategoryForm">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Category Modal -->
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="editCategoryForm" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="editCategoryModalLabel">Edit Category</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="edit-category-alert-container"></div>
+                        <input type="hidden" name="id" id="editCategoryId">
+                        <div class="form-group">
+                            <label for="edit_category_name">Category Name</label>
+                            <input type="text" class="form-control" name="name" id="edit_category_name" placeholder="Enter category name" required="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Category Modal -->
+    <div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="deleteCategoryModalLabel">Confirm Delete</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this category? This action cannot be undone.</p>
+                    <input type="hidden" id="deleteCategoryId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteCategory">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        
     </div>
 </section>

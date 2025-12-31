@@ -1,11 +1,88 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const appContainer = document.getElementById('app');
-    const pageName = document.getElementById('page-name');
-    const pageMenuName = document.getElementById('page-menu-name');
-    const userNameElement = document.getElementById('user-name');
-    const mainMenu = document.getElementById('mainMenu');
+$(document).ready(function() {
+    const $appContainer = $('#app');
+    const $pageName = $('#page-name');
+    const $pageMenuName = $('#page-menu-name');
+    const $userNameElement = $('#user-name');
+    const $mainMenu = $('#mainMenu');
 
-    // 1. Ambil Session User dari LocalStorage
+    function showsAlert(message, type = 'danger', container = '#alert-container') {
+        const $container = $(container);
+        $container.html(`
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                <span id="alert-message">${message}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `);
+    }
+
+    $(document).on('submit', '#form1', async function(e) {
+        e.preventDefault();
+
+        const $form = $(this);
+        const formData = new FormData(this);
+
+        const username = formData.get('username');
+        const email = formData.get('email');
+        const password = formData.get('password');
+        const confirmPassword = formData.get('confirm_password');
+
+        if (password !== confirmPassword) {
+            showsAlert("Password dan Konfirmasi Password tidak cocok!");
+            return;
+        }
+
+        try {
+            const regResponse = await fetch(`${BASE_URL}/user`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify({
+                    name: username,
+                    email: email,
+                    password: password,
+                    user_parent: JSON.parse(localStorage.getItem('user_session')).id
+                })
+            });
+
+            const result = await regResponse.json();
+
+            if (regResponse.ok) {
+                showsAlert('User berhasil ditambahkan!', 'success');
+
+                const $modalElement = $('#modal');
+                if ($modalElement.length) {
+                    const modal = bootstrap.Modal.getOrCreateInstance($modalElement[0]);
+                    modal.hide();
+                }
+
+                $form[0].reset();
+                initDataTableMaster();
+
+            } else {
+                showsAlert('Gagal: ' + (result.message || 'Terjadi kesalahan'));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showsAlert('Terjadi kesalahan koneksi ke database.');
+        }
+    });
+
+    $(document).on('click', '.icon-eye-off, .icon-eye', function() {
+        const $inputGroup = $(this).closest('.input-group');
+        const $input = $inputGroup.find('input');
+        if ($input.attr('type') === "password") {
+            $input.attr('type', "text");
+            $(this).removeClass('icon-eye-off').addClass('icon-eye');
+        } else {
+            $input.attr('type', "password");
+            $(this).removeClass('icon-eye').addClass('icon-eye-off');
+        }
+    });
+
     const sessionData = localStorage.getItem('user_session');
     if (!sessionData) {
         window.location.href = 'login.html';
@@ -13,74 +90,61 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const user = JSON.parse(sessionData);
 
-    if (userNameElement) {
-        userNameElement.textContent = user.name;
+    if ($userNameElement.length) {
+        $userNameElement.text(user.name);
     }
 
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0';
     const MENU_API = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/user_menu_view?select=*&id=eq.${user.id}`;
+    const BASE_URL = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/`;
 
-    // 2. Fungsi Load Konten Halaman (dari folder pages/)
     let currentPage = '';
 
-async function loadPage(page, title) {
-    // Cegah loading halaman yang sama berkali-kali secara bersamaan
-    if (pageName) pageName.textContent = title || "Dashboard";
-    if (pageMenuName) pageMenuName.textContent = title ? `Page Menu ${title}` : "Main Menu";
-    if (currentPage === page && $('#calendar').length > 0) return; 
-    
-    try {
-        currentPage = page;
-        appContainer.innerHTML = '<div class="text-center p-5"><div class="spinner-border text-primary" role="status"></div><p class="mt-2">Loading content...</p></div>';
-        
-        const res = await fetch(`pages/${page}.html`);
-        
-        if (!res.ok) {
-            throw new Error(`File pages/${page}.html tidak ditemukan (404)`);
-        }
-        
-        const html = await res.text();
-        appContainer.innerHTML = html;
+    async function loadPage(page, title) {
+        if ($pageName.length) $pageName.text(title || "Dashboard");
+        if ($pageMenuName.length) $pageMenuName.text(title ? `Page Menu ${title}` : "Main Menu");
+        if (currentPage === page && $('#calendar').length > 0) return;
 
-        // Berikan delay sedikit lebih lama agar DOM benar-benar siap
-        setTimeout(() => {
-            // Hapus inisialisasi lama sebelum membuat yang baru
-            if ($('#calendar').length > 0) {
-                // Pastikan initCalendar hanya dijalankan jika elemennya ada di HTML yang baru di-load
-                initCalendar();
-            }
-            
-            // Logika untuk DataTable
-            if ($('#datatable').length > 0) {
-                if (page === 'master-data' || page === 'user-access') {
-                    initDataTableMaster();
-                } else {
-                    initDataTable();
+        try {
+            currentPage = page;
+            $appContainer.html('<div class="text-center p-5"><div class="spinner-border text-primary" role="status"></div><p class="mt-2">Loading content...</p></div>');
+
+            const res = await fetch(`pages/${page}.html`);
+            if (!res.ok) throw new Error(`File pages/${page}.html tidak ditemukan (404)`);
+
+            const html = await res.text();
+            $appContainer.html(html);
+
+            setTimeout(() => {
+                if ($('#calendar').length > 0) initCalendar();
+                if ($('#datatable').length > 0) {
+                    if (page === 'master-data' || page === 'user-access') {
+                        initDataTableMaster();
+                        initDataTableWallets();
+                        initDataTableCategories();
+                    } else if (page === 'transactions') {
+                        initDataTableTransactions();
+                    } else {
+                        initDataTable();
+                    }
                 }
-            }
+                if ($('#chartdiv').length > 0) initCharts();
+                if (typeof INSPIRO !== 'undefined' && INSPIRO.elements) {
+                    INSPIRO.elements.buttons();
+                }
+            }, 200);
 
-            if ($('#chartdiv').length > 0) {
-                initCharts();
-            }
-            
-            // Polo Template Refresh (Jika ada plugin tooltip/hover dari template)
-            if (typeof INSPIRO !== 'undefined' && INSPIRO.elements) {
-                INSPIRO.elements.buttons(); // Contoh merefresh elemen template
-            }
-        }, 200);
-
-    } catch (err) {
-        console.error("LoadPage Error:", err);
-        appContainer.innerHTML = `
-            <div class="alert alert-danger m-5">
-                <h5><i class="icon-alert-triangle"></i> Error Loading Page</h5>
-                <p>${err.message}</p>
-                <button class="btn btn-sm btn-secondary" onclick="location.reload()">Reload Dashboard</button>
-            </div>`;
+        } catch (err) {
+            console.error("LoadPage Error:", err);
+            $appContainer.html(`
+                <div class="alert alert-danger m-5">
+                    <h5><i class="icon-alert-triangle"></i> Error Loading Page</h5>
+                    <p>${err.message}</p>
+                    <button class="btn btn-sm btn-secondary" onclick="location.reload()">Reload Dashboard</button>
+                </div>`);
+        }
     }
-}
 
-    // 3. Fungsi Load Menu Dinamis dari API
     async function initDashboard() {
         try {
             const response = await fetch(MENU_API, {
@@ -97,21 +161,18 @@ async function loadPage(page, title) {
             if (response.ok && menus.length > 0) {
                 renderNavbar(menus);
             } else {
-                mainMenu.innerHTML = '<li><a href="#">No Menu Access</a></li>';
+                $mainMenu.html('<li><a href="#">No Menu Access</a></li>');
             }
         } catch (err) {
             console.error("Error loading menu:", err);
-            mainMenu.innerHTML = '<li><a href="#">Error Loading Menu</a></li>';
+            $mainMenu.html('<li><a href="#">Error Loading Menu</a></li>');
         }
     }
 
     function initCharts() {
-        // Bersihkan chart lama jika ada untuk menghemat RAM
         am4core.disposeAllCharts();
-        
         am4core.useTheme(am4themes_animated);
 
-        // --- 1. INCOME & EXPENSES (XY Chart) ---
         if ($('#chartdiv').length > 0) {
             var chart = am4core.create("chartdiv", am4charts.XYChart);
             chart.data = [
@@ -136,7 +197,6 @@ async function loadPage(page, title) {
             lineSeries.stroke = am4core.color("#fdd400");
         }
 
-        // --- 2. PEMASUKAN TAHUNAN (Rotated Column - chartdiv2) ---
         if ($('#chartdiv2').length > 0) {
             var chart2 = am4core.create("chartdiv2", am4charts.XYChart);
             chart2.scrollbarX = new am4core.Scrollbar();
@@ -156,10 +216,9 @@ async function loadPage(page, title) {
             series2.columns.template.adapter.add("fill", (fill, target) => chart2.colors.getIndex(target.dataItem.index));
         }
 
-        // --- 3. PENGELUARAN HARIAN (Date Based - chartdiv5) ---
         if ($('#chartdiv5').length > 0) {
             var chart5 = am4core.create("chartdiv5", am4charts.XYChart);
-            chart5.data = [{ "date": "2023-01-01", "value": 81 }, { "date": "2023-01-02", "value": 50 }, { "date": "2023-01-03", "value": 90 }]; // Data singkat
+            chart5.data = [{ "date": "2023-01-01", "value": 81 }, { "date": "2023-01-02", "value": 50 }, { "date": "2023-01-03", "value": 90 }];
             chart5.dateFormatter.inputDateFormat = "yyyy-MM-dd";
             var dateAxis = chart5.xAxes.push(new am4charts.DateAxis());
             var valueAxis5 = chart5.yAxes.push(new am4charts.ValueAxis());
@@ -172,7 +231,6 @@ async function loadPage(page, title) {
             chart5.scrollbarX.series.push(series5);
         }
 
-        // --- 4. SALDO CHART (Pie Chart - chartdiv8) ---
         if ($('#chartdiv8').length > 0) {
             var chart8 = am4core.create("chartdiv8", am4charts.PieChart);
             chart8.data = [{ "country": "Tabungan", "litres": 500 }, { "country": "Investasi", "litres": 300 }, { "country": "Cash", "litres": 200 }];
@@ -181,7 +239,6 @@ async function loadPage(page, title) {
             pieSeries.dataFields.category = "country";
         }
 
-        // --- 5. DEBT CHART (Radar/Gauge - chartdiv9) ---
         if ($('#chartdiv9').length > 0) {
             var chart9 = am4core.create("chartdiv9", am4charts.RadarChart);
             chart9.data = [
@@ -205,83 +262,38 @@ async function loadPage(page, title) {
         console.log("All Financial Charts Initialized.");
     }
 
-    // FUNGSI INIT CALENDAR (Pastikan dipanggil di loadPage)
     function initCalendar() {
-        const calendarEl = $('#calendar');
-        
-        // Cek apakah elemen ada dan library sudah terload
-        if (calendarEl.length > 0 && typeof $().fullCalendar === 'function') {
-            calendarEl.fullCalendar({
+        const $calendarEl = $('#calendar');
+        if ($calendarEl.length > 0 && typeof $().fullCalendar === 'function') {
+            $calendarEl.fullCalendar({
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'listDay,listWeek,month'
                 },
-                // customize the button names,
-                // otherwise they'd all just say "list"
                 views: {
-                    listDay: {
-                        buttonText: 'list day'
-                    },
-                    listWeek: {
-                        buttonText: 'list week'
-                    }
+                    listDay: { buttonText: 'list day' },
+                    listWeek: { buttonText: 'list week' }
                 },
                 defaultView: 'listWeek',
                 defaultDate: '2021-01-12',
-                navLinks: true, // can click day/week names to navigate views
+                navLinks: true,
                 editable: true,
-                eventLimit: true, // allow "more" link when too many events
-                events: [{
-                    title: 'All Day Event',
-                    start: '2021-01-01',
-                }, {
-                    title: 'Long Event',
-                    start: '2021-01-07',
-                    end: '2021-01-10',
-                    className: 'fc-event-primary'
-                }, {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: '2021-01-09T16:00:00'
-                }, {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: '2021-01-16T16:00:00'
-                }, {
-                    title: 'Conference',
-                    start: '2021-01-11',
-                    end: '2021-01-13',
-                    className: 'fc-event-warning',
-                }, {
-                    title: 'Meeting',
-                    start: '2021-01-12T10:30:00',
-                    end: '2021-01-12T12:30:00',
-                    className: 'fc-event-success'
-                }, {
-                    title: 'Lunch',
-                    start: '2021-01-12T12:00:00'
-                }, {
-                    title: 'Meeting',
-                    start: '2021-01-12T14:30:00',
-                    className: 'fc-event-info'
-                }, {
-                    title: 'Happy Hour',
-                    start: '2021-01-12T17:30:00'
-                }, {
-                    title: 'Dinner',
-                    start: '2021-01-12T20:00:00',
-                    className: 'fc-event-success'
-                }, {
-                    title: 'Birthday Party',
-                    start: '2021-01-13T07:00:00',
-                    className: 'fc-event-danger'
-                }, {
-                    title: 'Click for Google',
-                    url: 'http://google.com/',
-                    start: '2021-01-28',
-                    className: 'fc-event-info'
-                }]
+                eventLimit: true,
+                events: [
+                    { title: 'All Day Event', start: '2021-01-01' },
+                    { title: 'Long Event', start: '2021-01-07', end: '2021-01-10', className: 'fc-event-primary' },
+                    { id: 999, title: 'Repeating Event', start: '2021-01-09T16:00:00' },
+                    { id: 999, title: 'Repeating Event', start: '2021-01-16T16:00:00' },
+                    { title: 'Conference', start: '2021-01-11', end: '2021-01-13', className: 'fc-event-warning' },
+                    { title: 'Meeting', start: '2021-01-12T10:30:00', end: '2021-01-12T12:30:00', className: 'fc-event-success' },
+                    { title: 'Lunch', start: '2021-01-12T12:00:00' },
+                    { title: 'Meeting', start: '2021-01-12T14:30:00', className: 'fc-event-info' },
+                    { title: 'Happy Hour', start: '2021-01-12T17:30:00' },
+                    { title: 'Dinner', start: '2021-01-12T20:00:00', className: 'fc-event-success' },
+                    { title: 'Birthday Party', start: '2021-01-13T07:00:00', className: 'fc-event-danger' },
+                    { title: 'Click for Google', url: 'http://google.com/', start: '2021-01-28', className: 'fc-event-info' }
+                ]
             });
             console.log("Calendar initialized successfully.");
         } else {
@@ -290,38 +302,22 @@ async function loadPage(page, title) {
     }
 
     function initDataTable() {
-        const tableEl = $('#datatable');
-        if (tableEl.length > 0) {
-            // Hancurkan instance lama jika ada (mencegah error re-initialize)
+        const $tableEl = $('#datatable');
+        if ($tableEl.length > 0) {
             if ($.fn.DataTable.isDataTable('#datatable')) {
-                tableEl.DataTable().destroy();
+                $tableEl.DataTable().destroy();
             }
 
-            const table = tableEl.DataTable({
-                buttons: [{
-                    extend: 'print',
-                    title: 'Test Data export',
-                    exportOptions: { columns: "thead th:not(.noExport)" }
-                }, {
-                    extend: 'pdf',
-                    title: 'Test Data export',
-                    exportOptions: { columns: "thead th:not(.noExport)" }
-                }, {
-                    extend: 'excel',
-                    title: 'Test Data export',
-                    exportOptions: { columns: "thead th:not(.noExport)" }
-                }, {
-                    extend: 'csv',
-                    title: 'Test Data export',
-                    exportOptions: { columns: "thead th:not(.noExport)" }
-                }, {
-                    extend: 'copy',
-                    title: 'Test Data export',
-                    exportOptions: { columns: "thead th:not(.noExport)" }
-                }]
+            const table = $tableEl.DataTable({
+                buttons: [
+                    { extend: 'print', title: 'Test Data export', exportOptions: { columns: "thead th:not(.noExport)" } },
+                    { extend: 'pdf', title: 'Test Data export', exportOptions: { columns: "thead th:not(.noExport)" } },
+                    { extend: 'excel', title: 'Test Data export', exportOptions: { columns: "thead th:not(.noExport)" } },
+                    { extend: 'csv', title: 'Test Data export', exportOptions: { columns: "thead th:not(.noExport)" } },
+                    { extend: 'copy', title: 'Test Data export', exportOptions: { columns: "thead th:not(.noExport)" } }
+                ]
             });
 
-            // Pindahkan tombol ke container khusus jika elemennya ada
             if ($('#export_buttons').length > 0) {
                 table.buttons().container().appendTo('#export_buttons');
                 $("#export_buttons .btn").removeClass('btn-secondary').addClass('btn-light');
@@ -330,19 +326,16 @@ async function loadPage(page, title) {
     }
 
     async function initDataTableMaster() {
-        const tableEl = $('#datatable');
-        if (tableEl.length === 0) return;
+        const $tableEl = $('#datatable');
+        if ($tableEl.length === 0) return;
 
-        // Hancurkan instance lama jika ada
         if ($.fn.DataTable.isDataTable('#datatable')) {
-            tableEl.DataTable().destroy();
+            $tableEl.DataTable().destroy();
         }
 
-        // Ambil user_id dari session untuk filter API
         const sessionData = JSON.parse(localStorage.getItem('user_session'));
         const userId = sessionData.id;
 
-        // URL API dengan filter OR (id kita sendiri atau bawahan kita)
         const FETCH_USER_API = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/user?select=id,name,email,menu_user(menu_id,can_edit,menu(name))&or=(id.eq.${userId},user_parent.eq.${userId})`;
 
         try {
@@ -357,21 +350,17 @@ async function loadPage(page, title) {
 
             const data = await response.json();
 
-            // Inisialisasi DataTable
-            const table = tableEl.DataTable({
+            const table = $tableEl.DataTable({
                 data: data,
                 columns: [
                     { data: 'name' },
                     { data: 'email' },
-                    { 
+                    {
                         data: 'menu_user',
                         render: function(data) {
                             if (!data || data.length === 0) return '<span class="text-muted small">No Access</span>';
-                            
-                            // Buat Badge untuk setiap menu
+                            const colors = ['bg-primary', 'bg-info', 'bg-success', 'bg-warning', 'bg-danger'];
                             return data.map(m => {
-                                // Warna random/tetap berdasarkan nama menu agar menarik
-                                const colors = ['bg-primary', 'bg-info', 'bg-success', 'bg-warning', 'bg-danger'];
                                 const colorClass = colors[m.menu_id % colors.length];
                                 return `<span class="badge ${colorClass} me-1" style="font-size: 10px; text-transform: uppercase;">${m.menu.name}</span>`;
                             }).join(' ');
@@ -391,7 +380,6 @@ async function loadPage(page, title) {
                         }
                     }
                 ],
-                // Masukkan konfigurasi button export yang tadi
                 buttons: [
                     { extend: 'print', className: 'btn-light' },
                     { extend: 'pdf', className: 'btn-light' },
@@ -400,7 +388,6 @@ async function loadPage(page, title) {
                 responsive: true
             });
 
-            // Pindahkan tombol export ke container
             if ($('#export_buttons').length > 0) {
                 table.buttons().container().appendTo('#export_buttons');
             }
@@ -410,30 +397,28 @@ async function loadPage(page, title) {
         }
     }
 
-    // 4. Fungsi Render Navbar dan Logika Klik
     function renderNavbar(menus) {
-        mainMenu.innerHTML = ''; 
+        $mainMenu.empty();
 
         menus.forEach((item, index) => {
-            const li = document.createElement('li');
-            if (index === 1) li.classList.add('active'); 
+            const $li = $('<li>');
+            if (index === 1) $li.addClass('active');
 
-            const a = document.createElement('a');
-            a.href = "#";
-            a.textContent = item.menu_name;
-            a.dataset.page = item.html; 
+            const $a = $('<a>', {
+                href: "#",
+                text: item.menu_name,
+                'data-page': item.html
+            });
 
-            a.addEventListener('click', function (e) {
+            $a.on('click', function(e) {
                 e.preventDefault();
-                document.querySelectorAll('#mainMenu li').forEach(el => el.classList.remove('active'));
-                li.classList.add('active');
-                
-                // Panggil loadPage berdasarkan data dari API (item.html)
+                $('#mainMenu li').removeClass('active');
+                $li.addClass('active');
                 loadPage(item.html, item.menu_name);
             });
 
-            li.appendChild(a);
-            mainMenu.appendChild(li);
+            $li.append($a);
+            $mainMenu.append($li);
         });
 
         if (menus.length > 1) {
@@ -443,16 +428,984 @@ async function loadPage(page, title) {
         }
     }
 
-    // 5. Fungsi Logout
-    const logoutBtn = document.querySelector('.logout-lur');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            localStorage.removeItem('user_session');
-            window.location.href = 'login.html';
+    $('.logout-lur').on('click', function(e) {
+        e.preventDefault();
+        localStorage.removeItem('user_session');
+        window.location.href = 'login.html';
+    });
+
+    // Fungsi untuk Edit User
+    window.editUser = async function(id) {
+        try {
+            const response = await fetch(`${BASE_URL}/user?id=eq.${id}`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const user = await response.json();
+            if (user.length > 0) {
+                $('#editUserId').val(user[0].id);
+                $('#editUsername').val(user[0].name);
+                $('#editEmail').val(user[0].email);
+                $('#editModal').modal('show');
+            }
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
+    };
+
+    // Handler untuk submit Edit Form
+    $(document).on('submit', '#editForm', async function(e) {
+        e.preventDefault();
+        const id = $('#editUserId').val();
+        const name = $('#editUsername').val();
+        const email = $('#editEmail').val();
+
+        try {
+            const response = await fetch(`${BASE_URL}/user?id=eq.${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({ name, email })
+            });
+
+            if (response.ok) {
+                showsAlert('User updated successfully!', 'success', '#edit-alert-container');
+                $('#editModal').modal('hide');
+                initDataTableMaster();
+            } else {
+                showsAlert('Failed to update user.', 'danger', '#edit-alert-container');
+            }
+        } catch (error) {
+            console.error('Error updating user:', error);
+            showsAlert('Error updating user.', 'danger', '#edit-alert-container');
+        }
+    });
+
+    // Fungsi untuk Delete User
+    window.deleteUser = function(id) {
+        $('#deleteUserId').val(id);
+        $('#deleteModal').modal('show');
+    };
+
+    // Handler untuk Confirm Delete
+    $(document).on('click', '#confirmDelete', async function() {
+        console.log('Confirm delete clicked');
+        const id = $('#deleteUserId').val();
+        console.log('User ID to delete:', id);
+        const timestamp = new Date().toISOString();
+
+        try {
+            const response = await fetch(`${BASE_URL}/user?id=eq.${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({ deleted_date: timestamp })
+            });
+
+            console.log('Delete response status:', response.status);
+            if (response.ok) {
+                showsAlert('User deleted successfully!', 'success');
+                $('#deleteModal').modal('hide');
+                initDataTableMaster();
+            } else {
+                showsAlert('Failed to delete user.', 'danger');
+            }
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            showsAlert('Error deleting user.', 'danger');
+        }
+    });
+
+    // Fungsi untuk Settings User
+    window.settingsUser = async function(id) {
+        $('#settingsUserId').val(id);
+        try {
+            // Fetch all menus
+            const menuResponse = await fetch(`${BASE_URL}/menu`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const menus = await menuResponse.json();
+
+            // Fetch current user menu access
+            const accessResponse = await fetch(`${BASE_URL}/menu_user?user_id=eq.${id}`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const currentAccess = await accessResponse.json();
+
+            // Create checkboxes
+            let html = '';
+            menus.forEach(menu => {
+                const access = currentAccess.find(a => a.menu_id === menu.id);
+                const checked = access ? 'checked' : '';
+                const canEditChecked = access && access.can_edit ? 'checked' : '';
+                html += `
+                    <div class="col-md-6 mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input menu-checkbox" type="checkbox" id="menu_${menu.id}" value="${menu.id}" ${checked}>
+                            <label class="form-check-label" for="menu_${menu.id}">${menu.name}</label>
+                        </div>
+                        <div class="form-check ms-3">
+                            <input class="form-check-input can-edit-checkbox" type="checkbox" id="edit_${menu.id}" ${canEditChecked}>
+                            <label class="form-check-label" for="edit_${menu.id}">Can Edit</label>
+                        </div>
+                    </div>
+                `;
+            });
+            $('#menuList').html(html);
+            $('#settingsModal').modal('show');
+        } catch (error) {
+            console.error('Error loading settings:', error);
+        }
+    };
+
+    // Handler untuk Save Settings
+    $(document).on('click', '#saveSettings', async function() {
+        console.log('Save settings clicked');
+        const userId = $('#settingsUserId').val();
+        console.log('User ID:', userId);
+        const selectedMenus = [];
+
+        $('.menu-checkbox:checked').each(function() {
+            const menuId = $(this).val();
+            const canEdit = $(`#edit_${menuId}`).is(':checked');
+            selectedMenus.push({ user_id: parseInt(userId), menu_id: parseInt(menuId), can_edit: canEdit });
         });
+
+        console.log('Selected menus:', selectedMenus);
+
+        try {
+            // First, delete existing access
+            const deleteResponse = await fetch(`${BASE_URL}/menu_user?user_id=eq.${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            console.log('Delete response status:', deleteResponse.status);
+
+            // Then, insert new access
+            if (selectedMenus.length > 0) {
+                const response = await fetch(`${BASE_URL}/menu_user`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(selectedMenus)
+                });
+
+                console.log('Insert response status:', response.status);
+                if (!response.ok) {
+                    throw new Error('Failed to save menu access');
+                }
+            }
+
+            showsAlert('Settings saved successfully!', 'success', '#settings-alert-container');
+            $('#settingsModal').modal('hide');
+            initDataTableMaster();
+        } catch (error) {
+            console.error('Error saving settings:', error);
+            showsAlert('Error saving settings.', 'danger', '#settings-alert-container');
+        }
+    });
+
+    // Fungsi untuk Transactions
+    async function initDataTableTransactions() {
+        const $tableEl = $('#datatable');
+        if ($tableEl.length === 0) return;
+
+        if ($.fn.DataTable.isDataTable('#datatable')) {
+            $tableEl.DataTable().destroy();
+        }
+
+        const sessionData = JSON.parse(localStorage.getItem('user_session'));
+        const userId = sessionData.id;
+
+        const FETCH_TRANSACTIONS_API = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/transactions?select=id,trx_date,type_id,amount,note,wallet_id,category_id,init,attachment_url,transaction_type(name)&user_id=eq.${userId}`;
+
+        try {
+            const response = await fetch(FETCH_TRANSACTIONS_API, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            const table = $tableEl.DataTable({
+                data: data,
+                columns: [
+                    { 
+                        data: 'trx_date',
+                        render: function(data) {
+                            return new Date(data).toLocaleDateString();
+                        }
+                    },
+                    { 
+                        data: 'transaction_type.name',
+                        defaultContent: 'N/A'
+                    },
+                    { 
+                        data: 'amount',
+                        render: function(data) {
+                            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data);
+                        }
+                    },
+                    { data: 'note' },
+                    {
+                        data: null,
+                        className: 'noExport',
+                        render: function(data) {
+                            return `
+                                <div class="btn-group">
+                                    <a class="ms-2 text-primary" href="#" onclick="editTransaction(${data.id})"><i class="icon-edit"></i></a>
+                                    <a class="ms-2 text-danger" href="#" onclick="deleteTransaction(${data.id})"><i class="icon-trash-2"></i></a>
+                                </div>
+                            `;
+                        }
+                    }
+                ],
+                buttons: [
+                    { extend: 'print', className: 'btn-light' },
+                    { extend: 'pdf', className: 'btn-light' },
+                    { extend: 'excel', className: 'btn-light' }
+                ],
+                responsive: true
+            });
+
+            if ($('#export_buttons').length > 0) {
+                table.buttons().container().appendTo('#export_buttons');
+            }
+
+            // Load transaction types for dropdowns
+            loadTransactionTypes();
+            loadCategories();
+            loadWallets();
+
+        } catch (err) {
+            console.error("Error loading transactions data:", err);
+        }
     }
 
-    // Jalankan inisialisasi
+    async function loadTransactionTypes() {
+        try {
+            const response = await fetch(`${BASE_URL}/transaction_type`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const types = await response.json();
+            
+            const $typeSelect = $('#type_id');
+            const $editTypeSelect = $('#edit_type_id');
+            
+            $typeSelect.empty().append('<option value="">Select Type</option>');
+            $editTypeSelect.empty().append('<option value="">Select Type</option>');
+            
+            types.forEach(type => {
+                $typeSelect.append(`<option value="${type.id}">${type.name}</option>`);
+                $editTypeSelect.append(`<option value="${type.id}">${type.name}</option>`);
+            });
+        } catch (error) {
+            console.error('Error loading transaction types:', error);
+        }
+    }
+
+    async function loadCategories() {
+        try {
+            const response = await fetch(`${BASE_URL}/categories?id=gt.1`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const categories = await response.json();
+            
+            const $categorySelect = $('#category_id');
+            const $editCategorySelect = $('#edit_category_id');
+            
+            $categorySelect.empty().append('<option value="">Select Category</option>');
+            $editCategorySelect.empty().append('<option value="">Select Category</option>');
+            
+            categories.forEach(category => {
+                $categorySelect.append(`<option value="${category.id}">${category.name}</option>`);
+                $editCategorySelect.append(`<option value="${category.id}">${category.name}</option>`);
+            });
+        } catch (error) {
+            console.error('Error loading categories:', error);
+        }
+    }
+
+    async function loadWallets() {
+        try {
+            const response = await fetch(`${BASE_URL}/wallets?id=gt.1`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const wallets = await response.json();
+            
+            const $walletSelect = $('#wallet_id');
+            const $editWalletSelect = $('#edit_wallet_id');
+            const $assetWalletSelect = $('#asset_wallet_id');
+            
+            $walletSelect.empty().append('<option value="">Select Wallet</option>');
+            $editWalletSelect.empty().append('<option value="">Select Wallet</option>');
+            $assetWalletSelect.empty().append('<option value="">Select Wallet</option>');
+            
+            wallets.forEach(wallet => {
+                $walletSelect.append(`<option value="${wallet.id}">${wallet.name}</option>`);
+                $editWalletSelect.append(`<option value="${wallet.id}">${wallet.name}</option>`);
+                $assetWalletSelect.append(`<option value="${wallet.id}">${wallet.name}</option>`);
+            });
+        } catch (error) {
+            console.error('Error loading wallets:', error);
+        }
+    }
+
+    // Handler untuk submit Add Transaction Form
+    $(document).on('submit', '#addTransactionForm', async function(e) {
+        e.preventDefault();
+
+        const $form = $(this);
+        const formData = new FormData(this);
+
+        const trx_date = formData.get('trx_date');
+        const type_id = formData.get('type_id');
+        const amount = parseFloat(formData.get('amount'));
+        const note = formData.get('note');
+        const wallet_id = formData.get('wallet_id') || null;
+        const category_id = formData.get('category_id') || null;
+
+        const sessionData = JSON.parse(localStorage.getItem('user_session'));
+        const userId = sessionData.id;
+
+        try {
+            const response = await fetch(`${BASE_URL}/transactions`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify({
+                    trx_date: trx_date,
+                    type_id: parseInt(type_id),
+                    amount: amount,
+                    note: note,
+                    wallet_id: wallet_id ? parseInt(wallet_id) : null,
+                    category_id: category_id ? parseInt(category_id) : null,
+                    user_id: userId
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showsAlert('Transaction added successfully!', 'success');
+
+                const $modalElement = $('#transactionModal');
+                if ($modalElement.length) {
+                    const modal = bootstrap.Modal.getOrCreateInstance($modalElement[0]);
+                    modal.hide();
+                }
+
+                $form[0].reset();
+                initDataTableTransactions();
+
+            } else {
+                showsAlert('Failed to add transaction: ' + (result.message || 'Unknown error'), 'danger');
+            }
+        } catch (error) {
+            console.error('Error adding transaction:', error);
+            showsAlert('Error adding transaction.', 'danger');
+        }
+    });
+
+    // Handler untuk submit Add Asset Form
+    $(document).on('submit', '#addAssetForm', async function(e) {
+        e.preventDefault();
+
+        const $form = $(this);
+        const formData = new FormData(this);
+
+        const amount = parseFloat(formData.get('amount'));
+        const note = formData.get('note');
+        const wallet_id = formData.get('wallet_id');
+
+        const sessionData = JSON.parse(localStorage.getItem('user_session'));
+        const userId = sessionData.id;
+
+        // Get today's date in YYYY-MM-DD format
+        const today = new Date().toISOString().split('T')[0];
+
+        try {
+            const response = await fetch(`${BASE_URL}/transactions`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify({
+                    trx_date: today,
+                    type_id: 1,
+                    amount: amount,
+                    note: note,
+                    wallet_id: parseInt(wallet_id),
+                    category_id: 1,
+                    init: true,
+                    user_id: userId
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showsAlert('Asset added successfully!', 'success', '#asset-alert-container');
+
+                const $modalElement = $('#assetModal');
+                if ($modalElement.length) {
+                    const modal = bootstrap.Modal.getOrCreateInstance($modalElement[0]);
+                    modal.hide();
+                }
+
+                $form[0].reset();
+                initDataTableTransactions();
+
+            } else {
+                showsAlert('Failed to add asset: ' + (result.message || 'Unknown error'), 'danger', '#asset-alert-container');
+            }
+        } catch (error) {
+            console.error('Error adding asset:', error);
+            showsAlert('Error adding asset.', 'danger', '#asset-alert-container');
+        }
+    });
+
+    // Fungsi untuk Edit Transaction
+    window.editTransaction = async function(id) {
+        try {
+            const response = await fetch(`${BASE_URL}/transactions?id=eq.${id}&select=*,transaction_type(name)`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const transaction = await response.json();
+            if (transaction.length > 0) {
+                const trx = transaction[0];
+                $('#editTransactionId').val(trx.id);
+                $('#edit_trx_date').val(trx.trx_date.split('T')[0]);
+                $('#edit_type_id').val(trx.type_id);
+                $('#edit_amount').val(trx.amount);
+                $('#edit_note').val(trx.note);
+                $('#edit_wallet_id').val(trx.wallet_id || '');
+                $('#edit_category_id').val(trx.category_id || '');
+                $('#editModal').modal('show');
+            }
+        } catch (error) {
+            console.error('Error fetching transaction:', error);
+        }
+    };
+
+    // Handler untuk submit Edit Transaction Form
+    $(document).on('submit', '#editForm', async function(e) {
+        e.preventDefault();
+        const id = $('#editTransactionId').val();
+        const trx_date = $('#edit_trx_date').val();
+        const type_id = $('#edit_type_id').val();
+        const amount = parseFloat($('#edit_amount').val());
+        const note = $('#edit_note').val();
+        const wallet_id = $('#edit_wallet_id').val() || null;
+        const category_id = $('#edit_category_id').val() || null;
+
+        try {
+            const response = await fetch(`${BASE_URL}/transactions?id=eq.${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({ 
+                    trx_date, 
+                    type_id: parseInt(type_id), 
+                    amount, 
+                    note, 
+                    wallet_id: wallet_id ? parseInt(wallet_id) : null, 
+                    category_id: category_id ? parseInt(category_id) : null
+                })
+            });
+
+            if (response.ok) {
+                showsAlert('Transaction updated successfully!', 'success', '#edit-alert-container');
+                $('#editModal').modal('hide');
+                initDataTableTransactions();
+            } else {
+                showsAlert('Failed to update transaction.', 'danger', '#edit-alert-container');
+            }
+        } catch (error) {
+            console.error('Error updating transaction:', error);
+            showsAlert('Error updating transaction.', 'danger', '#edit-alert-container');
+        }
+    });
+
+    // Fungsi untuk Delete Transaction
+    window.deleteTransaction = function(id) {
+        $('#deleteTransactionId').val(id);
+        $('#deleteModal').modal('show');
+    };
+
+    // Handler untuk Confirm Delete Transaction
+    $(document).on('click', '#confirmDelete', async function() {
+        const id = $('#deleteTransactionId').val();
+
+        try {
+            const response = await fetch(`${BASE_URL}/transactions?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (response.ok) {
+                showsAlert('Transaction deleted successfully!', 'success');
+                $('#deleteModal').modal('hide');
+                initDataTableTransactions();
+            } else {
+                showsAlert('Failed to delete transaction.', 'danger');
+            }
+        } catch (error) {
+            console.error('Error deleting transaction:', error);
+            showsAlert('Error deleting transaction.', 'danger');
+        }
+    });
+
+    // Wallets CRUD Functions
+    async function initDataTableWallets() {
+        const $tableEl = $('#wallet_datatable');
+        if ($tableEl.length === 0) return;
+
+        if ($.fn.DataTable.isDataTable('#wallet_datatable')) {
+            $tableEl.DataTable().destroy();
+        }
+
+        try {
+            const response = await fetch(`${BASE_URL}/wallets`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Wallet data loaded:', data);
+
+            const table = $tableEl.DataTable({
+                data: data,
+                columns: [
+                    { data: 'name', title: 'Wallet Name' },
+                    { data: 'created_at', title: 'Created At', render: function(data) { return new Date(data).toLocaleDateString(); } },
+                    {
+                        data: null,
+                        title: 'Actions',
+                        orderable: false,
+                        className: 'noExport',
+                        render: function(data, type, row) {
+                            return `
+                                <div class="btn-group">
+                                    <a class="ms-2 text-primary" href="#" onclick="editWallet(${row.id})"><i class="icon-edit"></i></a>
+                                    <a class="ms-2 text-danger" href="#" onclick="deleteWallet(${row.id})"><i class="icon-trash-2"></i></a>
+                                </div>
+                            `;
+                        }
+                    }
+                ],
+                responsive: true,
+                pageLength: 10
+            });
+
+        } catch (err) {
+            console.error("Error loading wallet data:", err);
+        }
+    }
+
+    // Add Wallet
+    $(document).on('submit', '#addWalletForm', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const name = formData.get('name');
+
+        try {
+            const response = await fetch(`${BASE_URL}/wallets`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    user_id: JSON.parse(localStorage.getItem('user_session')).id
+                })
+            });
+
+            if (response.ok) {
+                showsAlert('Wallet added successfully!', 'success', '#wallet-alert-container');
+                $('#walletModal').modal('hide');
+                $('#addWalletForm')[0].reset();
+                initDataTableWallets();
+            } else {
+                showsAlert('Failed to add wallet.', 'danger', '#wallet-alert-container');
+            }
+        } catch (error) {
+            console.error('Error adding wallet:', error);
+            showsAlert('Error adding wallet.', 'danger', '#wallet-alert-container');
+        }
+    });
+
+    // Edit Wallet
+    window.editWallet = function(id) {
+        // First get the wallet data
+        fetch(`${BASE_URL}/wallets?id=eq.${id}`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const wallet = data[0];
+                $('#editWalletId').val(wallet.id);
+                $('#edit_wallet_name').val(wallet.name);
+                $('#editWalletModal').modal('show');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching wallet:', error);
+        });
+    };
+
+    $(document).on('submit', '#editWalletForm', async function(e) {
+        e.preventDefault();
+
+        const id = $('#editWalletId').val();
+        const name = $('#edit_wallet_name').val();
+
+        try {
+            const response = await fetch(`${BASE_URL}/wallets?id=eq.${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify({
+                    name: name
+                })
+            });
+
+            if (response.ok) {
+                showsAlert('Wallet updated successfully!', 'success', '#edit-wallet-alert-container');
+                $('#editWalletModal').modal('hide');
+                initDataTableWallets();
+            } else {
+                showsAlert('Failed to update wallet.', 'danger', '#edit-wallet-alert-container');
+            }
+        } catch (error) {
+            console.error('Error updating wallet:', error);
+            showsAlert('Error updating wallet.', 'danger', '#edit-wallet-alert-container');
+        }
+    });
+
+    // Delete Wallet
+    window.deleteWallet = function(id) {
+        $('#deleteWalletId').val(id);
+        $('#deleteWalletModal').modal('show');
+    };
+
+    $(document).on('click', '#confirmDeleteWallet', async function() {
+        const id = $('#deleteWalletId').val();
+
+        try {
+            const response = await fetch(`${BASE_URL}/wallets?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (response.ok) {
+                showsAlert('Wallet deleted successfully!', 'success');
+                $('#deleteWalletModal').modal('hide');
+                initDataTableWallets();
+            } else {
+                showsAlert('Failed to delete wallet.', 'danger');
+            }
+        } catch (error) {
+            console.error('Error deleting wallet:', error);
+            showsAlert('Error deleting wallet.', 'danger');
+        }
+    });
+
+    // Categories CRUD Functions
+    async function initDataTableCategories() {
+        const $tableEl = $('#category_datatable');
+        if ($tableEl.length === 0) return;
+
+        if ($.fn.DataTable.isDataTable('#category_datatable')) {
+            $tableEl.DataTable().destroy();
+        }
+
+        try {
+            const response = await fetch(`${BASE_URL}/categories`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Category data loaded:', data);
+
+            const table = $tableEl.DataTable({
+                data: data,
+                columns: [
+                    { data: 'name', title: 'Category Name' },
+                    { data: 'created_at', title: 'Created At', render: function(data) { return new Date(data).toLocaleDateString(); } },
+                    {
+                        data: null,
+                        title: 'Actions',
+                        orderable: false,
+                        className: 'noExport',
+                        render: function(data, type, row) {
+                            return `
+                                <div class="btn-group">
+                                    <a class="ms-2 text-primary" href="#" onclick="editCategory(${row.id})"><i class="icon-edit"></i></a>
+                                    <a class="ms-2 text-danger" href="#" onclick="deleteCategory(${row.id})"><i class="icon-trash-2"></i></a>
+                                </div>
+                            `;
+                        }
+                    }
+                ],
+                responsive: true,
+                pageLength: 10
+            });
+
+        } catch (err) {
+            console.error("Error loading category data:", err);
+        }
+    }
+
+    // Add Category
+    $(document).on('submit', '#addCategoryForm', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const name = formData.get('name');
+
+        try {
+            const response = await fetch(`${BASE_URL}/categories`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    user_id: JSON.parse(localStorage.getItem('user_session')).id
+                })
+            });
+
+            if (response.ok) {
+                showsAlert('Category added successfully!', 'success', '#category-alert-container');
+                $('#categoryModal').modal('hide');
+                $('#addCategoryForm')[0].reset();
+                initDataTableCategories();
+            } else {
+                showsAlert('Failed to add category.', 'danger', '#category-alert-container');
+            }
+        } catch (error) {
+            console.error('Error adding category:', error);
+            showsAlert('Error adding category.', 'danger', '#category-alert-container');
+        }
+    });
+
+    $(document).on('click', '#confirmDeleteWallet', async function() {
+        const id = $('#deleteWalletId').val();
+
+        try {
+            const response = await fetch(`${BASE_URL}/wallets?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (response.ok) {
+                showsAlert('Wallet deleted successfully!', 'success');
+                $('#deleteWalletModal').modal('hide');
+                initDataTableWallets();
+            } else {
+                showsAlert('Failed to delete wallet.', 'danger');
+            }
+        } catch (error) {
+            console.error('Error deleting wallet:', error);
+            showsAlert('Error deleting wallet.', 'danger');
+        }
+    });
+
+    // Edit Category
+    window.editCategory = function(id) {
+        // First get the category data
+        fetch(`${BASE_URL}/categories?id=eq.${id}`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const category = data[0];
+                $('#editCategoryId').val(category.id);
+                $('#edit_category_name').val(category.name);
+                $('#editCategoryModal').modal('show');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching category:', error);
+        });
+    };
+
+    $(document).on('submit', '#editCategoryForm', async function(e) {
+        e.preventDefault();
+
+        const id = $('#editCategoryId').val();
+        const name = $('#edit_category_name').val();
+
+        try {
+            const response = await fetch(`${BASE_URL}/categories?id=eq.${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify({
+                    name: name
+                })
+            });
+
+            if (response.ok) {
+                showsAlert('Category updated successfully!', 'success', '#edit-category-alert-container');
+                $('#editCategoryModal').modal('hide');
+                initDataTableCategories();
+            } else {
+                showsAlert('Failed to update category.', 'danger', '#edit-category-alert-container');
+            }
+        } catch (error) {
+            console.error('Error updating category:', error);
+            showsAlert('Error updating category.', 'danger', '#edit-category-alert-container');
+        }
+    });
+
+    // Delete Category
+    window.deleteCategory = function(id) {
+        $('#deleteCategoryId').val(id);
+        $('#deleteCategoryModal').modal('show');
+    };
+
+    $(document).on('click', '#confirmDeleteCategory', async function() {
+        const id = $('#deleteCategoryId').val();
+
+        try {
+            const response = await fetch(`${BASE_URL}/categories?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (response.ok) {
+                showsAlert('Category deleted successfully!', 'success');
+                $('#deleteCategoryModal').modal('hide');
+                initDataTableCategories();
+            } else {
+                showsAlert('Failed to delete category.', 'danger');
+            }
+        } catch (error) {
+            console.error('Error deleting category:', error);
+            showsAlert('Error deleting category.', 'danger');
+        }
+    });
+
     initDashboard();
 });

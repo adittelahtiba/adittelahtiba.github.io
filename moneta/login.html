@@ -29,9 +29,9 @@
 
                         <form id="loginForm" class="form-validate">
                             <div class="form-group">
-                                <label for="email">Email address</label>
+                                <label for="email">Email/Username</label>
                                 <div class="input-group">
-                                    <input type="email" class="form-control" name="email" placeholder="Enter your email" required="">
+                                    <input type="text" class="form-control" name="email" placeholder="Enter your email" required="">
                                     <span class="input-group-text"><i class="icon-user"></i></span>
                                 </div>
                             </div>
@@ -89,7 +89,8 @@
             btnSubmit.innerHTML = 'Checking...'; // Memberikan feedback visual
 
             // Mencari data user berdasarkan email DAN password
-            const loginUrl = `${SUPABASE_BASE_URL}?select=id,name&email=eq.${email}&password=eq.${password}`;
+            const loginUrl = `${SUPABASE_BASE_URL}?select=id,name&or=(email.eq.${encodeURIComponent(email)},name.eq.${encodeURIComponent(email)})&password=eq.${encodeURIComponent(password)}`;
+
 
             try {
                 const response = await fetch(loginUrl, {

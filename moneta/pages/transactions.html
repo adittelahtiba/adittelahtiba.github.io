@@ -1,0 +1,208 @@
+<section id="page-content" class="no-sidebar">
+    <div class="container">
+        <div class="row mb-4 align-items-center">
+            <div class="col-lg-6">
+                <h4 class="mb-0">Transactions</h4>
+                <p class="text-muted">Manage your financial transactions</p>
+            </div>
+            <div class="col-lg-6 text-end">
+                <div id="export_buttons" class="d-inline-block me-2"></div>
+                <a class="btn btn-success btn-shadow me-2" data-bs-target="#assetModal" data-bs-toggle="modal" href="#">
+                    <i class="icon-plus"></i> Add Asset
+                </a>
+                <a class="btn btn-primary btn-shadow" data-bs-target="#transactionModal" data-bs-toggle="modal" href="#">
+                    <i class="icon-plus"></i> Add Transaction
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Transaction Date</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Note</th>
+                            <th class="noExport">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--Modal -->
+    <div class="modal fade" id="transactionModal" tabindex="1" role="modal" aria-labelledby="transaction-modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <form id="addTransactionForm" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="transaction-modal-label">Add Transaction</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div id="alert-container"></div>
+                            <div class="form-group">
+                                <label for="trx_date">Transaction Date</label>
+                                <input type="date" class="form-control" name="trx_date" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="type_id">Transaction Type</label>
+                                <select class="form-control" name="type_id" id="type_id" required="">
+                                    <option value="">Select Type</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Amount</label>
+                                <input type="number" class="form-control" name="amount" step="0.01" placeholder="Enter amount" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="note">Note</label>
+                                <textarea class="form-control" name="note" placeholder="Enter note"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="wallet_id">Wallet</label>
+                                <select class="form-control" name="wallet_id" id="wallet_id">
+                                    <option value="">Select Wallet</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="category_id">Category</label>
+                                <select class="form-control" name="category_id" id="category_id">
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-b" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-b" form="addTransactionForm">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end: Modal -->
+
+    <!-- Asset Modal -->
+    <div class="modal fade" id="assetModal" tabindex="1" role="modal" aria-labelledby="asset-modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <form id="addAssetForm" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="asset-modal-label">Add Asset</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div id="asset-alert-container"></div>
+                            <div class="form-group">
+                                <label for="asset_amount">Amount</label>
+                                <input type="number" class="form-control" name="amount" id="asset_amount" step="0.01" placeholder="Enter amount" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="asset_note">Note</label>
+                                <textarea class="form-control" name="note" id="asset_note" placeholder="Enter note"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="asset_wallet_id">Wallet</label>
+                                <select class="form-control" name="wallet_id" id="asset_wallet_id" required="">
+                                    <option value="">Select Wallet</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-b" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-b" form="addAssetForm">Save Asset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="editForm" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="editModalLabel">Edit Transaction</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="edit-alert-container"></div>
+                        <input type="hidden" name="id" id="editTransactionId">
+                        <div class="form-group">
+                            <label for="edit_trx_date">Transaction Date</label>
+                            <input type="date" class="form-control" name="trx_date" id="edit_trx_date" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_type_id">Transaction Type</label>
+                            <select class="form-control" name="type_id" id="edit_type_id" required="">
+                                <option value="">Select Type</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_amount">Amount</label>
+                            <input type="number" class="form-control" name="amount" id="edit_amount" step="0.01" placeholder="Enter amount" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_note">Note</label>
+                            <textarea class="form-control" name="note" id="edit_note" placeholder="Enter note"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_wallet_id">Wallet</label>
+                            <select class="form-control" name="wallet_id" id="edit_wallet_id">
+                                <option value="">Select Wallet</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_category_id">Category</label>
+                            <select class="form-control" name="category_id" id="edit_category_id">
+                                <option value="">Select Category</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="deleteModalLabel">Confirm Delete</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this transaction? This action cannot be undone.</p>
+                    <input type="hidden" id="deleteTransactionId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+$(document).ready(function() {
+    // Set default date to today for transaction form
+    const today = new Date().toISOString().split('T')[0];
+    $('#trx_date').val(today);
+});
+</script>

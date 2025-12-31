@@ -7,9 +7,9 @@
             </div>
             <div class="col-lg-6 text-end">
                 <div id="export_buttons" class="d-inline-block me-2"></div>
-                <button type="button" class="btn btn-primary btn-shadow">
+                <a class="btn btn-primary btn-shadow" data-bs-target="#modal" data-bs-toggle="modal" href="#">
                     <i class="icon-plus"></i> Add New User
-                </button>
+                </a>
             </div>
         </div>
 
@@ -31,3 +31,28 @@
         </div>
     </div>
 </section>
+
+<!--Modal -->
+        <div class="modal fade" id="modal" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-label">Medium Modal</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium atque architecto quae ullam rem labore veritatis temporibus asperiores, ad eaque odit commodi inventore dolore perspiciatis, nam dicta est eos id quod
+                                    excepturi.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-b" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-b">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: Modal -->

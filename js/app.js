@@ -645,7 +645,7 @@ $(document).ready(function() {
         const sessionData = JSON.parse(localStorage.getItem('user_session'));
         const userId = sessionData.id;
 
-        const FETCH_TRANSACTIONS_API = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/transactions?select=id,trx_date,type_id,amount,note,wallet_id,category_id,init,attachment_url,transaction_type(name)&user_id=eq.${userId}`;
+        const FETCH_TRANSACTIONS_API = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/transactions?select=id,init,trx_date,type_id,amount,note,wallet_id,category_id,init,attachment_url,transaction_type(wallet_name),categories(name),wallets(name)&user_id=eq.${userId}`;
 
         try {
             const response = await fetch(FETCH_TRANSACTIONS_API, {
@@ -664,13 +664,46 @@ $(document).ready(function() {
                 columns: [
                     { 
                         data: 'trx_date',
-                        render: function(data) {
-                            return new Date(data).toLocaleDateString();
+                        render: function (data, type, row) {
+                            // Jika asset awal
+                            if (row.init === true) {
+                                return `
+                                    <div>
+                                        <strong>Asset</strong><br>
+                                        <small class="text-muted">
+                                            Wallet: ${row.wallets?.name ?? '-'}
+                                        </small>
+                                    </div>
+                                `;
+                            }
+
+                            const date = new Date(data).toLocaleDateString('id-ID');
+                            const walletName = row.wallets?.name ?? '-';
+                            const categoryName = row.categories?.name ?? '-';
+
+                            return `
+                                <div>
+                                    <div>${date}</div>
+                                    <small class="text-muted">
+                                        ${walletName} • ${categoryName}
+                                    </small>
+                                </div>
+                            `;
                         }
                     },
                     { 
-                        data: 'transaction_type.name',
-                        defaultContent: 'N/A'
+                        data: 'transaction_type.wallet_name',
+                        render: function (data, type, row) {
+                            let cls = 'text-muted';
+
+                            if (row.type_id === 1) {
+                                cls = 'text-success fw-semibold';
+                            } else if (row.type_id === 2) {
+                                cls = 'text-danger fw-semibold';
+                            }
+
+                            return `<span class="${cls}">${data ?? '-'}</span>`;
+                        }
                     },
                     { 
                         data: 'amount',
@@ -733,8 +766,8 @@ $(document).ready(function() {
             $editTypeSelect.empty().append('<option value="">Select Type</option>');
             
             types.forEach(type => {
-                $typeSelect.append(`<option value="${type.id}">${type.name}</option>`);
-                $editTypeSelect.append(`<option value="${type.id}">${type.name}</option>`);
+                $typeSelect.append(`<option value="${type.id}">${type.wallet_name}</option>`);
+                $editTypeSelect.append(`<option value="${type.id}">${type.wallet_name}</option>`);
             });
         } catch (error) {
             console.error('Error loading transaction types:', error);
@@ -780,19 +813,31 @@ $(document).ready(function() {
             });
             const wallets = await response.json();
             
-            const $walletSelect = $('#wallet_id');
-            const $editWalletSelect = $('#edit_wallet_id');
-            const $assetWalletSelect = $('#asset_wallet_id');
-            
-            $walletSelect.empty().append('<option value="">Select Wallet</option>');
-            $editWalletSelect.empty().append('<option value="">Select Wallet</option>');
-            $assetWalletSelect.empty().append('<option value="">Select Wallet</option>');
-            
-            wallets.forEach(wallet => {
-                $walletSelect.append(`<option value="${wallet.id}">${wallet.name}</option>`);
-                $editWalletSelect.append(`<option value="${wallet.id}">${wallet.name}</option>`);
-                $assetWalletSelect.append(`<option value="${wallet.id}">${wallet.name}</option>`);
+            const $walletSelect        = $('#wallet_id');
+            const $editWalletSelect    = $('#edit_wallet_id');
+            const $assetWalletSelect   = $('#asset_wallet_id');
+            const $senderWalletSelect  = $('#sender_wallet');
+            const $receiverWalletSelect= $('#receiver_wallet');
+
+            [
+                $walletSelect,
+                $editWalletSelect,
+                $assetWalletSelect,
+                $senderWalletSelect,
+                $receiverWalletSelect
+            ].forEach($select => {
+                $select.empty().append('<option value="">Select Wallet</option>');
             });
+
+            wallets.forEach(wallet => {
+                const option = `<option value="${wallet.id}">${wallet.name}</option>`;
+                $walletSelect.append(option);
+                $editWalletSelect.append(option);
+                $assetWalletSelect.append(option);
+                $senderWalletSelect.append(option);
+                $receiverWalletSelect.append(option);
+            });
+
         } catch (error) {
             console.error('Error loading wallets:', error);
         }
@@ -857,6 +902,83 @@ $(document).ready(function() {
             showsAlert('Error adding transaction.', 'danger');
         }
     });
+
+    $(document).on('submit', '#transferForm', async function (e) {
+        e.preventDefault();
+
+        const $form = $(this);
+        const formData = new FormData(this);
+
+        const transfer_date   = formData.get('transfer_date');
+        const amount          = parseFloat(formData.get('transfer_amount'));
+        const admin_fee       = parseFloat(formData.get('admin_fee')) || 0;
+        const sender_wallet   = formData.get('sender_wallet');
+        const receiver_wallet = formData.get('receiver_wallet');
+        const note            = formData.get('transfer_note');
+
+        if (sender_wallet === receiver_wallet) {
+            showsAlert('Sender and receiver wallet cannot be the same!', 'danger');
+            return;
+        }
+
+        const sessionData = JSON.parse(localStorage.getItem('user_session'));
+        const userId = sessionData.id;
+
+        const transactionsPayload = [
+            // OUT - Sender
+            {
+                trx_date: transfer_date,
+                type_id: 2, // OUT
+                amount: amount + admin_fee,
+                note: note ? `[Transfer Out] ${note}` : 'Transfer Out',
+                wallet_id: parseInt(sender_wallet),
+                user_id: userId
+            },
+            // IN - Receiver
+            {
+                trx_date: transfer_date,
+                type_id: 1, // IN
+                amount: amount,
+                note: note ? `[Transfer In] ${note}` : 'Transfer In',
+                wallet_id: parseInt(receiver_wallet),
+                user_id: userId
+            }
+        ];
+
+        try {
+            const response = await fetch(`${BASE_URL}/transactions`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(transactionsPayload)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showsAlert('Transfer successful!', 'success');
+
+                const $modalElement = $('#transferModal');
+                if ($modalElement.length) {
+                    const modal = bootstrap.Modal.getOrCreateInstance($modalElement[0]);
+                    modal.hide();
+                }
+
+                $form[0].reset();
+                initDataTableTransactions();
+            } else {
+                showsAlert('Transfer failed: ' + (result.message || 'Unknown error'), 'danger');
+            }
+        } catch (error) {
+            console.error('Error transferring funds:', error);
+            showsAlert('Error processing transfer.', 'danger');
+        }
+    });
+
 
     // Handler untuk submit Add Asset Form
     $(document).on('submit', '#addAssetForm', async function(e) {

@@ -10,6 +10,9 @@
                 <a class="btn btn-success btn-shadow me-2" data-bs-target="#assetModal" data-bs-toggle="modal" href="#">
                     <i class="icon-plus"></i> Add Asset
                 </a>
+                <a class="btn btn-warning btn-shadow me-2" data-bs-target="#transferModal" data-bs-toggle="modal" href="#">
+                    <i class="icon-refresh"></i> Transfer
+                </a>
                 <a class="btn btn-primary btn-shadow" data-bs-target="#transactionModal" data-bs-toggle="modal" href="#">
                     <i class="icon-plus"></i> Add Transaction
                 </a>
@@ -171,6 +174,57 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Transfer Modal -->
+    <div class="modal fade" id="transferModal" tabindex="-1" role="dialog" aria-labelledby="transferModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="transferForm" class="form-validate mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="transferModalLabel">Transfer Funds</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div id="transfer-alert-container"></div>
+                            <div class="form-group">
+                                <label for="transfer_date">Transfer Date</label>
+                                <input type="date" class="form-control" name="transfer_date" id="transfer_date" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="transfer_amount">Amount</label>
+                                <input type="number" class="form-control" name="transfer_amount" id="transfer_amount" step="0.01" placeholder="Enter amount" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="admin_fee">Admin Fee</label>
+                                <input type="number" class="form-control" name="admin_fee" id="admin_fee" step="0.01" placeholder="Enter admin fee" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="sender_wallet">From Wallet</label>
+                                <select class="form-control" name="sender_wallet" id="sender_wallet" required="">
+                                    <option value="">Select Sender Wallet</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="receiver_wallet">To Wallet</label>
+                                <select class="form-control" name="receiver_wallet" id="receiver_wallet" required="">
+                                    <option value="">Select Receiver Wallet</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="transfer_note">Note</label>
+                                <textarea class="form-control" name="transfer_note" id="transfer_note" placeholder="Enter transfer note"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning">Transfer</button>
                     </div>
                 </div>
             </form>

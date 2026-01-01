@@ -117,6 +117,8 @@ $(document).ready(function() {
 
             setTimeout(() => {
                 if ($('#calendar').length > 0) initCalendar();
+                console.log(page);
+                if (page === 'dashboard') initCharts();
                 if ($('#datatable').length > 0) {
                     if (page === 'master-data' || page === 'user-access') {
                         initDataTableMaster();
@@ -128,7 +130,9 @@ $(document).ready(function() {
                         initDataTable();
                     }
                 }
-                if ($('#chartdiv').length > 0) initCharts();
+                if ($('#debtTable').length > 0 && page === 'debt') {
+                    initDataTableDebt();
+                }
                 if (typeof INSPIRO !== 'undefined' && INSPIRO.elements) {
                     INSPIRO.elements.buttons();
                 }
@@ -169,98 +173,6 @@ $(document).ready(function() {
         }
     }
 
-    function initCharts() {
-        am4core.disposeAllCharts();
-        am4core.useTheme(am4themes_animated);
-
-        if ($('#chartdiv').length > 0) {
-            var chart = am4core.create("chartdiv", am4charts.XYChart);
-            chart.data = [
-                { "year": "2009", "income": 23.5, "expenses": 21.1 },
-                { "year": "2010", "income": 26.2, "expenses": 30.5 },
-                { "year": "2011", "income": 30.1, "expenses": 34.9 },
-                { "year": "2012", "income": 29.5, "expenses": 31.1 },
-                { "year": "2013", "income": 30.6, "expenses": 28.2, "lineDash": "5,5" },
-                { "year": "2014", "income": 34.1, "expenses": 32.9, "strokeWidth": 1, "columnDash": "5,5", "fillOpacity": 0.2, "additional": "(projection)" }
-            ];
-            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "year";
-            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            var columnSeries = chart.series.push(new am4charts.ColumnSeries());
-            columnSeries.dataFields.valueY = "income";
-            columnSeries.dataFields.categoryX = "year";
-            columnSeries.name = "Income";
-            var lineSeries = chart.series.push(new am4charts.LineSeries());
-            lineSeries.dataFields.valueY = "expenses";
-            lineSeries.dataFields.categoryX = "year";
-            lineSeries.name = "Expenses";
-            lineSeries.stroke = am4core.color("#fdd400");
-        }
-
-        if ($('#chartdiv2').length > 0) {
-            var chart2 = am4core.create("chartdiv2", am4charts.XYChart);
-            chart2.scrollbarX = new am4core.Scrollbar();
-            chart2.data = [
-                { "country": "2018", "visits": 3025 }, { "country": "2019", "visits": 1882 },
-                { "country": "2020", "visits": 1809 }, { "country": "2021", "visits": 1322 },
-                { "country": "2022", "visits": 1122 }, { "country": "2023", "visits": 1114 }
-            ];
-            var categoryAxis2 = chart2.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis2.dataFields.category = "country";
-            categoryAxis2.renderer.labels.template.rotation = 270;
-            var valueAxis2 = chart2.yAxes.push(new am4charts.ValueAxis());
-            var series2 = chart2.series.push(new am4charts.ColumnSeries());
-            series2.dataFields.valueY = "visits";
-            series2.dataFields.categoryX = "country";
-            series2.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series2.columns.template.adapter.add("fill", (fill, target) => chart2.colors.getIndex(target.dataItem.index));
-        }
-
-        if ($('#chartdiv5').length > 0) {
-            var chart5 = am4core.create("chartdiv5", am4charts.XYChart);
-            chart5.data = [{ "date": "2023-01-01", "value": 81 }, { "date": "2023-01-02", "value": 50 }, { "date": "2023-01-03", "value": 90 }];
-            chart5.dateFormatter.inputDateFormat = "yyyy-MM-dd";
-            var dateAxis = chart5.xAxes.push(new am4charts.DateAxis());
-            var valueAxis5 = chart5.yAxes.push(new am4charts.ValueAxis());
-            var series5 = chart5.series.push(new am4charts.LineSeries());
-            series5.dataFields.valueY = "value";
-            series5.dataFields.dateX = "date";
-            series5.tooltipText = "{value}";
-            chart5.cursor = new am4charts.XYCursor();
-            chart5.scrollbarX = new am4charts.XYChartScrollbar();
-            chart5.scrollbarX.series.push(series5);
-        }
-
-        if ($('#chartdiv8').length > 0) {
-            var chart8 = am4core.create("chartdiv8", am4charts.PieChart);
-            chart8.data = [{ "country": "Tabungan", "litres": 500 }, { "country": "Investasi", "litres": 300 }, { "country": "Cash", "litres": 200 }];
-            var pieSeries = chart8.series.push(new am4charts.PieSeries());
-            pieSeries.dataFields.value = "litres";
-            pieSeries.dataFields.category = "country";
-        }
-
-        if ($('#chartdiv9').length > 0) {
-            var chart9 = am4core.create("chartdiv9", am4charts.RadarChart);
-            chart9.data = [
-                { "category": "Hutang Bank", "value": 80, "full": 100 },
-                { "category": "Kartu Kredit", "value": 35, "full": 100 },
-                { "category": "Pinjaman", "value": 92, "full": 100 }
-            ];
-            chart9.startAngle = -90; chart9.endAngle = 180;
-            chart9.innerRadius = am4core.percent(20);
-            var categoryAxis9 = chart9.yAxes.push(new am4charts.CategoryAxis());
-            categoryAxis9.dataFields.category = "category";
-            var valueAxis9 = chart9.xAxes.push(new am4charts.ValueAxis());
-            valueAxis9.min = 0; valueAxis9.max = 100;
-            var series9 = chart9.series.push(new am4charts.RadarColumnSeries());
-            series9.dataFields.valueX = "value";
-            series9.dataFields.categoryY = "category";
-            series9.columns.template.radarColumn.cornerRadius = 20;
-            series9.columns.template.adapter.add("fill", (fill, target) => chart9.colors.getIndex(target.dataItem.index));
-        }
-
-        console.log("All Financial Charts Initialized.");
-    }
 
     function initCalendar() {
         const $calendarEl = $('#calendar');
@@ -1528,6 +1440,568 @@ $(document).ready(function() {
             showsAlert('Error deleting category.', 'danger');
         }
     });
+
+    // Debt Management Functions
+    async function initDataTableDebt() {
+        const $tableEl = $('#debtTable');
+        if ($tableEl.length === 0) return;
+
+        if ($.fn.DataTable.isDataTable('#debtTable')) {
+            $tableEl.DataTable().destroy();
+        }
+
+        const sessionData = JSON.parse(localStorage.getItem('user_session'));
+        const userId = sessionData.id;
+
+        const FETCH_DEBT_API = `${BASE_URL}/debt?user_id=eq.${userId}&order=id.desc`;
+
+        try {
+            const response = await fetch(FETCH_DEBT_API, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            const processedData = data.map(debt => {
+                const typeText = debt.type_id == 1 ? 'Receivable' : 'Payable';
+                const statusText = debt.status ? 'Active' : 'Completed';
+                const installmentText = debt.is_installment ? 
+                    `${debt.installment_interval} (${debt.installment_total} installments)` : 'No';
+
+                return {
+                    ...debt,
+                    type_text: typeText,
+                    status_text: statusText,
+                    installment_text: installmentText
+                };
+            });
+
+            const table = $tableEl.DataTable({
+                data: processedData,
+                columns: [
+                    { data: 'person_name' },
+                    { data: 'type_text' },
+                    { data: 'ammount', render: function(data) { return 'Rp ' + parseFloat(data).toLocaleString('id-ID'); } },
+                    { data: 'due_date', render: function(data) { return data ? new Date(data).toLocaleDateString('id-ID') : '-'; } },
+                    { data: 'status_text' },
+                    { data: 'installment_text' },
+                    {
+                        data: null,
+                        className: 'noExport',
+                        render: function(data, type, row) {
+                            let actions = `
+                                <div class="btn-group">
+                                    <a class="ms-2 text-primary" href="#" onclick="editDebt(${row.id})"><i class="icon-edit"></i></a>
+                                    <a class="ms-2 text-danger" href="#" onclick="deleteDebt(${row.id})"><i class="icon-trash-2"></i></a>
+                            `;
+                            if (row.is_installment && row.status) {
+                                actions += `<a class="ms-2 text-success" href="#" onclick="payInstallment(${row.id})"><i class="icon-credit-card"></i></a>`;
+                            }
+                            actions += `</div>`;
+                            return actions;
+                        }
+                    }
+                ],
+                buttons: [
+                    { extend: 'print', className: 'btn-light' },
+                    { extend: 'pdf', className: 'btn-light' },
+                    { extend: 'excel', className: 'btn-light' }
+                ],
+                responsive: true,
+                pageLength: 10,
+                order: [[3, 'asc']] // Order by due date ascending
+            });
+
+            if ($('#export_buttons').length > 0) {
+                table.buttons().container().appendTo('#export_buttons');
+            }
+
+        } catch (err) {
+            console.error("Error loading debt data:", err);
+        }
+    }
+
+    // Add Debt
+    $(document).on('submit', '#addDebtForm', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const debtData = {
+            person_name: formData.get('person_name'),
+            type_id: parseInt(formData.get('type_id')),
+            ammount: parseFloat(formData.get('amount')),
+            due_date: formData.get('due_date') || null,
+            status: formData.get('status') === 'true',
+            is_installment: $('#is_installment').is(':checked'),
+            installment_interval: $('#is_installment').is(':checked') ? formData.get('installment_interval') : null,
+            installment_total: $('#is_installment').is(':checked') ? parseInt(formData.get('installment_count')) : null,
+            note: formData.get('note'),
+            user_id: JSON.parse(localStorage.getItem('user_session')).id
+        };
+
+        try {
+            const response = await fetch(`${BASE_URL}/debt`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(debtData)
+            });
+
+            if (response.ok) {
+                showsAlert('Debt added successfully!', 'success', '#debt-alert-container');
+                $('#debtModal').modal('hide');
+                $('#addDebtForm')[0].reset();
+                initDataTableDebt();
+            } else {
+                const error = await response.json();
+                showsAlert('Failed to add debt: ' + (error.message || 'Unknown error'), 'danger', '#debt-alert-container');
+            }
+        } catch (error) {
+            console.error('Error adding debt:', error);
+            showsAlert('Error adding debt.', 'danger', '#debt-alert-container');
+        }
+    });
+
+    // Edit Debt
+    window.editDebt = function(id) {
+        fetch(`${BASE_URL}/debt?id=eq.${id}`, {
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                const debt = data[0];
+                $('#editDebtId').val(debt.id);
+                $('#edit_person_name').val(debt.person_name);
+                $('#edit_type_id').val(debt.type_id);
+                $('#edit_amount').val(debt.ammount);
+                $('#edit_due_date').val(debt.due_date ? debt.due_date.split('T')[0] : '');
+                $('#edit_status').val(debt.status.toString());
+                $('#edit_is_installment').prop('checked', debt.is_installment);
+                $('#edit_installment_interval').val(debt.installment_interval || '');
+                $('#edit_installment_count').val(debt.installment_total || '');
+                $('#edit_note').val(debt.note || '');
+
+                // Show/hide installment fields
+                if (debt.is_installment) {
+                    $('.edit-installment-fields').show();
+                } else {
+                    $('.edit-installment-fields').hide();
+                }
+
+                $('#editDebtModal').modal('show');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching debt:', error);
+            showsAlert('Error loading debt data.', 'danger');
+        });
+    };
+
+    // Update Debt
+    $(document).on('submit', '#editDebtForm', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const id = $('#editDebtId').val();
+        const debtData = {
+            person_name: formData.get('person_name'),
+            type_id: parseInt(formData.get('type_id')),
+            ammount: parseFloat(formData.get('amount')),
+            due_date: formData.get('due_date') || null,
+            status: formData.get('status') === 'true',
+            is_installment: $('#edit_is_installment').is(':checked'),
+            installment_interval: $('#edit_is_installment').is(':checked') ? formData.get('installment_interval') : null,
+            installment_total: $('#edit_is_installment').is(':checked') ? parseInt(formData.get('installment_count')) : null,
+            note: formData.get('note')
+        };
+
+        try {
+            const response = await fetch(`${BASE_URL}/debt?id=eq.${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(debtData)
+            });
+
+            if (response.ok) {
+                showsAlert('Debt updated successfully!', 'success', '#edit-debt-alert-container');
+                $('#editDebtModal').modal('hide');
+                initDataTableDebt();
+            } else {
+                const error = await response.json();
+                showsAlert('Failed to update debt: ' + (error.message || 'Unknown error'), 'danger', '#edit-debt-alert-container');
+            }
+        } catch (error) {
+            console.error('Error updating debt:', error);
+            showsAlert('Error updating debt.', 'danger', '#edit-debt-alert-container');
+        }
+    });
+
+    // Delete Debt
+    window.deleteDebt = function(id) {
+        $('#deleteDebtId').val(id);
+        $('#deleteDebtModal').modal('show');
+    };
+
+    $(document).on('click', '#confirmDeleteDebt', async function() {
+        const id = $('#deleteDebtId').val();
+
+        try {
+            const response = await fetch(`${BASE_URL}/debt?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (response.ok) {
+                showsAlert('Debt deleted successfully!', 'success');
+                $('#deleteDebtModal').modal('hide');
+                initDataTableDebt();
+            } else {
+                showsAlert('Failed to delete debt.', 'danger');
+            }
+        } catch (error) {
+            console.error('Error deleting debt:', error);
+            showsAlert('Error deleting debt.', 'danger');
+        }
+    });
+
+    // Pay Installment
+    window.payInstallment = function(debtId) {
+        $('#payInstallmentDebtId').val(debtId);
+        $('#payment_date').val(new Date().toISOString().split('T')[0]); // Set today's date
+        $('#payInstallmentModal').modal('show');
+    };
+
+    $(document).on('submit', '#payInstallmentForm', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const debtId = $('#payInstallmentDebtId').val();
+        const paymentData = {
+            debt_id: parseInt(debtId),
+            amount: parseFloat(formData.get('payment_amount')),
+            payment_date: formData.get('payment_date'),
+            note: formData.get('payment_note')
+        };
+
+        try {
+            const response = await fetch(`${BASE_URL}/debt_payments`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(paymentData)
+            });
+
+            if (response.ok) {
+                showsAlert('Payment recorded successfully!', 'success', '#pay-installment-alert-container');
+                $('#payInstallmentModal').modal('hide');
+                $('#payInstallmentForm')[0].reset();
+                initDataTableDebt(); // Refresh to show updated status
+            } else {
+                const error = await response.json();
+                showsAlert('Failed to record payment: ' + (error.message || 'Unknown error'), 'danger', '#pay-installment-alert-container');
+            }
+        } catch (error) {
+            console.error('Error recording payment:', error);
+            showsAlert('Error recording payment.', 'danger', '#pay-installment-alert-container');
+        }
+    });
+
+    // Toggle installment fields
+    $(document).on('change', '#is_installment', function() {
+        if ($(this).is(':checked')) {
+            $('.installment-fields').show();
+        } else {
+            $('.installment-fields').hide();
+        }
+    });
+
+    $(document).on('change', '#edit_is_installment', function() {
+        if ($(this).is(':checked')) {
+            $('.edit-installment-fields').show();
+        } else {
+            $('.edit-installment-fields').hide();
+        }
+    });
+
+    // Initialize debt table if on debt page
+    if (window.location.pathname.includes('debt.html')) {
+        initDataTableDebt();
+    }
+
+    // Alias for backward compatibility
+    window.initTableMasterDebt = initDataTableDebt;
+
+    function initCharts() {
+        am4core.disposeAllCharts();
+        am4core.useTheme(am4themes_animated);
+
+        // Cash Flow Chart - Line Chart
+        if ($('#cashFlowChart').length > 0) {
+            var chart = am4core.create("cashFlowChart", am4charts.XYChart);
+            chart.data = [
+                { "date": "2024-01-01", "income": 15000000, "expenses": 12500000 },
+                { "date": "2024-01-02", "income": 16000000, "expenses": 13000000 },
+                { "date": "2024-01-03", "income": 14000000, "expenses": 13500000 },
+                { "date": "2024-01-04", "income": 17000000, "expenses": 14000000 },
+                { "date": "2024-01-05", "income": 15500000, "expenses": 12800000 },
+                { "date": "2024-01-06", "income": 16500000, "expenses": 13200000 },
+                { "date": "2024-01-07", "income": 15800000, "expenses": 12900000 }
+            ];
+            
+            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+            dateAxis.dataFields.dateX = "date";
+            dateAxis.title.text = "Date";
+            
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Amount (IDR)";
+            
+            var incomeSeries = chart.series.push(new am4charts.LineSeries());
+            incomeSeries.dataFields.valueY = "income";
+            incomeSeries.dataFields.dateX = "date";
+            incomeSeries.name = "Income";
+            incomeSeries.stroke = am4core.color("#28a745");
+            incomeSeries.strokeWidth = 3;
+            
+            var expensesSeries = chart.series.push(new am4charts.LineSeries());
+            expensesSeries.dataFields.valueY = "expenses";
+            expensesSeries.dataFields.dateX = "date";
+            expensesSeries.name = "Expenses";
+            expensesSeries.stroke = am4core.color("#dc3545");
+            expensesSeries.strokeWidth = 3;
+            
+            chart.legend = new am4charts.Legend();
+            chart.cursor = new am4charts.XYCursor();
+        }
+
+        // Expense by Category - Donut Chart
+        if ($('#expenseCategoryChart').length > 0) {
+            var chart = am4core.create("expenseCategoryChart", am4charts.PieChart);
+            chart.data = [
+                { "category": "Makanan", "amount": 4500000 },
+                { "category": "Transport", "amount": 3200000 },
+                { "category": "Hiburan", "amount": 2800000 },
+                { "category": "Belanja", "amount": 2100000 },
+                { "category": "Lainnya", "amount": 1400000 }
+            ];
+            
+            var pieSeries = chart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "amount";
+            pieSeries.dataFields.category = "category";
+            pieSeries.innerRadius = am4core.percent(50);
+            
+            pieSeries.labels.template.disabled = true;
+            pieSeries.ticks.template.disabled = true;
+            
+            var label = pieSeries.createChild(am4core.Label);
+            label.text = "Total\nRp 14,000,000";
+            label.horizontalCenter = "middle";
+            label.verticalCenter = "middle";
+            label.fontSize = 14;
+        }
+
+        // Daily Spending Trend - Bar Chart
+        if ($('#dailySpendingChart').length > 0) {
+            var chart = am4core.create("dailySpendingChart", am4charts.XYChart);
+            chart.data = [
+                { "day": "Senin", "amount": 850000 },
+                { "day": "Selasa", "amount": 920000 },
+                { "day": "Rabu", "amount": 780000 },
+                { "day": "Kamis", "amount": 1050000 },
+                { "day": "Jumat", "amount": 1200000 },
+                { "day": "Sabtu", "amount": 1350000 },
+                { "day": "Minggu", "amount": 950000 }
+            ];
+            
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "day";
+            
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Amount (IDR)";
+            
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueY = "amount";
+            series.dataFields.categoryX = "day";
+            series.columns.template.fill = am4core.color("#ffc107");
+        }
+
+        // Debt Composition - Donut Chart
+        if ($('#debtCompositionChart').length > 0) {
+            var chart = am4core.create("debtCompositionChart", am4charts.PieChart);
+            chart.data = [
+                { "source": "Bank", "amount": 25000000 },
+                { "source": "Kartu Kredit", "amount": 15000000 },
+                { "source": "Teman", "amount": 8000000 },
+                { "source": "Keluarga", "amount": 2000000 }
+            ];
+            
+            var pieSeries = chart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "amount";
+            pieSeries.dataFields.category = "source";
+            pieSeries.innerRadius = am4core.percent(50);
+            
+            pieSeries.labels.template.disabled = true;
+            pieSeries.ticks.template.disabled = true;
+        }
+
+        // Debt Over Time - Line Chart
+        if ($('#debtOverTimeChart').length > 0) {
+            var chart = am4core.create("debtOverTimeChart", am4charts.XYChart);
+            chart.data = [
+                { "month": "Jan", "debt": 50000000 },
+                { "month": "Feb", "debt": 48000000 },
+                { "month": "Mar", "debt": 45000000 },
+                { "month": "Apr", "debt": 42000000 },
+                { "month": "May", "debt": 38000000 },
+                { "month": "Jun", "debt": 35000000 }
+            ];
+            
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "month";
+            
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Debt Amount (IDR)";
+            
+            var series = chart.series.push(new am4charts.LineSeries());
+            series.dataFields.valueY = "debt";
+            series.dataFields.categoryX = "month";
+            series.stroke = am4core.color("#dc3545");
+            series.strokeWidth = 3;
+            
+            series.bullets.push(new am4charts.CircleBullet());
+        }
+
+        // Asset Allocation - Donut Chart
+        if ($('#assetAllocationChart').length > 0) {
+            var chart = am4core.create("assetAllocationChart", am4charts.PieChart);
+            chart.data = [
+                { "asset": "Cash", "amount": 20000000 },
+                { "asset": "Emas", "amount": 15000000 },
+                { "asset": "Properti", "amount": 30000000 },
+                { "asset": "Saham", "amount": 25000000 },
+                { "asset": "Crypto", "amount": 10000000 }
+            ];
+            
+            var pieSeries = chart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "amount";
+            pieSeries.dataFields.category = "asset";
+            pieSeries.innerRadius = am4core.percent(50);
+            
+            pieSeries.labels.template.disabled = true;
+            pieSeries.ticks.template.disabled = true;
+        }
+
+        // Asset Comparison - Bar Chart
+        if ($('#assetComparisonChart').length > 0) {
+            var chart = am4core.create("assetComparisonChart", am4charts.XYChart);
+            chart.data = [
+                { "asset": "Cash", "value": 20000000 },
+                { "asset": "Emas", "value": 15000000 },
+                { "asset": "Properti", "value": 30000000 },
+                { "asset": "Saham", "value": 25000000 },
+                { "asset": "Crypto", "value": 10000000 }
+            ];
+            
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "asset";
+            categoryAxis.renderer.labels.template.rotation = 45;
+            
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Value (IDR)";
+            
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "asset";
+            series.columns.template.fill = am4core.color("#28a745");
+        }
+
+        // Net Worth Growth - Area Chart
+        if ($('#netWorthChart').length > 0) {
+            var chart = am4core.create("netWorthChart", am4charts.XYChart);
+            chart.data = [
+                { "month": "Jan", "networth": 100000000 },
+                { "month": "Feb", "networth": 105000000 },
+                { "month": "Mar", "networth": 108000000 },
+                { "month": "Apr", "networth": 112000000 },
+                { "month": "May", "networth": 115000000 },
+                { "month": "Jun", "networth": 118000000 }
+            ];
+            
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "month";
+            
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Net Worth (IDR)";
+            
+            var series = chart.series.push(new am4charts.LineSeries());
+            series.dataFields.valueY = "networth";
+            series.dataFields.categoryX = "month";
+            series.stroke = am4core.color("#007bff");
+            series.strokeWidth = 3;
+            series.fill = am4core.color("#007bff");
+            series.fillOpacity = 0.3;
+        }
+
+        // Transaction Heatmap (Bonus)
+        if ($('#transactionHeatmap').length > 0) {
+            var chart = am4core.create("transactionHeatmap", am4charts.HeatLegend);
+            // Simplified heatmap data
+            chart.data = [
+                { "hour": 0, "weekday": "Mon", "transactions": 5 },
+                { "hour": 1, "weekday": "Mon", "transactions": 2 },
+                // Add more data as needed
+            ];
+        }
+
+        // Top 5 Spending Categories (Bonus)
+        if ($('#topCategoriesChart').length > 0) {
+            var chart = am4core.create("topCategoriesChart", am4charts.XYChart);
+            chart.data = [
+                { "category": "Makanan", "amount": 4500000 },
+                { "category": "Transport", "amount": 3200000 },
+                { "category": "Hiburan", "amount": 2800000 },
+                { "category": "Belanja", "amount": 2100000 },
+                { "category": "Tagihan", "amount": 1800000 }
+            ];
+            
+            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "category";
+            categoryAxis.renderer.inversed = true;
+            
+            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+            
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueX = "amount";
+            series.dataFields.categoryY = "category";
+            series.columns.template.fill = am4core.color("#6f42c1");
+        }
+
+        console.log("All Dashboard Charts Initialized with Dummy Data.");
+    }
 
     initDashboard();
 });

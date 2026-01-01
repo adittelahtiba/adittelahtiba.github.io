@@ -6610,4 +6610,12 @@ body[data-bg-image] { background-attachment: fixed; background-position: top cen
 
 .card .card-body .wizard { padding: 1rem; }
 
+/* Fix for fullscreen slider background image coverage */
+.inspiro-slider.slider-fullscreen .slide {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    min-height: 100vh !important;
+}
+
 /*# sourceMappingURL=style.css.map */

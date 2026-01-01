@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row mb-4">
             <div class="col-12">
-                <h4 class="mb-0">Financial Dashboard (masih data dummy)</h4>
+                <h4 class="mb-0">Financial Dashboard</h4>
                 <p class="text-muted">Monitor your financial health at a glance</p>
             </div>
         </div>
@@ -11,8 +11,13 @@
         <div class="row mb-5">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="icon-trending-up"></i> Cash Flow - "Uang kemana aja?"</h5>
+                        <div class="d-flex gap-2">
+                            <input type="date" class="form-control form-control-sm" id="cashFlowStartDate" style="width: 140px;">
+                            <input type="date" class="form-control form-control-sm" id="cashFlowEndDate" style="width: 140px;">
+                            
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -24,7 +29,7 @@
                                     <div class="col-12 mb-3">
                                         <div class="card bg-success text-white">
                                             <div class="card-body text-center">
-                                                <h4>Rp 15,000,000</h4>
+                                                <h4 id="cashFlowChartTotalIncome">Rp 15,000,000</h4>
                                                 <small>Total Income (This Month)</small>
                                             </div>
                                         </div>
@@ -32,7 +37,7 @@
                                     <div class="col-12 mb-3">
                                         <div class="card bg-danger text-white">
                                             <div class="card-body text-center">
-                                                <h4>Rp 12,500,000</h4>
+                                                <h4 id="cashFlowChartTotalExpenses">Rp 12,500,000</h4>
                                                 <small>Total Expenses (This Month)</small>
                                             </div>
                                         </div>
@@ -40,7 +45,7 @@
                                     <div class="col-12">
                                         <div class="card bg-info text-white">
                                             <div class="card-body text-center">
-                                                <h4>Rp 2,500,000</h4>
+                                                <h4 id="cashFlowChartTotalNet">Rp 2,500,000</h4>
                                                 <small>Net Cash Flow</small>
                                             </div>
                                         </div>
@@ -57,8 +62,29 @@
         <div class="row mb-5">
             <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header bg-warning text-dark">
+                    <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="icon-pie-chart"></i> Expense by Category</h5>
+                        <div class="d-flex gap-2">
+                            <select class="form-control form-control-sm" id="expenseYear" style="width: 80px;">
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                            <select class="form-control form-control-sm" id="expenseMonth" style="width: 100px;">
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div id="expenseCategoryChart" style="height: 300px;"></div>
@@ -67,8 +93,32 @@
             </div>
             <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header bg-secondary text-white">
+                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="icon-bar-chart"></i> Daily Spending Trend</h5>
+                        <div class="d-flex gap-2">
+                            <select class="form-control form-control-sm" id="dailySpendingYear" style="width: 80px;">
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                            <select class="form-control form-control-sm" id="dailySpendingMonth" style="width: 100px;">
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            <button class="btn btn-secondary btn-sm" onclick="updateDailySpendingChart()">
+                                <i class="icon-refresh"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div id="dailySpendingChart" style="height: 300px;"></div>
@@ -81,15 +131,25 @@
         <div class="row mb-5">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-danger text-white">
+                    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="icon-alert-triangle"></i> Debt Dashboard - "Beban hutang seberapa berat?"</h5>
+                        <div class="d-flex gap-2">
+                            <select class="form-control form-control-sm" id="debtYear" style="width: 80px;">
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                            <button class="btn btn-light btn-sm" onclick="updateDebtCharts()">
+                                <i class="icon-refresh"></i> Update
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div id="debtCompositionChart" style="height: 250px;"></div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <h6>Debt Payment Progress</h6>
@@ -101,8 +161,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div id="debtOverTimeChart" style="height: 250px;"></div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div id="debtReceivableChart" style="height: 250px;"></div>
                             </div>
                         </div>
                     </div>
@@ -114,8 +177,18 @@
         <div class="row mb-5">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="icon-briefcase"></i> Asset Dashboard - "Kekayaan disimpan dimana?"</h5>
+                        <div class="d-flex gap-2">
+                            <select class="form-control form-control-sm" id="assetYear" style="width: 80px;">
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                            <button class="btn btn-light btn-sm" onclick="updateAssetCharts()">
+                                <i class="icon-refresh"></i> Update
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -138,8 +211,32 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0"><i class="icon-calendar"></i> Transaction Heatmap</h5>
+                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="icon-calendar"></i> Daily Transaction Count</h5>
+                        <div class="d-flex gap-2">
+                            <select class="form-control form-control-sm" id="transactionYear" style="width: 80px;">
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                            <select class="form-control form-control-sm" id="transactionMonth" style="width: 100px;">
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            <button class="btn btn-info btn-sm" onclick="updateTransactionChart()">
+                                <i class="icon-refresh"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div id="transactionHeatmap" style="height: 300px;"></div>

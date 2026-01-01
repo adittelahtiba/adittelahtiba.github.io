@@ -1771,7 +1771,10 @@ $(document).ready(function() {
             url += `&trx_date=lte.${endDate}`;
         }
 
-        url += `&order=trx_date.asc`;
+        const sessionData = JSON.parse(localStorage.getItem('user_session'));
+        const userId = sessionData.id;
+
+        url += `&user_id=eq.${userId}&order=trx_date.asc`;
 
         const res = await fetch(url, {
             headers: {

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Undangan Digital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      html, body {
+          max-width: 100%;
+          overflow-x: hidden;
+          margin: 0;
+          padding: 0;
+      }
+
+      * {
+          box-sizing: border-box;
+      }
+        :root{ --sage:#6B8E7F; --cream:#FAF8F3; --olive:#8B8B7A; --bg-dark:#4A5F56; --bg-light:#FAF8F3; --text-light:#FAF8F3; --text-dark:#4A5F56; --muted:#8B8B7A; --accent:#6B8E7F; --accent-2:#8B8B7A; }
+
+        /* Animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal{
+                opacity:0; transform:translateY(18px) scale(.995); transition:opacity .8s cubic-bezier(.2,.9,.2,1), transform .8s cubic-bezier(.2,.9,.2,1); will-change:opacity,transform;
+            }
+            .reveal.in-view{ opacity:1; transform:none; }
+            .hero-section.reveal{ transform:translateY(6px) scale(1.01); }
+            .gallery-container img{ transition:transform .6s ease, filter .6s ease; }
+            .gallery-container img:hover{ transform:scale(1.04); filter:brightness(1.05); }
+        }
+
+        /* Music toggle */
+        .music-toggle{ position:fixed; left:12px; bottom:12px; z-index:9999; width:48px; height:48px; border-radius:12px; display:inline-grid; place-items:center; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); cursor:pointer }
+        .music-toggle.playing{ background:linear-gradient(90deg,var(--sage),var(--olive)); color:#FAF8F3 }
+        /* Cover overlay */
+        #coverOverlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,rgba(106,142,127,0.95), rgba(106,142,127,0.98)); z-index:99999; padding:24px }
+        #coverCard{ max-width:720px; width:100%; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:16px; padding:28px; text-align:center; border:1px solid rgba(255,255,255,0.04) }
+        #coverCard h2{ font-family:'Great Vibes', serif; font-size:46px; margin:6px 0; color:var(--cream) }
+        #coverCard p.sub{ color:rgba(245,241,232,0.8); margin-bottom:18px }
+        /* Floral decor */
+        .floral-top{ position:relative; display:block; margin:0 auto 12px; max-width:140px; opacity:0.95 }
+        .decor-flower{ position:absolute; pointer-events:none; opacity:0.12 }
+        .decor-flower.left{ left:-20px; top:10px; width:120px }
+        .decor-flower.right{ right:-20px; bottom:10px; width:120px }
+
+        /* Hero override: use couple photo as background and keep it pretty */
+        #home{ background-image: linear-gradient(rgba(74,95,86,0.55), rgba(74,95,86,0.55)), url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974&auto=format&fit=crop'); background-size:cover; background-position:center; padding:72px 0; position:relative }
+        #home .floral-top{ display:none }
+        #home h1, #home h4, #home p{ color:var(--text-light) }
+
+        /* Cover button styles (custom, not default bootstrap) */
+        .cover-btn{ padding:12px 18px; border-radius:12px; font-weight:700; border:none; cursor:pointer; box-shadow:0 8px 20px rgba(2,6,23,0.6); transition:transform .18s ease, box-shadow .18s ease }
+        .cover-btn.primary{ background:linear-gradient(90deg,var(--sage),var(--olive)); color:white }
+        .cover-btn.outline{ background:transparent; color:var(--text-light); border:1px solid rgba(255,255,255,0.12) }
+        .cover-btn:hover{ transform:translateY(-3px) }
+
+        /* Section alternation */
+        body > section{ transition:background .45s, color .45s; }
+        body > section:nth-of-type(odd){ background: linear-gradient(180deg,var(--bg-dark), #5A6F65); color:var(--text-light); }
+        body > section:nth-of-type(even){ background: var(--bg-light); color:var(--text-dark); }
+
+        /* Ensure text in dark sections is readable */
+        body > section:nth-of-type(odd) h2, body > section:nth-of-type(odd) h1, body > section:nth-of-type(odd) p, body > section:nth-of-type(odd) .small{ color:var(--text-light); }
+        body > section:nth-of-type(even) h2, body > section:nth-of-type(even) h1, body > section:nth-of-type(even) p, body > section:nth-of-type(even) .small{ color:var(--text-dark); }
+
+        /* Gallery layout */
+        .gallery-container{ display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:10px; align-items:stretch }
+        .gallery-container img{ width:100%; height:220px; object-fit:cover; border-radius:10px; display:block }
+
+        /* Story images smaller */
+        .story-img{ max-width:420px; width:100%; height:auto; object-fit:cover; border-radius:8px }
+
+        /* Event card style: colored square border */
+        .event-card{ border:3px solid var(--sage); padding:18px; border-radius:8px; background:rgba(107,142,127,0.08) }
+        .event-card h3{ margin-top:0 }
+
+        /* Ensure buttons look ok on light sections */
+        body > section:nth-of-type(even) .btn-primary{ background:linear-gradient(90deg,var(--sage),var(--olive)); color:#fff }
+        
+        /* Wedding gift card text color fix */
+        .card-gift{ color:var(--text-dark); }
+        .card-gift h5, .card-gift p{ color:var(--text-dark); }
+        
+        .countdown-item{ margin:0 16px; flex:0 1 auto; color:var(--sage) }
+        .countdown-item h3{ color:var(--sage); font-family:'Great Vibes', serif }
+        
+        /* Couple frame: centered, pronounced rounded top (semi-circle feel) and subtle shadow */
+        .couple-img {
+    display: block;
+    margin: 0 auto;
+    /* Membuat ukuran lebih ramping */
+    width: 220px; 
+    height: 300px;
+    
+    object-fit: cover;
+    border: 4px solid var(--olive);
+    
+    /* Atas melingkar sempurna (setengah lebar), bawah kotak sedikit manis */
+    /* Rumusnya: Kiri-Atas (Lebar/2) Kanan-Atas (Lebar/2) Kanan-Bawah Kiri-Bawah */
+    border-radius: 110px 110px 15px 15px;
+    
+    box-shadow: 0 12px 30px rgba(74,95,86,0.2);
+    transition: transform 0.3s ease;
+}
+
+/* Biar tetap proporsional di HP kecil */
+@media (max-width: 480px) {
+    .couple-img {
+        width: 180px;
+        height: 250px;
+        border-radius: 90px 90px 12px 12px;
+    }
+}
+        
+        .btn-action{ color:var(--sage); text-decoration:none; font-size:0.95rem; transition:all .25s; font-weight:600 }
+        .btn-action:hover{ text-decoration:underline; transform:translateX(2px) }
+        
+        /* Particles containers placed inside top sections only */
+        .tparty{ position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+        .tparty.hidden{ display:none; }
+        /* Ensure verse section is positioned so particles are contained */
+        #verse{ position:relative }
+    </style>
+</head>
+<body>
+
+    <!-- Particles containers (moved into top sections only) - global container removed -->
+
+    <!-- Cover overlay (personalized via query param ?to=Nama) -->
+    <div id="coverOverlay">
+        <div id="coverCard">
+            <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" style="max-width:90px;opacity:0.95;margin-bottom:6px">
+            <div id="coverGreeting" style="color:#f8fafc;opacity:0.95">Kepada Tamu Terhormat</div>
+            <h2 id="coverCouple">Budi &amp; Sinta</h2>
+            <p class="sub">Jumat, 02 Juli 2026 • 10:00 WIB</p>
+            <div style="display:flex;gap:10px;justify-content:center">
+                <button id="openInvite" class="cover-btn primary">Buka Undangan</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-floating">
+        <a href="#home"><i class="fa-solid fa-house"></i></a>
+        <a href="#couple"><i class="fa-solid fa-heart"></i></a>
+        <a href="#event"><i class="fa-solid fa-calendar-days"></i></a>
+        <a href="#gallery"><i class="fa-solid fa-images"></i></a>
+        <a href="#guestbook"><i class="fa-solid fa-comment-dots"></i></a>
+    </div>
+
+    <section id="home" class="hero-section">
+        <div id="tsparticles-home" class="tparty"></div>
+        <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" class="floral-top" alt="flower">
+        <h4 class="text-uppercase ls-3">The Wedding Of</h4>
+        <h1 class="display-2 font-wedding">Budi & Sinta</h1>
+        <p>02 . 01 . 2026</p>
+        <img class="decor-flower left" src="https://cdn-icons-png.flaticon.com/512/2099/2099078.png" alt="flower left">
+        <img class="decor-flower right" src="https://cdn-icons-png.flaticon.com/512/2099/2099086.png" alt="flower right">
+    </section>
+
+    <section id="verse" class="section-wedding text-center container">
+        <div id="tsparticles-verse" class="tparty"></div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <p class="fst-italic">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istrimu dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."</p>
+                <p class="fw-bold text-uppercase">( QS. Ar-Rum: 21 )</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- background audio + control -->
+    <audio id="bgAudio" src="assets/music.mp3" loop preload="none"></audio>
+    <button id="musicToggle" class="music-toggle" aria-label="Toggle music">♪</button>
+
+    <section id="couple" class="section-wedding container text-center">
+        <h2 class="font-wedding display-4">Mempelai</h2>
+        <div class="row mt-5 align-items-center">
+            <div class="col-md-5">
+                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974" class="couple-img mb-3">
+                <h3 class="font-wedding">Budi Setiawan, S.T</h3>
+                <p>Putra dari Bpk. Ahmad & Ibu Siti</p>
+            </div>
+            <div class="col-md-2 font-wedding display-3 my-4">&</div>
+            <div class="col-md-5">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1974" class="couple-img mb-3">
+                <h3 class="font-wedding">Sinta Permata, S.E</h3>
+                <p>Putri dari Bpk. Yusuf & Ibu Maria</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container py-5 text-center">
+    <h2 class="font-wedding display-4">Love Story</h2>
+    
+    <div class="row mt-4">
+        <div class="col-12 mb-5">
+            <h4>Pertama Kenal</h4>
+            <p class="small text-muted">Januari 2020 - Kami bertemu di acara amal yang diselenggarakan oleh komunitas kami. Dari percakapan singkat, lahirlah ikatan yang tak terduga.</p>
+        </div>
+        <div class="col-12 mb-5">
+            <h4>Menyatakan Cinta</h4>
+            <p class="small text-muted">Maret 2022 - Setelah dua tahun perjalanan penuh kenangan indah, Budi memutuskan untuk mengungkapkan perasaannya yang mendalam kepada Sinta. Momen itu menjadi titik balik dalam hidup mereka berdua.</p>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="font-wedding display-4">Acara</h2>
+        <a id="addToCal" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener">Tambahkan ke Google Calendar</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <div class="event-card">
+                <h3 class="font-wedding">Akad Nikah</h3>
+                <hr>
+                <p class="mb-1"><i class="fa-regular fa-calendar"></i> Jumat, 02 Juli 2026</p>
+                <p class="mb-1"><i class="fa-regular fa-clock"></i> 08.00 - 10.00 WIB</p>
+                <p class="small">Masjid Agung Al-Ikhlas<br>Jl. Protokol No. 1</p>
+                <a href="#" class="btn-action"><i class="fa-solid fa-location-dot"></i> Google Maps</a>
+            </div>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <div class="event-card">
+                <h3 class="font-wedding">Resepsi</h3>
+                <hr>
+                <p class="mb-1"><i class="fa-regular fa-calendar"></i> Jumat, 02 Juli 2026</p>
+                <p class="mb-1"><i class="fa-regular fa-clock"></i> 11.00 - Selesai</p>
+                <p class="small">Gedung Serbaguna Utama<br>Kota Bandung</p>
+                <a href="#" class="btn-action"><i class="fa-solid fa-location-dot"></i> Google Maps</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="text-center mb-4">
+        <h2 class="font-wedding display-4">Galeri Bahagia</h2>
+    </div>
+    <div class="gallery-container">
+        <img src="https://picsum.photos/seed/p1/600/800" style="grid-row: span 2;" alt="thumb1"> <img src="https://picsum.photos/seed/p2/400/400" alt="thumb2">
+        <img src="https://picsum.photos/seed/p3/400/400" alt="thumb3">
+        <img src="https://picsum.photos/seed/p4/800/400" style="grid-column: span 2;" alt="thumb4"> <img src="https://picsum.photos/seed/p5/400/400" alt="thumb5">
+        <img src="https://picsum.photos/seed/p6/400/400" alt="thumb6">
+    </div>
+</section>
+
+<section class="container py-5 text-center">
+    <!-- removed duplicate single gift card (merged below) -->
+</section>
+
+    <section class="section-wedding bg-light text-center">
+        <h2 class="font-wedding mb-4">Countdown</h2>
+        <div class="d-flex justify-content-center">
+            <div class="countdown-item"><h3 id="d">0</h3><small>Hari</small></div>
+            <div class="countdown-item"><h3 id="h">0</h3><small>Jam</small></div>
+            <div class="countdown-item"><h3 id="m">0</h3><small>Menit</small></div>
+            <div class="countdown-item"><h3 id="s">0</h3><small>Detik</small></div>
+        </div>
+    </section>
+
+    <section class="section-wedding container text-center">
+        <h2 class="font-wedding display-4">Wedding Gift</h2>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-5 mb-3">
+                    <div class="card-gift">
+                        <div style="background:linear-gradient(135deg,var(--accent),var(--sage));padding:20px;border-radius:12px;margin-bottom:20px;color:white">
+                            <i class="fa-solid fa-bank fa-2x"></i>
+                        </div>
+                        <h5 id="rekNumber" style="color:var(--accent);font-weight:700">No. Rekening: 123456789</h5>
+                        <p style="color:var(--text-dark)">A/N Budi Setiawan</p>
+                        <button id="btnCopyRek" class="btn btn-sm" style="background:var(--sage);color:white;border:none">Salin No. Rekening</button>
+                    </div>
+            </div>
+            <div class="col-md-5 mb-3">
+                <div class="card-gift">
+                    <div style="background:linear-gradient(135deg,var(--sage),var(--accent));padding:20px;border-radius:12px;margin-bottom:20px;color:white">
+                        <i class="fa-solid fa-map-location-dot fa-2x"></i>
+                    </div>
+                    <h5 style="color:var(--sage);font-weight:700">Kirim Kado (Alamat)</h5>
+                    <p id="giftAddress" style="color:var(--text-dark)">Jl. Melati No. 123, Kota Bandung</p>
+                    <button id="btnCopyAddr" class="btn btn-sm" style="background:var(--accent);color:white;border:none">Salin Alamat</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="guestbook" class="section-wedding container">
+        <div class="card border-0 shadow-sm p-4">
+            <h2 class="font-wedding text-center mb-4">Ucapan & Doa</h2>
+            <form id="guestForm">
+                <input id="g_name" type="text" class="form-control mb-3" placeholder="Nama Lengkap" required>
+                <select id="g_attend" class="form-select mb-3">
+                    <option value="Hadir">Hadir</option>
+                    <option value="Tidak Hadir">Tidak Hadir</option>
+                </select>
+                <textarea id="g_message" class="form-control mb-3" rows="4" placeholder="Berikan ucapan terbaikmu..." required></textarea>
+                <button id="g_submit" type="submit" class="btn btn-primary w-100 py-2" style="background: var(--dusty-blue); border:none;">Kirim Ucapan</button>
+            </form>
+            <div id="guestList" style="margin-top:18px;max-height:260px;overflow:auto"></div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+    <script>
+        // Logika Countdown (event date: 02 Jul 2026 08:00 WIB - future date)
+        const target = new Date("Jul 02, 2026 08:00:00").getTime();
+        function updateCountdown(){
+            const now = new Date().getTime();
+            const gap = target - now;
+            if(gap <= 0){ document.getElementById('d').innerText = 0; document.getElementById('h').innerText = 0; document.getElementById('m').innerText = 0; document.getElementById('s').innerText = 0; return; }
+            document.getElementById('d').innerText = Math.floor(gap / (1000 * 60 * 60 * 24));
+            document.getElementById('h').innerText = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('m').innerText = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('s').innerText = Math.floor((gap % (1000 * 60)) / 1000);
+        }
+        updateCountdown(); setInterval(updateCountdown, 1000);
+
+        // Copy helpers for rekening / alamat
+        function copyText(text){ navigator.clipboard.writeText(text).then(()=>{ alert('Tersalin: ' + text); }).catch(()=>{ alert('Gagal menyalin'); }); }
+        const btnRek = document.getElementById('btnCopyRek');
+        const btnAddr = document.getElementById('btnCopyAddr');
+        if(btnRek) btnRek.addEventListener('click', ()=> copyText(document.getElementById('rekNumber').innerText.replace('No. Rekening: ','').trim()));
+        if(btnAddr) btnAddr.addEventListener('click', ()=> copyText(document.getElementById('giftAddress').innerText.trim()));
+
+        // Guestbook: persist to localStorage
+        const guestForm = document.getElementById('guestForm');
+        const guestList = document.getElementById('guestList');
+        function renderGuests(){
+            const arr = JSON.parse(localStorage.getItem('guestbook')||'[]');
+            guestList.innerHTML = arr.slice().reverse().map(g=>`<div style="padding:10px;border-bottom:1px solid #eee"><strong>${escapeHtml(g.name)}</strong> <span style="color:#666">(${escapeHtml(g.attend)})</span><div style="margin-top:6px">${escapeHtml(g.msg)}</div><div style="font-size:11px;color:#999">${new Date(g.at).toLocaleString()}</div></div>`).join('');
+            if(arr.length===0) guestList.innerHTML = '<div style="color:#666">Belum ada ucapan.</div>';
+        }
+        function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+        if(guestForm){
+            guestForm.addEventListener('submit', e=>{
+                e.preventDefault();
+                const name = document.getElementById('g_name').value.trim();
+                const attend = document.getElementById('g_attend').value;
+                const msg = document.getElementById('g_message').value.trim();
+                if(!name || !msg){ alert('Isi nama dan pesan.'); return; }
+                const arr = JSON.parse(localStorage.getItem('guestbook')||'[]');
+                arr.push({name,attend,msg,at:new Date().toISOString()});
+                localStorage.setItem('guestbook', JSON.stringify(arr));
+                guestForm.reset(); renderGuests();
+                alert('Terima kasih, ucapan Anda telah terkirim.');
+            });
+        }
+        // If no guestbook entries yet, seed with dummy data for demonstration
+        if(!localStorage.getItem('guestbook')){
+            const seed = [
+                {name:'Siti Rahma', attend:'Hadir', msg:'Selamat menempuh hidup baru, semoga sakinah mawaddah warahmah.', at:new Date().toISOString()},
+                {name:'Andi Saputra', attend:'Hadir', msg:'Doa terbaik untuk kedua mempelai. Semoga bahagia selalu!', at:new Date().toISOString()},
+                {name:'Rina Putri', attend:'Tidak Hadir', msg:'Mohon maaf tidak bisa hadir, semoga lancar acaranya.', at:new Date().toISOString()},
+                {name:'Joko Prabowo', attend:'Hadir', msg:'Selamat ya! Doa kami menyertai.', at:new Date().toISOString()}
+            ];
+            localStorage.setItem('guestbook', JSON.stringify(seed));
+        }
+        renderGuests();
+
+        // Personalize cover from query param ?to=Name or ?name=Name
+        function getQueryParam(key){ try{ return new URL(window.location.href).searchParams.get(key); }catch(e){ return null } }
+        const guestParam = getQueryParam('to') || getQueryParam('name');
+        if(guestParam){ const g = decodeURIComponent(guestParam).split('+').join(' ').trim(); document.getElementById('coverGreeting').innerText = `Kepada: ${g}`; }
+
+        // Google Calendar link for event (now in event section)
+        (function(){
+            const addBtn = document.getElementById('addToCal');
+            if(!addBtn) return;
+            const title = encodeURIComponent('Akad Nikah — Budi & Sinta');
+            const details = encodeURIComponent('Akad dan Resepsi pernikahan Budi & Sinta. Lokasi: Masjid Agung Al-Ikhlas / Gedung Serbaguna Utama.');
+            const location = encodeURIComponent('Masjid Agung Al-Ikhlas, Jl. Protokol No.1, Kota Bandung');
+            // event start/end in UTC format YYYYMMDDTHHMMSSZ
+            const start = new Date('2026-07-02T08:00:00');
+            const end = new Date('2026-07-02T14:00:00');
+            function toCalTime(d){ return d.toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z'; }
+            const dates = `${toCalTime(start)}/${toCalTime(end)}`;
+            const href = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
+            addBtn.href = href;
+        })();
+
+        // Open invite: hide cover, try play music
+        (function(){
+            const openBtn = document.getElementById('openInvite');
+            const cover = document.getElementById('coverOverlay');
+            const audio = document.getElementById('bgAudio');
+            const musicBtn = document.getElementById('musicToggle');
+            if(!openBtn || !cover) return;
+            openBtn.addEventListener('click', ()=>{
+                cover.style.transition = 'opacity .5s'; cover.style.opacity = '0'; setTimeout(()=>{ cover.remove(); }, 600);
+                // try play music if available
+                if(audio && audio.src){ audio.play().then(()=>{ if(musicBtn) { musicBtn.classList.add('playing'); musicBtn.innerText='⏸'; } }).catch(()=>{}); }
+            });
+        })();
+
+        // Music toggle control
+        (function(){
+            const audio = document.getElementById('bgAudio');
+            const btn = document.getElementById('musicToggle');
+            let playing = false;
+            function setPlaying(v){ playing = v; btn.classList.toggle('playing', v); btn.innerText = v ? '⏸' : '♪'; }
+            btn.addEventListener('click', ()=>{
+                if(!audio.src){ alert('Silakan taruh file musik di assets/music.mp3 atau set src.'); return; }
+                if(playing){ audio.pause(); setPlaying(false); }
+                else{ audio.play().then(()=> setPlaying(true)).catch(()=>{ alert('Browser memblokir pemutaran otomatis. Silakan izinkan interaksi.'); }); }
+            });
+            audio.addEventListener('pause', ()=> setPlaying(false));
+            audio.addEventListener('play', ()=> setPlaying(true));
+        })();
+
+        // IntersectionObserver reveal animations
+        (function(){
+            if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const els = document.querySelectorAll('section, .card, .event-card, .gallery-container, .hero-section');
+            els.forEach(el=> el.classList.add('reveal'));
+            const io = new IntersectionObserver((entries)=>{
+                entries.forEach(e=>{ if(e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+            }, {threshold:0.12});
+            els.forEach(el=> io.observe(el));
+        })();
+
+        // Disable right-click and common inspect shortcuts (not foolproof)
+        (function(){
+            document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+            document.addEventListener('keydown', function(e){
+                // F12
+                if(e.keyCode === 123) e.preventDefault();
+                // Ctrl+Shift+I / Ctrl+Shift+J
+                if(e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) e.preventDefault();
+                // Ctrl+U
+                if(e.ctrlKey && (e.key === 'U' || e.key === 'u')) e.preventDefault();
+            });
+            // prevent some touch-zoom gestures (best-effort)
+            let lastTouchEnd = 0;
+            document.addEventListener('touchstart', function(e){ if(e.touches.length > 1) e.preventDefault(); }, {passive:false});
+            document.addEventListener('touchend', function(e){ const now = Date.now(); if(now - lastTouchEnd <= 300) e.preventDefault(); lastTouchEnd = now; }, false);
+        })();
+
+        // Particles JS initialization
+        (function(){
+                if(!tsParticles) return;
+                const particleOptions = {
+                    particles: {
+                        number:{ value:80, density:{ enable:true, value_area:800 } },
+                        color:{ value:'#6B8E7F' },
+                        shape:{ type:'circle' },
+                        opacity:{ value:0.25, random:true },
+                        size:{ value:3, random:true },
+                        move:{ enable:true, speed:0.8, direction:'none', random:false, straight:false, out_mode:'out', attract:{enable:false} }
+                    },
+                    interactivity:{
+                        detect_on:'canvas',
+                        events:{ onhover:{enable:true, mode:'repulse'}, onclick:{enable:true, mode:'push'} },
+                        modes:{ repulse:{distance:100}, push:{particles_nb:4} }
+                    },
+                    retina_detect:true
+                };
+
+                // Load particles only into the two top sections so lower buttons remain clickable
+                try{ tsParticles.load('tsparticles-home', particleOptions); }catch(e){}
+                try{ tsParticles.load('tsparticles-verse', particleOptions); }catch(e){}
+        })();
+    </script>
+</body>
+</html>

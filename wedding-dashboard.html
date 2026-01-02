@@ -182,6 +182,7 @@ function openModal(mode, id = null) {
       <label>Kategori</label>
       <select id="f_cat">${rawData.map(c => `<option value="${c.id}" ${item?.category_id == c.id ? 'selected':''}>${c.name}</option>`).join('')}</select>
       <label>Nama Item</label><input type="text" id="f_name" value="${item?.name || ''}">
+      <label>Notes</label><textarea id="f_notes" rows="3" style="width:100%; padding:10px; margin:8px 0 16px 0; background:#0f172a; border:1px solid #334155; color:white; border-radius:6px;">${item?.notes || ''}</textarea>
       <label>Estimasi Biaya</label><input type="number" id="f_cost" value="${item?.estimated_cost || ''}">
       <label>Link Source</label><input type="text" id="f_url" value="${item?.url_source || ''}">
       <label>Pihak</label>
@@ -195,8 +196,9 @@ function openModal(mode, id = null) {
     document.getElementById('modalTitle').innerText = "Catat Pembayaran";
     let items = [];
     rawData.forEach(c => c.wedding_items.forEach(i => items.push(i)));
+    // if `id` provided, preselect that item in the dropdown
     container.innerHTML = `
-      <label>Item</label><select id="f_item">${items.map(i => `<option value="${i.id}">${i.name}</option>`).join('')}</select>
+      <label>Item</label><select id="f_item">${items.map(i => `<option value="${i.id}" ${i.id == id ? 'selected':''}>${i.name}</option>`).join('')}</select>
       <label>Jumlah Bayar</label><input type="number" id="f_amount">
     `;
   }
@@ -212,6 +214,7 @@ async function submitForm() {
     body = {
       category_id: parseInt(document.getElementById('f_cat').value),
       name: document.getElementById('f_name').value,
+      notes: document.getElementById('f_notes') ? document.getElementById('f_notes').value : '',
       estimated_cost: parseInt(document.getElementById('f_cost').value) || 0,
       parties_id: parseInt(document.getElementById('f_party').value),
       url_source: document.getElementById('f_url').value
@@ -235,7 +238,10 @@ function renderCategories() {
           <tbody>
             ${cat.wedding_items.map(item => `
               <tr>
-                <td><strong>${item.name}</strong></td>
+                          <td>
+                            <strong>${item.name}</strong>
+                            ${item.notes ? `<div style="color:#94a3b8; font-size:12px; margin-top:6px">${item.notes}</div>` : ''}
+                          </td>
                 <td><span class="badge">${item.wedding_parties?.name || 'Bersama'}</span></td>
                 <td>Rp ${item.estimated_cost?.toLocaleString('id-ID')}</td>
                 <td>Rp ${item.wedding_payments.reduce((s,p)=>s+p.paid_amount,0).toLocaleString('id-ID')}</td>
@@ -243,6 +249,7 @@ function renderCategories() {
                   ${item.url_source ? `<a href="${item.url_source}" target="_blank" class="btn-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-width="2"/></svg></a>` : '-'}
                 </td>
                 <td style="text-align:center">
+                            <button class="btn-icon" title="Bayar" onclick="openModal('payment', ${item.id})"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2" stroke-width="2"/><path d="M4 6h16v12H4z" stroke-width="2"/></svg></button>
                   <button class="btn-icon" onclick="openModal('item', ${item.id})"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" stroke-width="2"/></svg></button>
                   <button class="btn-icon" onclick="deleteItem(${item.id})"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" stroke-width="2"/></svg></button>
                 </td>

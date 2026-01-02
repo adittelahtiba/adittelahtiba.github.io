@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Undangan Digital</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css2.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="assets/icon.png">
     <style>
       html, body {
           max-width: 100%;
@@ -33,8 +34,11 @@
         }
 
         /* Music toggle */
-        .music-toggle{ position:fixed; left:12px; bottom:12px; z-index:9999; width:48px; height:48px; border-radius:12px; display:inline-grid; place-items:center; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); cursor:pointer }
+        .music-toggle{ position:fixed; left:12px; bottom:12px; z-index:9999; width:48px; height:48px; border-radius:100px; display:inline-grid; place-items:center; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); cursor:pointer }
+        .music-toggle i{ font-size:18px; color:var(--sage); display:inline-block; transition:transform .3s ease, color .2s }
         .music-toggle.playing{ background:linear-gradient(90deg,var(--sage),var(--olive)); color:#FAF8F3 }
+        .music-toggle.playing i{ color:#FAF8F3; animation:spin 1.6s linear infinite }
+        @keyframes spin{ from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
         /* Cover overlay */
         #coverOverlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,rgba(106,142,127,0.95), rgba(106,142,127,0.98)); z-index:99999; padding:24px }
         #coverCard{ max-width:720px; width:100%; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:16px; padding:28px; text-align:center; border:1px solid rgba(255,255,255,0.04) }
@@ -47,7 +51,7 @@
         .decor-flower.right{ right:-20px; bottom:10px; width:120px }
 
         /* Hero override: use couple photo as background and keep it pretty */
-        #home{ background-image: linear-gradient(rgba(74,95,86,0.55), rgba(74,95,86,0.55)), url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974&auto=format&fit=crop'); background-size:cover; background-position:center; padding:72px 0; position:relative; top: -2px;}
+        #home{ background-image: linear-gradient(rgba(74,95,86,0.55), rgba(74,95,86,0.55)), url('assets/photo-1583939003579-730e3918a45a.jpg'); background-size:cover; background-position:center; padding:72px 0; position:relative; top: -2px;}
         #home .floral-top{ display:none }
         #home h1, #home h4, #home p{ color:var(--text-light) }
 
@@ -149,7 +153,7 @@ body > section:nth-of-type(odd) .small {
         /* Ubah bagian ini di dalam tag <style> */
         #event {
             background-image: linear-gradient(rgba(250, 248, 243, 0.85), rgba(250, 248, 243, 0.85)), 
-                            url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974&auto=format&fit=crop');
+                            url('assets/photo-1583939003579-730e3918a45a.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed; /* Membuat efek parallax halus saat di-scroll */
@@ -221,7 +225,7 @@ body > section:nth-of-type(odd) .small {
     <!-- Cover overlay (personalized via query param ?to=Nama) -->
     <div id="coverOverlay">
         <div id="coverCard">
-            <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" style="max-width:90px;opacity:0.95;margin-bottom:6px">
+            <!-- <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" style="max-width:90px;opacity:0.95;margin-bottom:6px"> -->
             <div id="coverGreeting" style="color:#f8fafc;opacity:0.95">Kepada Tamu Terhormat</div>
             <h2 id="coverCouple">Budi &amp; Sinta</h2>
             <p class="sub">Jumat, 02 Juli 2026 • 10:00 WIB</p>
@@ -232,11 +236,11 @@ body > section:nth-of-type(odd) .small {
     </div>
 
     <div class="nav-floating">
-        <a href="#home"><i class="fa-solid fa-house"></i></a>
-        <a href="#couple"><i class="fa-solid fa-heart"></i></a>
-        <a href="#event"><i class="fa-solid fa-calendar-days"></i></a>
-        <a href="#gallery"><i class="fa-solid fa-images"></i></a>
-        <a href="#guestbook"><i class="fa-solid fa-comment-dots"></i></a>
+        <a href="#home"><i class="fa-solid fa-house" style="color :var(--sage)"></i></a>
+        <a href="#couple"><i class="fa-solid fa-heart" style="color :var(--sage)"></i></a>
+        <a href="#event"><i class="fa-solid fa-calendar-days" style="color :var(--sage)"></i></a>
+        <a href="#gallery"><i class="fa-solid fa-images" style="color :var(--sage)"></i></a>
+        <a href="#guestbook"><i class="fa-solid fa-comment-dots" style="color :var(--sage)"></i></a>
     </div>
 
     <section id="home" class="hero-section">
@@ -260,20 +264,21 @@ body > section:nth-of-type(odd) .small {
     </section>
 
     <!-- background audio + control -->
-    <audio id="bgAudio" src="assets/music.mp3" loop preload="none"></audio>
-    <button id="musicToggle" class="music-toggle" aria-label="Toggle music">♪</button>
+    <audio id="bgAudio" src="assets/Taylor Swift - Love Story (Piano Cover by Riyandi Kusuma).mp3" loop preload="none"></audio>
+    <button id="musicToggle" class="music-toggle" aria-label="Toggle music"> <i class="fa-solid fa-compact-disc"></i> </button>
+    
 
     <section id="couple" class="section-wedding container text-center">
         <h3 class="font-wedding display-4">Mempelai</h3>
         <div class="row mt-5 align-items-center">
             <div class="col-md-5">
-                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974" class="couple-img mb-3">
+                <img src="assets/photo-1583939003579-730e3918a45a.jpg" class="couple-img mb-3">
                 <h3 class="font-wedding">Budi Setiawan, S.T</h3>
                 <p>Putra dari Bpk. Ahmad & Ibu Siti</p>
             </div>
             <div class="col-md-2 font-wedding display-3 my-4">&</div>
             <div class="col-md-5">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1974" class="couple-img mb-3">
+                <img src="assets/photo-1511795409834-ef04bbd61622.jpg" class="couple-img mb-3">
                 <h3 class="font-wedding">Sinta Permata, S.E</h3>
                 <p>Putri dari Bpk. Yusuf & Ibu Maria</p>
             </div>
@@ -333,10 +338,10 @@ body > section:nth-of-type(odd) .small {
         <h2 class="font-wedding display-4">Galeri Bahagia</h2>
     </div>
     <div class="gallery-container">
-        <img src="https://picsum.photos/seed/p1/600/800" style="grid-row: span 2;" alt="thumb1"> <img src="https://picsum.photos/seed/p2/400/400" alt="thumb2">
-        <img src="https://picsum.photos/seed/p3/400/400" alt="thumb3">
-        <img src="https://picsum.photos/seed/p4/800/400" style="grid-column: span 2;" alt="thumb4"> <img src="https://picsum.photos/seed/p5/400/400" alt="thumb5">
-        <img src="https://picsum.photos/seed/p6/400/400" alt="thumb6">
+        <img src="assets/101-400x400.jpg" style="grid-row: span 2;" alt="thumb1"> <img src="assets/315-400x400.jpg" alt="thumb2">
+        <img src="assets/133-800x400.jpg" alt="thumb3">
+        <img src="assets/199-400x400.jpg" style="grid-column: span 2;" alt="thumb4"> <img src="assets/428-600x800.jpg" alt="thumb5">
+        <img src="assets/228-400x400.jpg" alt="thumb6">
     </div>
 </section>
 
@@ -380,8 +385,8 @@ body > section:nth-of-type(odd) .small {
         </div>
     </section>
 
-    <section id="guestbook" class="section-wedding container">
-        <div class="card border-0 shadow-sm p-4">
+    <section id="guestbook" class="section-wedding container mb-5">
+        <div class="card border-0 shadow-sm p-4 mb-5">
             <h2 class="font-wedding text-center mb-4">Ucapan & Doa</h2>
             <form id="guestForm">
                 <input id="g_name" type="text" class="form-control mb-3" placeholder="Nama Lengkap" required>
@@ -396,7 +401,7 @@ body > section:nth-of-type(odd) .small {
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+    <script src="assets/tsparticles.slim.bundle.min.js"></script>
     <script>
         // Logika Countdown (event date: 02 Jul 2026 08:00 WIB - future date)
         const target = new Date("Jul 02, 2026 08:00:00").getTime();
@@ -484,7 +489,7 @@ body > section:nth-of-type(odd) .small {
             openBtn.addEventListener('click', ()=>{
                 cover.style.transition = 'opacity .5s'; cover.style.opacity = '0'; setTimeout(()=>{ cover.remove(); }, 600);
                 // try play music if available
-                if(audio && audio.src){ audio.play().then(()=>{ if(musicBtn) { musicBtn.classList.add('playing'); musicBtn.innerText='⏸'; } }).catch(()=>{}); }
+                if(audio && audio.src){ audio.play().then(()=>{ if(musicBtn) { musicBtn.classList.add('playing'); musicBtn.innerHTML='<i class="fa-solid fa-compact-disc"></i>'; } }).catch(()=>{}); }
             });
         })();
 
@@ -493,7 +498,7 @@ body > section:nth-of-type(odd) .small {
             const audio = document.getElementById('bgAudio');
             const btn = document.getElementById('musicToggle');
             let playing = false;
-            function setPlaying(v){ playing = v; btn.classList.toggle('playing', v); btn.innerText = v ? '⏸' : '♪'; }
+            function setPlaying(v){ playing = v; btn.classList.toggle('playing', v); btn.innerHTML = v ? '<i class="fa-solid fa-compact-disc"></i>' : '<i class="fa-solid fa-compact-disc"></i>'; }
             btn.addEventListener('click', ()=>{
                 if(!audio.src){ alert('Silakan taruh file musik di assets/music.mp3 atau set src.'); return; }
                 if(playing){ audio.pause(); setPlaying(false); }

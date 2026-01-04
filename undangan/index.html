@@ -868,17 +868,14 @@ rotate: {
         },
 
         move: {
-          enable: true,
-          direction: "bottom",
-          speed: { min: 0.5, max: 0.8 },
-          gravity: {
-            enable: true,
-            acceleration: 0.25
-          },
-          drift: { min: -0.4, max: 0.4 },
-          straight: false,
-          outModes: { default: "out" }
-        },
+  enable: true,
+  direction: "bottom", // Partikel tetap bergerak ke bawah
+  speed: { min: 1, max: 1.8 }, // Kecepatan akan tetap di rentang ini
+  gravity: {
+    enable: false // Matikan ini agar tidak ada akselerasi
+  },
+  outModes: { default: "out" }
+},
 
         wobble: {
           enable: true,

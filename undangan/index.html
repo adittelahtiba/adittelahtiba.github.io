@@ -114,7 +114,11 @@
 
 /* Variasi Warna Untuk Alamat */
 .money-card {
-    background: linear-gradient(135deg, #000000, #a1923b); /* Sage style */
+    background: linear-gradient(135deg, #005AA7, #00B3A4); /* Sage style */
+}
+
+.address-card {
+    background: linear-gradient(135deg, #1E3C72, #BFC3C7); /* Sage style */
 }
 
         /* Animations */
@@ -322,6 +326,44 @@ body > section:nth-of-type(odd) .small {
         /* Thank you section: perfect circular frames */
         .thankyou-img{ width:160px; height:160px; object-fit:cover; border-radius:50%; border:6px solid var(--sage); box-shadow:0 12px 30px rgba(74,95,86,0.18); display:inline-block }
         @media (max-width:480px){ .thankyou-img{ width:120px; height:120px; border-width:5px } }
+
+        /* Copy notification modal */
+        .copy-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(107, 142, 127, 0.95);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            font-weight: 600;
+            animation: slideInDown 0.3s ease-out, slideOutUp 0.3s ease-out 1s forwards;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -70%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @keyframes slideOutUp {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -70%);
+            }
+        }
     </style>
 </head>
 <body>
@@ -368,6 +410,8 @@ body > section:nth-of-type(odd) .small {
             </div>
         </div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
 
     <!-- background audio + control -->
     <audio id="bgAudio" src="assets/Taylor Swift - Love Story (Piano Cover by Riyandi Kusuma).mp3" loop preload="none"></audio>
@@ -508,7 +552,7 @@ body > section:nth-of-type(odd) .small {
         </div>
 
         <div class="col-md-6 mb-4">
-            <div class="atm-card">
+            <div class="atm-card address-card">
                 <div class="atm-card-inner">
                     <div class="atm-label" style="font-size: 1.2rem; margin-bottom: 5px;"><i class="fa-solid fa-map-location-dot"></i> Ship to:</div>
                     <div class="atm-holder-name" style="font-size: 1rem; line-height: 1.4;" id="giftAddress">
@@ -557,7 +601,6 @@ body > section:nth-of-type(odd) .small {
         </div>
     </section>
 
-    <script src="assets/tsparticles.slim.bundle.min.js"></script>
     <script>
         // Logika Countdown (event date: 02 Jul 2026 08:00 WIB - future date)
         const target = new Date("Jul 02, 2026 08:00:00").getTime();
@@ -664,6 +707,59 @@ body > section:nth-of-type(odd) .small {
             audio.addEventListener('play', ()=> setPlaying(true));
         })();
 
+        // Helper function to show copy notification
+        function showCopyNotification(message) {
+            const existing = document.querySelector('.copy-notification');
+            if(existing) existing.remove();
+            
+            const notif = document.createElement('div');
+            notif.className = 'copy-notification';
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notif.remove();
+            }, 3000);
+        }
+
+        // Click to copy ATM cards and gift address
+        (function(){
+            const atmCards = document.querySelectorAll('.atm-card');
+            atmCards.forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', function(e){
+                    e.preventDefault();
+                    const numberEl = this.querySelector('.atm-number');
+                    if(numberEl){
+                        const text = numberEl.innerText.trim();
+                        navigator.clipboard.writeText(text).then(()=>{
+                            showCopyNotification('✓ Nomor rekening tersalin');
+                        }).catch(()=>{
+                            showCopyNotification('✗ Gagal menyalin');
+                        });
+                    }
+                });
+            });
+            
+            // Gift address card click to copy
+            const giftAddressSection = document.querySelector('#wedding-gift .atm-card:not(.money-card)');
+            if(giftAddressSection){
+                giftAddressSection.style.cursor = 'pointer';
+                giftAddressSection.addEventListener('click', function(e){
+                    e.preventDefault();
+                    const addressEl = document.getElementById('giftAddress');
+                    if(addressEl){
+                        const text = addressEl.innerText.trim();
+                        navigator.clipboard.writeText(text).then(()=>{
+                            showCopyNotification('✓ Alamat tersalin');
+                        }).catch(()=>{
+                            showCopyNotification('✗ Gagal menyalin');
+                        });
+                    }
+                });
+            }
+        })();
+
         // IntersectionObserver reveal animations
         (function(){
             if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -692,41 +788,7 @@ body > section:nth-of-type(odd) .small {
             document.addEventListener('touchend', function(e){ const now = Date.now(); if(now - lastTouchEnd <= 300) e.preventDefault(); lastTouchEnd = now; }, false);
         })();
 
-        // Particles JS initialization with CDN fallback when local file missing
-        (function(){
-            const particleOptions = {
-                particles: {
-                    number:{ value:80, density:{ enable:true, value_area:800 } },
-                    color:{ value:'#6B8E7F' },
-                    shape:{ type:'circle' },
-                    opacity:{ value:0.25, random:true },
-                    size:{ value:3, random:true },
-                    move:{ enable:true, speed:2, direction:'none', random:false, straight:false, out_mode:'out', attract:{enable:false} }
-                },
-                interactivity:{
-                    detect_on:'canvas',
-                    events:{ onhover:{enable:true, mode:'repulse'}, onclick:{enable:true, mode:'push'} },
-                    modes:{ repulse:{distance:100}, push:{particles_nb:4} }
-                },
-                retina_detect:true
-            };
-
-            function initParticles(){
-                try{ if(window.tsParticles && tsParticles.load) tsParticles.load('tsparticles-home', particleOptions); }catch(e){}
-                try{ if(window.tsParticles && tsParticles.load) tsParticles.load('tsparticles-verse', particleOptions); }catch(e){}
-            }
-
-            if(window.tsParticles && tsParticles.load){ initParticles(); }
-            else {
-                // load CDN slim if local file didn't define tsParticles
-                const cdn = 'https://cdn.jsdelivr.net/npm/tsparticles-slim@2/tsparticles.slim.min.js';
-                const s = document.createElement('script');
-                s.src = cdn; s.async = true;
-                s.onload = initParticles;
-                s.onerror = function(){ /* fail silently */ };
-                document.head.appendChild(s);
-            }
-        })();
+        
     </script>
     <script>
     (function(){
@@ -738,9 +800,89 @@ body > section:nth-of-type(odd) .small {
         btn.addEventListener('click', ()=>{
             const showing = wrapper.style.display === 'block';
             wrapper.style.display = showing ? 'none' : 'block';
-            btn.innerText = showing ? 'Kirim Hadiah' : 'Sembunyikan Amplop';
+            btn.innerText = showing ? 'Kirim Hadiah' : 'Click card to copy';
             if(!showing){ setTimeout(()=> window.scrollTo({ top: wrapper.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' }), 120); }
         });
+    })();
+    </script>
+    <script>
+    // Initialize tsparticles for verse section with falling leaves/snow
+    (function(){
+        // Wait for tsParticles library to load
+        const checkParticles = setInterval(function() {
+            if(window.tsParticles) {
+                clearInterval(checkParticles);
+                tsParticles.load("tsparticles-verse", {
+            emitters: {
+                position: {
+                    x: 50,
+                    y: 0
+                },
+                rate: {
+                    delay: 0.15,
+                    quantity: 2
+                }
+            },
+            particles: {
+                color: {
+                    value: "#ffffff"
+                },
+                move: {
+                    decay: 0.05,
+                    direction: "bottom",
+                    enable: true,
+                    gravity: {
+                        acceleration: 3,
+                        enable: true
+                    },
+                    speed: 2,
+                    straight: false
+                },
+                number: {
+                    value: 0
+                },
+                opacity: {
+                    value: 0.8
+                },
+                rotate: {
+                    value: {
+                        min: 0,
+                        max: 360
+                    },
+                    direction: "random",
+                    animation: {
+                        enable: true,
+                        speed: 30
+                    }
+                },
+                shape: {
+                    type: "circle"
+                },
+                size: {
+                    value: {
+                        min: 2,
+                        max: 4
+                    },
+                    animation: {
+                        enable: false
+                    }
+                },
+                wobble: {
+                    enable: true,
+                    speed: {
+                        min: -15,
+                        max: 15
+                    },
+                    distance: 30
+                }
+            },
+            background: {
+                color: "transparent"
+            },
+            detectRetina: true
+        }).catch(e => console.log('Particle loading error:', e));
+            }
+        }, 100);
     })();
     </script>
 </body>

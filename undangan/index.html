@@ -709,14 +709,41 @@ body > section:nth-of-type(odd) .small {
             const audio = document.getElementById('bgAudio');
             const btn = document.getElementById('musicToggle');
             let playing = false;
+            let shouldResumeOnVisible = false; // remember if we should resume when tab becomes visible
+
             function setPlaying(v){ playing = v; btn.classList.toggle('playing', v); btn.innerHTML = v ? '<i class="fa-solid fa-compact-disc"></i>' : '<i class="fa-solid fa-compact-disc"></i>'; }
+
             btn.addEventListener('click', ()=>{
                 if(!audio.src){ alert('Silakan taruh file musik di assets/music.mp3 atau set src.'); return; }
                 if(playing){ audio.pause(); setPlaying(false); }
                 else{ audio.play().then(()=> setPlaying(true)).catch(()=>{ alert('Browser memblokir pemutaran otomatis. Silakan izinkan interaksi.'); }); }
             });
+
             audio.addEventListener('pause', ()=> setPlaying(false));
             audio.addEventListener('play', ()=> setPlaying(true));
+
+            // Pause/resume audio when page/tab visibility changes
+            document.addEventListener('visibilitychange', function() {
+                try{
+                    if(document.hidden){
+                        // remember current playing state so we can resume later
+                        shouldResumeOnVisible = playing;
+                        if(playing){ audio.pause(); setPlaying(false); }
+                    } else {
+                        // tab became visible again
+                        if(shouldResumeOnVisible){
+                            audio.play().then(()=> setPlaying(true)).catch(()=>{/* autoplay blocked - ignore */});
+                        }
+                        shouldResumeOnVisible = false;
+                    }
+                }catch(e){/* ignore */}
+            });
+
+            // Some mobile browsers fire pagehide when app goes to background - treat similar to visibilitychange
+            window.addEventListener('pagehide', function(){ try{ shouldResumeOnVisible = playing; if(playing){ audio.pause(); setPlaying(false); } }catch(e){} });
+
+            // Ensure audio is stopped on unload/navigation
+            window.addEventListener('beforeunload', function(){ try{ audio.pause(); }catch(e){} });
         })();
 
         // Helper function to show copy notification

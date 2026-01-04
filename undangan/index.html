@@ -150,9 +150,11 @@
         .decor-flower.right{ right:-20px; bottom:10px; width:120px }
 
         /* Hero override: use couple photo as background and keep it pretty */
-        #home{ background-image: linear-gradient(rgba(74,95,86,0.55), rgba(74,95,86,0.55)), url('assets/photo-1583939003579-730e3918a45a.jpg'); background-size:cover; background-position:center; padding:72px 0; position:relative; top: -2px;}
+        #home{ background-image: linear-gradient(rgba(74,95,86,0.55), rgba(74,95,86,0.55)), url('assets/photo-1583939003579-730e3918a45a.jpg'); background-size:cover; background-position:center; padding:72px 0; position:relative; top: -2px;
+        min-height: 100vh; overflow: hidden;
+    }
         #home .floral-top{ display:none }
-        #home h1, #home h4, #home p{ color:var(--text-light) }
+        #home h1, #home h4, #home p{ color:var(--text-light); position:relative; z-index:2 }
 
         #addToCal {
             background-color: transparent; color: var(--sage); border: 2px solid var(--sage); padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background .3s, color .3s;
@@ -268,7 +270,7 @@ body > section:nth-of-type(odd) .small {
             border: 3px solid var(--sage);
             padding: 18px;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9) !important; /* Background putih transparan */
+            background: rgb(250 248 243) !important;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         .event-card h3 { margin-top:0; color:var(--accent); }
@@ -316,7 +318,13 @@ body > section:nth-of-type(odd) .small {
         .btn-action:hover{  transform:translateX(2px) }
         
         /* Particles containers placed inside top sections only */
-        .tparty{ position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+        .tparty {
+  position: absolute;
+  inset: 0;
+  z-index: 1;              /* partikel */
+  pointer-events: none;
+}
+
         .tparty.hidden{ display:none; }
         /* Ensure verse section is positioned so particles are contained */
         #verse{ position:relative }
@@ -411,7 +419,7 @@ body > section:nth-of-type(odd) .small {
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+    <script src="assets/tsparticles.slim.bundle.min.js"></script>
 
     <!-- background audio + control -->
     <audio id="bgAudio" src="assets/Taylor Swift - Love Story (Piano Cover by Riyandi Kusuma).mp3" loop preload="none"></audio>
@@ -689,6 +697,10 @@ body > section:nth-of-type(odd) .small {
                 cover.style.transition = 'opacity .5s'; cover.style.opacity = '0'; setTimeout(()=>{ cover.remove(); }, 600);
                 // try play music if available
                 if(audio && audio.src){ audio.play().then(()=>{ if(musicBtn) { musicBtn.classList.add('playing'); musicBtn.innerHTML='<i class="fa-solid fa-compact-disc"></i>'; } }).catch(()=>{}); }
+                setTimeout(() => {
+                    window.dispatchEvent(new Event("resize"));
+                }, 600);
+
             });
         })();
 
@@ -800,90 +812,86 @@ body > section:nth-of-type(odd) .small {
         btn.addEventListener('click', ()=>{
             const showing = wrapper.style.display === 'block';
             wrapper.style.display = showing ? 'none' : 'block';
-            btn.innerText = showing ? 'Kirim Hadiah' : 'Click card to copy';
+            btn.innerText = showing ? 'Kirim Hadiah' : 'Tap to copy';
             if(!showing){ setTimeout(()=> window.scrollTo({ top: wrapper.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' }), 120); }
         });
     })();
     </script>
     <script>
-    // Initialize tsparticles for verse section with falling leaves/snow
-    (function(){
-        // Wait for tsParticles library to load
-        const checkParticles = setInterval(function() {
-            if(window.tsParticles) {
-                clearInterval(checkParticles);
-                tsParticles.load("tsparticles-verse", {
-            emitters: {
-                position: {
-                    x: 50,
-                    y: 0
-                },
-                rate: {
-                    delay: 0.15,
-                    quantity: 2
-                }
-            },
-            particles: {
-                color: {
-                    value: "#ffffff"
-                },
-                move: {
-                    decay: 0.05,
-                    direction: "bottom",
-                    enable: true,
-                    gravity: {
-                        acceleration: 3,
-                        enable: true
-                    },
-                    speed: 2,
-                    straight: false
-                },
-                number: {
-                    value: 0
-                },
-                opacity: {
-                    value: 0.8
-                },
-                rotate: {
-                    value: {
-                        min: 0,
-                        max: 360
-                    },
-                    direction: "random",
-                    animation: {
-                        enable: true,
-                        speed: 30
-                    }
-                },
-                shape: {
-                    type: "circle"
-                },
-                size: {
-                    value: {
-                        min: 2,
-                        max: 4
-                    },
-                    animation: {
-                        enable: false
-                    }
-                },
-                wobble: {
-                    enable: true,
-                    speed: {
-                        min: -15,
-                        max: 15
-                    },
-                    distance: 30
-                }
-            },
-            background: {
-                color: "transparent"
-            },
-            detectRetina: true
-        }).catch(e => console.log('Particle loading error:', e));
-            }
-        }, 100);
-    })();
-    </script>
+(function(){
+  const check = setInterval(() => {
+    if (!window.tsParticles) return;
+    clearInterval(check);
+
+    tsParticles.load("tsparticles-home", {
+      fullScreen: { enable: false },
+
+      background: {
+        color: "transparent"
+      },
+
+      particles: {
+        number: {
+          value: 38,
+          density: { enable: true, area: 900 }
+        },
+
+        color: {
+          value: ["#6B8E7F", "#8B8B7A", "#C9A44C"]
+        },
+
+        shape: {
+  type: "polygon",
+  polygon: {
+    sides: 6
+  }
+},
+
+rotate: {
+  value: { min: 0, max: 360 },
+  animation: { enable: true, speed: 8 }
+},
+
+
+
+        opacity: {
+          value: { min: 0.25, max: 0.7 },
+          animation: {
+            enable: true,
+            speed: 0.5,
+            minimumValue: 0.2
+          }
+        },
+
+        size: {
+          value: { min: 1.5, max: 3.5 }
+        },
+
+        move: {
+          enable: true,
+          direction: "bottom",
+          speed: { min: 0.6, max: 1.6 },
+          gravity: {
+            enable: true,
+            acceleration: 0.25
+          },
+          drift: { min: -0.4, max: 0.4 },
+          straight: false,
+          outModes: { default: "out" }
+        },
+
+        wobble: {
+          enable: true,
+          distance: 12,
+          speed: { min: -1.5, max: 1.5 }
+        }
+      },
+
+      detectRetina: true
+    });
+  }, 100);
+})();
+</script>
+
 </body>
 </html>

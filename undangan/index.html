@@ -20,7 +20,102 @@
       * {
           box-sizing: border-box;
       }
-        :root{ --sage:#6B8E7F; --cream:#FAF8F3; --olive:#8B8B7A; --bg-dark:#4A5F56; --bg-light:#FAF8F3; --text-light:#FAF8F3; --text-dark:#4A5F56; --muted:#8B8B7A; --accent:#6B8E7F; --accent-2:#8B8B7A; }
+        :root{ --sage:#6B8E7F; --cream:#FAF8F3; --olive:#8B8B7A; --bg-dark:#4A5F56; --bg-light:#FAF8F3; --text-light:#FAF8F3; --text-dark:#4A5F56; --muted:#8B8B7A; --accent:#6B8E7F; --accent-2:#8B8B7A;
+    --card-bg: linear-gradient(135deg, #2c3e50, #4ca1af); /* Bisa diganti warna sage Anda */
+    --card-accent: rgba(255, 255, 255, 0.2);
+}
+
+.atm-card {
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: 15px;
+    position: relative;
+    padding: 25px;
+    color: white;
+    text-align: left;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.atm-card:hover {
+    transform: translateY(-5px);
+}
+
+.atm-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 200px;
+    height: 200px;
+    background: var(--card-accent);
+    border-radius: 50%;
+}
+
+.atm-card-inner {
+    position: relative;
+    z-index: 2;
+}
+
+.atm-chip {
+    width: 45px;
+    height: 35px;
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.atm-bank-name {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.atm-number {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    margin: 15px 0;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+}
+
+.atm-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+    opacity: 0.7;
+}
+
+.atm-holder-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.atm-logo {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-style: italic;
+    opacity: 0.5;
+}
+
+/* Variasi Warna Untuk Alamat */
+.money-card {
+    background: linear-gradient(135deg, #000000, #a1923b); /* Sage style */
+}
 
         /* Animations */
         @media (prefers-reduced-motion: no-preference) {
@@ -39,8 +134,8 @@
         .music-toggle.playing{ background:linear-gradient(90deg,var(--sage),var(--olive)); color:#FAF8F3 }
         .music-toggle.playing i{ color:#FAF8F3; animation:spin 1.6s linear infinite }
         @keyframes spin{ from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
-        /* Cover overlay */
-        #coverOverlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,rgba(106,142,127,0.95), rgba(106,142,127,0.98)); z-index:99999; padding:24px }
+        /* Cover overlay (gradient over couple photo) */
+        #coverOverlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background-image: linear-gradient(180deg, rgba(106,142,127,0.75), rgba(106,142,127,0.75)), url('assets/photo-1583939003579-730e3918a45a.jpg'); background-size:cover; background-position:center; z-index:99999; padding:24px }
         #coverCard{ max-width:720px; width:100%; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:16px; padding:28px; text-align:center; border:1px solid rgba(255,255,255,0.04) }
         #coverCard h2{ font-family:'Great Vibes', serif; font-size:46px; margin:6px 0; color:var(--cream) }
         #coverCard p.sub{ color:rgba(245,241,232,0.8); margin-bottom:18px }
@@ -69,6 +164,11 @@
         body > section{ transition:background .45s, color .45s; }
         body > section:nth-of-type(odd){ background: linear-gradient(180deg,var(--bg-dark), #5A6F65); color:var(--text-light); }
         body > section:nth-of-type(even){ background: var(--bg-light); color:var(--text-dark); }
+
+        .text-muted2 {
+    --bs-text-opacity: 1;
+    color: rgb(255 255 255 / 75%) !important;
+}
 
         /* Ensure text in dark sections is readable */
         /* Efek Animasi Kilap */
@@ -216,6 +316,12 @@ body > section:nth-of-type(odd) .small {
         .tparty.hidden{ display:none; }
         /* Ensure verse section is positioned so particles are contained */
         #verse{ position:relative }
+        /* Hidden by default: gift cards (revealed via button) */
+        #giftCardsWrapper{ display:none }
+
+        /* Thank you section: perfect circular frames */
+        .thankyou-img{ width:160px; height:160px; object-fit:cover; border-radius:50%; border:6px solid var(--sage); box-shadow:0 12px 30px rgba(74,95,86,0.18); display:inline-block }
+        @media (max-width:480px){ .thankyou-img{ width:120px; height:120px; border-width:5px } }
     </style>
 </head>
 <body>
@@ -359,28 +465,66 @@ body > section:nth-of-type(odd) .small {
         </div>
     </section>
 
-    <section class="section-wedding container text-center">
+    <section class="section-wedding container text-center" id="wedding-gift">
         <h3 class="font-wedding display-4">Wedding Gift</h3>
         <div class="row justify-content-center mt-4">
-            <div class="col-md-5 mb-3">
-                    <div class="card-gift">
-                        <div style="background:#FAF8F3; border: 2px solid var(--sage); padding:20px;border-radius:12px;margin-bottom:20px;color:var(--sage)">
-                            <i class="fa-solid fa-bank fa-2x"></i>
-                        </div>
-                        <h5 id="rekNumber" style="color:var(--accent);font-weight:700">No. Rekening: 123456789</h5>
-                        <p style="color:var(--text-dark)">A/N Budi Setiawan</p>
-                        <button id="btnCopyRek" class="btn btn-sm" style="background:var(--sage);color:white;border:none">Salin No. Rekening</button>
-                    </div>
-            </div>
-            <div class="col-md-5 mb-3">
-                <div class="card-gift">
-                    <div style="background:#FAF8F3;border: 2px solid var(--sage); padding:20px;border-radius:12px;margin-bottom:20px;color:var(--sage)">
-                        <i class="fa-solid fa-map-location-dot fa-2x"></i>
-                    </div>
-                    <h5 style="color:var(--sage);font-weight:700">Kirim Kado (Alamat)</h5>
-                    <p id="giftAddress" style="color:var(--text-dark)">Jl. Melati No. 123, Kota Bandung</p>
-                    <button id="btnCopyAddr" class="btn btn-sm" style="background:var(--accent);color:white;border:none">Salin Alamat</button>
+            <div class="col-md-8">
+                <p class="small text-muted2">Doa restu Anda adalah karunia bagi kami.</p>
+                <div style="margin:18px 0">
+                    <button id="toggleGiftBtn" class="btn btn-sm" style="background:var(--sage);color:white;border:none;font-weight:700;padding:10px 18px">Kirim Hadiah</button>
                 </div>
+
+                <div id="giftCardsWrapper">
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6 mb-4">
+            <div class="atm-card money-card">
+                <div class="atm-card-inner">
+                    <div class="atm-chip"></div>
+                    <div class="atm-bank-name">Mandiri</div>
+                    <div class="atm-number" id="rekNumber">1234 5678 9012</div>
+                    <div class="atm-label">Account Holder</div>
+                    <div class="atm-holder-name">BUDI SETIAWAN</div>
+                    <div class="atm-logo">BANK</div>
+                </div>
+            </div>
+            <!-- <button id="btnCopyRek" class="btn btn-sm mt-3" style="background:var(--sage);color:white;border-radius:20px;padding:8px">
+                <i class="fa-solid fa-copy"></i> Salin No. Rekening
+            </button> -->
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="atm-card money-card">
+                <div class="atm-card-inner">
+                    <div class="atm-chip"></div>
+                    <div class="atm-bank-name">BCA</div>
+                    <div class="atm-number" id="rekNumber">1234 5678 9012</div>
+                    <div class="atm-label">Account Holder</div>
+                    <div class="atm-holder-name">BUDI SETIAWAN</div>
+                    <div class="atm-logo">BANK</div>
+                </div>
+            </div>
+            <!-- <button id="btnCopyRek2" class="btn btn-sm mt-3" style="background:var(--sage);color:white;border-radius:20px;padding:8px">
+                <i class="fa-solid fa-copy"></i> Salin No. Rekening
+            </button> -->
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="atm-card">
+                <div class="atm-card-inner">
+                    <div class="atm-label" style="font-size: 1.2rem; margin-bottom: 5px;"><i class="fa-solid fa-map-location-dot"></i> Ship to:</div>
+                    <div class="atm-holder-name" style="font-size: 1rem; line-height: 1.4;" id="giftAddress">
+                        Jl. Melati No. 123,<br>
+                        Kec. Coblong, Kota Bandung,<br>
+                        Jawa Barat 40123
+                    </div>
+                    <div class="atm-logo" style="opacity: 0.3;"><i class="fa-solid fa-box-archive"></i></div>
+                </div>
+            </div>
+            <!-- <button id="btnCopyAddr" class="btn btn-sm mt-3" style="background:var(--sage);color:white;border-radius:20px;padding:8px">
+                <i class="fa-solid fa-copy"></i> Salin Alamat
+            </button> -->
+        </div>
+    </div>
+</div>
             </div>
         </div>
     </section>
@@ -398,6 +542,18 @@ body > section:nth-of-type(odd) .small {
                 <button id="g_submit" type="submit" class="btn btn-primary w-100 py-2" style="background: var(--sage); border:none;">Kirim Ucapan</button>
             </form>
             <div id="guestList" style="margin-top:18px;max-height:260px;overflow:auto"></div>
+        </div>
+    </section>
+
+    <!-- Terima Kasih: Bottom section with round couple images -->
+    <section class="section-wedding container text-center" id="thankyou">
+        <div class="text-center mb-4">
+            <h2 class="font-wedding display-4">Terima Kasih</h2>
+            <p class="small text-muted2">Terima kasih atas doa, kehadiran, dan dukungan Anda. Semoga berkah selalu menyertai.</p>
+            <div style="display:flex;gap:24px;justify-content:center;margin-top:20px">
+                <img src="assets/photo-1583939003579-730e3918a45a.jpg" alt="Budi" class="thankyou-img">
+                <img src="assets/photo-1511795409834-ef04bbd61622.jpg" alt="Sinta" class="thankyou-img">
+            </div>
         </div>
     </section>
 
@@ -536,30 +692,56 @@ body > section:nth-of-type(odd) .small {
             document.addEventListener('touchend', function(e){ const now = Date.now(); if(now - lastTouchEnd <= 300) e.preventDefault(); lastTouchEnd = now; }, false);
         })();
 
-        // Particles JS initialization
+        // Particles JS initialization with CDN fallback when local file missing
         (function(){
-                if(!tsParticles) return;
-                const particleOptions = {
-                    particles: {
-                        number:{ value:80, density:{ enable:true, value_area:800 } },
-                        color:{ value:'#6B8E7F' },
-                        shape:{ type:'circle' },
-                        opacity:{ value:0.25, random:true },
-                        size:{ value:3, random:true },
-                        move:{ enable:true, speed:2, direction:'none', random:false, straight:false, out_mode:'out', attract:{enable:false} }
-                    },
-                    interactivity:{
-                        detect_on:'canvas',
-                        events:{ onhover:{enable:true, mode:'repulse'}, onclick:{enable:true, mode:'push'} },
-                        modes:{ repulse:{distance:100}, push:{particles_nb:4} }
-                    },
-                    retina_detect:true
-                };
+            const particleOptions = {
+                particles: {
+                    number:{ value:80, density:{ enable:true, value_area:800 } },
+                    color:{ value:'#6B8E7F' },
+                    shape:{ type:'circle' },
+                    opacity:{ value:0.25, random:true },
+                    size:{ value:3, random:true },
+                    move:{ enable:true, speed:2, direction:'none', random:false, straight:false, out_mode:'out', attract:{enable:false} }
+                },
+                interactivity:{
+                    detect_on:'canvas',
+                    events:{ onhover:{enable:true, mode:'repulse'}, onclick:{enable:true, mode:'push'} },
+                    modes:{ repulse:{distance:100}, push:{particles_nb:4} }
+                },
+                retina_detect:true
+            };
 
-                // Load particles only into the two top sections so lower buttons remain clickable
-                try{ tsParticles.load('tsparticles-home', particleOptions); }catch(e){}
-                try{ tsParticles.load('tsparticles-verse', particleOptions); }catch(e){}
+            function initParticles(){
+                try{ if(window.tsParticles && tsParticles.load) tsParticles.load('tsparticles-home', particleOptions); }catch(e){}
+                try{ if(window.tsParticles && tsParticles.load) tsParticles.load('tsparticles-verse', particleOptions); }catch(e){}
+            }
+
+            if(window.tsParticles && tsParticles.load){ initParticles(); }
+            else {
+                // load CDN slim if local file didn't define tsParticles
+                const cdn = 'https://cdn.jsdelivr.net/npm/tsparticles-slim@2/tsparticles.slim.min.js';
+                const s = document.createElement('script');
+                s.src = cdn; s.async = true;
+                s.onload = initParticles;
+                s.onerror = function(){ /* fail silently */ };
+                document.head.appendChild(s);
+            }
         })();
+    </script>
+    <script>
+    (function(){
+        const btn = document.getElementById('toggleGiftBtn');
+        const wrapper = document.getElementById('giftCardsWrapper');
+        if(!btn || !wrapper) return;
+        // Ensure initial hidden state
+        wrapper.style.display = 'none';
+        btn.addEventListener('click', ()=>{
+            const showing = wrapper.style.display === 'block';
+            wrapper.style.display = showing ? 'none' : 'block';
+            btn.innerText = showing ? 'Kirim Hadiah' : 'Sembunyikan Amplop';
+            if(!showing){ setTimeout(()=> window.scrollTo({ top: wrapper.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' }), 120); }
+        });
+    })();
     </script>
 </body>
 </html>

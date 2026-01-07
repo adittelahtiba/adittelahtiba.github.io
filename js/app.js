@@ -98,6 +98,30 @@ $(document).ready(function() {
     const MENU_API = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/user_menu_view?select=*&id=eq.${user.id}`;
     const BASE_URL = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/`;
 
+    // Helper function to format currency input (display rupiah, send raw value)
+    // Defined early so it's available to all pages
+    function formatCurrencyInput(inputElement) {
+        inputElement.addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, ''); // Remove non-digits
+            if (value) {
+                const formatted = new Intl.NumberFormat('id-ID').format(parseInt(value));
+                this.dataset.rawValue = value; // Store raw value in data attribute
+                this.value = formatted; // Display formatted with dots
+            } else {
+                this.dataset.rawValue = '';
+                this.value = '';
+            }
+        });
+
+        inputElement.addEventListener('blur', function(e) {
+            // On blur, ensure we still see formatted value
+            if (this.dataset.rawValue) {
+                const formatted = new Intl.NumberFormat('id-ID').format(parseInt(this.dataset.rawValue));
+                this.value = formatted;
+            }
+        });
+    }
+
     let currentPage = '';
 
     async function loadPage(page, title) {
@@ -122,7 +146,9 @@ $(document).ready(function() {
                     initCashFlowChart();
                     initCharts();
                     initializeDashboardFilters();
-                    initDaillySpendingTrendChart();
+                    initWeeklySpendingDetail();
+                    initExpenseCategoryChart();
+                    initAssetAllocationChart();
                 }
                 if ($('#datatable').length > 0) {
                     if (page === 'master-data' || page === 'user-access') {
@@ -761,29 +787,6 @@ $(document).ready(function() {
         }
     }
 
-    // Helper function to format currency input (display rupiah, send raw value)
-    function formatCurrencyInput(inputElement) {
-        inputElement.addEventListener('input', function(e) {
-            let value = this.value.replace(/\D/g, ''); // Remove non-digits
-            if (value) {
-                const formatted = new Intl.NumberFormat('id-ID').format(parseInt(value));
-                this.dataset.rawValue = value; // Store raw value in data attribute
-                this.value = formatted; // Display formatted with dots
-            } else {
-                this.dataset.rawValue = '';
-                this.value = '';
-            }
-        });
-
-        inputElement.addEventListener('blur', function(e) {
-            // On blur, ensure we still see formatted value
-            if (this.dataset.rawValue) {
-                const formatted = new Intl.NumberFormat('id-ID').format(parseInt(this.dataset.rawValue));
-                this.value = formatted;
-            }
-        });
-    }
-
     // Handler untuk submit Add Transaction Form
     $(document).on('submit', '#addTransactionForm', async function(e) {
         e.preventDefault();
@@ -876,10 +879,20 @@ $(document).ready(function() {
             {
                 trx_date: transfer_date,
                 type_id: 2, // OUT
-                amount: amount + admin_fee,
+                amount: amount,
                 note: note ? `[Transfer Out] ${note}` : 'Transfer Out',
                 wallet_id: parseInt(sender_wallet),
-                user_id: userId
+                user_id: userId,
+                init: true
+            },
+            {
+                trx_date: transfer_date,
+                type_id: 2, // OUT
+                amount: admin_fee,
+                note: note ? `[Admin Transfer Out] ${note}` : 'AdminTransfer Out',
+                wallet_id: parseInt(sender_wallet),
+                user_id: userId,
+                init: false
             },
             // IN - Receiver
             {
@@ -888,7 +901,8 @@ $(document).ready(function() {
                 amount: amount,
                 note: note ? `[Transfer In] ${note}` : 'Transfer In',
                 wallet_id: parseInt(receiver_wallet),
-                user_id: userId
+                user_id: userId,
+                init: true
             }
         ];
 
@@ -1924,7 +1938,7 @@ $(document).ready(function() {
         const year = $('#expenseYear').val();
         const month = $('#expenseMonth').val();
         const yearMonth = `${year}-${month}`;
-        
+
         const userSession = localStorage.getItem('user_session');
         const userId = userSession ? JSON.parse(userSession).id : null;
         
@@ -1946,11 +1960,6 @@ $(document).ready(function() {
                     category: item.category_name,
                     amount: Number(item.amount)
                 })) : [
-                    { category: "Makanan", amount: 4500000 },
-                    { category: "Transport", amount: 3200000 },
-                    { category: "Hiburan", amount: 2800000 },
-                    { category: "Belanja", amount: 2100000 },
-                    { category: "Lainnya", amount: 1400000 }
                 ];
 
                 // Hitung total
@@ -1982,88 +1991,223 @@ $(document).ready(function() {
             });
     }
 
-    // Inisialisasi saat halaman load
-    $(document).ready(function() {
-        initExpenseCategoryChart();
 
-        // Update chart saat select berubah
-        $('#expenseYear, #expenseMonth').on('change', function() {
-            initExpenseCategoryChart();
-        });
-    });
 
-    function initDaillySpendingTrendChart() {
-        if ($('#dailySpendingChart').length > 0) {
-            const userSession = localStorage.getItem('user_session');
-            const userId = userSession ? JSON.parse(userSession).id : null;
 
-            // create chart instance
-            var chart = am4core.create("dailySpendingChart", am4charts.XYChart);
 
-            // prepare axes
-            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "day";
+    function initWeeklySpendingDetail() {
+        if ($('#dailySpendingDetailChart').length === 0) return;
+        
+        const userSession = localStorage.getItem('user_session');
+        const userId = userSession ? JSON.parse(userSession).id : null;
+        
+        if (!userId) {
+            console.error('initWeeklySpendingDetail: userId is null');
+            return;
+        }
 
-            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Amount (IDR)";
+        // helper to get ISO week number and ISO year for a date
+        function getISOWeekAndYear(d) {
+            const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            const dayNum = date.getUTCDay() || 7;
+            date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+            const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+            const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1)/7);
+            return { week: weekNo, year: date.getUTCFullYear() };
+        }
 
-            var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.valueY = "amount";
-            series.dataFields.categoryX = "day";
-            series.columns.template.fill = am4core.color("#ffc107");
+        const nowInfo = getISOWeekAndYear(new Date());
+        const isoWeek = nowInfo.week;
+        const isoYear = nowInfo.year;
 
-            // default empty data (in case fetch fails)
-            const daysOrder = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
-            chart.data = daysOrder.map(d => ({ day: d, amount: 0 }));
-
-            if (!userId) return;
-
-            // helper to get ISO week number and ISO year for a date
-            function getISOWeekAndYear(d) {
-                const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-                const dayNum = date.getUTCDay() || 7; // Monday=1, Sunday=7
-                date.setUTCDate(date.getUTCDate() + 4 - dayNum);
-                const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
-                const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1)/7);
-                return { week: weekNo, year: date.getUTCFullYear() };
+        const fetchUrl = `${BASE_URL}/vw_weekly_expense?user_id=eq.${userId}&week_number=eq.${isoWeek}&iso_year=eq.${isoYear}`;
+        
+        fetch(fetchUrl, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json'
             }
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+            }
+            return res.json();
+        })
+        .then(rows => {
+            console.log('Weekly spending data fetched:', rows);
+            // Call the detail chart initialization with the fetched data
+            initDailySpendingDetail(rows, userId, isoWeek, isoYear);
+        })
+        .catch(err => {
+            console.error('Error fetching weekly spending data:', err);
+        });
+    }
 
-            const nowInfo = getISOWeekAndYear(new Date());
-            const isoWeek = nowInfo.week;
-            const isoYear = nowInfo.year;
-
-            // fetch weekly expense view for current ISO week and year
-            fetch(`${BASE_URL}/vw_weekly_expense?user_id=eq.${userId}&week_number=eq.${isoWeek}&iso_year=eq.${isoYear}`, {
-                method: 'GET',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`,
-                    'Content-Type': 'application/json'
+    function initDailySpendingDetail(rows, userId, isoWeek, isoYear) {
+        // Create detailed full-width chart
+        // Use setTimeout to ensure theme is applied
+        setTimeout(() => {
+            if ($('#dailySpendingDetailChart').length > 0) {
+                if (window.dailySpendingDetailChart && typeof window.dailySpendingDetailChart.dispose === 'function') {
+                    window.dailySpendingDetailChart.dispose();
+                    window.dailySpendingDetailChart = null;
                 }
-            })
-            .then(res => res.json())
-            .then(rows => {
-                // rows already filtered by iso week/year for this user
-                // map day_index (1=Mon..7=Sun) to amount
+
+                const detailChart = am4core.create("dailySpendingDetailChart", am4charts.XYChart);
+
+                // prepare axes
+                const categoryAxis = detailChart.xAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.dataFields.category = "day";
+
+                const valueAxis = detailChart.yAxes.push(new am4charts.ValueAxis());
+                valueAxis.title.text = "Spending Amount (IDR)";
+                valueAxis.min = 0;
+
+                // Create column series
+                const columnSeries = detailChart.series.push(new am4charts.ColumnSeries());
+                columnSeries.dataFields.valueY = "amount";
+                columnSeries.dataFields.categoryX = "day";
+                columnSeries.columns.template.fill = am4core.color("#0d6efd");
+                columnSeries.columns.template.strokeWidth = 2;
+                columnSeries.columns.template.stroke = am4core.color("#0b5ed7");
+
+                // Add tooltip with formatted value
+                columnSeries.columns.template.tooltipText = "{day}\n{amount:,.0f}";
+
+                // Create line series untuk trend
+                const lineSeries = detailChart.series.push(new am4charts.LineSeries());
+                lineSeries.dataFields.valueY = "amount";
+                lineSeries.dataFields.categoryX = "day";
+                lineSeries.stroke = am4core.color("#dc3545");
+                lineSeries.strokeWidth = 2;
+                lineSeries.propertyFields.strokeDasharray = "strokeDasharray";
+                lineSeries.sequencedInterpolation = true;
+                lineSeries.sequencedInterpolationDelay = 30;
+
+                // Add bullets
+                const bullet = lineSeries.bullets.push(new am4charts.CircleBullet());
+                bullet.circle.radius = 5;
+                bullet.circle.fill = am4core.color("#dc3545");
+
+                // Build chart data
+                const dayLabels = {1:'Senin',2:'Selasa',3:'Rabu',4:'Kamis',5:'Jumat',6:'Sabtu',7:'Minggu'};
                 const map = {};
-                console.log('vw_weekly_expense rows:', rows);
                 if (rows && rows.length) {
                     rows.forEach(r => {
                         const idx = parseInt(r.day_index);
                         map[idx] = (map[idx] || 0) + Number(r.amount || 0);
                     });
                 }
-
-                const dayLabels = {1:'Senin',2:'Selasa',3:'Rabu',4:'Kamis',5:'Jumat',6:'Sabtu',7:'Minggu'};
                 const chartData = [1,2,3,4,5,6,7].map(i => ({ day: dayLabels[i], amount: map[i] || 0 }));
-                console.log('dailySpending chart data:', chartData);
-                chart.data = chartData;
-            })
-            .catch(err => {
-                console.error('Error fetching vw_weekly_expense:', err);
-            });
+
+                detailChart.data = chartData;
+                window.dailySpendingDetailChart = detailChart;
+
+                // Build daily breakdown table
+                buildDailySpendingBreakdown(rows, map);
+            }
+        }, 50);
+    }
+
+    function buildDailySpendingBreakdown(rows, dayMap) {
+        if ($('#dailySpendingBreakdown').length === 0) return;
+
+        const dayLabels = {1:'Senin',2:'Selasa',3:'Rabu',4:'Kamis',5:'Jumat',6:'Sabtu',7:'Minggu'};
+        const dayColors = {1:'#e8f5e9',2:'#e3f2fd',3:'#fff3e0',4:'#fce4ec',5:'#f3e5f5',6:'#e0f2f1',7:'#ede7f6'};
+
+        let html = '<table class="table table-sm table-hover mb-0">';
+        html += '<thead><tr><th>Day</th><th>Amount</th><th>% of Week</th></tr></thead><tbody>';
+
+        const totalWeek = Object.values(dayMap).reduce((a,b) => a+b, 0);
+
+        [1,2,3,4,5,6,7].forEach(idx => {
+            const amount = dayMap[idx] || 0;
+            const percentage = totalWeek > 0 ? ((amount / totalWeek) * 100).toFixed(1) : 0;
+            const bgColor = dayColors[idx];
+
+            html += `<tr style="background-color: ${bgColor};">`;
+            html += `<td><strong>${dayLabels[idx]}</strong></td>`;
+            html += `<td>${formatRupiah(amount)}</td>`;
+            html += `<td><span class="badge bg-info">${percentage}%</span></td>`;
+            html += '</tr>';
+        });
+
+        html += `<tr style="background-color: #f8f9fa; font-weight: bold;">`;
+        html += `<td>TOTAL</td>`;
+        html += `<td>${formatRupiah(totalWeek)}</td>`;
+        html += `<td><span class="badge bg-success">100%</span></td>`;
+        html += '</tr>';
+
+        html += '</tbody></table>';
+
+        $('#dailySpendingBreakdown').html(html);
+    }
+
+    function initAssetAllocationChart() {
+        if (!$('#assetAllocationChart').length) return;
+
+        // Dispose chart lama
+        if (window.assetAllocationChart && typeof window.assetAllocationChart.dispose === 'function') {
+            window.assetAllocationChart.dispose();
+            window.assetAllocationChart = null;
         }
 
+        const userSession = localStorage.getItem('user_session');
+        const userId = userSession ? JSON.parse(userSession).id : null;
+        
+        if (!userId) return;
+
+        // Fetch data dari asset_view
+        fetch(`${BASE_URL}/asset_view?user_id=eq.${userId}`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                // Map view data to chart format
+                const chartData = data && data.length ? data.map(item => ({
+                    wallet: item.wallet_name,
+                    amount: Number(item.asset)
+                })) : [];
+
+                // Hitung total asset
+                const totalAsset = chartData.reduce((sum, item) => sum + item.amount, 0);
+
+                // === AMCHART ===
+                const chart = am4core.create("assetAllocationChart", am4charts.PieChart);
+                chart.data = chartData;
+
+                const pieSeries = chart.series.push(new am4charts.PieSeries());
+                pieSeries.dataFields.value = "amount";
+                pieSeries.dataFields.category = "wallet";
+                pieSeries.innerRadius = am4core.percent(60);
+                pieSeries.labels.template.disabled = true;
+                pieSeries.ticks.template.disabled = true;
+
+                // Label total asset di tengah donat
+                const label = pieSeries.createChild(am4core.Label);
+                label.text = `Total Asset\n${formatRupiah(totalAsset)}`;
+                label.horizontalCenter = "middle";
+                label.verticalCenter = "middle";
+                label.fontSize = 13;
+                label.fontWeight = 'bold';
+
+                // Tooltip untuk setiap wallet
+                const tooltip = pieSeries.slices.template.tooltipText = "{wallet}\n{amount}";
+
+                // Store chart
+                window.assetAllocationChart = chart;
+            })
+            .catch(err => {
+                console.error('Error fetching asset allocation data:', err);
+            });
     }
 
 
@@ -2323,6 +2467,9 @@ $(document).ready(function() {
             series.columns.template.fill = am4core.color("#6f42c1");
         }
 
+        // Reapply theme so dynamically created charts will have the theme too
+        am4core.useTheme(am4themes_animated);
+        
         console.log("All Dashboard Charts Initialized with Dummy Data.");
     }
 
@@ -2493,6 +2640,12 @@ $(document).ready(function() {
     $(document).on('change', '#cashFlowStartDate, #cashFlowEndDate', function () {
         console.log("bangsat");
         initCashFlowChart();
+    });
+
+
+    $(document).on('change', '#expenseYear, #expenseMonth', function () {
+        console.log("bangsat2");
+        initExpenseCategoryChart();
     });
 
 

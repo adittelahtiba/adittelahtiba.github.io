@@ -91,92 +91,32 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="icon-bar-chart"></i> Daily Spending Trend</h5>
-                        
-                    </div>
-                    <div class="card-body">
-                        <div id="dailySpendingChart" style="height: 300px;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Debt Dashboard -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="icon-alert-triangle"></i> Debt Dashboard - "Beban hutang seberapa berat?"</h5>
-                        <div class="d-flex gap-2">
-                            <select class="form-control form-control-sm" id="debtYear" style="width: 80px;">
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                            </select>
-                            <button class="btn btn-light btn-sm" onclick="updateDebtCharts()">
-                                <i class="icon-refresh"></i> Update
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div id="debtCompositionChart" style="height: 250px;"></div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="card">
-                                    <div class="card-body text-center">
-                                        <h6>Debt Payment Progress</h6>
-                                        <div class="progress mb-3" style="height: 20px;">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
-                                        </div>
-                                        <p class="mb-1">Rp 32,500,000 / Rp 50,000,000</p>
-                                        <small class="text-muted">Paid / Total Debt</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div id="debtOverTimeChart" style="height: 250px;"></div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div id="debtReceivableChart" style="height: 250px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Asset Dashboard -->
-        <div class="row mb-5">
-            <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="icon-briefcase"></i> Asset Dashboard - "Kekayaan disimpan dimana?"</h5>
-                        <div class="d-flex gap-2">
-                            <select class="form-control form-control-sm" id="assetYear" style="width: 80px;">
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                            </select>
-                            <button class="btn btn-light btn-sm" onclick="updateAssetCharts()">
-                                <i class="icon-refresh"></i> Update
-                            </button>
-                        </div>
+                        <h5 class="mb-0"><i class="icon-briefcase"></i> Asset Allocation - "Kekayaan disimpan dimana?"</h5>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div id="assetAllocationChart" style="height: 250px;"></div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div id="assetComparisonChart" style="height: 250px;"></div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div id="netWorthChart" style="height: 250px;"></div>
+                        <div id="assetAllocationChart" style="height: 350px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Spending Trend - Full Width Detailed View -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="icon-trending-up"></i> Weekly Spending Detail</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="dailySpendingDetailChart" style="height: 400px;"></div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h6>Daily Breakdown</h6>
+                                <div id="dailySpendingBreakdown" style="max-height: 250px; overflow-y: auto;"></div>
                             </div>
                         </div>
                     </div>
@@ -184,52 +124,7 @@
             </div>
         </div>
 
-        <!-- Bonus Charts -->
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="icon-calendar"></i> Daily Transaction Count</h5>
-                        <div class="d-flex gap-2">
-                            <select class="form-control form-control-sm" id="transactionYear" style="width: 80px;">
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                            </select>
-                            <select class="form-control form-control-sm" id="transactionMonth" style="width: 100px;">
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                            <button class="btn btn-info btn-sm" onclick="updateTransactionChart()">
-                                <i class="icon-refresh"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="transactionHeatmap" style="height: 300px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0"><i class="icon-list"></i> Top 5 Spending Categories</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="topCategoriesChart" style="height: 300px;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
+        
     </div>
 </section>

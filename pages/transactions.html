@@ -259,13 +259,16 @@ $(document).ready(function() {
     const today = new Date().toISOString().split('T')[0];
     $('#trx_date').val(today);
     
-    // Initialize currency formatter for all amount inputs
-    const amountInputs = ['#amount', '#edit_amount', '#transfer_amount', '#admin_fee', '#asset_amount'];
-    amountInputs.forEach(selector => {
-        const el = document.querySelector(selector);
-        if (el) {
-            formatCurrencyInput(el);
-        }
-    });
+    // Initialize currency formatter for all amount inputs (deferred until function is available)
+    // This is handled by initializeCurrencyFormatters() in app.js
+    if (typeof formatCurrencyInput === 'function') {
+        const amountInputs = ['#amount', '#edit_amount', '#transfer_amount', '#admin_fee', '#asset_amount'];
+        amountInputs.forEach(selector => {
+            const el = document.querySelector(selector);
+            if (el) {
+                formatCurrencyInput(el);
+            }
+        });
+    }
 });
 </script>

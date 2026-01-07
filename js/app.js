@@ -122,6 +122,7 @@ $(document).ready(function() {
                     initCashFlowChart();
                     initCharts();
                     initializeDashboardFilters();
+                    initDaillySpendingTrendChart();
                 }
                 if ($('#datatable').length > 0) {
                     if (page === 'master-data' || page === 'user-access') {
@@ -561,7 +562,7 @@ $(document).ready(function() {
         const sessionData = JSON.parse(localStorage.getItem('user_session'));
         const userId = sessionData.id;
 
-        const FETCH_TRANSACTIONS_API = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/transactions?select=id,init,trx_date,type_id,amount,note,wallet_id,category_id,init,attachment_url,transaction_type(wallet_name),categories(name),wallets(name)&user_id=eq.${userId}`;
+        const FETCH_TRANSACTIONS_API = `https://worrkhiiwvlinanxsimn.supabase.co/rest/v1/transactions?select=id,init,trx_date,type_id,amount,note,wallet_id,category_id,init,attachment_url,transaction_type(wallet_name),categories(name),wallets(name)&user_id=eq.${userId}&order=id.desc`;
 
         try {
             const response = await fetch(FETCH_TRANSACTIONS_API, {
@@ -577,6 +578,7 @@ $(document).ready(function() {
 
             const table = $tableEl.DataTable({
                 data: data,
+                order: [], // Disable default sorting to maintain API order (sorted by id desc)
                 columns: [
                     { 
                         data: 'trx_date',
@@ -759,6 +761,29 @@ $(document).ready(function() {
         }
     }
 
+    // Helper function to format currency input (display rupiah, send raw value)
+    function formatCurrencyInput(inputElement) {
+        inputElement.addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, ''); // Remove non-digits
+            if (value) {
+                const formatted = new Intl.NumberFormat('id-ID').format(parseInt(value));
+                this.dataset.rawValue = value; // Store raw value in data attribute
+                this.value = formatted; // Display formatted with dots
+            } else {
+                this.dataset.rawValue = '';
+                this.value = '';
+            }
+        });
+
+        inputElement.addEventListener('blur', function(e) {
+            // On blur, ensure we still see formatted value
+            if (this.dataset.rawValue) {
+                const formatted = new Intl.NumberFormat('id-ID').format(parseInt(this.dataset.rawValue));
+                this.value = formatted;
+            }
+        });
+    }
+
     // Handler untuk submit Add Transaction Form
     $(document).on('submit', '#addTransactionForm', async function(e) {
         e.preventDefault();
@@ -768,7 +793,9 @@ $(document).ready(function() {
 
         const trx_date = formData.get('trx_date');
         const type_id = formData.get('type_id');
-        const amount = parseFloat(formData.get('amount'));
+        // Get raw amount value from data attribute
+        const amountInput = document.getElementById('amount');
+        const amount = parseFloat(amountInput.dataset.rawValue || formData.get('amount').replace(/\D/g, ''));
         const note = formData.get('note');
         const wallet_id = formData.get('wallet_id') || null;
         const category_id = formData.get('category_id') || null;
@@ -826,8 +853,12 @@ $(document).ready(function() {
         const formData = new FormData(this);
 
         const transfer_date   = formData.get('transfer_date');
-        const amount          = parseFloat(formData.get('transfer_amount'));
-        const admin_fee       = parseFloat(formData.get('admin_fee')) || 0;
+        // Get raw amount value from data attribute
+        const transferAmountInput = document.getElementById('transfer_amount');
+        const amount          = parseFloat(transferAmountInput.dataset.rawValue || formData.get('transfer_amount').replace(/\D/g, ''));
+        // Get raw admin_fee value
+        const adminFeeInput = document.getElementById('admin_fee');
+        const admin_fee       = parseFloat(adminFeeInput.dataset.rawValue || formData.get('admin_fee').replace(/\D/g, '') || '0');
         const sender_wallet   = formData.get('sender_wallet');
         const receiver_wallet = formData.get('receiver_wallet');
         const note            = formData.get('transfer_note');
@@ -903,7 +934,9 @@ $(document).ready(function() {
         const $form = $(this);
         const formData = new FormData(this);
 
-        const amount = parseFloat(formData.get('amount'));
+        // Get raw amount value from data attribute
+        const assetAmountInput = document.getElementById('asset_amount') || document.querySelector('#addAssetForm input[name="amount"]');
+        const amount = parseFloat(assetAmountInput.dataset.rawValue || formData.get('amount').replace(/\D/g, ''));
         const note = formData.get('note');
         const wallet_id = formData.get('wallet_id');
 
@@ -974,7 +1007,13 @@ $(document).ready(function() {
                 $('#editTransactionId').val(trx.id);
                 $('#edit_trx_date').val(trx.trx_date.split('T')[0]);
                 $('#edit_type_id').val(trx.type_id);
-                $('#edit_amount').val(trx.amount);
+                
+                // Set raw amount value and formatted display
+                const editAmountInput = document.getElementById('edit_amount');
+                editAmountInput.dataset.rawValue = trx.amount;
+                const formatted = new Intl.NumberFormat('id-ID').format(parseInt(trx.amount));
+                editAmountInput.value = formatted;
+                
                 $('#edit_note').val(trx.note);
                 $('#edit_wallet_id').val(trx.wallet_id || '');
                 $('#edit_category_id').val(trx.category_id || '');
@@ -991,7 +1030,9 @@ $(document).ready(function() {
         const id = $('#editTransactionId').val();
         const trx_date = $('#edit_trx_date').val();
         const type_id = $('#edit_type_id').val();
-        const amount = parseFloat($('#edit_amount').val());
+        // Get raw amount value from data attribute
+        const editAmountInput = document.getElementById('edit_amount');
+        const amount = parseFloat(editAmountInput.dataset.rawValue || $('#edit_amount').val().replace(/\D/g, ''));
         const note = $('#edit_note').val();
         const wallet_id = $('#edit_wallet_id').val() || null;
         const category_id = $('#edit_category_id').val() || null;
@@ -1883,13 +1924,25 @@ $(document).ready(function() {
         const year = $('#expenseYear').val();
         const month = $('#expenseMonth').val();
         const yearMonth = `${year}-${month}`;
+        
+        const userSession = localStorage.getItem('user_session');
+        const userId = userSession ? JSON.parse(userSession).id : null;
+        
+        if (!userId) return;
 
-        // Fetch data dari API
-        fetch(`/api/expense_by_category?year_month=${yearMonth}`)
+        // Fetch data dari vw_monthly_expense_by_category
+        fetch(`${BASE_URL}/vw_monthly_expense_by_category?user_id=eq.${userId}&year_month=eq.${yearMonth}`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => {
-                // Kalau data kosong, pakai dummy
-                const chartData = data.length ? data.map(item => ({
+                // Map view data to chart format
+                const chartData = data && data.length ? data.map(item => ({
                     category: item.category_name,
                     amount: Number(item.amount)
                 })) : [
@@ -1939,6 +1992,80 @@ $(document).ready(function() {
         });
     });
 
+    function initDaillySpendingTrendChart() {
+        if ($('#dailySpendingChart').length > 0) {
+            const userSession = localStorage.getItem('user_session');
+            const userId = userSession ? JSON.parse(userSession).id : null;
+
+            // create chart instance
+            var chart = am4core.create("dailySpendingChart", am4charts.XYChart);
+
+            // prepare axes
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "day";
+
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Amount (IDR)";
+
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueY = "amount";
+            series.dataFields.categoryX = "day";
+            series.columns.template.fill = am4core.color("#ffc107");
+
+            // default empty data (in case fetch fails)
+            const daysOrder = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
+            chart.data = daysOrder.map(d => ({ day: d, amount: 0 }));
+
+            if (!userId) return;
+
+            // helper to get ISO week number and ISO year for a date
+            function getISOWeekAndYear(d) {
+                const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+                const dayNum = date.getUTCDay() || 7; // Monday=1, Sunday=7
+                date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+                const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+                const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1)/7);
+                return { week: weekNo, year: date.getUTCFullYear() };
+            }
+
+            const nowInfo = getISOWeekAndYear(new Date());
+            const isoWeek = nowInfo.week;
+            const isoYear = nowInfo.year;
+
+            // fetch weekly expense view for current ISO week and year
+            fetch(`${BASE_URL}/vw_weekly_expense?user_id=eq.${userId}&week_number=eq.${isoWeek}&iso_year=eq.${isoYear}`, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(rows => {
+                // rows already filtered by iso week/year for this user
+                // map day_index (1=Mon..7=Sun) to amount
+                const map = {};
+                console.log('vw_weekly_expense rows:', rows);
+                if (rows && rows.length) {
+                    rows.forEach(r => {
+                        const idx = parseInt(r.day_index);
+                        map[idx] = (map[idx] || 0) + Number(r.amount || 0);
+                    });
+                }
+
+                const dayLabels = {1:'Senin',2:'Selasa',3:'Rabu',4:'Kamis',5:'Jumat',6:'Sabtu',7:'Minggu'};
+                const chartData = [1,2,3,4,5,6,7].map(i => ({ day: dayLabels[i], amount: map[i] || 0 }));
+                console.log('dailySpending chart data:', chartData);
+                chart.data = chartData;
+            })
+            .catch(err => {
+                console.error('Error fetching vw_weekly_expense:', err);
+            });
+        }
+
+    }
+
 
 
     function initCharts() {
@@ -1946,31 +2073,8 @@ $(document).ready(function() {
         am4core.useTheme(am4themes_animated);
 
 
-        // Daily Spending Trend - Bar Chart
-        if ($('#dailySpendingChart').length > 0) {
-            var chart = am4core.create("dailySpendingChart", am4charts.XYChart);
-            chart.data = [
-                { "day": "Senin", "amount": 850000 },
-                { "day": "Selasa", "amount": 920000 },
-                { "day": "Rabu", "amount": 780000 },
-                { "day": "Kamis", "amount": 1050000 },
-                { "day": "Jumat", "amount": 1200000 },
-                { "day": "Sabtu", "amount": 1350000 },
-                { "day": "Minggu", "amount": 950000 }
-            ];
-            
-            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "day";
-            
-            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Amount (IDR)";
-            
-            var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.valueY = "amount";
-            series.dataFields.categoryX = "day";
-            series.columns.template.fill = am4core.color("#ffc107");
-        }
-
+        // Daily Spending Trend - Bar Chart (load from vw_weekly_expense view)
+        
         // Debt Composition - Donut Chart
         if ($('#debtCompositionChart').length > 0) {
             // Fetch real debt data
@@ -2429,6 +2533,34 @@ $(document).ready(function() {
         // TODO: Implement API call to update chart data
         showsAlert('Transaction chart updated!', 'success');
     };
+
+    // Initialize currency formatters for amount inputs
+    function initializeCurrencyFormatters() {
+        // Add Transaction modal
+        const amountInput = document.getElementById('amount');
+        if (amountInput) formatCurrencyInput(amountInput);
+
+        // Edit Transaction modal
+        const editAmountInput = document.getElementById('edit_amount');
+        if (editAmountInput) formatCurrencyInput(editAmountInput);
+
+        // Transfer modal
+        const transferAmountInput = document.getElementById('transfer_amount');
+        if (transferAmountInput) formatCurrencyInput(transferAmountInput);
+
+        const adminFeeInput = document.getElementById('admin_fee');
+        if (adminFeeInput) formatCurrencyInput(adminFeeInput);
+
+        // Asset modal
+        const assetAmountInput = document.getElementById('asset_amount');
+        if (assetAmountInput) formatCurrencyInput(assetAmountInput);
+    }
+
+    // Run initializer when page loads and when modals are shown
+    initializeCurrencyFormatters();
+    $(document).on('show.bs.modal', '#transactionModal, #editModal, #transferModal, #assetModal', function() {
+        setTimeout(initializeCurrencyFormatters, 100);
+    });
 
     initDashboard();
 });

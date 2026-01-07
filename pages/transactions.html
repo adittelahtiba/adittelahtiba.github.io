@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="amount">Amount</label>
-                                <input type="number" class="form-control" name="amount" step="0.01" placeholder="Enter amount" required="">
+                                <input type="text" class="form-control" id="amount" name="amount" placeholder="Enter amount" required="">
                             </div>
                             <div class="form-group">
                                 <label for="note">Note</label>
@@ -105,7 +105,7 @@
                             <div id="asset-alert-container"></div>
                             <div class="form-group">
                                 <label for="asset_amount">Amount</label>
-                                <input type="number" class="form-control" name="amount" id="asset_amount" step="0.01" placeholder="Enter amount" required="">
+                                <input type="text" class="form-control" id="asset_amount" name="amount" placeholder="Enter amount" required="">
                             </div>
                             <div class="form-group">
                                 <label for="asset_note">Note</label>
@@ -152,7 +152,7 @@
                         </div>
                         <div class="form-group">
                             <label for="edit_amount">Amount</label>
-                            <input type="number" class="form-control" name="amount" id="edit_amount" step="0.01" placeholder="Enter amount" required="">
+                            <input type="text" class="form-control" id="edit_amount" name="amount" placeholder="Enter amount" required="">
                         </div>
                         <div class="form-group">
                             <label for="edit_note">Note</label>
@@ -198,11 +198,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="transfer_amount">Amount</label>
-                                <input type="number" class="form-control" name="transfer_amount" id="transfer_amount" step="0.01" placeholder="Enter amount" required="">
+                                <input type="text" class="form-control" id="transfer_amount" name="transfer_amount" placeholder="Enter amount" required="">
                             </div>
                             <div class="form-group">
                                 <label for="admin_fee">Admin Fee</label>
-                                <input type="number" class="form-control" name="admin_fee" id="admin_fee" step="0.01" placeholder="Enter admin fee" required="">
+                                <input type="text" class="form-control" id="admin_fee" name="admin_fee" placeholder="Enter admin fee">
                             </div>
                             <div class="form-group">
                                 <label for="sender_wallet">From Wallet</label>
@@ -258,5 +258,14 @@ $(document).ready(function() {
     // Set default date to today for transaction form
     const today = new Date().toISOString().split('T')[0];
     $('#trx_date').val(today);
+    
+    // Initialize currency formatter for all amount inputs
+    const amountInputs = ['#amount', '#edit_amount', '#transfer_amount', '#admin_fee', '#asset_amount'];
+    amountInputs.forEach(selector => {
+        const el = document.querySelector(selector);
+        if (el) {
+            formatCurrencyInput(el);
+        }
+    });
 });
 </script>

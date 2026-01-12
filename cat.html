@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Kucing Animasi PNG</title>
+<style>
+  body {
+    margin: 0;
+    height: 2000px;
+  }
+  canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+/* =====================
+   SCENE & CAMERA
+===================== */
+const scene = new THREE.Scene();
+
+const camera = new THREE.OrthographicCamera(
+  -innerWidth / 2,
+   innerWidth / 2,
+   innerHeight / 2,
+  -innerHeight / 2,
+  1,
+  1000
+);
+camera.position.z = 10;
+
+/* =====================
+   RENDERER
+===================== */
+const renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+
+/* =====================
+   LOAD FRAMES
+===================== */
+const loader = new THREE.TextureLoader();
+
+function loadFrames(prefix) {
+  const frames = [];
+  for (let i = 1; i <= 12; i++) {
+    frames.push(loader.load(`${prefix}-${i}.png`));
+  }
+  return frames;
+}
+
+
+const animations = {
+  stay:  loadFrames('stay'),
+  up:    loadFrames('up'),
+  right: loadFrames('right'),
+  down:  loadFrames('down'),
+  left:  loadFrames('left')
+};
+
+/* =====================
+   CAT
+===================== */
+const material = new THREE.SpriteMaterial({
+  map: animations.stay[0],
+  transparent: true
+});
+
+const cat = new THREE.Sprite(material);
+cat.scale.set(120, 120, 1);
+cat.position.set(0, 0, 0);
+scene.add(cat);
+
+/* =====================
+   ANIMATION STATE
+===================== */
+let currentAnim = 'stay';
+let frameIndex = 0;
+let frameTick = 0;
+
+const FRAME_SPEED = 4; // makin kecil makin cepet
+
+function playAnimation(name) {
+  if (currentAnim !== name) {
+    currentAnim = name;
+    frameIndex = 0;
+    frameTick = 0;
+  }
+}
+
+/* =====================
+   MOVEMENT
+===================== */
+let moving = false;
+const speed = 5;
+const target = new THREE.Vector2();
+
+/* =====================
+   CLICK → MOVE
+===================== */
+window.addEventListener('click', (e) => {
+  target.set(
+    e.clientX - innerWidth / 2,
+   -e.clientY + innerHeight / 2
+  );
+  moving = true;
+});
+
+/* =====================
+   LOOP
+===================== */
+function animate() {
+  requestAnimationFrame(animate);
+
+  if (moving) {
+    const dx = target.x - cat.position.x;
+    const dy = target.y - cat.position.y;
+    const dist = Math.hypot(dx, dy);
+
+    // pilih animasi arah
+    if (Math.abs(dx) > Math.abs(dy)) {
+      playAnimation(dx > 0 ? 'right' : 'left');
+    } else {
+      playAnimation(dy > 0 ? 'up' : 'down');
+    }
+
+    if (dist <= speed) {
+      cat.position.set(target.x, target.y, 0);
+      moving = false;
+      playAnimation('stay');
+    } else {
+      cat.position.x += (dx / dist) * speed;
+      cat.position.y += (dy / dist) * speed;
+    }
+  }
+
+  // === FRAME LOOP ===
+  frameTick++;
+  if (frameTick % FRAME_SPEED === 0) {
+    frameIndex = (frameIndex + 1) % animations[currentAnim].length;
+    material.map = animations[currentAnim][frameIndex];
+  }
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+/* =====================
+   RESIZE
+===================== */
+addEventListener('resize', () => {
+  camera.left = -innerWidth / 2;
+  camera.right = innerWidth / 2;
+  camera.top = innerHeight / 2;
+  camera.bottom = -innerHeight / 2;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+
+</body>
+</html>

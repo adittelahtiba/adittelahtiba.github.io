@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kalkulator Cimol Kentang</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: right;
+    }
+    th {
+      background: #f2f2f2;
+    }
+    td:first-child, th:first-child {
+      text-align: left;
+    }
+    .total {
+      font-weight: bold;
+      background: #e8f5e9;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Kalkulator Bahan & Biaya Cimol Kentang</h2>
+
+<label>Berat Kentang (gram)</label>
+<input type="number" id="kentang" value="1000" oninput="hitung()">
+
+<table>
+  <thead>
+    <tr>
+      <th>Bahan</th>
+      <th>Jumlah</th>
+      <th>Biaya (Rp)</th>
+    </tr>
+  </thead>
+  <tbody id="hasil"></tbody>
+  <tfoot>
+    <tr class="total">
+      <td>Total Biaya</td>
+      <td></td>
+      <td id="totalBiaya">0</td>
+    </tr>
+    <tr class="total">
+      <td>Biaya per Kotak</td>
+      <td></td>
+      <td id="biayaPerKotak">0</td>
+    </tr>
+  </tfoot>
+</table>
+
+<script>
+function hitung() {
+  const kentang = parseFloat(document.getElementById("kentang").value) || 0;
+  const faktor = kentang / 1000;
+
+  // Harga per gram / pcs
+  const harga = {
+    kentang: 25,
+    tapioka: 11,
+    bawangPutih: 40,
+    garam: 20,
+    merica: 400,
+    kaldu: 50,
+    daunBawang: 30,
+    bumbuTabur: 41.25,
+    kotak: 2500,
+    sticker: 640
+  };
+
+  const kotak = Math.ceil(8 * faktor);
+  const sticker = kotak;
+
+  const bahan = [
+    { nama: "Kentang", jumlah: kentang + " gr", biaya: kentang * harga.kentang },
+    { nama: "Tepung Tapioka", jumlah: (550 * faktor).toFixed(1) + " gr", biaya: 550 * faktor * harga.tapioka },
+    { nama: "Bawang Putih", jumlah: (20 * faktor).toFixed(1) + " gr", biaya: 20 * faktor * harga.bawangPutih },
+    { nama: "Garam", jumlah: (15 * faktor).toFixed(1) + " gr", biaya: 15 * faktor * harga.garam },
+    { nama: "Merica Bubuk", jumlah: (5 * faktor).toFixed(1) + " gr", biaya: 5 * faktor * harga.merica },
+    { nama: "Kaldu Bubuk", jumlah: (10 * faktor).toFixed(1) + " gr", biaya: 10 * faktor * harga.kaldu },
+    { nama: "Daun Bawang", jumlah: (30 * faktor).toFixed(1) + " gr", biaya: 30 * faktor * harga.daunBawang },
+    { nama: "Bumbu Tabur", jumlah: (120 * faktor).toFixed(1) + " gr", biaya: 120 * faktor * harga.bumbuTabur },
+    { nama: "Kotak Kemasan", jumlah: kotak + " pcs", biaya: kotak * harga.kotak },
+    { nama: "Sticker", jumlah: sticker + " pcs", biaya: sticker * harga.sticker }
+  ];
+
+  let html = "";
+  let total = 0;
+
+  bahan.forEach(b => {
+    const biaya = Math.round(b.biaya);
+    total += biaya;
+    html += `
+      <tr>
+        <td>${b.nama}</td>
+        <td>${b.jumlah}</td>
+        <td>${biaya.toLocaleString("id-ID")}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("hasil").innerHTML = html;
+  document.getElementById("totalBiaya").innerText =
+    total.toLocaleString("id-ID");
+  document.getElementById("biayaPerKotak").innerText =
+    kotak > 0 ? Math.round(total / kotak).toLocaleString("id-ID") : 0;
+}
+
+hitung();
+</script>
+
+</body>
+                      </html>

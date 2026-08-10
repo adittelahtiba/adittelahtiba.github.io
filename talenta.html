@@ -1,0 +1,1008 @@
+<!doctype html>
+
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Talenta Check-in Client</title>
+
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: #0b1120;
+            color: #e5e7eb;
+            font-family: Inter, system-ui, sans-serif
+        }
+
+        .wrap {
+            max-width: 920px;
+            margin: auto;
+            padding: 28px 18px
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 16px
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            font-size: 25px
+        }
+
+        .sub {
+            color: #94a3b8;
+            margin-bottom: 22px
+        }
+
+        h2 {
+            font-size: 17px;
+            margin: 0 0 14px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        label {
+            display: block;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 6px
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            background: #080e1b;
+            border: 1px solid #334155;
+            color: #e5e7eb;
+            border-radius: 8px;
+            padding: 10px
+        }
+
+        input,
+        select {
+            height: 42px
+        }
+
+        select {
+            cursor: pointer
+        }
+
+        textarea {
+            min-height: 130px;
+            font: 13px ui-monospace, monospace
+        }
+
+        .full {
+            grid-column: 1/-1
+        }
+
+        .actions {
+            display: flex;
+            gap: 9px;
+            margin-top: 14px;
+            flex-wrap: wrap
+        }
+
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-weight: 600;
+            cursor: pointer
+        }
+
+        .primary {
+            background: #2563eb;
+            color: white
+        }
+
+        .green {
+            background: #16a34a;
+            color: white
+        }
+
+        .secondary {
+            background: #334155;
+            color: white
+        }
+
+        button:disabled {
+            opacity: .5;
+            cursor: not-allowed
+        }
+
+        .status {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #94a3b8
+        }
+
+        .ok {
+            color: #86efac
+        }
+
+        .bad {
+            color: #fca5a5
+        }
+
+        pre {
+            background: #070b14;
+            border: 1px solid #263244;
+            border-radius: 8px;
+            padding: 14px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow: auto;
+            font: 13px ui-monospace, monospace
+        }
+
+        .note {
+            font-size: 12px;
+            color: #fbbf24;
+            line-height: 1.5
+        }
+
+        .hidden {
+            display: none
+        }
+
+        @media(max-width:650px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="wrap">
+
+        <h1>Talenta Check-in Client</h1>
+        <div class="sub">Login → ambil token → POST / GET live-attendance</div>
+
+        <!-- LOGIN -->
+
+        <div class="card">
+            <h2>1. Login</h2>
+
+            ```
+            <div class="grid">
+
+                <div>
+                    <label>Login Endpoint</label>
+                    <input id="loginUrl" value="https://api-mobile.talenta.co/api/v1/login">
+                </div>
+
+                <div>
+                    <label>Email</label>
+                    <input id="email" type="email" autocomplete="off" value="pangestuaditya.solihin@gmail.com">
+                </div>
+
+                <div>
+                    <label>Password</label>
+                    <input id="password" type="password" autocomplete="off" value="Adityap26">
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <button class="primary" id="loginBtn" onclick="login()">
+                    Login & Get Token
+                </button>
+
+                <button class="secondary" onclick="clearToken()">
+                    Clear Token
+                </button>
+            </div>
+
+            <div id="loginStatus" class="status">
+                Belum login.
+            </div>
+            ```
+
+        </div>
+
+        <!-- CHECK-IN -->
+
+        <div class="card">
+
+            ```
+            <h2>2. Attendance</h2>
+
+            <div class="grid">
+
+                <div class="full">
+                    <label>Attendance Endpoint</label>
+                    <input id="attendanceUrl" value="https://api-mobile.talenta.co/api/v1/live-attendance">
+                </div>
+
+                <div>
+                    <label>Status</label>
+
+                    <select id="attStatus">
+                        <option value="checkin" selected>Check-in</option>
+                        <option value="checkout">Check-out</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Description</label>
+                    <input id="description" value="diarium">
+                </div>
+
+                <div>
+                    <label>Latitude</label>
+                    <input id="latitude" value="-6.8979017">
+                </div>
+
+                <div>
+                    <label>Longitude</label>
+                    <input id="longitude" value="107.6196074">
+                </div>
+
+            </div>
+
+            <div class="actions">
+
+                <button class="green" id="checkinBtn" onclick="checkin()" disabled>
+                    POST Check-in
+                </button>
+
+                <button class="secondary" onclick="useCurrentLocation()">
+                    Use Current Location
+                </button>
+
+            </div>
+
+            <div id="tokenStatus" class="status">
+                Token: belum tersedia.
+            </div>
+
+            <div class="note" style="margin-top:10px">
+                Token hanya disimpan sementara di memory halaman dan tidak
+                dikirim ke server selain endpoint Talenta.
+            </div>
+            ```
+
+        </div>
+
+        <!-- GET ATTENDANCE STATUS -->
+        <div class="card">
+
+            ```
+            <h2>3. Live Attendance Status (GET)</h2>
+
+            <div class="grid">
+
+                <div class="full">
+                    <label>Status Endpoint</label>
+                    <input id="getStatusUrl" value="https://api-mobile.talenta.co/api/v1/live-attendance">
+                </div>
+
+            </div>
+
+            <div class="actions">
+
+                <button class="primary" id="getStatusBtn" onclick="getStatus()" disabled>
+                    GET Attendance Status
+                </button>
+
+            </div>
+            ```
+
+        </div>
+
+        <!-- RESPONSE -->
+
+        <div class="card">
+
+            ```
+            <h2>Response</h2>
+
+            <div id="responseStatus" class="status">
+                Belum ada response.
+            </div>
+
+            <pre id="response">Response akan tampil di sini.</pre>
+            ```
+
+        </div>
+
+        <!-- CURL -->
+
+        <div class="card">
+
+            ```
+            <h2>Generated cURL</h2>
+
+            <pre id="curl">
+```
+
+Login terlebih dahulu untuk membuat cURL check-in. </pre>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        let accessToken = "";
+
+        const $ = id => document.getElementById(id);
+
+        function randomizeLastThree(val) {
+            const valStr = String(val);
+            if (valStr.includes('.')) {
+                const parts = valStr.split('.');
+                const integerPart = parts[0];
+                const decimalPart = parts[1];
+                if (decimalPart.length >= 3) {
+                    const baseDecimal = decimalPart.slice(0, -3);
+                    const random3 = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                    return `${integerPart}.${baseDecimal}${random3}`;
+                }
+            }
+            return valStr;
+        }
+
+        // Randomize initial values on page load
+        if ($("latitude")) $("latitude").value = randomizeLastThree($("latitude").value);
+        if ($("longitude")) $("longitude").value = randomizeLastThree($("longitude").value);
+
+
+        function setStatus(id, text, ok = null) {
+
+            const el = $(id);
+
+            el.textContent = text;
+
+            el.className =
+                "status " +
+                (
+                    ok === true
+                        ? "ok"
+                        : ok === false
+                            ? "bad"
+                            : ""
+                );
+        }
+
+
+        /* =========================
+           LOGIN
+        ========================= */
+
+        async function login() {
+
+            const btn = $("loginBtn");
+
+            btn.disabled = true;
+            btn.textContent = "Logging in...";
+
+            setStatus(
+                "loginStatus",
+                "Mengirim login..."
+            );
+
+            try {
+
+                const payload = {
+
+                    email: $("email").value.trim(),
+
+                    password: $("password").value
+
+                };
+
+
+                const res = await fetch(
+                    $("loginUrl").value,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+
+                        body: JSON.stringify(payload)
+                    }
+                );
+
+
+                const text = await res.text();
+
+                let json;
+
+                try {
+                    json = JSON.parse(text);
+                } catch {
+                    json = null;
+                }
+
+
+                if (!res.ok) {
+
+                    accessToken = "";
+
+                    $("checkinBtn").disabled = true;
+                    if ($("getStatusBtn")) $("getStatusBtn").disabled = true;
+
+                    setStatus(
+                        "loginStatus",
+                        `Login gagal: ${res.status} ${res.statusText}`,
+                        false
+                    );
+
+                    showResponse(res, text);
+
+                    return;
+                }
+
+
+                /*
+                  Token diambil dari:
+                  response.data.token
+                */
+
+                accessToken =
+                    json?.data?.token || "";
+
+
+                if (!accessToken) {
+
+                    setStatus(
+                        "loginStatus",
+                        "Login berhasil tetapi token tidak ditemukan pada data.token.",
+                        false
+                    );
+
+                    showResponse(res, text);
+
+                    return;
+                }
+
+
+                $("checkinBtn").disabled = false;
+                if ($("getStatusBtn")) $("getStatusBtn").disabled = false;
+
+
+                setStatus(
+                    "loginStatus",
+                    `Login berhasil · HTTP ${res.status}`,
+                    true
+                );
+
+
+                setStatus(
+                    "tokenStatus",
+                    "Token tersedia dan siap digunakan untuk attendance.",
+                    true
+                );
+
+
+                showResponse(res, json);
+
+                updateButtonText();
+
+                updateCurl();
+
+            } catch (err) {
+
+                setStatus(
+                    "loginStatus",
+                    "Request gagal: " + err.message,
+                    false
+                );
+
+                $("response").textContent =
+                    "Browser gagal mengakses API.\n\n" +
+                    "Jika error terkait CORS, GitHub Pages tidak dapat " +
+                    "melakukan request langsung ke API tersebut.";
+
+            } finally {
+
+                btn.disabled = false;
+
+                btn.textContent =
+                    "Login & Get Token";
+
+            }
+        }
+
+
+        /* =========================
+           CHECK-IN / CHECK-OUT
+        ========================= */
+
+        async function checkin() {
+
+            if (!accessToken) {
+
+                setStatus(
+                    "tokenStatus",
+                    "Login terlebih dahulu.",
+                    false
+                );
+
+                return;
+            }
+
+
+            const btn = $("checkinBtn");
+
+            const status =
+                $("attStatus").value;
+
+
+            btn.disabled = true;
+
+            btn.textContent =
+                status === "checkin"
+                    ? "Checking in..."
+                    : "Checking out...";
+
+
+            setStatus(
+                "responseStatus",
+                `Mengirim ${status}...`
+            );
+
+
+            const payload = {
+
+                status: status,
+
+                latitude:
+                    $("latitude").value,
+
+                longitude:
+                    $("longitude").value,
+
+                description:
+                    $("description").value
+
+            };
+
+
+            try {
+
+                const started =
+                    performance.now();
+
+
+                const res = await fetch(
+                    $("attendanceUrl").value,
+                    {
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Accept":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + accessToken
+
+                        },
+
+                        body:
+                            JSON.stringify(payload)
+                    }
+                );
+
+
+                const elapsed =
+                    Math.round(
+                        performance.now() - started
+                    );
+
+
+                const text =
+                    await res.text();
+
+
+                setStatus(
+                    "responseStatus",
+                    `${res.status} ${res.statusText} · ${elapsed} ms`,
+                    res.ok
+                );
+
+
+                try {
+
+                    $("response").textContent =
+                        JSON.stringify(
+                            JSON.parse(text),
+                            null,
+                            2
+                        );
+
+                } catch {
+
+                    $("response").textContent =
+                        text || "(empty response)";
+
+                }
+
+
+                updateCurl();
+
+
+            } catch (err) {
+
+                setStatus(
+                    "responseStatus",
+                    "Attendance gagal",
+                    false
+                );
+
+
+                $("response").textContent =
+                    err.message +
+                    "\n\nJika ini dijalankan dari github.io " +
+                    "dan muncul Failed to fetch, kemungkinan " +
+                    "besar API tidak mengizinkan CORS.";
+
+            } finally {
+
+                btn.disabled = false;
+
+                updateButtonText();
+
+            }
+        }
+
+
+        /* =========================
+           GET ATTENDANCE STATUS
+        ========================= */
+
+        async function getStatus() {
+
+            if (!accessToken) {
+
+                setStatus(
+                    "tokenStatus",
+                    "Login terlebih dahulu.",
+                    false
+                );
+
+                return;
+            }
+
+
+            const btn = $("getStatusBtn");
+
+            btn.disabled = true;
+
+            btn.textContent = "Fetching status...";
+
+
+            setStatus(
+                "responseStatus",
+                "Mengirim GET request..."
+            );
+
+
+            try {
+
+                const started =
+                    performance.now();
+
+
+                const res = await fetch(
+                    $("getStatusUrl").value,
+                    {
+                        method: "GET",
+
+                        headers: {
+
+                            "Accept":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + accessToken
+
+                        }
+                    }
+                );
+
+
+                const elapsed =
+                    Math.round(
+                        performance.now() - started
+                    );
+
+
+                const text =
+                    await res.text();
+
+
+                setStatus(
+                    "responseStatus",
+                    `${res.status} ${res.statusText} · ${elapsed} ms`,
+                    res.ok
+                );
+
+
+                try {
+
+                    $("response").textContent =
+                        JSON.stringify(
+                            JSON.parse(text),
+                            null,
+                            2
+                        );
+
+                } catch {
+
+                    $("response").textContent =
+                        text || "(empty response)";
+
+                }
+
+
+                updateCurl();
+
+
+            } catch (err) {
+
+                setStatus(
+                    "responseStatus",
+                    "GET Status gagal",
+                    false
+                );
+
+
+                $("response").textContent =
+                    err.message +
+                    "\n\nJika ini dijalankan dari github.io " +
+                    "dan muncul Failed to fetch, kemungkinan " +
+                    "besar API tidak mengizinkan CORS.";
+
+            } finally {
+
+                btn.disabled = false;
+
+                btn.textContent = "GET Attendance Status";
+
+            }
+        }
+
+
+        /* =========================
+           BUTTON TEXT
+        ========================= */
+
+        function updateButtonText() {
+
+            const status =
+                $("attStatus").value;
+
+            $("checkinBtn").textContent =
+                status === "checkin"
+                    ? "POST Check-in"
+                    : "POST Check-out";
+        }
+
+
+        /* =========================
+           RESPONSE
+        ========================= */
+
+        function showResponse(res, data) {
+
+            try {
+
+                $("response").textContent =
+                    typeof data === "string"
+                        ? data
+                        : JSON.stringify(
+                            data,
+                            null,
+                            2
+                        );
+
+            } catch {
+
+                $("response").textContent =
+                    String(data);
+
+            }
+
+
+            setStatus(
+                "responseStatus",
+                `${res.status} ${res.statusText}`,
+                res.ok
+            );
+        }
+
+
+        /* =========================
+           CLEAR TOKEN
+        ========================= */
+
+        function clearToken() {
+
+            accessToken = "";
+
+            $("checkinBtn").disabled = true;
+            if ($("getStatusBtn")) $("getStatusBtn").disabled = true;
+
+            setStatus(
+                "tokenStatus",
+                "Token sudah dihapus dari memory halaman."
+            );
+
+
+            $("curl").textContent =
+                "Login terlebih dahulu untuk membuat cURL check-in.";
+        }
+
+
+        /* =========================
+           CURRENT LOCATION
+        ========================= */
+
+        function useCurrentLocation() {
+
+            if (!navigator.geolocation) {
+
+                setStatus(
+                    "tokenStatus",
+                    "Browser tidak mendukung geolocation.",
+                    false
+                );
+
+                return;
+            }
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                p => {
+
+                    $("latitude").value =
+                        randomizeLastThree(p.coords.latitude);
+
+                    $("longitude").value =
+                        randomizeLastThree(p.coords.longitude);
+
+
+                    updateCurl();
+
+
+                    setStatus(
+                        "tokenStatus",
+                        "Lokasi browser berhasil diambil.",
+                        true
+                    );
+
+                },
+
+
+                e => {
+
+                    setStatus(
+                        "tokenStatus",
+                        "Gagal mengambil lokasi: " +
+                        e.message,
+                        false
+                    );
+
+                },
+
+
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000
+                }
+
+            );
+        }
+
+
+        /* =========================
+           GENERATED CURL
+        ========================= */
+
+        function updateCurl() {
+
+            if (!accessToken) {
+
+                $("curl").textContent =
+                    "Login terlebih dahulu untuk membuat cURL.";
+
+                return;
+            }
+
+
+            const payload = {
+
+                status:
+                    $("attStatus").value,
+
+                latitude:
+                    $("latitude").value,
+
+                longitude:
+                    $("longitude").value,
+
+                description:
+                    $("description").value
+
+            };
+
+
+            const postCurl = `curl -X POST '${$("attendanceUrl").value}' \\
+  -H 'Authorization: Bearer ${accessToken}' \\
+  -H 'Content-Type: application/json' \\
+  -H 'Accept: application/json' \\
+  -d '${JSON.stringify(payload)}'`;
+
+            const getUrl = $("getStatusUrl") ? $("getStatusUrl").value : "https://api-mobile.talenta.co/api/v1/live-attendance";
+            const getCurl = `curl -X GET '${getUrl}' \\
+  -H 'Authorization: Bearer ${accessToken}' \\
+  -H 'Accept: application/json'`;
+
+            $("curl").textContent = `[POST Check-in/out]:\n${postCurl}\n\n[GET Status]:\n${getCurl}`;
+
+        }
+
+
+        /* =========================
+           AUTO UPDATE
+        ========================= */
+
+        [
+            "attendanceUrl",
+            "getStatusUrl",
+            "attStatus",
+            "description",
+            "latitude",
+            "longitude"
+        ].forEach(id => {
+
+            $(id).addEventListener(
+                "input",
+                updateCurl
+            );
+
+            $(id).addEventListener(
+                "change",
+                () => {
+
+                    updateButtonText();
+                    updateCurl();
+
+                }
+            );
+
+        });
+
+    </script>
+
+</body>
+
+</html>

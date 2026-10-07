@@ -311,11 +311,15 @@
             display: none;
         }
 
-        #home h1,
         #home h4,
         #home p {
             color: var(--ivory);
             text-shadow: 0 2px 14px rgba(15, 30, 51, 0.7);
+            position: relative;
+            z-index: 2;
+        }
+
+        #home h1 {
             position: relative;
             z-index: 2;
         }
@@ -397,7 +401,7 @@
 
         .gold-shine,
         #coverCouple,
-        body>section h1.font-wedding,
+        body>section:not(#home) h1.font-wedding,
         body>section h2.font-wedding,
         body>section h3.font-wedding,
         body>section h4.font-wedding {
@@ -413,6 +417,55 @@
             display: inline-block;
             animation: shineGold 4s linear infinite;
             font-weight: bold;
+        }
+
+        /* ✨ Efek Animasi Kilap Silver Khusus Nama Mempelai di Hero */
+        @keyframes shineSilver {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        @-webkit-keyframes shineSilver {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        #home h1.font-wedding,
+        .shine-silver {
+            background: linear-gradient(to right,
+                    #8E9EAB 0%,
+                    #CBD5E1 25%,
+                    #FFFFFF 50%,
+                    #CBD5E1 75%,
+                    #8E9EAB 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            text-shadow: none !important;
+            display: inline-block;
+            animation: shineSilver 3.5s linear infinite;
+            -webkit-animation: shineSilver 3.5s linear infinite;
+            will-change: background-position;
+            font-weight: bold;
+            filter: drop-shadow(0 4px 12px rgba(15, 30, 51, 0.85));
+        }
+
+        .copy-icon {
+            display: inline-block;
+            font-size: 1.05rem;
+            margin-left: 8px;
+            color: var(--gold-light);
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .copy-icon:hover {
+            transform: scale(1.2);
+            color: #FFFFFF;
         }
 
         .font-wedding {
@@ -726,7 +779,7 @@
         <div id="tsparticles-home" class="tparty"></div>
         <!-- <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" class="floral-top" alt="flower"> -->
         <h4 class="text-uppercase ls-3">The Wedding Of</h4>
-        <h1 class="display-2 font-wedding">Ryka & Adit</h1>
+        <h1 class="display-2 font-wedding shine-silver">Ryka & Adit</h1>
         <p>20 . 12 . 2026</p>
         <!-- <img class="decor-flower left" src="https://cdn-icons-png.flaticon.com/512/2099/2099078.png" alt="flower left">
         <img class="decor-flower right" src="https://cdn-icons-png.flaticon.com/512/2099/2099086.png" alt="flower right"> -->
@@ -834,16 +887,18 @@
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.38.jpeg" alt="Galeri 4">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg" alt="Galeri 5">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.40.jpeg" alt="Galeri 6">
-            <img src="assets/WhatsApp Image 2026-10-07 at 16.19.45.jpeg" alt="Galeri 7">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.46.jpeg" style="grid-column: span 2;" alt="Galeri 8">
+
+            <img src="assets/WhatsApp Image 2026-10-07 at 16.19.45.jpeg" alt="Galeri 7">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg" alt="Galeri 9">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.47.jpeg" alt="Galeri 10">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.48.jpeg" alt="Galeri 11">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.56.jpeg" style="grid-column: span 2;" alt="Galeri 12">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.57.jpeg" style="grid-column: span 2;" alt="Galeri 13">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.19.58.jpeg" alt="Galeri 14">
-            <img src="assets/WhatsApp Image 2026-10-07 at 16.19.59.jpeg" style="grid-column: span 2;" alt="Galeri 15">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).jpeg" alt="Galeri 16">
+
+            <img src="assets/WhatsApp Image 2026-10-07 at 16.19.59.jpeg" style="grid-column: span 2;" alt="Galeri 15">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.20.01.jpeg" alt="Galeri 17">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.20.03 (1).jpeg" alt="Galeri 18">
             <img src="assets/WhatsApp Image 2026-10-07 at 16.20.03.jpeg" alt="Galeri 19">
@@ -891,30 +946,26 @@
                                 <div class="atm-card-inner">
                                     <div class="atm-chip"></div>
                                     <div class="atm-bank-name">Mandiri</div>
-                                    <div class="atm-number" id="rekNumber">1234 5678 9012</div>
+                                    <div class="atm-number"><span class="rek-val">1234 5678 9012</span> <i
+                                            class="fa-regular fa-copy copy-icon" title="Salin No. Rekening"></i></div>
                                     <div class="atm-label">Account Holder</div>
                                     <div class="atm-holder-name">Ryka SETIAWAN</div>
                                     <div class="atm-logo">BANK</div>
                                 </div>
                             </div>
-                            <!-- <button id="btnCopyRek" class="btn btn-sm mt-3" style="background:var(--navy);color:white;border-radius:20px;padding:8px">
-                <i class="fa-solid fa-copy"></i> Salin No. Rekening
-            </button> -->
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="atm-card money-card">
                                 <div class="atm-card-inner">
                                     <div class="atm-chip"></div>
                                     <div class="atm-bank-name">BCA</div>
-                                    <div class="atm-number" id="rekNumber">1234 5678 9012</div>
+                                    <div class="atm-number"><span class="rek-val">1234 5678 9012</span> <i
+                                            class="fa-regular fa-copy copy-icon" title="Salin No. Rekening"></i></div>
                                     <div class="atm-label">Account Holder</div>
                                     <div class="atm-holder-name">Ryka SETIAWAN</div>
                                     <div class="atm-logo">BANK</div>
                                 </div>
                             </div>
-                            <!-- <button id="btnCopyRek2" class="btn btn-sm mt-3" style="background:var(--navy);color:white;border-radius:20px;padding:8px">
-                <i class="fa-solid fa-copy"></i> Salin No. Rekening
-            </button> -->
                         </div>
 
                         <div class="col-md-6 mb-4">
@@ -922,19 +973,16 @@
                                 <div class="atm-card-inner">
                                     <div class="atm-label" style="font-size: 1.2rem; margin-bottom: 5px;"><i
                                             class="fa-solid fa-map-location-dot"></i> Ship to:</div>
-                                    <div class="atm-holder-name" style="font-size: 1rem; line-height: 1.4;"
-                                        id="giftAddress">
-                                        Jl. Melati No. 123,<br>
-                                        Kec. Coblong, Kota Bandung,<br>
-                                        Jawa Barat 40123
+                                    <div class="atm-holder-name" style="font-size: 1rem; line-height: 1.4;">
+                                        <span id="giftAddress">Jl. Melati No. 123,<br>
+                                            Kec. Coblong, Kota Bandung,<br>
+                                            Jawa Barat 40123</span> <i class="fa-regular fa-copy copy-icon"
+                                            title="Salin Alamat"></i>
                                     </div>
                                     <div class="atm-logo" style="opacity: 0.3;"><i class="fa-solid fa-box-archive"></i>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <button id="btnCopyAddr" class="btn btn-sm mt-3" style="background:var(--navy);color:white;border-radius:20px;padding:8px">
-                <i class="fa-solid fa-copy"></i> Salin Alamat
-            </button> -->
                         </div>
                     </div>
                 </div>
@@ -1131,21 +1179,45 @@
             addBtn.href = href;
         })();
 
-        // Open invite: hide cover, try play music
+        // Ensure page starts at top upon initial load or reload
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+        window.addEventListener('load', () => window.scrollTo(0, 0));
+        window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
+
+        // Open invite: hide cover, try play music, scroll to top
         (function () {
             const openBtn = document.getElementById('openInvite');
             const cover = document.getElementById('coverOverlay');
             const audio = document.getElementById('bgAudio');
             const musicBtn = document.getElementById('musicToggle');
             if (!openBtn || !cover) return;
+
+            window.scrollTo(0, 0);
+
             openBtn.addEventListener('click', () => {
-                cover.style.transition = 'opacity .5s'; cover.style.opacity = '0'; setTimeout(() => { cover.remove(); }, 600);
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                cover.style.transition = 'opacity .5s';
+                cover.style.opacity = '0';
+                setTimeout(() => {
+                    cover.remove();
+                    window.scrollTo(0, 0);
+                }, 550);
+
                 // try play music if available
-                if (audio && audio.src) { audio.play().then(() => { if (musicBtn) { musicBtn.classList.add('playing'); musicBtn.innerHTML = '<i class="fa-solid fa-compact-disc"></i>'; } }).catch(() => { }); }
+                if (audio && audio.src) {
+                    audio.play().then(() => {
+                        if (musicBtn) {
+                            musicBtn.classList.add('playing');
+                            musicBtn.innerHTML = '<i class="fa-solid fa-compact-disc"></i>';
+                        }
+                    }).catch(() => { });
+                }
                 setTimeout(() => {
                     window.dispatchEvent(new Event("resize"));
                 }, 600);
-
             });
         })();
 
@@ -1213,35 +1285,29 @@
                 card.style.cursor = 'pointer';
                 card.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const numberEl = this.querySelector('.atm-number');
-                    if (numberEl) {
-                        const text = numberEl.innerText.trim();
-                        navigator.clipboard.writeText(text).then(() => {
-                            showCopyNotification('✓ Nomor rekening tersalin');
-                        }).catch(() => {
-                            showCopyNotification('✗ Gagal menyalin');
-                        });
+                    if (this.classList.contains('address-card')) {
+                        const addrEl = this.querySelector('#giftAddress') || document.getElementById('giftAddress');
+                        if (addrEl) {
+                            const text = addrEl.innerText.trim();
+                            navigator.clipboard.writeText(text).then(() => {
+                                showCopyNotification('✓ Alamat tersalin');
+                            }).catch(() => {
+                                showCopyNotification('✗ Gagal menyalin');
+                            });
+                        }
+                    } else {
+                        const valEl = this.querySelector('.rek-val') || this.querySelector('.atm-number');
+                        if (valEl) {
+                            const text = valEl.innerText.trim();
+                            navigator.clipboard.writeText(text).then(() => {
+                                showCopyNotification('✓ Nomor rekening tersalin');
+                            }).catch(() => {
+                                showCopyNotification('✗ Gagal menyalin');
+                            });
+                        }
                     }
                 });
             });
-
-            // Gift address card click to copy
-            const giftAddressSection = document.querySelector('#wedding-gift .atm-card:not(.money-card)');
-            if (giftAddressSection) {
-                giftAddressSection.style.cursor = 'pointer';
-                giftAddressSection.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const addressEl = document.getElementById('giftAddress');
-                    if (addressEl) {
-                        const text = addressEl.innerText.trim();
-                        navigator.clipboard.writeText(text).then(() => {
-                            showCopyNotification('✓ Alamat tersalin');
-                        }).catch(() => {
-                            showCopyNotification('✗ Gagal menyalin');
-                        });
-                    }
-                });
-            }
         })();
 
         // IntersectionObserver reveal animations
@@ -1282,10 +1348,9 @@
             // Ensure initial hidden state
             wrapper.style.display = 'none';
             btn.addEventListener('click', () => {
-                const showing = wrapper.style.display === 'block';
-                wrapper.style.display = showing ? 'none' : 'block';
-                btn.innerText = showing ? 'Kirim Hadiah' : 'Tap to copy';
-                if (!showing) { setTimeout(() => window.scrollTo({ top: wrapper.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }), 120); }
+                wrapper.style.display = 'block';
+                btn.style.display = 'none'; // Sembunyikan tombol saat hadiah dibuka
+                setTimeout(() => window.scrollTo({ top: wrapper.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }), 120);
             });
         })();
     </script>

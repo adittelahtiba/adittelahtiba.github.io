@@ -1563,44 +1563,62 @@
 
 
     <script>
-        // Gallery lazy loading with IntersectionObserver
-        (function() {
-            const lazyImgs = document.querySelectorAll('.gallery-lazy');
+        // Gallery lazy loading — preload di background, baru tampil saat sudah ready
+        (function () {
+            var lazyImgs = document.querySelectorAll('.gallery-lazy');
 
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            const img = entry.target;
-                            img.src = img.dataset.src;
-                            img.addEventListener('load', function() {
+            function revealImg(img) {
+                var src = img.dataset.src;
+                if (!src) return;
+
+                // Buat Image object di background — download + decode sebelum tampil
+                var preloader = new Image();
+
+                var finish = function () {
+                    // Pakai decode() kalau tersedia supaya browser decode dulu sebelum render
+                    var doReveal = function () {
+                        img.src = src;
+                        // requestAnimationFrame pastikan browser sudah siap paint
+                        requestAnimationFrame(function () {
+                            requestAnimationFrame(function () {
                                 img.classList.add('loaded');
-                                const skeleton = img.previousElementSibling;
+                                var skeleton = img.previousElementSibling;
                                 if (skeleton && skeleton.classList.contains('gallery-skeleton')) {
                                     skeleton.classList.add('hidden');
                                 }
                             });
-                            img.addEventListener('error', function() {
-                                img.classList.add('loaded');
-                                const skeleton = img.previousElementSibling;
-                                if (skeleton) skeleton.classList.add('hidden');
-                            });
-                            observer.unobserve(img);
+                        });
+                    };
+
+                    if (typeof preloader.decode === 'function') {
+                        preloader.decode().then(doReveal).catch(doReveal);
+                    } else {
+                        doReveal();
+                    }
+                };
+
+                preloader.onload  = finish;
+                preloader.onerror = finish; // tetap tampil meski error
+                preloader.src     = src;    // mulai download di background
+            }
+
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            revealImg(entry.target);
+                            observer.unobserve(entry.target);
                         }
                     });
-                }, { rootMargin: '100px' });
+                }, {
+                    rootMargin: '200px 0px', // mulai preload 200px sebelum masuk layar
+                    threshold: 0
+                });
 
-                lazyImgs.forEach(function(img) {
-                    observer.observe(img);
-                });
+                lazyImgs.forEach(function (img) { observer.observe(img); });
             } else {
-                // Fallback: load all images immediately
-                lazyImgs.forEach(function(img) {
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                    const skeleton = img.previousElementSibling;
-                    if (skeleton) skeleton.classList.add('hidden');
-                });
+                // Fallback: langsung load semua
+                lazyImgs.forEach(function (img) { revealImg(img); });
             }
         })();
     </script>

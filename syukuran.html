@@ -234,10 +234,65 @@
             margin-top: 8px;
             font-style: normal;
         }
+
+        /* TOMBOL MUSIK MELAYANG (FLOATING MUSIC CONTROL) */
+        .music-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            background: var(--navy);
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(23, 43, 73, 0.3);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: var(--navy-deep);
+        }
+
+        .music-btn i {
+            font-size: 18px;
+        }
+
+        @keyframes rotateMusic {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .music-btn.playing i {
+            animation: rotateMusic 4s linear infinite;
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- ELEMENT AUDIO BACKSOUND -->
+    <audio id="audioBacksound" loop preload="auto">
+        <!-- Ganti 'audio.mp3' dengan path/URL file lagu Anda -->
+        <source src="assets/Mawlid Cinta.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- TOMBOL KONTROL MUSIK -->
+    <button class="music-btn" id="musicBtn" title="Putar/Hentikan Musik">
+        <i class="fa-solid fa-compact-disc" id="musicIcon"></i>
+    </button>
 
     <div class="container">
         <div class="invitation-card">
@@ -281,7 +336,7 @@
                     <i class="fa-solid fa-location-dot event-icon"></i>
                     <div class="event-info">
                         <label>Lokasi Acara</label>
-                        <span>Kediaman Keluarga</span>
+                        <span>Kediaman Keluarga Bapak Supyandi</span>
                         <div style="font-size: 12px; color: var(--text-muted); font-weight: normal; margin-top: 2px;">
                             Komp. Sapta Taruna PU Blok B. 108 RT. 07/08
                         </div>
@@ -301,7 +356,7 @@
             <div class="family-name">
                 Wassalamu’alaikum Wr. Wb.<br><br>
                 <small style="font-weight: normal; color: var(--text-muted);">Kami yang berbahagia,</small><br>
-                Keluarga Besar Ryka & Adit
+                Keluarga Besar Bapak Supyandi
             </div>
 
         </div>
@@ -315,6 +370,39 @@
         if (guest) {
             document.getElementById('guestName').textContent = guest;
         }
+
+        // Fitur Pemutar Musik / Backsound
+        const audio = document.getElementById('audioBacksound');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+                musicIcon.className = 'fa-solid fa-volume-xmark';
+                isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    musicBtn.classList.add('playing');
+                    musicIcon.className = 'fa-solid fa-compact-disc';
+                    isPlaying = true;
+                }).catch(err => {
+                    console.log("Autoplay dicegah oleh browser:", err);
+                });
+            }
+        }
+
+        musicBtn.addEventListener('click', toggleMusic);
+
+        // Memutar lagu secara otomatis pada interaksi pertama pengguna (kebijakan Autoplay Browser)
+        document.addEventListener('click', function startAudioOnInteraction() {
+            if (!isPlaying) {
+                toggleMusic();
+            }
+            document.removeEventListener('click', startAudioOnInteraction);
+        }, { once: true });
     </script>
 
 </body>

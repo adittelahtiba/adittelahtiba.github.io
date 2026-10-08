@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Syukuran Pernikahan | Ryka & Adit</title>
+
+    <style>
+        :root {
+            --ivory: #F6F1E7;
+            --navy: #172B49;
+            --gold: #B08A4A;
+            --gold-light: #C9A96E;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--ivory);
+            color: var(--navy);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            padding: 0 24px;
+        }
+
+        /* COVER */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .cover-content {
+            width: 100%;
+        }
+
+        .small-title {
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .names {
+            font-family: Georgia, serif;
+            font-size: 56px;
+            font-weight: normal;
+            color: var(--navy);
+            margin: 0;
+        }
+
+        .date {
+            margin-top: 18px;
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: var(--gold);
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 30px auto;
+        }
+
+        /* CONTENT */
+        section {
+            padding: 70px 0;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: Georgia, serif;
+            font-size: 34px;
+            font-weight: normal;
+            color: var(--gold);
+            margin: 0 0 25px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.9;
+            margin: 0;
+        }
+
+        .invitation {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        /* EVENT */
+        .event {
+            border-top: 1px solid rgba(176, 138, 74, 0.4);
+            border-bottom: 1px solid rgba(176, 138, 74, 0.4);
+            padding: 30px 15px;
+            margin-top: 30px;
+        }
+
+        .event-title {
+            font-family: Georgia, serif;
+            font-size: 27px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .event-item {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+
+        .event-label {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* MAP BUTTON */
+        .map-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 11px 25px;
+            border: 1px solid var(--gold);
+            border-radius: 30px;
+            background: var(--navy);
+            color: var(--ivory);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .map-button:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(176, 138, 74, 0.25);
+        }
+
+        .footer-names {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            color: var(--gold);
+            margin-top: 20px;
+        }
+
+        .thanks {
+            font-size: 14px;
+            line-height: 1.8;
+            max-width: 450px;
+            margin: auto;
+        }
+
+        @media (max-width: 480px) {
+            .names {
+                font-size: 46px;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+        }
+
+        .guest-name {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            color: var(--gold);
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- COVER -->
+    <section class="cover">
+        <div class="cover-content">
+
+            <div class="small-title">
+                Syukuran Pernikahan
+            </div>
+
+            <h1 class="names">
+                Ryka & Adit
+            </h1>
+
+            <div class="divider"></div>
+
+            <p>
+                Dengan penuh rasa syukur,<br>
+                kami mengundang
+            </p>
+
+            <p class="guest-name" id="guestName">
+                Bapak/Ibu
+            </p>
+
+            <p>
+                untuk hadir dalam acara syukuran pernikahan kami.
+            </p>
+
+            <div class="date">
+                SABTU · 19 DESEMBER 2026
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- UNDANGAN -->
+    <section>
+        <div class="container">
+
+            <h2 class="section-title">
+                Assalamu’alaikum
+            </h2>
+
+            <div class="invitation">
+
+                <p>
+                    Alhamdulillah, atas rahmat dan karunia Allah SWT,
+                    kami telah melangsungkan pernikahan.
+                </p>
+
+                <br>
+
+                <p>
+                    Sebagai ungkapan rasa syukur dan kebahagiaan,
+                    dengan segala kerendahan hati kami mengundang
+                    Bapak/Ibu tetangga sekalian untuk hadir
+                    dalam acara syukuran pernikahan kami.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ACARA -->
+    <section>
+        <div class="container">
+
+            <h2 class="section-title">
+                Syukuran Pernikahan
+            </h2>
+
+            <div class="event">
+
+                <div class="event-title">
+                    Ryka & Adit
+                </div>
+
+                <div class="event-item">
+                    <span class="event-label">Hari</span><br>
+                    Sabtu, 19 Desember 2026
+                </div>
+
+                <div class="event-item">
+                    <span class="event-label">Waktu</span><br>
+                    13.00 - 16.00 WIB
+                </div>
+
+                <div class="event-item">
+                    <span class="event-label">Tempat</span><br>
+                    Kediaman Keluarga
+                </div>
+
+                <div class="event-item">
+                    <span class="event-label">Alamat</span><br>
+                    Komp. Sapta Taruna PU Blok B. 108 RT. 07/08
+                </div>
+
+                <a href="https://maps.app.goo.gl/gR3MQmjpuQif3T957" target="_blank" class="map-button">
+                    Lihat Lokasi
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- PENUTUP -->
+    <footer>
+
+        <p class="thanks">
+            Kehadiran dan doa restu Bapak/Ibu
+            merupakan kebahagiaan bagi kami dan keluarga.
+        </p>
+
+        <div class="footer-names">
+            Ryka & Adit
+        </div>
+
+        <p style="margin-top: 15px; font-size: 13px;">
+            Terima kasih atas doa dan perhatian yang diberikan.
+        </p>
+
+    </footer>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const guest = params.get('to');
+
+        if (guest) {
+            document.getElementById('guestName').textContent = guest;
+        }
+    </script>
+
+</body>
+
+</html>

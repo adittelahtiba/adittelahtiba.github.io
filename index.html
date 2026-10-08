@@ -752,26 +752,26 @@
                 transform: translate(-50%, -70%);
             }
         }
-    
+
         /* Gallery lazy loading */
         .gallery-img-wrap {
             position: relative;
             border-radius: 12px;
             overflow: hidden;
             background: #e8e0d0;
-            height: 220px;       /* fixed height — cegah layout shift saat gambar load */
-            contain: strict;     /* isolasi layout supaya scroll tidak loncat */
+            height: 220px;
+            /* fixed height — cegah layout shift saat gambar load */
+            contain: strict;
+            /* isolasi layout supaya scroll tidak loncat */
         }
 
         .gallery-skeleton {
             position: absolute;
             inset: 0;
-            background: linear-gradient(
-                90deg,
-                rgba(176, 138, 74, 0.08) 25%,
-                rgba(176, 138, 74, 0.22) 50%,
-                rgba(176, 138, 74, 0.08) 75%
-            );
+            background: linear-gradient(90deg,
+                    rgba(176, 138, 74, 0.08) 25%,
+                    rgba(176, 138, 74, 0.22) 50%,
+                    rgba(176, 138, 74, 0.08) 75%);
             background-size: 200% 100%;
             animation: skeletonShimmer 1.4s ease-in-out infinite;
             border-radius: 12px;
@@ -785,13 +785,19 @@
         }
 
         @keyframes skeletonShimmer {
-            0%   { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
         }
 
         .gallery-lazy {
             width: 100%;
-            height: 100%;        /* ikuti tinggi wrapper yang sudah fixed */
+            height: 100%;
+            /* ikuti tinggi wrapper yang sudah fixed */
             object-fit: cover;
             border-radius: 12px;
             display: block;
@@ -807,32 +813,31 @@
             opacity: 1;
         }
 
-        
-        
 
-        
+
+
+
         /* ✨ Section fade-up animation */
-        body > section {
+        body>section {
             opacity: 0;
             transform: translateY(60px);
             transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-                        transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+                transform 1s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: opacity, transform;
         }
 
-        body > section.fade-visible {
+        body>section.fade-visible {
             opacity: 1;
             transform: translateY(0);
         }
 
         /* Hero section langsung visible, tidak perlu animasi */
-        body > section:first-of-type {
+        body>section:first-of-type {
             opacity: 1;
             transform: translateY(0);
             transition: none;
         }
-
-        </style>
+    </style>
 </head>
 
 <body>
@@ -976,7 +981,8 @@
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg" alt="Galeri 3" class="gallery-lazy">
+                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg" alt="Galeri 3"
+                    class="gallery-lazy">
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
@@ -984,7 +990,8 @@
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg" alt="Galeri 5" class="gallery-lazy">
+                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg" alt="Galeri 5"
+                    class="gallery-lazy">
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
@@ -1000,7 +1007,8 @@
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg" alt="Galeri 9" class="gallery-lazy">
+                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg" alt="Galeri 9"
+                    class="gallery-lazy">
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
@@ -1024,7 +1032,8 @@
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).jpeg" alt="Galeri 16" class="gallery-lazy">
+                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).jpeg" alt="Galeri 16"
+                    class="gallery-lazy">
             </div>
             <div class="gallery-img-wrap" style="grid-column: span 2;">
                 <div class="gallery-skeleton"></div>
@@ -1036,7 +1045,8 @@
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.03 (1).jpeg" alt="Galeri 18" class="gallery-lazy">
+                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.03 (1).jpeg" alt="Galeri 18"
+                    class="gallery-lazy">
             </div>
             <div class="gallery-img-wrap">
                 <div class="gallery-skeleton"></div>
@@ -1597,9 +1607,9 @@
                     }
                 };
 
-                preloader.onload  = finish;
+                preloader.onload = finish;
                 preloader.onerror = finish; // tetap tampil meski error
-                preloader.src     = src;    // mulai download di background
+                preloader.src = src;    // mulai download di background
             }
 
             if ('IntersectionObserver' in window) {
@@ -1623,19 +1633,19 @@
         })();
     </script>
 
-    
+
 
     <script>
         // Section fade-up on scroll
-        (function() {
+        (function () {
             var sections = document.querySelectorAll('body > section:not(:first-of-type)');
 
             if ('IntersectionObserver' in window) {
-                var observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
+                var observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
                         if (entry.isIntersecting) {
                             // Small delay so user actually sees the animation mid-scroll
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 entry.target.classList.add('fade-visible');
                             }, 80);
                             observer.unobserve(entry.target);
@@ -1646,11 +1656,11 @@
                     rootMargin: '0px 0px -60px 0px'
                 });
 
-                sections.forEach(function(section) {
+                sections.forEach(function (section) {
                     observer.observe(section);
                 });
             } else {
-                sections.forEach(function(s) { s.classList.add('fade-visible'); });
+                sections.forEach(function (s) { s.classList.add('fade-visible'); });
             }
         })();
     </script>

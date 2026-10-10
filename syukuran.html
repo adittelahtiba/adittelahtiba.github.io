@@ -115,6 +115,7 @@
             max-width: 480px;
             margin: 0 auto;
             padding: 0 16px;
+            transition: max-width 0.3s ease;
         }
 
         /* CARD WRAPPER */
@@ -125,6 +126,11 @@
             padding: 36px 24px;
             box-shadow: 0 10px 30px rgba(23, 43, 73, 0.08);
             text-align: center;
+        }
+
+        /* KHUSUS KONDISI SAAT DOWNLOAD: UBAH CONTAINER JADI LEBAR (LANDSCAPE) */
+        .container.is-downloading {
+            max-width: 750px !important;
         }
 
         /* HEADER & SHINE GOLD ANIMATION */
@@ -151,10 +157,10 @@
             font-weight: bold;
         }
 
-        /* KELAS KHUSUS SAAT DOWNLOAD (WARNA EMAS STATIS) */
-        .invitation-card.is-downloading .gold-shine,
-        .invitation-card.is-downloading .title-names,
-        .invitation-card.is-downloading .arabic {
+        /* UBAH GRADASI JADI WARNA EMAS SOLID SAAT DOWNLOAD */
+        .container.is-downloading .gold-shine,
+        .container.is-downloading .title-names,
+        .container.is-downloading .arabic {
             background: none !important;
             -webkit-background-clip: initial !important;
             -webkit-text-fill-color: initial !important;
@@ -395,7 +401,7 @@
 
     <!-- ELEMENT AUDIO BACKSOUND -->
     <audio id="audioBacksound" loop preload="auto">
-        <source src="assets/Bridal Night.mp3" type="audio/mpeg">
+        <source src="assets/Mawlid Cinta.mp3" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
 
@@ -404,7 +410,7 @@
         <i class="fa-solid fa-compact-disc" id="musicIcon"></i>
     </button>
 
-    <div class="container">
+    <div class="container" id="mainContainer">
         <!-- KARTU UNDANGAN YANG BISA DIDOWNLOAD JADI GAMBAR -->
         <div class="invitation-card" id="invitationCard">
 
@@ -535,16 +541,17 @@
 
         // Fitur Download Kartu Undangan Menjadi Gambar (PNG) menggunakan html2canvas
         const downloadBtn = document.getElementById('downloadBtn');
+        const mainContainer = document.getElementById('mainContainer');
         const invitationCard = document.getElementById('invitationCard');
 
         downloadBtn.addEventListener('click', function () {
             downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses Gambar...';
             downloadBtn.style.pointerEvents = 'none';
 
-            // Tambahkan class agar animasi shine berhenti dan berubah menjadi teks warna emas solid
-            invitationCard.classList.add('is-downloading');
+            // Tambahkan class agar container melebar dan animasi shine berhenti (menjadi warna emas solid)
+            mainContainer.classList.add('is-downloading');
 
-            // Beri jeda sekejap agar browser merender perubahan style sebelum html2canvas mengambil screenshot
+            // Beri jeda sekejap agar browser merender perubahan lebar & style sebelum html2canvas mengambil screenshot
             setTimeout(() => {
                 html2canvas(invitationCard, {
                     scale: 2, // Kualitas tinggi (retina)
@@ -556,18 +563,18 @@
                     link.href = canvas.toDataURL('image/png');
                     link.click();
 
-                    // Hapus kembali class setelah download selesai
-                    invitationCard.classList.remove('is-downloading');
+                    // Kembalikan ukuran container dan style seperti semula setelah selesai
+                    mainContainer.classList.remove('is-downloading');
                     downloadBtn.innerHTML = '<i class="fa-solid fa-image"></i> Download Undangan';
                     downloadBtn.style.pointerEvents = 'auto';
                 }).catch(err => {
                     console.error('Gagal mendownload:', err);
                     alert('Terjadi kesalahan saat mengunduh gambar.');
-                    invitationCard.classList.remove('is-downloading');
+                    mainContainer.classList.remove('is-downloading');
                     downloadBtn.innerHTML = '<i class="fa-solid fa-image"></i> Download Undangan';
                     downloadBtn.style.pointerEvents = 'auto';
                 });
-            }, 100);
+            }, 150);
         });
     </script>
 

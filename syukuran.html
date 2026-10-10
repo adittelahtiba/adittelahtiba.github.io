@@ -6,17 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Undangan Syukuran & Pengajian Menjelang Pernikahan</title>
 
-    <!-- Font Google (Montserrat & Allura sesuai index.html) -->
+    <!-- Font Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Allura&family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas library untuk download kartu sebagai gambar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            /* ✨ Palette Mewah disesuaikan dengan index.html */
             --ivory: #F6F1E7;
             --ivory-warm: #FAF6EE;
             --navy: #172B49;
@@ -25,7 +26,6 @@
             --gold-light: #C9A96E;
             --gold-shimmer: #FFF6E5;
 
-            /* Compatibility variables */
             --bg-color: #F6F1E7;
             --card-bg: #FAF6EE;
             --text-main: #172B49;
@@ -47,6 +47,67 @@
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             padding: 20px 0 40px;
+            overflow-x: hidden;
+        }
+
+        /* ANIMASI TIRAI (CURTAIN OPENING) */
+        .curtain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--navy);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .curtain-overlay.open {
+            transform: translateY(-100%);
+        }
+
+        .curtain-content {
+            text-align: center;
+            color: var(--ivory);
+            padding: 20px;
+        }
+
+        .curtain-title {
+            font-family: 'Allura', cursive;
+            font-size: 48px;
+            color: var(--gold-light);
+            margin-bottom: 10px;
+        }
+
+        .curtain-subtitle {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            color: var(--ivory);
+            opacity: 0.8;
+        }
+
+        .btn-open-invitation {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--navy);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(176, 138, 74, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-open-invitation:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(176, 138, 74, 0.6);
         }
 
         .container {
@@ -88,6 +149,17 @@
             display: inline-block;
             animation: shineGold 4s linear infinite;
             font-weight: bold;
+        }
+
+        /* KELAS KHUSUS SAAT DOWNLOAD (WARNA EMAS STATIS) */
+        .invitation-card.is-downloading .gold-shine,
+        .invitation-card.is-downloading .title-names,
+        .invitation-card.is-downloading .arabic {
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+            color: var(--gold) !important;
+            animation: none !important;
         }
 
         .tagline {
@@ -220,6 +292,32 @@
             box-shadow: 0 6px 18px rgba(176, 138, 74, 0.35);
         }
 
+        /* DOWNLOAD BUTTON */
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--navy-deep);
+            border: 1px solid var(--gold-light);
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.25s ease;
+            margin-top: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(176, 138, 74, 0.3);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(176, 138, 74, 0.5);
+        }
+
         /* FOOTER */
         .footer-thanks {
             font-size: 13px;
@@ -251,7 +349,7 @@
             justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(23, 43, 73, 0.3);
-            z-index: 999;
+            z-index: 998;
             transition: all 0.3s ease;
         }
 
@@ -282,10 +380,22 @@
 
 <body>
 
+    <!-- OVERLAY TIRAI (CURTAIN OPENING) -->
+    <div class="curtain-overlay" id="curtainOverlay">
+        <div class="curtain-content">
+            <div class="curtain-subtitle">Undangan Syukuran & Pengajian</div>
+            <div class="curtain-title">Ryka Nurdianti</div>
+            <p style="color: var(--ivory); font-size: 13px; margin-bottom: 24px; opacity: 0.85;">Kepada Yth.
+                Bapak/Ibu/Saudara/i</p>
+            <button class="btn-open-invitation" id="openInvitationBtn">
+                <i class="fa-solid fa-envelope-open"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
+
     <!-- ELEMENT AUDIO BACKSOUND -->
     <audio id="audioBacksound" loop preload="auto">
-        <!-- Ganti 'audio.mp3' dengan path/URL file lagu Anda -->
-        <source src="assets/Mawlid Cinta.mp3" type="audio/mpeg">
+        <source src="assets/Bridal Night.mp3" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
 
@@ -295,7 +405,8 @@
     </button>
 
     <div class="container">
-        <div class="invitation-card">
+        <!-- KARTU UNDANGAN YANG BISA DIDOWNLOAD JADI GAMBAR -->
+        <div class="invitation-card" id="invitationCard">
 
             <div class="tagline">Syukuran & Pengajian Menjelang Pernikahan</div>
 
@@ -310,7 +421,6 @@
                 Dengan memohon rahmat dan rida Allah SWT, kami bermaksud menyelenggarakan acara Syukuran dan Pengajian
                 Menjelang Pernikahan putri kami:
             </p>
-
 
             <h1 class="title-names">Ryka Nurdianti</h1>
 
@@ -371,7 +481,11 @@
             </div>
 
         </div>
-        Download Undangan
+
+        <!-- TOMBOL DOWNLOAD GAMBAR -->
+        <button class="btn-download" id="downloadBtn">
+            <i class="fa-solid fa-image"></i> Download Undangan
+        </button>
     </div>
 
     <script>
@@ -408,13 +522,53 @@
 
         musicBtn.addEventListener('click', toggleMusic);
 
-        // Memutar lagu secara otomatis pada interaksi pertama pengguna (kebijakan Autoplay Browser)
-        document.addEventListener('click', function startAudioOnInteraction() {
+        // Animasi Buka Tirai & Mulai Musik
+        const curtainOverlay = document.getElementById('curtainOverlay');
+        const openInvitationBtn = document.getElementById('openInvitationBtn');
+
+        openInvitationBtn.addEventListener('click', function () {
+            curtainOverlay.classList.add('open');
             if (!isPlaying) {
                 toggleMusic();
             }
-            document.removeEventListener('click', startAudioOnInteraction);
-        }, { once: true });
+        });
+
+        // Fitur Download Kartu Undangan Menjadi Gambar (PNG) menggunakan html2canvas
+        const downloadBtn = document.getElementById('downloadBtn');
+        const invitationCard = document.getElementById('invitationCard');
+
+        downloadBtn.addEventListener('click', function () {
+            downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses Gambar...';
+            downloadBtn.style.pointerEvents = 'none';
+
+            // Tambahkan class agar animasi shine berhenti dan berubah menjadi teks warna emas solid
+            invitationCard.classList.add('is-downloading');
+
+            // Beri jeda sekejap agar browser merender perubahan style sebelum html2canvas mengambil screenshot
+            setTimeout(() => {
+                html2canvas(invitationCard, {
+                    scale: 2, // Kualitas tinggi (retina)
+                    useCORS: true,
+                    backgroundColor: null
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'Undangan-Ryka-Nurdianti.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+
+                    // Hapus kembali class setelah download selesai
+                    invitationCard.classList.remove('is-downloading');
+                    downloadBtn.innerHTML = '<i class="fa-solid fa-image"></i> Download Undangan';
+                    downloadBtn.style.pointerEvents = 'auto';
+                }).catch(err => {
+                    console.error('Gagal mendownload:', err);
+                    alert('Terjadi kesalahan saat mengunduh gambar.');
+                    invitationCard.classList.remove('is-downloading');
+                    downloadBtn.innerHTML = '<i class="fa-solid fa-image"></i> Download Undangan';
+                    downloadBtn.style.pointerEvents = 'auto';
+                });
+            }, 100);
+        });
     </script>
 
 </body>

@@ -115,6 +115,7 @@
             max-width: 480px;
             margin: 0 auto;
             padding: 0 16px;
+            transition: max-width 0.3s ease;
         }
 
         /* CARD WRAPPER */
@@ -125,6 +126,11 @@
             padding: 36px 24px;
             box-shadow: 0 10px 30px rgba(23, 43, 73, 0.08);
             text-align: center;
+        }
+
+        /* KHUSUS KONDISI SAAT DOWNLOAD: UBAH CONTAINER JADI LEBAR (LANDSCAPE) */
+        .container.is-downloading {
+            max-width: 750px !important;
         }
 
         /* HEADER & SHINE GOLD ANIMATION */
@@ -151,10 +157,10 @@
             font-weight: bold;
         }
 
-        /* KELAS KHUSUS SAAT DOWNLOAD (WARNA EMAS STATIS) */
-        .invitation-card.is-downloading .gold-shine,
-        .invitation-card.is-downloading .title-names,
-        .invitation-card.is-downloading .arabic {
+        /* UBAH GRADASI JADI WARNA EMAS SOLID SAAT DOWNLOAD */
+        .container.is-downloading .gold-shine,
+        .container.is-downloading .title-names,
+        .container.is-downloading .arabic {
             background: none !important;
             -webkit-background-clip: initial !important;
             -webkit-text-fill-color: initial !important;
@@ -285,11 +291,47 @@
             margin-top: 10px;
         }
 
+        .qr-map {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 80%;
+            padding: 12px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            margin-top: 10px;
+            margin-left: 10%;
+        }
+
         .btn-map:hover {
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
             color: var(--navy);
             border-color: var(--gold-light);
             box-shadow: 0 6px 18px rgba(176, 138, 74, 0.35);
+        }
+
+        .container.is-downloading .qr-map {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 80%;
+            padding: 12px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            margin-top: 10px;
+            margin-left: 10%;
+        }
+
+        .container.is-downloading .btn-map {
+            display: none;
         }
 
         /* DOWNLOAD BUTTON */
@@ -404,7 +446,7 @@
         <i class="fa-solid fa-compact-disc" id="musicIcon"></i>
     </button>
 
-    <div class="container">
+    <div class="container" id="mainContainer">
         <!-- KARTU UNDANGAN YANG BISA DIDOWNLOAD JADI GAMBAR -->
         <div class="invitation-card" id="invitationCard">
 
@@ -467,6 +509,8 @@
                 <a href="https://maps.app.goo.gl/gR3MQmjpuQif3T957" target="_blank" class="btn-map">
                     <i class="fa-solid fa-map-location-dot"></i> Petunjuk Arah (Google Maps)
                 </a>
+
+                <img src="assets/Golden_QR_Code_on_Transparent_Background-removebg-preview.png" class="qr-map">
             </div>
 
             <p class="footer-thanks">
@@ -502,6 +546,7 @@
         const musicBtn = document.getElementById('musicBtn');
         const musicIcon = document.getElementById('musicIcon');
         let isPlaying = false;
+        let wasPlayingBeforeHidden = false; // Menyimpan status musik sebelum tab ditinggal
 
         function toggleMusic() {
             if (isPlaying) {
@@ -522,6 +567,26 @@
 
         musicBtn.addEventListener('click', toggleMusic);
 
+        // Fitur Auto Stop Musik Saat Halaman Tidak Aktif / Berpindah Tab
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                // Jika tab disembunyikan / pindah tab / minimize
+                if (isPlaying) {
+                    wasPlayingBeforeHidden = true; // Tandai bahwa sebelumnya musik sedang menyala
+                    audio.pause();
+                    musicBtn.classList.remove('playing');
+                    musicIcon.className = 'fa-solid fa-volume-xmark';
+                    isPlaying = false;
+                } else {
+                    wasPlayingBeforeHidden = false;
+                }
+            } else {
+                // Jika halaman dibuka kembali
+                // (Opsional: Jika ingin musik otomatis menyala lagi saat kembali, ubah kondisi di bawah. 
+                // Saat ini dibiarkan berhenti sesuai permintaan "musik auto berhenti")
+            }
+        });
+
         // Animasi Buka Tirai & Mulai Musik
         const curtainOverlay = document.getElementById('curtainOverlay');
         const openInvitationBtn = document.getElementById('openInvitationBtn');
@@ -535,16 +600,17 @@
 
         // Fitur Download Kartu Undangan Menjadi Gambar (PNG) menggunakan html2canvas
         const downloadBtn = document.getElementById('downloadBtn');
+        const mainContainer = document.getElementById('mainContainer');
         const invitationCard = document.getElementById('invitationCard');
 
         downloadBtn.addEventListener('click', function () {
             downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses Gambar...';
             downloadBtn.style.pointerEvents = 'none';
 
-            // Tambahkan class agar animasi shine berhenti dan berubah menjadi teks warna emas solid
-            invitationCard.classList.add('is-downloading');
+            // Tambahkan class agar container melebar dan animasi shine berhenti (menjadi warna emas solid)
+            mainContainer.classList.add('is-downloading');
 
-            // Beri jeda sekejap agar browser merender perubahan style sebelum html2canvas mengambil screenshot
+            // Beri jeda sekejap agar browser merender perubahan lebar & style sebelum html2canvas mengambil screenshot
             setTimeout(() => {
                 html2canvas(invitationCard, {
                     scale: 2, // Kualitas tinggi (retina)
@@ -556,18 +622,18 @@
                     link.href = canvas.toDataURL('image/png');
                     link.click();
 
-                    // Hapus kembali class setelah download selesai
-                    invitationCard.classList.remove('is-downloading');
+                    // Kembalikan ukuran container dan style seperti semula setelah selesai
+                    mainContainer.classList.remove('is-downloading');
                     downloadBtn.innerHTML = '<i class="fa-solid fa-image"></i> Download Undangan';
                     downloadBtn.style.pointerEvents = 'auto';
                 }).catch(err => {
                     console.error('Gagal mendownload:', err);
                     alert('Terjadi kesalahan saat mengunduh gambar.');
-                    invitationCard.classList.remove('is-downloading');
+                    mainContainer.classList.remove('is-downloading');
                     downloadBtn.innerHTML = '<i class="fa-solid fa-image"></i> Download Undangan';
                     downloadBtn.style.pointerEvents = 'auto';
                 });
-            }, 100);
+            }, 150);
         });
     </script>
 

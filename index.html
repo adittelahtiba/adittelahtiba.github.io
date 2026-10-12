@@ -543,22 +543,81 @@
             opacity: 0.9;
         }
 
-        /* Gallery layout */
-        .gallery-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            align-items: stretch;
+        /* Gallery slideshow */
+        .gallery-slideshow {
+            position: relative;
+            padding: 12px 0 0;
         }
 
-        .gallery-container img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
+        .gallery-stage {
+            position: relative;
+            width: min(100%, 980px);
+            height: clamp(280px, 44vw, 540px);
+            margin: 0 auto;
+            perspective: 1200px;
+            overflow: hidden;
+        }
+
+        .gallery-slide {
+            position: absolute;
+            top: 50%;
+            width: clamp(180px, 28vw, 350px);
+            height: clamp(220px, 34vw, 420px);
             border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 18px 28px rgba(18, 38, 54, 0.12);
+            opacity: 0;
+            background: rgba(255, 255, 255, 0.3);
+            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        opacity 0.8s ease, filter 0.8s ease, left 0.8s ease, right 0.8s ease;
+            transform: translate(-50%, -50%) scale(0.85);
+            filter: blur(2.5px) saturate(0.7);
+            pointer-events: none;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            border: 1px solid rgba(176, 138, 74, 0.2);
-            box-shadow: 0 4px 15px rgba(23, 43, 73, 0.06);
+            filter: brightness(0.96);
+        }
+
+        .gallery-slide.is-prev {
+            left: 18%;
+            opacity: 0.38;
+            transform: translate(-50%, -50%) scale(0.84) rotateY(18deg);
+            filter: blur(2px) saturate(0.65);
+        }
+
+        .gallery-slide.is-active {
+            left: 50%;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            filter: blur(0) saturate(1);
+            z-index: 3;
+        }
+
+        .gallery-slide.is-next {
+            left: 82%;
+            opacity: 0.38;
+            transform: translate(-50%, -50%) scale(0.84) rotateY(-18deg);
+            filter: blur(2px) saturate(0.65);
+        }
+
+        .gallery-slide.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .gallery-counter {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            letter-spacing: 0.18rem;
+            color: rgba(23, 43, 73, 0.7);
+            font-weight: 600;
         }
 
         /* Story images */
@@ -1175,93 +1234,20 @@
             <h2 class="font-wedding display-4" data-i18n="galleryTitle">Happy Memories&nbsp;</h2>
         </div>
 
-        <div class="gallery-container">
-            <!-- <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.32.jpeg" alt="Galeri 1" class="gallery-lazy">
-            </div> -->
-            <!-- <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.37.jpeg" alt="Galeri 2" class="gallery-lazy">
-            </div> -->
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg" alt="Galeri 3"
-                    class="gallery-lazy">
+        <div class="gallery-slideshow" aria-label="Gallery slideshow">
+            <div class="gallery-stage" id="galleryStage">
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg" alt="Gallery 1"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg" alt="Gallery 2"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg" alt="Gallery 3"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47.jpeg" alt="Gallery 4"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38.jpeg" alt="Gallery 5"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).jpeg" alt="Gallery 6"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.56.jpeg" alt="Gallery 7"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.59.jpeg" alt="Gallery 8"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.06.jpeg" alt="Gallery 9"></div>
             </div>
-            <!-- <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.38.jpeg" alt="Galeri 4" class="gallery-lazy">
-            </div> -->
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg" alt="Galeri 5"
-                    class="gallery-lazy">
-            </div>
-            <!--<div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.40.jpeg" alt="Galeri 6" class="gallery-lazy">
-            </div>
-            <div class="gallery-img-wrap" style="grid-column: span 2;">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.46.jpeg" alt="Galeri 8" class="gallery-lazy">
-            </div>
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/New Project (21).png" alt="Galeri 7" class="gallery-lazy">
-            </div> -->
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg" alt="Galeri 9"
-                    class="gallery-lazy">
-            </div>
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.47.jpeg" alt="Galeri 10" class="gallery-lazy">
-            </div>
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.38.jpeg" alt="Galeri 11" class="gallery-lazy">
-            </div>
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).jpeg" alt="Galeri 16"
-                    class="gallery-lazy">
-            </div>
-            <!-- <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.58.jpeg" alt="Galeri 14" class="gallery-lazy">
-            </div> -->
-            <div class="gallery-img-wrap" style="grid-column: span 2;">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.56.jpeg" alt="Galeri 12" class="gallery-lazy">
-            </div>
-            <!-- <div class="gallery-img-wrap" style="grid-column: span 2;">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.57.jpeg" alt="Galeri 13" class="gallery-lazy">
-            </div> -->
-
-
-            <div class="gallery-img-wrap" style="grid-column: span 2;">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.19.59.jpeg" alt="Galeri 15" class="gallery-lazy">
-            </div>
-            <!-- <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.01.jpeg" alt="Galeri 17" class="gallery-lazy">
-            </div>
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.03 (1).jpeg" alt="Galeri 18"
-                    class="gallery-lazy">
-            </div> -->
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.03.jpeg" alt="Galeri 19" class="gallery-lazy">
-            </div>
-            <div class="gallery-img-wrap">
-                <div class="gallery-skeleton"></div>
-                <img data-src="assets/WhatsApp Image 2026-10-07 at 16.20.06.jpeg" alt="Galeri 20" class="gallery-lazy">
+            <div class="gallery-counter">
+                <span id="galleryCurrent">01</span> / <span id="galleryTotal">09</span>
             </div>
         </div>
     </section>
@@ -2077,6 +2063,44 @@
     </script>
 
 
+
+    <script>
+        (function () {
+            var slides = Array.prototype.slice.call(document.querySelectorAll('.gallery-slide'));
+            var currentIndex = 0;
+            var currentEl = document.getElementById('galleryCurrent');
+            var totalEl = document.getElementById('galleryTotal');
+
+            if (slides.length && currentEl && totalEl) {
+                totalEl.textContent = String(slides.length).padStart(2, '0');
+
+                function updateGallery() {
+                    slides.forEach(function (slide, index) {
+                        slide.classList.remove('is-active', 'is-prev', 'is-next', 'is-hidden');
+
+                        var diff = (index - currentIndex + slides.length) % slides.length;
+                        if (diff === 0) {
+                            slide.classList.add('is-active');
+                        } else if (diff === 1) {
+                            slide.classList.add('is-next');
+                        } else if (diff === slides.length - 1) {
+                            slide.classList.add('is-prev');
+                        } else {
+                            slide.classList.add('is-hidden');
+                        }
+                    });
+
+                    currentEl.textContent = String(currentIndex + 1).padStart(2, '0');
+                }
+
+                updateGallery();
+                setInterval(function () {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    updateGallery();
+                }, 3500);
+            }
+        })();
+    </script>
 
     <script>
         // Section fade-up on scroll removed to keep mobile scrolling smooth.

@@ -171,7 +171,6 @@
                 opacity: 0;
                 transform: translateY(18px) scale(.995);
                 transition: opacity .8s cubic-bezier(.2, .9, .2, 1), transform .8s cubic-bezier(.2, .9, .2, 1);
-                will-change: opacity, transform;
             }
 
             .reveal.in-view {
@@ -190,6 +189,23 @@
             .gallery-container img:hover {
                 transform: scale(1.04);
                 filter: brightness(1.05);
+            }
+        }
+
+        @media (max-width: 767px) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            #event {
+                background-attachment: scroll;
+            }
+
+            .gallery-container img,
+            .event-card,
+            .btn-action,
+            .btn-primary {
+                transition-duration: 0.2s;
             }
         }
 
@@ -443,6 +459,18 @@
             font-weight: bold;
         }
 
+        @media (max-width: 767px) {
+            .gold-shine,
+            #coverCouple,
+            body>section:not(#home) h1.font-wedding,
+            body>section h2.font-wedding,
+            body>section h3.font-wedding,
+            body>section h4.font-wedding {
+                animation-duration: 12s;
+                animation-timing-function: linear;
+            }
+        }
+
         /* ✨ Efek Animasi Kilap Silver Khusus Nama Mempelai di Hero */
         @keyframes shineSilver {
             to {
@@ -473,9 +501,16 @@
             display: inline-block;
             animation: shineSilver 3.5s linear infinite;
             -webkit-animation: shineSilver 3.5s linear infinite;
-            will-change: background-position;
             font-weight: bold;
             filter: drop-shadow(0 4px 12px rgba(15, 30, 51, 0.85));
+        }
+
+        @media (max-width: 767px) {
+            #home h1.font-wedding,
+            .shine-silver {
+                animation-duration: 10s;
+                filter: drop-shadow(0 2px 5px rgba(15, 30, 51, 0.65));
+            }
         }
 
         .copy-icon {
@@ -845,18 +880,16 @@
 
 
 
-        /* ✨ Section fade-up animation */
+        /* Scroll fade-up effect removed for better mobile smoothness */
         body>section {
-            opacity: 0;
-            transform: translateY(60px);
-            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-            will-change: opacity, transform;
+            opacity: 1;
+            transform: none;
+            transition: none;
         }
 
         body>section.fade-visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
 
         /* Hero section langsung visible, tidak perlu animasi */
@@ -1116,10 +1149,10 @@
                 <div>
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" alt="Ryka" class="thankyou-img">
                     <div style="margin-top:12px; font-weight:600; color: var(--navy);">
-                        <a href="https://instagram.com/rykandrt" target="_blank" rel="noopener"
-                            style="color:var(--navy); text-decoration:none;">
+                        <a href="https://instagram.com/rykanrdnt" target="_blank" rel="noopener"
+                            style="color:var(--gold); text-decoration:none;">
                             <i class="fa-brands fa-instagram"
-                                style="margin-right:8px; color: var(--gold);"></i>@rykandrt&nbsp;&nbsp;&nbsp;&nbsp;
+                                style="margin-right:8px; color: var(--gold);"></i>@rykanrdnt&nbsp;&nbsp;&nbsp;&nbsp;
                         </a>
                     </div>
                 </div>
@@ -1127,7 +1160,7 @@
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" alt="Adit" class="thankyou-img">
                     <div style="margin-top:12px; font-weight:600; color: var(--navy);">
                         <a href="https://instagram.com/uwa_adit" target="_blank" rel="noopener"
-                            style="color:var(--navy); text-decoration:none;">
+                            style="color:var(--gold); text-decoration:none;">
                             <i class="fa-brands fa-instagram"
                                 style="margin-right:8px; color: var(--gold);"></i>@uwa_adit&nbsp;&nbsp;&nbsp;&nbsp;
                         </a>
@@ -1864,8 +1897,14 @@
             });
             // prevent some touch-zoom gestures (best-effort)
             let lastTouchEnd = 0;
-            document.addEventListener('touchstart', function (e) { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
-            document.addEventListener('touchend', function (e) { const now = Date.now(); if (now - lastTouchEnd <= 300) e.preventDefault(); lastTouchEnd = now; }, false);
+            document.addEventListener('touchstart', function (e) {
+                if (e.touches.length > 1) e.preventDefault();
+            }, { passive: false });
+            document.addEventListener('touchend', function (e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) e.preventDefault();
+                lastTouchEnd = now;
+            }, { passive: false });
         })();
 
 
@@ -1919,8 +1958,6 @@
                             animation: { enable: true, speed: 8 }
                         },
 
-
-
                         opacity: {
                             value: { min: 0.25, max: 0.7 },
                             animation: {
@@ -1936,10 +1973,10 @@
 
                         move: {
                             enable: true,
-                            direction: "bottom", // Partikel tetap bergerak ke bawah
-                            speed: { min: 1, max: 1.8 }, // Kecepatan akan tetap di rentang ini
+                            direction: "bottom",
+                            speed: { min: 1, max: 1.8 },
                             gravity: {
-                                enable: false // Matikan ini agar tidak ada akselerasi
+                                enable: false
                             },
                             outModes: { default: "out" }
                         },
@@ -2022,32 +2059,12 @@
 
 
     <script>
-        // Section fade-up on scroll
+        // Section fade-up on scroll removed to keep mobile scrolling smooth.
         (function () {
             var sections = document.querySelectorAll('body > section:not(:first-of-type)');
-
-            if ('IntersectionObserver' in window) {
-                var observer = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            // Small delay so user actually sees the animation mid-scroll
-                            setTimeout(function () {
-                                entry.target.classList.add('fade-visible');
-                            }, 80);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    threshold: 0.12,
-                    rootMargin: '0px 0px -60px 0px'
-                });
-
-                sections.forEach(function (section) {
-                    observer.observe(section);
-                });
-            } else {
-                sections.forEach(function (s) { s.classList.add('fade-visible'); });
-            }
+            sections.forEach(function (section) {
+                section.classList.add('fade-visible');
+            });
         })();
     </script>
 </body>

@@ -1013,7 +1013,7 @@
                     <hr>
                     <p class="mb-1"><i class="fa-regular fa-calendar"></i> <span data-i18n="eventDate">Sunday, 20 December 2026</span></p>
                     <p class="mb-1"><i class="fa-regular fa-clock"></i> <span data-i18n="weddingTime">08.00 - 10.00 WIB</span></p>
-                    <p class="small">Graha Sativa Bulog<br>Jl. Soekarno-Hatta, Jatisari, Kec. Buahbatu</p>
+                    <p class="small">Masjid Baitul Ma'mur<br>Jl. Soekarno-Hatta, Jatisari, Kec. Buahbatu</p>
                     <a target="_blank" href="https://maps.app.goo.gl/D45FPoQDKUpFe2uZ6" class="btn-action"><i
                             class="fa-solid fa-location-dot"></i> Google Maps</a>
                 </div>
@@ -1398,10 +1398,20 @@
             }).join('');
         }
 
+        function restoreGuestNameField() {
+            const nameField = document.getElementById('g_name');
+            if (!nameField) return;
+            const nextName = guestLookupState.allowed && guestLookupState.guestName ? guestLookupState.guestName : 'Guest';
+            nameField.disabled = true;
+            nameField.readOnly = true;
+            nameField.value = nextName;
+        }
+
         async function submitGuest(evt) {
             evt.preventDefault();
             const submitBtn = document.getElementById('g_submit');
-            const name = document.getElementById('g_name').value.trim();
+            const nameField = document.getElementById('g_name');
+            const name = (nameField ? nameField.value : '').trim();
             const attend = document.getElementById('g_attend').value;
             const msg = document.getElementById('g_message').value.trim();
             if (!name || !msg) { showCopyNotification('Please fill in your name and message.'); return; }
@@ -1410,7 +1420,17 @@
                 submitBtn.disabled = true; submitBtn.style.opacity = 0.6;
                 const res = await fetch(`${API_BASE}/wedding_guest_book`, { method: 'POST', headers: HEADERS, body: JSON.stringify(payload) });
                 if (!res.ok) throw new Error('Failed');
-                document.getElementById('guestForm').reset();
+
+                const guestFormRef = document.getElementById('guestForm');
+                if (guestFormRef) {
+                    guestFormRef.reset();
+                    const select = document.getElementById('g_attend');
+                    if (select) {
+                        select.value = 'Hadir';
+                    }
+                }
+                restoreGuestNameField();
+                document.getElementById('g_message').value = '';
                 showCopyNotification('✓ Message sent');
                 fetchGuests();
             } catch (e) { showCopyNotification('✗ Failed to send message'); }
@@ -1569,7 +1589,7 @@
                 homeTag: 'The Wedding of',
                 weddingDate: '20 . 12 . 2026',
 
-                verseText: '"And among His signs is that He created for you spouses from among yourselves so that you may find comfort in them..."',
+                verseText: '"And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy. Indeed in that are signs for a people who give thought."',
 
                 coupleTitle: 'The Couple',
                 rykaParents: 'Daughter of Mr. Supyandi & Mrs. Yani',
@@ -1636,7 +1656,7 @@
                 coverButton: 'Buka Undangan',
                 homeTag: 'Pernikahan',
                 weddingDate: '20 . 12 . 2026',
-                verseText: '"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istrimu dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."',
+                verseText: '"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."',
                 coupleTitle: 'Mempelai',
                 rykaParents: 'Putri dari Bpk. Supyandi & Ibu Yani',
                 aditParents: 'Putra dari Bpk. Jajang & Ibu Eulis',
@@ -2062,9 +2082,9 @@
         // Section fade-up on scroll removed to keep mobile scrolling smooth.
         (function () {
             var sections = document.querySelectorAll('body > section:not(:first-of-type)');
-            sections.forEach(function (section) {
+                sections.forEach(function (section) {
                 section.classList.add('fade-visible');
-            });
+                });
         })();
     </script>
 </body>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guest List Manager</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --panel: #111827;
+            --panel-soft: #1f2937;
+            --line: #374151;
+            --text: #f3f4f6;
+            --muted: #9ca3af;
+            --primary: #8b5cf6;
+            --primary-2: #a78bfa;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #111827);
+            color: var(--text);
+        }
+
+        .wrap {
+            max-width: 980px;
+            margin: 48px auto;
+            padding: 24px;
+        }
+
+        .card {
+            background: rgba(17, 24, 39, 0.96);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        h1 {
+            margin: 0 0 20px;
+            font-size: clamp(1.6rem, 3vw, 2.3rem);
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        input {
+            width: 100%;
+            background: var(--panel-soft);
+            color: var(--text);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 1rem;
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            color: white;
+        }
+
+        .secondary {
+            background: #374151;
+            color: var(--text);
+        }
+
+        .danger {
+            background: rgba(239, 68, 68, 0.12);
+            color: #fecaca;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+        }
+
+        button:hover {
+            filter: brightness(1.08);
+        }
+
+        .status {
+            min-height: 24px;
+            margin-bottom: 18px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+        }
+
+        th, td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+        }
+
+        th {
+            background: rgba(31, 41, 55, 0.9);
+            color: #e5e7eb;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        tbody tr:hover {
+            background: rgba(148, 163, 184, 0.05);
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        @media (max-width: 720px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            .wrap {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="card">
+            <h1>Guest List Manager</h1>
+
+            <form id="guestForm">
+                <input id="guestName" type="text" placeholder="Enter guest name" required />
+                <button id="submitBtn" type="submit" class="primary">Add Guest</button>
+                <button id="cancelBtn" type="button" class="secondary" style="display: none;">Cancel</button>
+            </form>
+
+            <div id="status" class="status">Loading guest list...</div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Created At</th>
+                        <th>Guest Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="guestTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://worrkhiiwvlinanxsimn.supabase.co/rest/v1';
+        const HEADERS = {
+            apikey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0',
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+        };
+
+        const guestForm = document.getElementById('guestForm');
+        const guestNameInput = document.getElementById('guestName');
+        const guestTableBody = document.getElementById('guestTableBody');
+        const statusEl = document.getElementById('status');
+        const submitBtn = document.getElementById('submitBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        let editingId = null;
+
+        function setStatus(message, isError = false) {
+            statusEl.textContent = message;
+            statusEl.style.color = isError ? '#fca5a5' : '#cbd5e1';
+        }
+
+        function escapeHtml(value) {
+            return String(value || '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function formatDate(value) {
+            if (!value) return '-';
+            const d = new Date(value);
+            return Number.isNaN(d.getTime()) ? value : d.toLocaleString();
+        }
+
+        async function fetchGuests() {
+            try {
+                setStatus('Loading guest list...');
+                const res = await fetch(`${API_BASE}/guest_list?select=id,created_at,guest_name&order=created_at.desc`, { headers: HEADERS });
+                if (!res.ok) throw new Error('Failed to load guests');
+                const rows = await res.json();
+
+                if (!rows || rows.length === 0) {
+                    guestTableBody.innerHTML = '<tr><td colspan="4" class="muted">No guests yet.</td></tr>';
+                    setStatus('No guests found in the table.');
+                    return;
+                }
+
+                guestTableBody.innerHTML = rows.map(row => `
+                    <tr>
+                        <td>${row.id}</td>
+                        <td>${formatDate(row.created_at)}</td>
+                        <td>${escapeHtml(row.guest_name || '')}</td>
+                        <td>
+                            <div class="table-actions">
+                                <button type="button" class="secondary" data-action="edit" data-id="${row.id}" data-name="${escapeHtml(row.guest_name || '')}">Edit</button>
+                                <button type="button" class="danger" data-action="delete" data-id="${row.id}">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+
+                setStatus(`Loaded ${rows.length} guest(s).`);
+            } catch (error) {
+                guestTableBody.innerHTML = '<tr><td colspan="4" class="muted">Unable to load data.</td></tr>';
+                setStatus('Failed to load guest list.', true);
+                console.error(error);
+            }
+        }
+
+        async function submitGuest(event) {
+            event.preventDefault();
+            const guestName = guestNameInput.value.trim();
+
+            if (!guestName) {
+                setStatus('Guest name cannot be empty.', true);
+                return;
+            }
+
+            try {
+                const payload = { guest_name: guestName };
+                const url = editingId ? `${API_BASE}/guest_list?id=eq.${editingId}` : `${API_BASE}/guest_list`;
+                const method = editingId ? 'PATCH' : 'POST';
+
+                const res = await fetch(url, {
+                    method,
+                    headers: HEADERS,
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) throw new Error('Request failed');
+
+                setStatus(editingId ? 'Guest updated successfully.' : 'Guest added successfully.');
+                guestForm.reset();
+                editingId = null;
+                submitBtn.textContent = 'Add Guest';
+                cancelBtn.style.display = 'none';
+                await fetchGuests();
+            } catch (error) {
+                setStatus(editingId ? 'Failed to update guest.' : 'Failed to add guest.', true);
+                console.error(error);
+            }
+        }
+
+        async function deleteGuest(id) {
+            const confirmDelete = window.confirm('Delete this guest?');
+            if (!confirmDelete) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/guest_list?id=eq.${id}`, {
+                    method: 'DELETE',
+                    headers: HEADERS
+                });
+
+                if (!res.ok) throw new Error('Delete failed');
+                setStatus('Guest deleted successfully.');
+                await fetchGuests();
+            } catch (error) {
+                setStatus('Failed to delete guest.', true);
+                console.error(error);
+            }
+        }
+
+        function prepareEdit(id, name) {
+            editingId = id;
+            guestNameInput.value = name;
+            guestNameInput.focus();
+            submitBtn.textContent = 'Update Guest';
+            cancelBtn.style.display = 'inline-block';
+        }
+
+        guestForm.addEventListener('submit', submitGuest);
+        cancelBtn.addEventListener('click', () => {
+            editingId = null;
+            guestForm.reset();
+            submitBtn.textContent = 'Add Guest';
+            cancelBtn.style.display = 'none';
+            setStatus('Edit canceled.');
+        });
+
+        document.addEventListener('click', (event) => {
+            const target = event.target.closest('[data-action]');
+            if (!target) return;
+            const action = target.dataset.action;
+            const id = Number(target.dataset.id);
+
+            if (action === 'delete') {
+                deleteGuest(id);
+            }
+
+            if (action === 'edit') {
+                const name = target.dataset.name || '';
+                prepareEdit(id, name);
+            }
+        });
+
+        fetchGuests();
+    </script>
+</body>
+</html>

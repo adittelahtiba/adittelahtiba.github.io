@@ -2115,6 +2115,28 @@
                     });
                 });
 
+                var touchStartX = 0;
+                var touchStartY = 0;
+
+                stage.addEventListener('touchstart', function (event) {
+                    var touch = event.changedTouches[0];
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+                    stopAutoPlay();
+                }, { passive: true });
+
+                stage.addEventListener('touchend', function (event) {
+                    var touch = event.changedTouches[0];
+                    var deltaX = touch.clientX - touchStartX;
+                    var deltaY = touch.clientY - touchStartY;
+
+                    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                        goToDirection(deltaX < 0 ? 1 : -1);
+                    }
+
+                    setTimeout(startAutoPlay, 1500);
+                }, { passive: true });
+
                 stage.addEventListener('mouseenter', stopAutoPlay);
                 stage.addEventListener('mouseleave', startAutoPlay);
                 stage.addEventListener('focusin', stopAutoPlay);

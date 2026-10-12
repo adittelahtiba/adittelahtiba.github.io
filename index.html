@@ -556,6 +556,14 @@
             margin: 0 auto;
             perspective: 1200px;
             overflow: hidden;
+            touch-action: pan-y;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: grab;
+        }
+
+        .gallery-stage:active {
+            cursor: grabbing;
         }
 
         .gallery-slide {
@@ -832,6 +840,34 @@
         .att-tidak {
             background: #f59e0b;
             color: #312e00;
+        }
+
+        #guestbook .card {
+            background: linear-gradient(180deg, rgba(255, 249, 243, 0.96), rgba(244, 233, 217, 0.9));
+            border: 1px solid rgba(176, 138, 74, 0.32);
+            box-shadow: 0 16px 38px rgba(23, 43, 73, 0.08);
+        }
+
+        #guestbook .form-control,
+        #guestbook .form-select {
+            background: rgba(255, 255, 255, 0.46);
+            border: 1px solid rgba(176, 138, 74, 0.38);
+            color: var(--navy);
+            box-shadow: inset 0 1px 2px rgba(23, 43, 73, 0.04);
+        }
+
+        #guestbook .form-control:focus,
+        #guestbook .form-select:focus {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(176, 138, 74, 0.7);
+            box-shadow: 0 0 0 0.2rem rgba(176, 138, 74, 0.18);
+            color: var(--navy);
+        }
+
+        #guestbook #guestList {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 8px 6px 0;
         }
 
         input.form-control:disabled,
@@ -1172,7 +1208,7 @@
     </section>
 
     <section id="guestbook" class="section-wedding container">
-        <div class="card border-0 shadow-sm p-4 mb-5">
+        <div class="card border-0 p-4 mb-5">
             <h2 class="font-wedding text-center mb-4" data-i18n="guestbookTitle">Messages & Prayers&nbsp;</h2>
             <form id="guestForm">
                 <input id="g_name" type="text" class="form-control mb-3" placeholder="Full Name" value="Guest"
@@ -2123,27 +2159,49 @@
                     });
                 });
 
-                var touchStartX = 0;
-                var touchStartY = 0;
+                var swipeStartX = 0;
+                var swipeStartY = 0;
 
-                stage.addEventListener('touchstart', function (event) {
-                    var touch = event.changedTouches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
+                function handlePointerDown(event) {
+                    swipeStartX = event.clientX;
+                    swipeStartY = event.clientY;
                     stopAutoPlay();
-                }, { passive: true });
+                }
 
-                stage.addEventListener('touchend', function (event) {
-                    var touch = event.changedTouches[0];
-                    var deltaX = touch.clientX - touchStartX;
-                    var deltaY = touch.clientY - touchStartY;
+                function handlePointerUp(event) {
+                    var deltaX = event.clientX - swipeStartX;
+                    var deltaY = event.clientY - swipeStartY;
 
                     if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
                         goToDirection(deltaX < 0 ? 1 : -1);
                     }
 
                     setTimeout(startAutoPlay, 1500);
-                }, { passive: true });
+                }
+
+                stage.addEventListener('pointerdown', handlePointerDown, { passive: true });
+                stage.addEventListener('pointerup', handlePointerUp, { passive: true });
+
+                if (!window.PointerEvent) {
+                    stage.addEventListener('touchstart', function (event) {
+                        var touch = event.changedTouches[0];
+                        swipeStartX = touch.clientX;
+                        swipeStartY = touch.clientY;
+                        stopAutoPlay();
+                    }, { passive: true });
+
+                    stage.addEventListener('touchend', function (event) {
+                        var touch = event.changedTouches[0];
+                        var deltaX = touch.clientX - swipeStartX;
+                        var deltaY = touch.clientY - swipeStartY;
+
+                        if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                            goToDirection(deltaX < 0 ? 1 : -1);
+                        }
+
+                        setTimeout(startAutoPlay, 1500);
+                    }, { passive: true });
+                }
 
                 stage.addEventListener('mouseenter', stopAutoPlay);
                 stage.addEventListener('mouseleave', startAutoPlay);

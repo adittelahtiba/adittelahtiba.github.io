@@ -1265,6 +1265,7 @@
 
         const guestForm = document.getElementById('guestForm');
         const guestList = document.getElementById('guestList');
+        let guestMessages = [];
 
         // user_code stored in session so they can delete their own comments
         function getUserCode() {
@@ -1280,18 +1281,55 @@
                 const res = await fetch(`${API_BASE}/wedding_guest_book?select=*,created_at&order=created_at.desc`, { headers: HEADERS });
                 if (!res.ok) throw new Error('Fetch failed');
                 const arr = await res.json();
-                renderGuests(arr);
+                guestMessages = Array.isArray(arr) ? arr : [];
+                renderGuests(guestMessages);
             } catch (e) {
+                guestMessages = [];
                 guestList.innerHTML = '<div style="color:#666">Failed to load messages. Please try again later.</div>';
             }
+        }
+
+        function formatRelativeTime(dateString) {
+            const lang = langState && langState.current ? langState.current : 'en';
+            const date = new Date(dateString);
+            if (Number.isNaN(date.getTime())) return '';
+
+            const diffMs = Date.now() - date.getTime();
+            const absMs = Math.abs(diffMs);
+            const labels = {
+                en: { justNow: 'just now', ago: 'ago', second: 'second', seconds: 'seconds', minute: 'minute', minutes: 'minutes', hour: 'hour', hours: 'hours', day: 'day', days: 'days', month: 'month', months: 'months', year: 'year', years: 'years' },
+                id: { justNow: 'baru saja', ago: 'yang lalu', second: 'detik', seconds: 'detik', minute: 'menit', minutes: 'menit', hour: 'jam', hours: 'jam', day: 'hari', days: 'hari', month: 'bulan', months: 'bulan', year: 'tahun', years: 'tahun' }
+            };
+
+            if (absMs < 60 * 1000) return labels[lang].justNow;
+
+            const ranges = [
+                { value: 365 * 24 * 60 * 60 * 1000, singular: 'year', plural: 'years' },
+                { value: 30 * 24 * 60 * 60 * 1000, singular: 'month', plural: 'months' },
+                { value: 24 * 60 * 60 * 1000, singular: 'day', plural: 'days' },
+                { value: 60 * 60 * 1000, singular: 'hour', plural: 'hours' },
+                { value: 60 * 1000, singular: 'minute', plural: 'minutes' },
+                { value: 1000, singular: 'second', plural: 'seconds' }
+            ];
+
+            for (const range of ranges) {
+                const count = Math.floor(absMs / range.value);
+                if (count >= 1) {
+                    const label = count === 1 ? labels[lang][range.singular] : labels[lang][range.plural];
+                    return `${count} ${label} ${labels[lang].ago}`;
+                }
+            }
+
+            return labels[lang].justNow;
         }
 
         function renderGuests(arr) {
             if (!arr || arr.length === 0) { guestList.innerHTML = '<div style="color:#666">No messages yet.</div>'; return; }
             const me = getUserCode();
+            const fallbackText = langState.current === 'id' ? 'baru saja' : 'just now';
             guestList.innerHTML = arr.map(g => {
                 const id = g.id;
-                const time = new Date(g.created_at).toLocaleString();
+                const time = formatRelativeTime(g.created_at);
                 const canDelete = g.user_code && g.user_code === me;
                 const att = (g.attendance || '').toLowerCase();
                 let attClass = 'att-maybe';
@@ -1322,7 +1360,7 @@
                                                 ${canDelete ? `<button onclick="confirmDelete(${id})" title="Delete" class="btn-icon" style="background:transparent;color:#ff6d7b;border:none"><i class="fa-regular fa-trash-can"></i></button>` : ''}
                                             </div>
                                             <div style="margin-top:6px">${escapeHtml(g.comment || '')}</div>
-                                            <div style="font-size:11px;color:#999">${time}</div>
+                                            <div style="font-size:11px;color:#999">${time || fallbackText}</div>
                                         </div>`;
             }).join('');
         }
@@ -1534,6 +1572,21 @@
                 guestMessagePlaceholder: 'Share your wishes and prayers...',
                 sendMessage: 'Send Wishes',
 
+                justNow: 'just now',
+                ago: 'ago',
+                second: 'second',
+                seconds: 'seconds',
+                minute: 'minute',
+                minutes: 'minutes',
+                hour: 'hour',
+                hours: 'hours',
+                day: 'day',
+                days: 'days',
+                month: 'month',
+                months: 'months',
+                year: 'year',
+                years: 'years',
+
                 attending: 'Joyfully Accept',
                 maybe: 'Undecided',
                 notAttending: 'Regretfully Decline',
@@ -1578,6 +1631,20 @@
                 guestNamePlaceholder: 'Nama Lengkap',
                 guestMessagePlaceholder: 'Tulis doa dan ucapan terbaikmu...',
                 sendMessage: 'Kirim Ucapan',
+                justNow: 'baru saja',
+                ago: 'yang lalu',
+                second: 'detik',
+                seconds: 'detik',
+                minute: 'menit',
+                minutes: 'menit',
+                hour: 'jam',
+                hours: 'jam',
+                day: 'hari',
+                days: 'hari',
+                month: 'bulan',
+                months: 'bulan',
+                year: 'tahun',
+                years: 'tahun',
                 attending: 'Hadir',
                 maybe: 'Belum Pasti',
                 notAttending: 'Tidak Hadir',
@@ -1636,6 +1703,10 @@
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
+
+            if (guestMessages.length) {
+                renderGuests(guestMessages);
+            }
         }
 
         document.querySelectorAll('.lang-btn').forEach(btn => {

@@ -84,6 +84,12 @@
             color: var(--text);
         }
 
+        .copy-btn {
+            background: rgba(34, 197, 94, 0.12);
+            color: #bbf7d0;
+            border: 1px solid rgba(34, 197, 94, 0.35);
+        }
+
         .danger {
             background: rgba(239, 68, 68, 0.12);
             color: #fecaca;
@@ -214,6 +220,31 @@
             return Number.isNaN(d.getTime()) ? value : d.toLocaleString();
         }
 
+        function buildGuestChatTemplate(guestName) {
+            const safeName = String(guestName || '').trim();
+            const guestParam = safeName.replace(/\s+/g, '+');
+            const inviteUrl = `https://moneta.asia/?to=${guestParam}`;
+
+            return `Assalamualaikum Warahmatullahi Wabarakatuh\n` +
+                `Dengan segala hormat, kami mengundang Bapak/Ibu/Saudara/i ${safeName} untuk menghadiri acara pernikahan kami.\n` +
+                `Informasi lengkap mengenai acara dapat dilihat melalui link berikut:\n` +
+                `${inviteUrl}\n` +
+                `Besar harapan kami atas kehadiran dan doa restunya. Mohon maaf undangan hanya kami sampaikan melalui pesan ini.\n` +
+                `Terima kasih atas perhatian dan doanya.\n` +
+                `Wassalamualaikum Warahmatullahi Wabarakatuh`;
+        }
+
+        async function copyGuestChat(guestName) {
+            const text = buildGuestChatTemplate(guestName);
+            try {
+                await navigator.clipboard.writeText(text);
+                setStatus(`Chat template copied for ${guestName}.`);
+            } catch (error) {
+                setStatus('Unable to copy chat template.', true);
+                console.error(error);
+            }
+        }
+
         async function fetchGuests() {
             try {
                 setStatus('Loading guest list...');
@@ -234,7 +265,8 @@
                         <td>${escapeHtml(row.guest_name || '')}</td>
                         <td>
                             <div class="table-actions">
-                                <button type="button" class="secondary" data-action="edit" data-id="${row.id}" data-name="${escapeHtml(row.guest_name || '')}">Edit</button>
+                                <button type="button" class="copy-btn" data-action="copy-chat" data-id="${row.id}" data-name="${String(row.guest_name || '').replace(/"/g, '&quot;')}">Copy Chat</button>
+                                <button type="button" class="secondary" data-action="edit" data-id="${row.id}" data-name="${String(row.guest_name || '').replace(/"/g, '&quot;')}">Edit</button>
                                 <button type="button" class="danger" data-action="delete" data-id="${row.id}">Delete</button>
                             </div>
                         </td>
@@ -319,7 +351,7 @@
             setStatus('Edit canceled.');
         });
 
-        document.addEventListener('click', (event) => {
+        document.addEventListener('click', async (event) => {
             const target = event.target.closest('[data-action]');
             if (!target) return;
             const action = target.dataset.action;
@@ -332,6 +364,11 @@
             if (action === 'edit') {
                 const name = target.dataset.name || '';
                 prepareEdit(id, name);
+            }
+
+            if (action === 'copy-chat') {
+                const name = target.dataset.name || '';
+                await copyGuestChat(name);
             }
         });
 

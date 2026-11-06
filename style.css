@@ -57,7 +57,7 @@ body {
 
 /* Countdown */
 .countdown-item {
-    background: var(--navy);
+    /* background: var(--navy); */
     color: var(--gold-light);
     border: 1px solid var(--gold);
     border-radius: 10px;

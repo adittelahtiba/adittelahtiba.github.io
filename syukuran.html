@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Undangan Syukuran Menjelang Pernikahan</title>
 
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The Wedding of Ryka & Adit">
+    <meta property="og:description" content="Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir di hari istimewa kami.">
+    <meta property="og:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+    <meta property="og:image:secure_url" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Ryka & Adit Wedding">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+
+
+    <link rel="icon" type="image/png" href="assets/icon.png">
+
     <!-- Font Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -427,8 +442,10 @@
         <div class="curtain-content">
             <div class="curtain-subtitle">Undangan Syukuran Menjelang Pernikahan</div>
             <div class="curtain-title">Ryka Nurdianti</div>
-            <p style="color: var(--ivory); font-size: 13px; margin-bottom: 24px; opacity: 0.85;">Kepada Yth.
-                Bapak/Ibu/Saudara/i</p>
+            <div class="guest-box" style="margin: 18px 0 20px; background: rgba(23, 43, 73, 0.6); border-color: rgba(176, 138, 74, 0.6);">
+                <div class="guest-label" style="color: var(--ivory); opacity: 0.9;">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+                <div class="guest-name" id="curtainGuestName" style="color: var(--gold-light);">Tamu Undangan</div>
+            </div>
             <button class="btn-open-invitation" id="openInvitationBtn">
                 <i class="fa-solid fa-envelope-open"></i> Buka Undangan
             </button>
@@ -527,9 +544,9 @@
         </div>
 
         <!-- TOMBOL DOWNLOAD GAMBAR -->
-        <button class="btn-download" id="downloadBtn">
+        <!-- <button class="btn-download" id="downloadBtn">
             <i class="fa-solid fa-image"></i> Download Undangan
-        </button>
+        </button> -->
     </div>
 
     <script>
@@ -538,7 +555,12 @@
         const guest = params.get('to');
 
         if (guest) {
-            document.getElementById('guestName').textContent = guest;
+            const guestNameEl = document.getElementById('guestName');
+            const curtainGuestNameEl = document.getElementById('curtainGuestName');
+            const displayName = decodeURIComponent(guest).replace(/\+/g, ' ');
+
+            if (guestNameEl) guestNameEl.textContent = displayName;
+            if (curtainGuestNameEl) curtainGuestNameEl.textContent = displayName;
         }
 
         // Fitur Pemutar Musik / Backsound

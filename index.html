@@ -1598,15 +1598,28 @@
         function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
         async function fetchGuests() {
+            const guestbookSection = document.getElementById('guestbook');
             try {
-                const res = await fetch(`${API_BASE}/wedding_guest_book?select=*,created_at&order=created_at.desc`, { headers: HEADERS });
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+                const res = await fetch(`${API_BASE}/wedding_guest_book?select=*,created_at&order=created_at.desc`, {
+                    headers: HEADERS,
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+
                 if (!res.ok) throw new Error('Fetch failed');
                 const arr = await res.json();
                 guestMessages = Array.isArray(arr) ? arr : [];
                 renderGuests(guestMessages);
+                if (guestbookSection) guestbookSection.style.display = 'block';
             } catch (e) {
                 guestMessages = [];
-                guestList.innerHTML = '<div style="color:#666">Failed to load messages. Please try again later.</div>';
+                if (guestbookSection) {
+                    guestbookSection.style.display = 'none';
+                    guestbookSection.setAttribute('hidden', 'hidden');
+                }
+                if (guestList) guestList.innerHTML = '';
             }
         }
 
@@ -1774,6 +1787,7 @@
             const guestParam = getQueryParam('to') || getQueryParam('name');
             const rawName = guestParam ? decodeURIComponent(guestParam).split('+').join(' ').trim() : '';
             const loadingText = 'Sedang mencari tamu...';
+            const timeoutMs = 3000;
 
             if (!nameField) return;
 
@@ -1800,19 +1814,27 @@
                         nameField.value = 'Guest';
                     }
                     if (openBtn) {
-                        openBtn.disabled = true;
-                        openBtn.textContent = 'Sedang mencari tamu...';
+                        openBtn.disabled = false;
+                        openBtn.textContent = 'Open Invitation';
                     }
                     guestLookupState.resolved = true;
-                    guestLookupState.allowed = false;
+                    guestLookupState.allowed = true;
                 }, 1200);
                 return;
             }
 
+            const controller = new AbortController();
+            let apiFailed = false;
+            const timeoutId = setTimeout(() => {
+                apiFailed = true;
+                controller.abort();
+            }, timeoutMs);
+
             try {
-                const lookupUrl = `${API_BASE}/guest_list?guest_name=eq.${encodeURIComponent(rawName)}&select=id,guest_name`;
-                const res = await fetch(lookupUrl, { headers: HEADERS });
+                const lookupUrl = `${API_BASE}/guest_list?guest_name_lower=eq.${encodeURIComponent(rawName.toLowerCase())}&select=id,guest_name`;
+                const res = await fetch(lookupUrl, { headers: HEADERS, signal: controller.signal });
                 if (!res.ok) throw new Error('Lookup failed');
+
                 const rows = await res.json();
 
                 if (rows && rows.length > 0) {
@@ -1828,23 +1850,44 @@
                     }
                     return;
                 }
-            } catch (e) { }
 
-            guestLookupState.resolved = true;
-            guestLookupState.allowed = false;
-            if (coverGreeting && rawName) {
-                coverGreeting.innerText = `To: ${rawName}`;
-            }
-
-            setTimeout(() => {
-                if (nameField.value === loadingText) {
-                    nameField.value = rawName || 'Guest';
-                }
+                // Array kosong => tamu tidak ada di daftar; jangan loloskan undangan.
+                guestLookupState.resolved = true;
+                guestLookupState.allowed = false;
+                if (coverGreeting) coverGreeting.innerText = `To: ${rawName}`;
+                if (nameField.value === loadingText) nameField.value = rawName;
                 if (openBtn) {
                     openBtn.disabled = true;
-                    openBtn.textContent = 'Sedang mencari tamu...';
+                    openBtn.textContent = 'Guest not found';
                 }
-            }, 1200);
+                return;
+            } catch (e) {
+                apiFailed = true;
+            } finally {
+                clearTimeout(timeoutId);
+            }
+
+            if (apiFailed) {
+                guestLookupState.resolved = true;
+                guestLookupState.allowed = true;
+                if (coverGreeting) coverGreeting.innerText = `To: ${rawName}`;
+                if (nameField.value === loadingText) nameField.value = rawName;
+                if (openBtn) {
+                    openBtn.disabled = false;
+                    openBtn.textContent = 'Open Invitation';
+                }
+                return;
+            }
+
+            // Fallback aman kalau tidak ada error tapi status belum jelas.
+            guestLookupState.resolved = true;
+            guestLookupState.allowed = false;
+            if (coverGreeting) coverGreeting.innerText = `To: ${rawName}`;
+            if (nameField.value === loadingText) nameField.value = rawName;
+            if (openBtn) {
+                openBtn.disabled = true;
+                openBtn.textContent = 'Guest not found';
+            }
         }
 
         resolveGuestFromTable();

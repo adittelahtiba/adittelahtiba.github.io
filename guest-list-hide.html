@@ -295,7 +295,7 @@
             }
 
             try {
-                const payload = { guest_name: guestName };
+                const payload = { guest_name: guestName, guest_name_lower: guestName.toLowerCase() };
                 const url = editingId ? `${API_BASE}/guest_list?id=eq.${editingId}` : `${API_BASE}/guest_list`;
                 const method = editingId ? 'PATCH' : 'POST';
 

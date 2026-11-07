@@ -1214,6 +1214,11 @@
     </button>
 
 
+    <div class="container text-center py-4">
+        <p class="mb-2" style="letter-spacing: 0.08em; font-weight: 600; color: var(--navy);" data-i18n="openingGreeting">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+        <p class="mb-0 mx-auto" style="max-width: 760px; color: var(--navy); line-height: 1.8;" data-i18n="openingText">With utmost respect, we invite you and your family to attend our wedding celebration and share in our happiness.</p>
+    </div>
+
     <section id="couple" class="section-wedding container text-center">
         <h3 class="font-wedding display-4" data-i18n="coupleTitle">The Couple&nbsp;</h3>
         <div class="row mt-5 align-items-center">
@@ -1231,29 +1236,33 @@
         </div>
     </section>
 
-    <section class="container py-5 text-center">
-        <h2 class="font-wedding display-4" data-i18n="loveStoryTitle">Love Story&nbsp;</h2>
 
-        <div class="row mt-4">
-            <div class="col-12 mb-5">
-                <h4 data-i18n="firstMeeting">Our First Meeting</h4>
-                <p class="small text-muted" data-i18n="firstMeetingText">
-                    It all began with a simple meeting fueled by a sincere desire to know each other better.
-                    Without much planning, that moment became the beginning of a journey that gradually brought
-                    us closer together.
-                </p>
-            </div>
 
-            <div class="col-12 mb-5">
-                <h4 data-i18n="strengtheningHearts">Strengthening Our Hearts</h4>
-                <p class="small text-muted" data-i18n="strengtheningHeartsText">
-                    After getting to know each other and understanding one another more deeply, we became certain
-                    to take the next step toward a more serious commitment. With the blessing of our families,
-                    we united our intentions to build a life together.
-                </p>
+    <section id="countdownSection" class="section-wedding text-center">
+        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="metadata">
+            <source src="assets/RIKA & ADIT.mp4" type="video/mp4">
+        </video>
+        <div class="countdown-overlay"></div>
+        <div style="position: relative; z-index: 1;">
+            <h2 class="font-wedding mb-4" data-i18n="countdownTitle">Countdown&nbsp;</h2>
+            <div class="d-flex justify-content-center">
+                <div class="countdown-item">
+                    <h3 id="d">0&nbsp;</h3><small data-i18n="days">Days</small>
+                </div>
+                <div class="countdown-item">
+                    <h3 id="h">0&nbsp;</h3><small data-i18n="hours">Hours</small>
+                </div>
+                <div class="countdown-item">
+                    <h3 id="m">0&nbsp;</h3><small data-i18n="minutes">Minutes</small>
+                </div>
+                <div class="countdown-item">
+                    <h3 id="s">0&nbsp;</h3><small data-i18n="seconds">Seconds</small>
+                </div>
             </div>
         </div>
     </section>
+
+
 
     <section class="container py-5" id="event">
         <div class="text-center mb-5">
@@ -1287,35 +1296,33 @@
     </section>
 
 
-
     <section class="container py-5 text-center">
-        <!-- removed duplicate single gift card (merged below) -->
-    </section>
+        <h2 class="font-wedding display-4" data-i18n="loveStoryTitle">Love Story&nbsp;</h2>
 
-    <section id="countdownSection" class="section-wedding text-center">
-        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="metadata">
-            <source src="assets/RIKA & ADIT.mp4" type="video/mp4">
-        </video>
-        <div class="countdown-overlay"></div>
-        <div style="position: relative; z-index: 1;">
-            <h2 class="font-wedding mb-4" data-i18n="countdownTitle">Countdown&nbsp;</h2>
-            <div class="d-flex justify-content-center">
-                <div class="countdown-item">
-                    <h3 id="d">0&nbsp;</h3><small data-i18n="days">Days</small>
-                </div>
-                <div class="countdown-item">
-                    <h3 id="h">0&nbsp;</h3><small data-i18n="hours">Hours</small>
-                </div>
-                <div class="countdown-item">
-                    <h3 id="m">0&nbsp;</h3><small data-i18n="minutes">Minutes</small>
-                </div>
-                <div class="countdown-item">
-                    <h3 id="s">0&nbsp;</h3><small data-i18n="seconds">Seconds</small>
-                </div>
+        <div class="row mt-4">
+            <div class="col-12 mb-5">
+                <h4 data-i18n="firstMeeting">Our First Meeting</h4>
+                <p class="small text-muted" data-i18n="firstMeetingText">
+                    It all began with a simple meeting fueled by a sincere desire to know each other better.
+                    Without much planning, that moment became the beginning of a journey that gradually brought
+                    us closer together.
+                </p>
+            </div>
+
+            <div class="col-12 mb-5">
+                <h4 data-i18n="strengtheningHearts">Strengthening Our Hearts</h4>
+                <p class="small text-muted" data-i18n="strengtheningHeartsText">
+                    After getting to know each other and understanding one another more deeply, we became certain
+                    to take the next step toward a more serious commitment. With the blessing of our families,
+                    we united our intentions to build a life together.
+                </p>
             </div>
         </div>
     </section>
 
+    <section class="container py-5 text-center">
+        <!-- removed duplicate single gift card (merged below) -->
+    </section>
 
 
     <section class="container py-5" id="gallery">
@@ -1425,7 +1432,9 @@
     <section class="section-wedding container text-center" id="thankyou">
         <div class="text-center mb-4">
             <h2 class="font-wedding display-4" data-i18n="thankYouTitle">Thank You&nbsp;</h2>
-            <p class="small text-muted2" data-i18n="thankYouText">Thank you for your prayers, presence, and support. May blessings always accompany you.</p>
+            <p class="small text-muted2" data-i18n="thankYouText">It is an honor and a joy for us if you are willing to attend and bless our wedding with your presence. Thank you for your prayers, attendance, and support.</p>
+            <p class="mt-4 mb-2" style="font-weight: 700; letter-spacing: 0.04em; color: var(--navy);" data-i18n="thankYouClosing">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+            <p class="mb-0 font-wedding" style="font-size: clamp(1.5rem, 2vw, 2.5rem); color: var(--gold);" data-i18n="thankYouSignature">Ryka &amp; Adit</p>
             <div style="display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
                 <div>
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" alt="Ryka" class="thankyou-img">
@@ -1835,8 +1844,12 @@
                 maybe: 'Undecided',
                 notAttending: 'Regretfully Decline',
 
+                openingGreeting: 'Assalamu\'alaikum Warahmatullahi Wabarakatuh',
+                openingText: 'With utmost respect, we invite you and your family to grace our wedding celebration and share in our happiness.',
                 thankYouTitle: 'Thank You',
-                thankYouText: 'Thank you for your prayers, presence, and love. May blessings always be with you.',
+                thankYouText: 'It is an honor and a joy for us if you are willing to attend and bless our wedding with your presence. Thank you for your prayers, attendance, and support.',
+                thankYouClosing: 'Wassalamu\'alaikum Warahmatullahi Wabarakatuh',
+                thankYouSignature: 'Ryka & Adit',
                 footerTitle: 'See You at the Wedding',
                 footerText: 'We look forward to celebrating this special day with you.',
 
@@ -1894,8 +1907,12 @@
                 attending: 'Hadir',
                 maybe: 'Belum Pasti',
                 notAttending: 'Tidak Hadir',
+                openingGreeting: 'Assalamu\'alaikum Warahmatullahi Wabarakatuh',
+                openingText: 'Dengan penuh hormat, kami mengundang Bapak/Ibu/Saudara/i serta kerabat sekalian untuk hadir dan merayakan pernikahan kami. Kehadiran serta doa restu Anda merupakan kebahagiaan dan keberkahan bagi kami.',
                 thankYouTitle: 'Terima Kasih',
-                thankYouText: 'Terima kasih atas doa, kehadiran, dan dukungan Anda. Semoga berkah selalu menyertai.',
+                thankYouText: 'Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Atas kehadiran serta doa restu yang telah diberikan, kami ucapkan terima kasih.',
+                thankYouClosing: 'Wassalamu\'alaikum Warahmatullahi Wabarakatuh',
+                thankYouSignature: 'Ryka & Adit',
                 footerTitle: 'Sampai Bertemu di Pernikahan',
                 footerText: 'Kami menantikan kebersamaan Anda dalam merayakan hari istimewa ini.',
                 galleryTitle: 'Galeri Bahagia',

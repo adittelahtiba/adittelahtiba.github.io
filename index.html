@@ -514,6 +514,42 @@
             border: 1px solid rgba(246, 241, 231, 0.3);
         }
 
+        .section-ornament {
+            width: 200px;
+            height: 34px;
+            display: block;
+            margin: 0 auto 18px;
+            opacity: 0.96;
+        }
+
+        .section-ornament svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .section-ornament .gold-line {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .section-ornament .gold-line-thin {
+            fill: none;
+            stroke: rgba(176, 138, 74, 0.85);
+            stroke-width: 1.1;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .section-ornament .gold-fill {
+            fill: rgba(176, 138, 74, 0.12);
+            stroke: var(--gold);
+            stroke-width: 1.2;
+        }
+
         .nav-floating a {
             position: relative;
             display: inline-flex;
@@ -1204,6 +1240,14 @@
 
     <section id="verse" class="section-wedding text-center container">
         <div id="tsparticles-verse" class="tparty"></div>
+        <div class="section-ornament" aria-hidden="true">
+            <svg viewBox="0 0 200 34" preserveAspectRatio="xMidYMid meet" role="img" aria-label="gold ornament">
+                <path class="gold-line" d="M12 17H78M122 17h66"/>
+                <path class="gold-line-thin" d="M42 9c6 0 11 5 11 11s-5 11-11 11-11-5-11-11 5-11 11-11zm116 0c6 0 11 5 11 11s-5 11-11 11-11-5-11-11 5-11 11-11z"/>
+                <path class="gold-line" d="M80 17h40"/>
+                <circle class="gold-fill" cx="100" cy="17" r="7.5"/>
+            </svg>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <p class="fst-italic" data-i18n="verseText">"And among the signs of His power is that He created for you spouses from among yourselves, so that you may find tranquility in them..."</p>
@@ -1231,6 +1275,14 @@
     </div>
 
     <section id="couple" class="section-wedding container text-center">
+        <div class="section-ornament" aria-hidden="true">
+            <svg viewBox="0 0 200 34" preserveAspectRatio="xMidYMid meet" role="img" aria-label="gold ornament">
+                <path class="gold-line" d="M12 17H78M122 17h66"/>
+                <path class="gold-line-thin" d="M39 8c7 0 13 6 13 13s-6 13-13 13-13-6-13-13 6-13 13-13zm122 0c7 0 13 6 13 13s-6 13-13 13-13-6-13-13 6-13 13-13z"/>
+                <path class="gold-line" d="M80 17h40"/>
+                <path class="gold-line" d="M87 9c7 0 13 6 13 13s-6 13-13 13-13-6-13-13 6-13 13-13zm26 0c7 0 13 6 13 13s-6 13-13 13-13-6-13-13 6-13 13-13z"/>
+            </svg>
+        </div>
         <h3 class="font-wedding display-4" data-i18n="coupleTitle">The Couple&nbsp;</h3>
         <div class="row mt-5 align-items-center">
             <div class="col-md-5">
@@ -1251,7 +1303,7 @@
 
     <section id="countdownSection" class="section-wedding text-center">
         <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="metadata">
-            <source src="assets/RIKA & ADIT.mp4" type="video/mp4">
+            <source src="assets/fd.mp4" type="video/mp4">
         </video>
         <div class="countdown-overlay"></div>
         <div style="position: relative; z-index: 1;">
@@ -1277,6 +1329,14 @@
 
     <section class="container py-5" id="event">
         <div class="text-center mb-5">
+            <div class="section-ornament" aria-hidden="true">
+                <svg viewBox="0 0 200 34" preserveAspectRatio="xMidYMid meet" role="img" aria-label="gold ornament">
+                    <path class="gold-line" d="M12 17H78M122 17h66"/>
+                    <path class="gold-line" d="M80 17h40"/>
+                    <circle class="gold-fill" cx="100" cy="17" r="8"/>
+                    <path class="gold-line-thin" d="M64 9c6 0 11 5 11 11s-5 11-11 11-11-5-11-11 5-11 11-11zm72 0c6 0 11 5 11 11s-5 11-11 11-11-5-11-11 5-11 11-11z"/>
+                </svg>
+            </div>
             <h4 class="font-wedding display-4 text-dark-navy" data-i18n="eventTitle">The Event</h4>
         </div>
 
@@ -1435,26 +1495,8 @@
             </form>
             <div id="guestList" style="margin-top:18px;max-height:260px;overflow:auto"></div>
         </div>
-    </section>
 
-
-
-    <!-- Thank you: Bottom section with round couple images -->
-    <section class="section-wedding container text-center" id="thankyou">
-        <div class="text-center mb-4">
-            
-            <h2 class="font-wedding display-4" data-i18n="thankYouTitle">Thank You&nbsp;</h2>
-            <p class="small text-muted2" data-i18n="thankYouText">It is an honor and a joy for us if you are willing to attend and bless our wedding with your presence. Thank you for your prayers, attendance, and support.</p>
-            <p class="mt-4 mb-2" style="font-weight: 700; letter-spacing: 0.04em; color: var(--gold);" data-i18n="thankYouClosing">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
-            
-        </div>
-    </section>
-
-
-    <section class="container py-5" style="background: var(--navy); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);">
-        <div class="text-center mb-4">
-            <h2 class="font-wedding display-4" data-i18n="footerTitle">See You at the Wedding&nbsp;</h2>
-<div style="display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+        <div style="display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
                 <div>
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" alt="Ryka" class="thankyou-img">
                     <div style="margin-top:12px; font-weight:600; color: var(--navy);">
@@ -1476,6 +1518,33 @@
                     </div>
                 </div>
             </div>
+    </section>
+
+
+
+    <!-- Thank you: Bottom section with round couple images -->
+    <section class="section-wedding container text-center" id="thankyou">
+        <div class="text-center mb-4">
+            <div class="section-ornament" aria-hidden="true">
+                <svg viewBox="0 0 200 34" preserveAspectRatio="xMidYMid meet" role="img" aria-label="gold ornament">
+                    <path class="gold-line" d="M12 17H78M122 17h66"/>
+                    <path class="gold-line-thin" d="M44 12c5 0 9 4 9 9s-4 9-9 9-9-4-9-9 4-9 9-9zm112 0c5 0 9 4 9 9s-4 9-9 9-9-4-9-9 4-9 9-9z"/>
+                    <path class="gold-line" d="M80 17h40"/>
+                    <circle class="gold-fill" cx="100" cy="17" r="7.5"/>
+                </svg>
+            </div>
+            <h2 class="font-wedding display-4" data-i18n="thankYouTitle">Thank You&nbsp;</h2>
+            <p class="small text-muted2" data-i18n="thankYouText">It is an honor and a joy for us if you are willing to attend and bless our wedding with your presence. Thank you for your prayers, attendance, and support.</p>
+            <p class="mt-4 mb-2" style="font-weight: 700; letter-spacing: 0.04em; color: var(--gold);" data-i18n="thankYouClosing">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+            
+        </div>
+    </section>
+
+
+    <section class="container py-5" style="background: var(--navy); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);">
+        <div class="text-center mb-4">
+            <h2 class="font-wedding display-4" data-i18n="footerTitle">See You at the Wedding&nbsp;</h2>
+
             <p class="small text-muted2 mb-5 " data-i18n="footerText">We look forward to celebrating this special day with you.</p>
 
         </div>

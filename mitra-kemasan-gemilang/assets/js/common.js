@@ -1,20 +1,176 @@
 const CART_KEY = 'mkg_cart';
 const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#e6f4f4"/><text x="50%" y="50%" fill="#0f8b8d" font-family="Arial" font-size="20" text-anchor="middle" dy=".3em">Gambar Produk</text></svg>');
 const $ = (s, r = document) => r.querySelector(s);
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const rupiah = n => 'Rp' + Number(n).toLocaleString('id-ID');
 const isPromo = p => p.originalPrice > p.price;
 const promoPct = p => Math.round((1 - p.price / p.originalPrice) * 100);
-
-let _products = null;
-async function loadProducts() {
-    if (_products) return _products;
-    const res = await fetch('assets/data/products.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    if (!Array.isArray(data)) throw new Error('Format JSON tidak valid');
-    return (_products = data);
+function resolveProductImage(product, fallback = PLACEHOLDER) {
+    if (!product || typeof product !== 'object') return fallback;
+    const values = [];
+    const add = item => {
+        if (Array.isArray(item)) item.forEach(v => add(v));
+        else if (typeof item === 'string' && item.trim()) values.push(item.trim());
+        else if (item && typeof item === 'object') add(item.url || item.src || item.path);
+    };
+    add(product.image);
+    add(product.imageUrl);
+    add(product.mainImage);
+    add(product.main_image);
+    add(product.detailImage);
+    add(product.detail_image);
+    add(product.images);
+    add(product.gallery);
+    add(product.thumbnail);
+    add(product.cover);
+    return values[0] || fallback;
 }
+function normalizeCategory(rawCategory, fallback = 'Umum') {
+    if (!rawCategory) return { id: 0, name: fallback, slug: String(fallback).toLowerCase().replace(/\s+/g, '-'), description: '' };
+    if (typeof rawCategory === 'string') return { id: 0, name: rawCategory, slug: rawCategory.toLowerCase().replace(/\s+/g, '-'), description: '' };
+    return {
+        id: Number(rawCategory.id ?? rawCategory.category_id ?? 0),
+        name: rawCategory.name || rawCategory.title || fallback,
+        slug: rawCategory.slug || String(rawCategory.name || rawCategory.title || fallback).toLowerCase().replace(/\s+/g, '-'),
+        description: rawCategory.description || ''
+    };
+}
+function normalizeProduct(raw) {
+    const rawCategory = raw.category || {
+        id: raw.category_id ?? raw.categoryId ?? 0,
+        name: raw.category_name || raw.categoryName || 'Umum',
+        slug: raw.category_slug || raw.categorySlug || '',
+        description: raw.category_description || raw.categoryDescription || ''
+    };
+    const category = normalizeCategory(rawCategory, raw.category_name || raw.categoryName || 'Umum');
+    const images = Array.isArray(raw.images) ? raw.images.filter(Boolean) : [];
+    const specSource = raw.specifications || {
+        material: raw.material || '',
+        color: raw.color || '',
+        size: raw.size || '',
+        thickness: raw.thickness || ''
+    };
+    const firstImage = resolveProductImage({
+        image: raw.image || raw.main_image || raw.mainImage || raw.image_url || raw.imageUrl,
+        images: raw.images || raw.gallery || [],
+        detailImage: raw.detail_image || raw.detailImage,
+        cover: raw.cover,
+        thumbnail: raw.thumbnail
+    }, PLACEHOLDER);
+    const variantCount = Number(raw.variant_count ?? raw.variantCount ?? (Array.isArray(raw.variants) ? raw.variants.length : 0) ?? 0);
+    return {
+        id: Number(raw.id),
+        name: raw.name || 'Produk',
+        slug: raw.slug || String(raw.name || 'produk').toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        category: category.name,
+        categoryId: Number(raw.category_id ?? raw.categoryId ?? category.id),
+        categorySlug: category.slug,
+        categoryData: category,
+        description: raw.description || '',
+        price: Number(raw.price ?? raw.amount ?? 0),
+        originalPrice: Number(raw.original_price ?? raw.originalPrice ?? raw.price ?? raw.amount ?? 0),
+        unit: raw.unit || 'pcs',
+        stock: Number(raw.stock ?? 0),
+        featured: Boolean(raw.is_featured ?? raw.featured ?? false),
+        image: firstImage,
+        images,
+        material: raw.material || specSource.material || '',
+        color: raw.color || specSource.color || '',
+        size: raw.size || specSource.size || '',
+        thickness: raw.thickness || specSource.thickness || '',
+        specifications: specSource,
+        variants: Array.isArray(raw.variants) ? raw.variants : [],
+        variant_count: variantCount,
+        _source: raw
+    };
+}
+function getSourceData(payload) {
+    if (Array.isArray(payload)) return payload;
+    if (payload && Array.isArray(payload.data)) return payload.data;
+    if (payload && Array.isArray(payload.products)) return payload.products;
+    if (payload && payload.status === 'success' && Array.isArray(payload.data)) return payload.data;
+    return [];
+}
+function resolveApiUrl(type = 'products', id = null) {
+    const { productsApiUrl, categoriesApiUrl, detailApiUrl, variantsApiUrl, apiBaseUrl } = STORE_CONFIG || {};
+    const build = (url, query) => {
+        if (!url) throw new Error(`URL API untuk ${type} belum diatur. Periksa assets/js/config.js.`);
+        const u = new URL(url, window.location.href);
+        if (query) Object.entries(query).forEach(([k, v]) => {
+            if (v !== null && v !== undefined && v !== '') u.searchParams.set(k, String(v));
+        });
+        return u.toString();
+    };
+    if (type === 'categories' && categoriesApiUrl) return build(categoriesApiUrl, id ? { id } : null);
+    if (type === 'variants' && variantsApiUrl) return build(variantsApiUrl, id ? { id } : null);
+    if (type === 'detail' && detailApiUrl) return build(detailApiUrl, id ? { id } : null);
+    if (type === 'products' && productsApiUrl) return build(productsApiUrl, id ? { id } : null);
+    if (apiBaseUrl && type === 'products') return `${apiBaseUrl.replace(/\/$/, '')}/products${id ? `/${id}` : ''}`;
+    if (apiBaseUrl && type === 'categories') return `${apiBaseUrl.replace(/\/$/, '')}/categories${id ? `/${id}` : ''}`;
+    if (apiBaseUrl && type === 'variants') return `${apiBaseUrl.replace(/\/$/, '')}/variants${id ? `/${id}` : ''}`;
+    throw new Error(`Tidak ada endpoint API aktif untuk ${type}. Periksa assets/js/config.js.`);
+}
+async function fetchJson(url) {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...(STORE_CONFIG?.supabaseHeaders || {})
+    };
+    const res = await fetch(url, {
+        cache: 'no-store',
+        headers
+    });
+    if (!res.ok) {
+        const text = await res.text().catch(() => '');
+        throw new Error('HTTP ' + res.status + ' untuk ' + url + (text ? ': ' + text.slice(0, 200) : ''));
+    }
+    return res.json();
+}
+function normalizeVariant(raw = {}) {
+    return {
+        id: Number(raw.id ?? 0),
+        product_id: Number(raw.product_id ?? raw.productId ?? 0),
+        variant_type: raw.variant_type || raw.variantType || 'variant',
+        variant_name: raw.variant_name || raw.variantName || raw.name || 'Variant',
+        color_hex: raw.color_hex || raw.colorHex || raw.hex || '',
+        price: Number(raw.price ?? raw.amount ?? 0),
+        original_price: Number(raw.original_price ?? raw.originalPrice ?? raw.price ?? 0),
+        stock: Number(raw.stock ?? 0),
+        image_url: raw.image_url || raw.imageUrl || raw.image || ''
+    };
+}
+let _products = null;
+async function getProducts() {
+    if (_products) return _products;
+    const url = resolveApiUrl('products');
+    const payload = await fetchJson(url);
+    const list = getSourceData(payload);
+    if (!Array.isArray(list)) throw new Error('Format data produk tidak valid');
+    _products = list.map(normalizeProduct);
+    return _products;
+}
+async function getVariants() {
+    const url = resolveApiUrl('variants');
+    const payload = await fetchJson(url);
+    const list = getSourceData(payload);
+    if (!Array.isArray(list)) return [];
+    return list.map(normalizeVariant);
+}
+async function getProductById(id) {
+    const list = await getProducts();
+    return list.find(p => Number(p.id) === Number(id)) || null;
+}
+async function getCategories() {
+    const url = resolveApiUrl('categories');
+    const payload = await fetchJson(url);
+    const list = getSourceData(payload);
+    if (!Array.isArray(list)) return [];
+    return list.map(raw => normalizeCategory(raw, raw?.name || 'Umum'));
+}
+async function loadProducts() { return getProducts(); }
+async function loadProductById(id) { return getProductById(id); }
+async function loadCategories() { return getCategories(); }
+async function loadVariants() { return getVariants(); }
 function errorBox(msg = 'Data produk gagal dimuat. Muat ulang halaman atau jalankan lewat static web server.') {
     return `<div class="alert alert-danger w-100"><i class="bi bi-exclamation-triangle"></i> ${esc(msg)}</div>`;
 }
@@ -30,9 +186,21 @@ function saveCart(cart) { localStorage.setItem(CART_KEY, JSON.stringify(cart)); 
 function cartCount() { return getCart().reduce((s, i) => s + i.qty, 0); }
 function updateBadge() { const b = $('#cart-badge'); if (b) { const n = cartCount(); b.textContent = n; b.style.display = n ? 'grid' : 'none'; } }
 function addToCart(p, qty = 1) {
-    const cart = getCart(), item = cart.find(i => i.id === p.id);
-    const total = Math.min(p.stock, (item ? item.qty : 0) + qty);
-    if (item) item.qty = total; else cart.push({ id: p.id, qty: total });
+    const cart = getCart();
+    const variantId = p && p.variantId ? Number(p.variantId) : 0;
+    const variantName = p && (p.variantName || p.variant_name || p.variantLabel || p.variant_label || '');
+    const item = cart.find(i => i.id === p.id && Number(i.variantId || 0) === variantId);
+    const stock = Number(p.stock ?? 0);
+    const total = Math.min(stock || Number.MAX_SAFE_INTEGER, (item ? item.qty : 0) + qty);
+    if (item) {
+        item.qty = total;
+        if (variantId) item.variantId = variantId;
+        if (variantName) item.variantName = variantName;
+    } else {
+        const entry = { id: p.id, qty: total, ...(variantId ? { variantId } : {}) };
+        if (variantName) entry.variantName = variantName;
+        cart.push(entry);
+    }
     saveCart(cart);
     return total;
 }
@@ -50,9 +218,13 @@ function toast(msg, ok = true) {
 /* ---- Komponen bersama ---- */
 function productCard(p) {
     const out = p.stock <= 0;
+    const image = resolveProductImage(p);
+    const hasVariants = Number(p.variant_count ?? p.variants?.length ?? 0) > 0;
+    const buttonLabel = hasVariants ? 'Pilih Varian' : 'Tambah';
+    const buttonIcon = hasVariants ? 'bi-arrow-right-circle' : 'bi-cart-plus';
     return `<div class="col"><div class="product-card">
         ${isPromo(p) ? `<span class="badge-promo">Hemat ${promoPct(p)}%</span>` : ''}
-        <a href="product-detail.html?id=${p.id}"><img class="img" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.onerror=null;this.src=PLACEHOLDER"></a>
+        <a href="product-detail.html?id=${p.id}"><img class="img" src="${esc(image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.onerror=null;this.src=PLACEHOLDER"></a>
         <div class="body">
             <span class="cat">${esc(p.category)}</span>
             <h3><a href="product-detail.html?id=${p.id}">${esc(p.name)}</a></h3>
@@ -60,7 +232,7 @@ function productCard(p) {
             <div class="${out ? 'stock-out' : 'stock-ok'}"><i class="bi ${out ? 'bi-x-circle' : 'bi-check-circle'}"></i> ${out ? 'Stok habis' : 'Tersedia'}</div>
             <div class="actions">
                 <a class="btn btn-outline-teal flex-fill" href="product-detail.html?id=${p.id}"><i class="bi bi-eye"></i> <span>Detail</span></a>
-                <button class="btn btn-teal flex-fill" data-add="${p.id}" ${out ? 'disabled' : ''}><i class="bi bi-cart-plus"></i> <span>Tambah</span></button>
+                <button class="btn btn-teal flex-fill" data-add="${p.id}" ${out ? 'disabled' : ''}><i class="bi ${buttonIcon}"></i> <span>${buttonLabel}</span></button>
             </div>
         </div></div></div>`;
 }
@@ -99,6 +271,11 @@ document.addEventListener('click', async e => {
     try {
         const p = (await loadProducts()).find(x => x.id === Number(b.dataset.add));
         if (!p) return;
+        const hasVariants = Number(p.variant_count ?? p.variants?.length ?? 0) > 0;
+        if (hasVariants) {
+            location.href = `product-detail.html?id=${p.id}`;
+            return;
+        }
         addToCart(p, 1); toast(`${p.name} ditambahkan ke keranjang`);
     } catch { toast('Gagal menambahkan produk', false); }
 });

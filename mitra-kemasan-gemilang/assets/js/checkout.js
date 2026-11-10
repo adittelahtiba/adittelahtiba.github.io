@@ -5,7 +5,8 @@
         let total = 0, items = 0;
         const rows = ls.map(({ p, qty }, i) => {
             const sub = p.price * qty; total += sub; items += qty;
-            return `${i + 1}. ${p.name}\n   Harga: ${rupiah(p.price)}\n   Jumlah: ${qty} ${p.unit}\n   Subtotal: ${rupiah(sub)}`;
+            const variantText = p.variantName ? `\n   Varian: ${p.variantName}` : '';
+            return `${i + 1}. ${p.name}${variantText}\n   Harga: ${rupiah(p.price)}\n   Jumlah: ${qty} ${p.unit}\n   Subtotal: ${rupiah(sub)}`;
         }).join('\n\n');
         return `Halo ${STORE_CONFIG.name}, saya ingin melakukan pemesanan.\n\n*DATA PEMESAN*\nNama: ${d.nama}\nNo. WhatsApp: ${d.telp}\nAlamat: ${d.alamat}\n\n*DETAIL PESANAN*\n\n${rows}\n\nTotal Item: ${items}\nTotal Pembayaran: ${rupiah(total)}\n\nCatatan: ${d.catatan || '-'}\n\nTerima kasih.`;
     }

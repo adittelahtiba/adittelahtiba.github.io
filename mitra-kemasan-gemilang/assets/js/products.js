@@ -1,6 +1,8 @@
 (async function () {
     const grid = $('#grid'), S = { q: '', cat: '', min: 0, max: Infinity, sort: 'default', per: 12, page: 1 };
     let all;
+    grid.innerHTML = loadingCards(8);
+    $('#info').textContent = 'Memuat produk...';
     try { all = await loadProducts(); } catch (e) { console.error(e); grid.innerHTML = errorBox(); return; }
     const catSel = $('#f-cat');
     [...new Set(all.map(p => p.category))].forEach(c => catSel.insertAdjacentHTML('beforeend', `<option>${esc(c)}</option>`));
@@ -9,8 +11,9 @@
 
     const sorters = { 'harga-asc': (a, b) => a.price - b.price, 'harga-desc': (a, b) => b.price - a.price, 'nama': (a, b) => a.name.localeCompare(b.name, 'id'), 'promo': (a, b) => (isPromo(b) ? promoPct(b) : 0) - (isPromo(a) ? promoPct(a) : 0) };
     function filtered() {
-        const q = S.q.toLowerCase();
-        const l = all.filter(p => (!q || (p.name + ' ' + p.category + ' ' + p.description).toLowerCase().includes(q)) && (!S.cat || p.category === S.cat) && p.price >= S.min && p.price <= S.max);
+        const q = normalizeSearchText(S.q);
+        const searched = searchProducts(all, q);
+        const l = searched.filter(p => (!S.cat || p.category === S.cat) && p.price >= S.min && p.price <= S.max);
         return sorters[S.sort] ? l.sort(sorters[S.sort]) : l;
     }
     function pageList(cur, total) {

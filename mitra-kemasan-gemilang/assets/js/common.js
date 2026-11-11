@@ -91,23 +91,25 @@ function getSourceData(payload) {
     if (payload && payload.status === 'success' && Array.isArray(payload.data)) return payload.data;
     return [];
 }
-function resolveApiUrl(type = 'products', id = null) {
+function resolveApiUrl(type = 'products', id = null, query = {}) {
     const { productsApiUrl, categoriesApiUrl, detailApiUrl, variantsApiUrl, apiBaseUrl } = STORE_CONFIG || {};
-    const build = (url, query) => {
+    const build = (url, extra = {}) => {
         if (!url) throw new Error(`URL API untuk ${type} belum diatur. Periksa assets/js/config.js.`);
+        const params = { ...(id ? { id } : {}), ...extra };
         const u = new URL(url, window.location.href);
-        if (query) Object.entries(query).forEach(([k, v]) => {
+        Object.entries(params).forEach(([k, v]) => {
             if (v !== null && v !== undefined && v !== '') u.searchParams.set(k, String(v));
         });
         return u.toString();
     };
-    if (type === 'categories' && categoriesApiUrl) return build(categoriesApiUrl, id ? { id } : null);
-    if (type === 'variants' && variantsApiUrl) return build(variantsApiUrl, id ? { id } : null);
-    if (type === 'detail' && detailApiUrl) return build(detailApiUrl, id ? { id } : null);
-    if (type === 'products' && productsApiUrl) return build(productsApiUrl, id ? { id } : null);
-    if (apiBaseUrl && type === 'products') return `${apiBaseUrl.replace(/\/$/, '')}/products${id ? `/${id}` : ''}`;
-    if (apiBaseUrl && type === 'categories') return `${apiBaseUrl.replace(/\/$/, '')}/categories${id ? `/${id}` : ''}`;
-    if (apiBaseUrl && type === 'variants') return `${apiBaseUrl.replace(/\/$/, '')}/variants${id ? `/${id}` : ''}`;
+    const normalizedQuery = { ...query };
+    if (type === 'categories' && categoriesApiUrl) return build(categoriesApiUrl, normalizedQuery);
+    if (type === 'variants' && variantsApiUrl) return build(variantsApiUrl, normalizedQuery);
+    if (type === 'detail' && detailApiUrl) return build(detailApiUrl, normalizedQuery);
+    if (type === 'products' && productsApiUrl) return build(productsApiUrl, normalizedQuery);
+    if (apiBaseUrl && type === 'products') return `${apiBaseUrl.replace(/\/$/, '')}/products${id ? `/${id}` : ''}${Object.keys(normalizedQuery).length ? '?' + new URLSearchParams(normalizedQuery).toString() : ''}`;
+    if (apiBaseUrl && type === 'categories') return `${apiBaseUrl.replace(/\/$/, '')}/categories${id ? `/${id}` : ''}${Object.keys(normalizedQuery).length ? '?' + new URLSearchParams(normalizedQuery).toString() : ''}`;
+    if (apiBaseUrl && type === 'variants') return `${apiBaseUrl.replace(/\/$/, '')}/variants${id ? `/${id}` : ''}${Object.keys(normalizedQuery).length ? '?' + new URLSearchParams(normalizedQuery).toString() : ''}`;
     throw new Error(`Tidak ada endpoint API aktif untuk ${type}. Periksa assets/js/config.js.`);
 }
 async function fetchJson(url) {
@@ -139,18 +141,133 @@ function normalizeVariant(raw = {}) {
         image_url: raw.image_url || raw.imageUrl || raw.image || ''
     };
 }
+function normalizeSearchText(value) {
+    return String(value ?? '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+function levenshteinDistance(a, b) {
+    const matrix = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+    for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
+    for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+            matrix[i][j] = Math.min(
+                matrix[i - 1][j] + 1,
+                matrix[i][j - 1] + 1,
+                matrix[i - 1][j - 1] + cost
+            );
+        }
+    }
+    return matrix[a.length][b.length];
+}
+function scoreMatchText(text, query) {
+    const source = normalizeSearchText(text);
+    const q = normalizeSearchText(query);
+    if (!source || !q) return 0;
+    if (source.includes(q)) return 150 + (q.length * 22) + (source.indexOf(q) * 2);
+
+    const qTokens = q.split(' ').filter(Boolean);
+    const sourceWords = source.split(/\s+/).filter(Boolean);
+    let score = 0;
+
+    qTokens.forEach(token => {
+        if (!token) return;
+        const exactWord = sourceWords.find(word => word === token);
+        if (exactWord) {
+            score += 40 + token.length * 12;
+            return;
+        }
+
+        const prefixWord = sourceWords.find(word => word.startsWith(token) || token.startsWith(word));
+        if (prefixWord) {
+            score += 18 + token.length * 8;
+            return;
+        }
+
+        const typoWord = sourceWords.find(word => levenshteinDistance(word, token) <= 1 || word.includes(token.slice(0, 2)) || token.includes(word.slice(0, 2)));
+        if (typoWord) {
+            score += 8 + token.length * 5;
+            return;
+        }
+
+        if (token.length >= 3 && source.includes(token.slice(0, 3))) {
+            score += 6;
+        }
+    });
+
+    if (source.startsWith(q.slice(0, Math.min(q.length, 8)))) score += 10;
+    return score;
+}
+function buildProductSearchDocument(product) {
+    const variantText = (product.variants || [])
+        .map(v => [v.variant_name, v.variant_type, v.color_hex].filter(Boolean).join(' '))
+        .join(' ');
+    const specText = Object.values(product.specifications || {}).filter(Boolean).join(' ');
+    return [
+        product.name,
+        product.category,
+        product.description,
+        product.material,
+        product.color,
+        product.size,
+        product.thickness,
+        specText,
+        variantText,
+        product.slug,
+        product.categorySlug,
+        product.categoryData?.name || ''
+    ].join(' ');
+}
+function searchProducts(products, keyword) {
+    const q = normalizeSearchText(keyword);
+    if (!q) return [...products];
+
+    return products
+        .map(product => {
+            const doc = buildProductSearchDocument(product);
+            let score = 0;
+            const nameScore = scoreMatchText(product.name, q) * 5;
+            const categoryScore = scoreMatchText(product.category, q) * 3;
+            const descriptionScore = scoreMatchText(product.description, q) * 2;
+            const materialScore = scoreMatchText(product.material, q) * 2;
+            const colorScore = scoreMatchText(product.color, q) * 2;
+            const sizeScore = scoreMatchText(product.size, q) * 1.5;
+            const specScore = scoreMatchText(doc, q) * 1.2;
+            score = nameScore + categoryScore + descriptionScore + materialScore + colorScore + sizeScore + specScore;
+            return { product, score };
+        })
+        .filter(entry => entry.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(entry => entry.product);
+}
+window.searchProducts = searchProducts;
 let _products = null;
-async function getProducts() {
-    if (_products) return _products;
-    const url = resolveApiUrl('products');
+async function getProducts(options = {}) {
+    const { limit, offset, ...rest } = options;
+    const query = { ...rest };
+    if (limit !== undefined && limit !== null && limit !== '') query.limit = Number(limit);
+    if (offset !== undefined && offset !== null && offset !== '') query.offset = Number(offset);
+    if (_products && Object.keys(query).length === 0) return _products;
+    const url = resolveApiUrl('products', null, query);
     const payload = await fetchJson(url);
     const list = getSourceData(payload);
     if (!Array.isArray(list)) throw new Error('Format data produk tidak valid');
-    _products = list.map(normalizeProduct);
-    return _products;
+    const normalized = list.map(normalizeProduct);
+    if (Object.keys(query).length === 0) _products = normalized;
+    return normalized;
 }
-async function getVariants() {
-    const url = resolveApiUrl('variants');
+async function getVariants(options = {}) {
+    const { limit, offset, ...rest } = options;
+    const query = { ...rest };
+    if (limit !== undefined && limit !== null && limit !== '') query.limit = Number(limit);
+    if (offset !== undefined && offset !== null && offset !== '') query.offset = Number(offset);
+    const url = resolveApiUrl('variants', null, query);
     const payload = await fetchJson(url);
     const list = getSourceData(payload);
     if (!Array.isArray(list)) return [];
@@ -160,8 +277,12 @@ async function getProductById(id) {
     const list = await getProducts();
     return list.find(p => Number(p.id) === Number(id)) || null;
 }
-async function getCategories() {
-    const url = resolveApiUrl('categories');
+async function getCategories(options = {}) {
+    const { limit, offset, ...rest } = options;
+    const query = { ...rest };
+    if (limit !== undefined && limit !== null && limit !== '') query.limit = Number(limit);
+    if (offset !== undefined && offset !== null && offset !== '') query.offset = Number(offset);
+    const url = resolveApiUrl('categories', null, query);
     const payload = await fetchJson(url);
     const list = getSourceData(payload);
     if (!Array.isArray(list)) return [];
@@ -173,6 +294,35 @@ async function loadCategories() { return getCategories(); }
 async function loadVariants() { return getVariants(); }
 function errorBox(msg = 'Data produk gagal dimuat. Muat ulang halaman atau jalankan lewat static web server.') {
     return `<div class="alert alert-danger w-100"><i class="bi bi-exclamation-triangle"></i> ${esc(msg)}</div>`;
+}
+function loadingCards(count = 8) {
+    return Array.from({ length: count }, () => `
+        <div class="col">
+            <div class="product-card placeholder-glow">
+                <span class="placeholder rounded-4 d-block" style="height:220px; width:100%; background:#edf4f4;"></span>
+                <div class="body p-3">
+                    <span class="placeholder d-block mb-2" style="width:40%; height:12px; border-radius:999px; background:#e5efef;"></span>
+                    <span class="placeholder d-block mb-2" style="width:75%; height:18px; border-radius:999px; background:#e5efef;"></span>
+                    <span class="placeholder d-block mb-2" style="width:55%; height:14px; border-radius:999px; background:#e5efef;"></span>
+                    <div class="actions mt-3 d-flex gap-2">
+                        <span class="placeholder flex-fill" style="height:38px; border-radius:10px; background:#e5efef;"></span>
+                        <span class="placeholder flex-fill" style="height:38px; border-radius:10px; background:#e5efef;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+function loadingCategories(count = 6) {
+    return Array.from({ length: count }, () => `
+        <div class="col">
+            <div class="placeholder-glow filter-box h-100 p-3 rounded-4">
+                <span class="placeholder d-block mb-2" style="width:40px; height:40px; border-radius:12px; background:#e5efef;"></span>
+                <span class="placeholder d-block mb-2" style="width:75%; height:14px; border-radius:999px; background:#e5efef;"></span>
+                <span class="placeholder d-block" style="width:45%; height:12px; border-radius:999px; background:#e5efef;"></span>
+            </div>
+        </div>
+    `).join('');
 }
 
 /* ---- Keranjang (LocalStorage) ---- */
@@ -284,11 +434,13 @@ document.addEventListener('click', async e => {
 const CAT_ICONS = { 'Plastik PP': 'bi-bag', 'Plastik Klip': 'bi-lock', 'Plastik HDPE': 'bi-handbag', 'Standing Pouch': 'bi-box2-heart', 'Cup & Tutup': 'bi-cup-straw', 'Plastik Wrap': 'bi-layers', 'Plastik Pengiriman': 'bi-truck' };
 async function initHome() {
     const cats = $('#categories'), feat = $('#featured');
+    if (cats) cats.innerHTML = loadingCategories(6);
+    if (feat) feat.innerHTML = loadingCards(4);
     try {
-        const list = await loadProducts();
-        const names = [...new Set(list.map(p => p.category))];
+        const [list, categoryList] = await Promise.all([loadProducts(), loadCategories().catch(() => [])]);
+        const names = categoryList.length ? categoryList.map(c => c.name) : [...new Set(list.map(p => p.category))];
         cats.innerHTML = names.map(n => `<div class="col"><a class="cat-card" href="products.html?kategori=${encodeURIComponent(n)}"><i class="bi ${CAT_ICONS[n] || 'bi-box'}"></i>${esc(n)}<small>${list.filter(p => p.category === n).length} produk</small></a></div>`).join('');
         feat.innerHTML = list.filter(p => p.featured).slice(0, 8).map(productCard).join('');
-    } catch (err) { console.error(err); cats.innerHTML = feat.innerHTML = errorBox(); }
+    } catch (err) { console.error(err); if (cats) cats.innerHTML = errorBox(); if (feat) feat.innerHTML = errorBox(); }
 }
 document.addEventListener('DOMContentLoaded', () => { renderChrome(); if (document.body.dataset.page === 'home') initHome(); });

@@ -8,7 +8,7 @@
     document.title = `${p.name} | ${STORE_CONFIG.name}`;
     const labels = { material: 'Bahan', color: 'Warna', size: 'Ukuran', thickness: 'Ketebalan' };
     const specs = Object.entries(p.specifications || {}).map(([k, v]) => `<tr><th>${esc(labels[k] || k)}</th><td>${esc(v)}</td></tr>`).join('');
-    const selectedVariant = null;
+    const defaultVariant = variants.length ? [...variants].sort((a, b) => Number(b.stock ?? 0) - Number(a.stock ?? 0))[0] : null;
     const currentPrice = Number(p.price);
     const currentOriginalPrice = Number(p.originalPrice ?? p.price);
     const currentImage = resolveProductImage(p);
@@ -38,14 +38,14 @@
             <div class="mt-3 mb-3">
                 <label id="variant-label" class="form-label fw-semibold">${variantTypeLabel(currentType)}</label>
                 <div class="variant-swatch-list">
-                    ${variants.map(v => `<button type="button" class="variant-swatch" data-variant-id="${v.id}" style="--swatch:${esc(v.color_hex || detectVariantColor(v.variant_name || ''))}">
+                    ${variants.map(v => `<button type="button" class="variant-swatch${Number(defaultVariant?.id ?? 0) === Number(v.id) ? ' active' : ''}" data-variant-id="${v.id}" style="--swatch:${esc(v.color_hex || detectVariantColor(v.variant_name || ''))}">
                         <span class="variant-swatch-dot" style="background:${esc(v.color_hex || detectVariantColor(v.variant_name || ''))}"></span>
                         <span>${esc(v.variant_name || v.variant_type || 'Variant')}</span>
                     </button>`).join('')}
                 </div>
                 <select id="variant-select" class="form-select d-none">
-                    <option value="" selected disabled>${esc(variantTypeLabel(currentType))}</option>
-                    ${variants.map(v => `<option value="${v.id}">${esc(v.variant_name || v.variant_type || 'Varian')}</option>`).join('')}
+                    <option value="" ${defaultVariant ? '' : 'selected disabled'}>${esc(variantTypeLabel(currentType))}</option>
+                    ${variants.map(v => `<option value="${v.id}" ${Number(defaultVariant?.id ?? 0) === Number(v.id) ? 'selected' : ''}>${esc(v.variant_name || v.variant_type || 'Varian')}</option>`).join('')}
                 </select>
             </div>
         `;
@@ -74,8 +74,11 @@
     <h2 class="h4 mt-5 mb-3">Produk Terkait</h2><div class="row row-cols-2 row-cols-md-4 g-3" id="related"></div>`;
     const q = $('#q'), qty = () => Math.max(1, Math.min(Number(q.max) || 1, parseInt(q.value) || 1));
     const variantSelect = $('#variant-select');
+    if (variantSelect && defaultVariant) {
+        variantSelect.value = String(defaultVariant.id);
+    }
     const syncVariant = () => {
-        const selected = variantSelect && variantSelect.value ? variants.find(v => Number(v.id) === Number(variantSelect.value)) || null : null;
+        const selected = variantSelect && variantSelect.value ? variants.find(v => Number(v.id) === Number(variantSelect.value)) || null : defaultVariant;
         const addBtn = $('#add'); const buyBtn = $('#buy');
         const priceEl = $('#detail-price');
         const originalPriceEl = $('#detail-original-price');

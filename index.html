@@ -302,11 +302,9 @@
             inset: 0;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: flex-start;
             background-color: #122b4a;
-            background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg');
-            background-size: cover;
-            background-position: center top;
+            background-image: none;
             z-index: 99999;
             padding: 24px;
             overflow: hidden;
@@ -317,16 +315,35 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        180deg,
-        rgba(15, 20, 45, 0) 30%,
-        rgba(25, 25, 65, 0.15) 48%,
-        rgba(20, 17, 59, 0.65) 72%,
-        rgba(10, 5, 45, 1) 100%
-    );
+    background: transparent;
     z-index: 0;
     pointer-events: none;
 }
+
+        #coverOverlay .cover-left-bg,
+        #coverOverlay .cover-right-bg {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 0;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+        }
+
+        #coverOverlay .cover-left-bg {
+            left: 0;
+            width: 55%;
+            background-image: url('assets/image copy.png');
+            background-position: center center;
+        }
+
+        #coverOverlay .cover-right-bg {
+            right: 0;
+            width: 45%;
+            background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg');
+            background-position: center center;
+        }
 
         #coverOverlay.open {
             transform: translateY(-105%);
@@ -336,12 +353,13 @@
             position: relative;
             z-index: 1;
             max-width: 520px;
-            width: 100%;
+            width: min(100%, 440px);
             border-radius: 16px;
             padding: 28px 36px 28px 28px;
             text-align: left;
             margin-top: 0;
-            margin-left: auto;
+            margin-left: clamp(28px, 5vw, 90px);
+            margin-right: auto;
             overflow: hidden;
             background: transparent;
             border: none;
@@ -367,6 +385,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            justify-content: center;
         }
 
         #coverCard h2 {
@@ -390,6 +409,14 @@
         @media (max-width: 767px) {
             #coverOverlay {
                 justify-content: center;
+                background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg');
+                background-position: center top;
+                background-size: cover;
+            }
+
+            #coverOverlay .cover-left-bg,
+            #coverOverlay .cover-right-bg {
+                display: none;
             }
 
             #coverCard {
@@ -457,7 +484,10 @@
 
         #home .home-bg-layer {
             position: absolute;
-            inset: 0;
+            left: 0;
+            top: 0;
+            width: 55%;
+            height: 100%;
             background-size: cover;
             background-position: 50% 38%;
             background-repeat: no-repeat;
@@ -466,9 +496,26 @@
             transition: opacity 1.1s ease;
         }
 
+        #home .home-bg-side {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 45%;
+            height: 100%;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
         @media (max-width: 767px) {
             #home .home-bg-layer {
+                width: 100%;
                 background-position: center top;
+            }
+
+            #home .home-bg-side {
+                display: none;
             }
         }
 
@@ -479,11 +526,18 @@
             background: linear-gradient(180deg, rgba(15, 30, 51, 0.28), rgba(15, 30, 51, 0.58));
         }
 
+        #home .home-bg-side::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(15, 30, 51, 0.08) 0%, rgba(15, 30, 51, 0.42) 100%);
+        }
+
         #home .home-bg-layer.is-active {
             opacity: 1;
         }
 
-        #home > *:not(.home-bg-layer) {
+        #home > *:not(.home-bg-layer):not(.home-bg-side) {
             position: relative;
             z-index: 2;
         }
@@ -542,7 +596,7 @@
 
         /* Cover button styles */
         .cover-btn {
-            padding: 12px 32px;
+            padding: 9px 22px;
             border-radius: 50px;
             font-weight: 700;
             border: none;
@@ -559,6 +613,14 @@
             letter-spacing: 0.04em;
             min-width: 110px;
             white-space: nowrap;
+        }
+
+        #openInvite {
+            padding: 8px 18px;
+            font-size: 0.75rem;
+            line-height: 1.2;
+            letter-spacing: 0.04em;
+            min-width: 140px;
         }
 
         .cover-btn.primary {
@@ -1266,6 +1328,8 @@
 
     <!-- Cover overlay (personalized via query param ?to=Nama) -->
     <div id="coverOverlay">
+        <div class="cover-left-bg"></div>
+        <div class="cover-right-bg"></div>
         <div id="tsparticles-home" class="tparty"></div>
         <div id="coverCard">
             <div class="cover-card-inner">
@@ -1292,6 +1356,7 @@
         <div class="home-bg-layer is-active" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg');"></div>
         <div class="home-bg-layer" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.45.jpeg');"></div>
         <div class="home-bg-layer" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg');"></div>
+        <div class="home-bg-side" style="background-image: url('assets/image copy.png');"></div>
         <!-- <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" class="floral-top" alt="flower"> -->
         <div class="hero-content">
             <h4 class="text-uppercase ls-3" data-i18n="homeTag">The Wedding Of</h4>

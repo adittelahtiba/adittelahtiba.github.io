@@ -1937,20 +1937,20 @@
                 coverGreeting.innerText = 'Kepada Tamu Terhormat';
             }
 
-            if (!rawName) {
-                setTimeout(() => {
-                    if (nameField.value === loadingText) {
-                        nameField.value = 'Guest';
-                    }
-                    if (openBtn) {
-                        openBtn.disabled = false;
-                        openBtn.textContent = 'Open Invitation';
-                    }
-                    guestLookupState.resolved = true;
-                    guestLookupState.allowed = true;
-                }, 1200);
-                return;
-            }
+            // if (!rawName) {
+            //     setTimeout(() => {
+            //         if (nameField.value === loadingText) {
+            //             nameField.value = 'Guest';
+            //         }
+            //         if (openBtn) {
+            //             openBtn.disabled = false;
+            //             openBtn.textContent = 'Open Invitation';
+            //         }
+            //         guestLookupState.resolved = true;
+            //         guestLookupState.allowed = true;
+            //     }, 1200);
+            //     return;
+            // }
 
             const controller = new AbortController();
             let apiFailed = false;

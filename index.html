@@ -302,7 +302,7 @@
             inset: 0;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             background-color: #122b4a;
             background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg');
             background-size: cover;
@@ -335,12 +335,13 @@
         #coverCard {
             position: relative;
             z-index: 1;
-            max-width: 720px;
+            max-width: 520px;
             width: 100%;
             border-radius: 16px;
-            padding: 28px;
-            text-align: center;
+            padding: 28px 36px 28px 28px;
+            text-align: left;
             margin-top: 0;
+            margin-left: auto;
             overflow: hidden;
             background: transparent;
             border: none;
@@ -363,6 +364,9 @@
         .cover-card-inner {
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         #coverCard h2 {
@@ -377,6 +381,30 @@
             margin-bottom: 22px;
             letter-spacing: 1px;
             font-size: 0.95rem;
+        }
+
+        #coverCard [style*="justify-content:center"] {
+            justify-content: flex-start !important;
+        }
+
+        @media (max-width: 767px) {
+            #coverOverlay {
+                justify-content: center;
+            }
+
+            #coverCard {
+                margin: 0 auto;
+                text-align: center;
+                padding: 28px;
+            }
+
+            .cover-card-inner {
+                align-items: center;
+            }
+
+            #coverCard [style*="justify-content:center"] {
+                justify-content: center !important;
+            }
         }
 
         #tsparticles-home {
@@ -460,6 +488,23 @@
             z-index: 2;
         }
 
+        #home .hero-content {
+            width: min(100%, 520px);
+            margin-left: auto;
+            margin-right: clamp(28px, 7vw, 120px);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            gap: 8px;
+        }
+
+        #home .hero-cta {
+            position: relative;
+            z-index: 2;
+            margin-top: 12px;
+        }
+
         #home .floral-top {
             display: none;
         }
@@ -470,11 +515,29 @@
             text-shadow: 0 2px 14px rgba(15, 30, 51, 0.7);
             position: relative;
             z-index: 2;
+            margin: 0;
         }
 
         #home h1 {
             position: relative;
             z-index: 2;
+            margin: 0;
+        }
+
+        @media (max-width: 767px) {
+            #home {
+                align-items: center;
+                justify-content: flex-end;
+                padding-bottom: 90px;
+            }
+
+            #home .hero-content {
+                width: min(100%, 420px);
+                margin: 0 auto;
+                align-items: center;
+                text-align: center;
+                padding-bottom: 12px;
+            }
         }
 
         /* Cover button styles */
@@ -1230,11 +1293,13 @@
         <div class="home-bg-layer" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.45.jpeg');"></div>
         <div class="home-bg-layer" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg');"></div>
         <!-- <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" class="floral-top" alt="flower"> -->
-        <h4 class="text-uppercase ls-3" data-i18n="homeTag">The Wedding Of</h4>
-        <h1 class="display-2 font-wedding shine-silver">Ryka & Adit&nbsp;</h1>
-        <p data-i18n="weddingDate">20 . 12 . 2026</p>
-        <div style="position: relative; z-index: 2; margin-top: 20px;">
-            <a id="saveTheDateBtn" class="cover-btn primary" target="_blank" rel="noopener" data-i18n="saveDate">Save the Date</a>
+        <div class="hero-content">
+            <h4 class="text-uppercase ls-3" data-i18n="homeTag">The Wedding Of</h4>
+            <h1 class="display-2 font-wedding shine-silver">Ryka & Adit&nbsp;</h1>
+            <p data-i18n="weddingDate">20 . 12 . 2026</p>
+            <div class="hero-cta">
+                <a id="saveTheDateBtn" class="cover-btn primary" target="_blank" rel="noopener" data-i18n="saveDate">Save the Date</a>
+            </div>
         </div>
         <!-- <img class="decor-flower left" src="https://cdn-icons-png.flaticon.com/512/2099/2099078.png" alt="flower left">
         <img class="decor-flower right" src="https://cdn-icons-png.flaticon.com/512/2099/2099086.png" alt="flower right"> -->

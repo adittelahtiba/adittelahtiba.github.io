@@ -9,10 +9,41 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--ivory);
+    background-color: var(--navy);
     color: var(--navy);
-    background-image: radial-gradient(rgba(176, 138, 74, 0.15) 0.5px, transparent 0.5px);
-    background-size: 24px 24px;
+    background-image: url('assets/navy.png');
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-position: center top;
+}
+
+.bg-navy,
+[style*="background: var(--navy)"],
+[style*="background-color: var(--navy)"],
+[style*="background: var(--navy-deep)"],
+[style*="background-color: var(--navy-deep)"] {
+    background-image: url('assets/navy.png');
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-position: center top;
+}
+
+.bg-ivory,
+[style*="background: var(--ivory)"],
+[style*="background-color: var(--ivory)"],
+[style*="background: var(--ivory-warm)"],
+[style*="background-color: var(--ivory-warm)"] {
+    background-image: url('assets/ivory.png');
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-position: center top;
+}
+
+.bg-warm-ivory {
+    background-image: url('assets/warm-ivory.png');
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-position: center top;
 }
 
 .font-wedding {

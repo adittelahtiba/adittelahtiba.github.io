@@ -12,7 +12,6 @@
             background: #f4f4f4;
             color: #222;
             padding: 30px;
-            transition: .3s;
         }
 
         .container {
@@ -32,12 +31,28 @@
 
         .status {
             font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .chrome-button {
+            display: none;
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+
     <h2>Browser Detector</h2>
 
     <div class="item">
@@ -57,12 +72,25 @@
 
     <div class="item">
         Force Dark Mode:
-        <div class="status" id="forceDark">Belum dapat dipastikan</div>
+        <div class="status" id="forceDark">
+            Belum dapat dipastikan
+        </div>
     </div>
+
+    <button
+        class="chrome-button"
+        id="chromeButton"
+        onclick="openChrome()">
+        Buka di Google Chrome
+    </button>
+
 </div>
 
 <script>
+
+// DETECT BROWSER
 function detectBrowser() {
+
     const ua = navigator.userAgent;
 
     const isSamsung = /SamsungBrowser/i.test(ua);
@@ -75,27 +103,51 @@ function detectBrowser() {
     document.getElementById('browser').textContent =
         isSamsung ? 'Samsung Internet' : 'Browser lainnya';
 
-    // System theme
+    // System Theme
     document.getElementById('systemTheme').textContent =
         isDark ? 'Dark Mode' : 'Light Mode';
 
-    // Samsung
+    // Samsung Detection
     document.getElementById('samsung').textContent =
         isSamsung ? 'Ya' : 'Tidak';
 
-    // Force Dark Mode candidate
+    // Force Dark Mode Indicator
     document.getElementById('forceDark').textContent =
         isSamsung && !isDark
             ? 'Perlu pemeriksaan lanjutan'
             : 'Tidak terdeteksi';
+
+    // SHOW CHROME BUTTON
+    document.getElementById('chromeButton').style.display =
+        isSamsung ? 'block' : 'none';
 }
 
-// Initial detection
+
+// OPEN GOOGLE CHROME
+function openChrome() {
+
+    const currentUrl = window.location.href;
+
+    const intentUrl =
+        'intent://' +
+        currentUrl.replace(/^https?:\/\//, '') +
+        '#Intent;' +
+        'scheme=https;' +
+        'package=com.android.chrome;' +
+        'end';
+
+    window.location.href = intentUrl;
+}
+
+
+// INITIALIZE
 detectBrowser();
 
-// Listen for theme changes
+
+// LISTEN THEME CHANGES
 window.matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', detectBrowser);
+
 </script>
 
 </body>

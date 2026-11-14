@@ -727,43 +727,19 @@
             color: rgba(23, 43, 73, 0.65) !important;
         }
 
-        /* ✨ Efek Animasi Kilap Emas Mewah (8% Gold & 2% Gold Highlight) */
-        @keyframes shineGold {
-            to {
-                background-position: 200% center;
-            }
-        }
-
         .gold-shine,
         #coverCouple,
         body>section:not(#home) h1.font-wedding,
         body>section h2.font-wedding,
         body>section h3.font-wedding,
         body>section h4.font-wedding {
-            background: linear-gradient(to right,
-                    #B08A4A 15%,
-                    #C9A96E 35%,
-                    #FFF6E5 50%,
-                    #C9A96E 65%,
-                    #B08A4A 85%);
-            background-size: 200% auto;
+            background: var(--gold);
+            background-clip: text;
             -webkit-background-clip: text;
+            color: var(--gold);
             -webkit-text-fill-color: transparent;
             display: inline-block;
-            animation: shineGold 4s linear infinite;
             font-weight: bold;
-        }
-
-        @media (max-width: 767px) {
-            .gold-shine,
-            #coverCouple,
-            body>section:not(#home) h1.font-wedding,
-            body>section h2.font-wedding,
-            body>section h3.font-wedding,
-            body>section h4.font-wedding {
-                animation-duration: 12s;
-                animation-timing-function: linear;
-            }
         }
 
         /* ✨ Efek Animasi Kilap Silver Khusus Nama Mempelai di Hero */
@@ -782,11 +758,11 @@
         #home h1.font-wedding,
         .shine-silver {
             background: linear-gradient(to right,
-                    #8E9EAB 0%,
-                    #CBD5E1 25%,
+                    #FFFFFF 0%,
+                    #F5F7FA 25%,
                     #FFFFFF 50%,
-                    #CBD5E1 75%,
-                    #8E9EAB 100%);
+                    #F5F7FA 75%,
+                    #FFFFFF 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
@@ -797,7 +773,7 @@
             animation: shineSilver 3.5s linear infinite;
             -webkit-animation: shineSilver 3.5s linear infinite;
             font-weight: bold;
-            filter: drop-shadow(0 4px 12px rgba(15, 30, 51, 0.85));
+            filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.18));
         }
 
         @media (max-width: 767px) {
@@ -1334,9 +1310,9 @@
         <div id="coverCard">
             <div class="cover-card-inner">
                 <!-- <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" style="max-width:90px;opacity:0.95;margin-bottom:6px"> -->
-                <div id="coverGreeting" data-i18n="coverGreeting" style="color:var(--ivory);opacity:0.95">To Our Esteemed Guest</div>
-                <h2 id="coverCouple">Ryka &amp; Adit&nbsp;</h2>
-                <p class="sub" data-i18n="coverDate">Sunday, 20 December 2026</p>
+                <div id="coverGreeting" data-i18n="coverGreeting" style="color:#fff;opacity:0.98">To: Ryka Nurdianti</div>
+                <h1 class="display-2 font-wedding shine-silver">Ryka & Adit&nbsp;</h1>
+                <p class="sub" data-i18n="coverDate" style="color:#fff;">Sunday, 20 December 2026</p>
                 <div style="display:flex;gap:10px;justify-content:center">
                     <button id="openInvite" class="cover-btn primary">Open Invitation</button>
                 </div>
@@ -1900,122 +1876,36 @@
         if (guestForm) { guestForm.addEventListener('submit', submitGuest); }
         fetchGuests();
 
-        // Personalize cover from query param ?to=Name or ?name=Name
-        function getQueryParam(key) { try { return new URL(window.location.href).searchParams.get(key); } catch (e) { return null } }
+        function getQueryParam(key) { try { return new URL(window.location.href).searchParams.get(key); } catch (e) { return null; } }
 
         const guestLookupState = {
             resolved: false,
-            allowed: false,
-            guestName: ''
+            allowed: true,
+            guestName: 'Ryka Nurdianti'
         };
 
-        async function resolveGuestFromTable() {
+        function resolveGuestFromTable() {
             const nameField = document.getElementById('g_name');
             const coverGreeting = document.getElementById('coverGreeting');
             const openBtn = document.getElementById('openInvite');
             const guestParam = getQueryParam('to') || getQueryParam('name');
-            const rawName = guestParam ? decodeURIComponent(guestParam).split('+').join(' ').trim() : '';
-            const loadingText = 'Sedang mencari tamu...';
-            const timeoutMs = 3000;
+            const fallbackName = 'Ryka Nurdianti';
+            const guestName = guestParam ? decodeURIComponent(guestParam).split('+').join(' ').trim() || fallbackName : fallbackName;
 
-            if (!nameField) return;
-
-            guestLookupState.resolved = false;
-            guestLookupState.allowed = false;
-            guestLookupState.guestName = rawName || '';
-
-            nameField.disabled = true;
-            nameField.readOnly = true;
-            nameField.value = loadingText;
-
-            if (openBtn) {
-                openBtn.disabled = true;
-                openBtn.textContent = loadingText;
-            }
-
-            if (coverGreeting && !guestParam) {
-                coverGreeting.innerText = 'Kepada Tamu Terhormat';
-            }
-
-            // if (!rawName) {
-            //     setTimeout(() => {
-            //         if (nameField.value === loadingText) {
-            //             nameField.value = 'Guest';
-            //         }
-            //         if (openBtn) {
-            //             openBtn.disabled = false;
-            //             openBtn.textContent = 'Open Invitation';
-            //         }
-            //         guestLookupState.resolved = true;
-            //         guestLookupState.allowed = true;
-            //     }, 1200);
-            //     return;
-            // }
-
-            const controller = new AbortController();
-            let apiFailed = false;
-            const timeoutId = setTimeout(() => {
-                apiFailed = true;
-                controller.abort();
-            }, timeoutMs);
-
-            try {
-                const lookupUrl = `${API_BASE}/guest_list?guest_name_lower=eq.${encodeURIComponent(rawName.toLowerCase())}&select=id,guest_name`;
-                const res = await fetch(lookupUrl, { headers: HEADERS, signal: controller.signal });
-                if (!res.ok) throw new Error('Lookup failed');
-
-                const rows = await res.json();
-
-                if (rows && rows.length > 0) {
-                    const guestName = rows[0].guest_name || rawName;
-                    nameField.value = guestName;
-                    guestLookupState.resolved = true;
-                    guestLookupState.allowed = true;
-                    guestLookupState.guestName = guestName;
-                    if (coverGreeting) coverGreeting.innerText = `To: ${guestName}`;
-                    if (openBtn) {
-                        openBtn.disabled = false;
-                        openBtn.textContent = 'Open Invitation';
-                    }
-                    return;
-                }
-
-                // Array kosong => tamu tidak ada di daftar; jangan loloskan undangan.
-                guestLookupState.resolved = true;
-                guestLookupState.allowed = false;
-                if (coverGreeting) coverGreeting.innerText = `To: ${rawName}`;
-                if (nameField.value === loadingText) nameField.value = rawName;
-                if (openBtn) {
-                    openBtn.disabled = true;
-                    openBtn.textContent = 'Guest not found';
-                }
-                return;
-            } catch (e) {
-                apiFailed = true;
-            } finally {
-                clearTimeout(timeoutId);
-            }
-
-            if (apiFailed) {
-                guestLookupState.resolved = true;
-                guestLookupState.allowed = true;
-                if (coverGreeting) coverGreeting.innerText = `To: ${rawName}`;
-                if (nameField.value === loadingText) nameField.value = rawName;
-                if (openBtn) {
-                    openBtn.disabled = false;
-                    openBtn.textContent = 'Open Invitation';
-                }
-                return;
-            }
-
-            // Fallback aman kalau tidak ada error tapi status belum jelas.
             guestLookupState.resolved = true;
-            guestLookupState.allowed = false;
-            if (coverGreeting) coverGreeting.innerText = `To: ${rawName}`;
-            if (nameField.value === loadingText) nameField.value = rawName;
+            guestLookupState.allowed = true;
+            guestLookupState.guestName = guestName;
+
+            if (nameField) {
+                nameField.disabled = false;
+                nameField.readOnly = false;
+                nameField.value = guestName;
+            }
+
+            if (coverGreeting) coverGreeting.innerText = `To: ${guestName}`;
             if (openBtn) {
-                openBtn.disabled = true;
-                openBtn.textContent = 'Guest not found';
+                openBtn.disabled = false;
+                openBtn.textContent = 'Open Invitation';
             }
         }
 
@@ -2209,15 +2099,15 @@
             }
 
             const guestParam = getQueryParam('to') || getQueryParam('name');
+            const coverGreeting = document.getElementById('coverGreeting');
             if (guestParam) {
                 const g = decodeURIComponent(guestParam).split('+').join(' ').trim();
-                const coverGreeting = document.getElementById('coverGreeting');
                 if (coverGreeting) {
                     coverGreeting.innerText = `${selected.toGuest}${g}`;
                 }
-            } else {
-                const coverGreeting = document.getElementById('coverGreeting');
-                if (coverGreeting) coverGreeting.innerText = selected.coverGreeting;
+            } else if (coverGreeting) {
+                const defaultGuestName = guestLookupState.guestName || 'Ryka Nurdianti';
+                coverGreeting.innerText = `To: ${defaultGuestName}`;
             }
 
             const coverButton = document.getElementById('openInvite');

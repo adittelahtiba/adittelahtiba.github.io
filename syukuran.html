@@ -550,6 +550,16 @@
     </div>
 
     <script>
+        (function () {
+            const ua = navigator.userAgent || '';
+            const isSamsungBrowser = /SamsungBrowser/i.test(ua) || (/Samsung/i.test(ua) && /Android/i.test(ua));
+            if (isSamsungBrowser) {
+                const redirectUrl = new URL('syukuran-samsung-browser.html', window.location.href).toString();
+                window.location.replace(redirectUrl);
+                return;
+            }
+        })();
+
         // Ambil nama tamu dari URL param (?to=NamaTamu)
         const params = new URLSearchParams(window.location.search);
         const guest = params.get('to');

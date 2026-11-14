@@ -203,7 +203,7 @@
         .gold-shine,
         .title-names,
         .arabic {
-            background: var(--gold-light);
+            background: white;
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -564,6 +564,16 @@
     </div>
 
     <script>
+        (function () {
+            const ua = navigator.userAgent || '';
+            const isSamsungBrowser = /SamsungBrowser/i.test(ua) || (/Samsung/i.test(ua) && /Android/i.test(ua));
+            if (!isSamsungBrowser) {
+                const redirectUrl = new URL('syukuran.html', window.location.href).toString();
+                window.location.replace(redirectUrl);
+                return;
+            }
+        })();
+
         // Ambil nama tamu dari URL param (?to=NamaTamu)
         const params = new URLSearchParams(window.location.search);
         const guest = params.get('to');
@@ -615,13 +625,22 @@
             }
         });
 
-        openChromeBtn.addEventListener('click', function () {
-            const chromeUrl = 'googlechrome://navigate?url=' + encodeURIComponent(targetUrl);
-            window.location.href = chromeUrl;
+        function openChrome() {
+            const currentUrl = window.location.href;
 
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 1200);
+            const intentUrl =
+                'intent://' +
+                currentUrl.replace(/^https?:\/\//, '') +
+                '#Intent;' +
+                'scheme=https;' +
+                'package=com.android.chrome;' +
+                'end';
+
+            window.location.href = intentUrl;
+        }
+
+        openChromeBtn.addEventListener('click', function () {
+            openChrome();
         });
     </script>
 

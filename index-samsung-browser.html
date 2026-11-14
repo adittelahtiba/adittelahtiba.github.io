@@ -279,7 +279,7 @@
 
         .music-toggle.playing {
             background: var(--navy);
-            border-color: var(--gold);
+            border-color: var(--gold-light);
         }
 
         .music-toggle.playing i {
@@ -660,7 +660,7 @@
 
         .section-ornament .gold-line {
             fill: none;
-            stroke: var(--gold);
+            stroke: var(--gold-light);
             stroke-width: 0.7;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -675,7 +675,7 @@
         }
 
         .section-ornament .gold-fill {
-            fill: var(--gold);
+            fill: var(--gold-light);
             stroke: none;
         }
 
@@ -734,7 +734,7 @@
         body>section h2.font-wedding,
         body>section h3.font-wedding,
         body>section h4.font-wedding {
-            background: var(--gold);
+            background: var(--gold-light);
             background-size: 200% auto;
             background-clip: text;
             -webkit-background-clip: text;
@@ -799,7 +799,7 @@
 
         .font-wedding {
             font-family: 'Allura', cursive;
-            color: var(--gold);
+            color: var(--gold-light);
         }
 
         .text-dark-navy,
@@ -959,7 +959,7 @@
         }
 
         .event-card {
-            border: 1.5px solid var(--gold);
+            border: 1.5px solid var(--gold-light);
             padding: 28px 20px;
             border-radius: 16px;
             background: var(--ivory) !important;
@@ -974,7 +974,7 @@
 
         .event-card h3 {
             margin-top: 0;
-            color: var(--gold);
+            color: var(--gold-light);
         }
 
         .event-card p {
@@ -990,7 +990,7 @@
         .btn-primary {
             background-color: var(--navy);
             color: var(--ivory);
-            border: 1px solid var(--gold);
+            border: 1px solid var(--gold-light);
             border-radius: 50px;
             padding: 9px 24px;
             font-weight: 600;
@@ -1011,7 +1011,7 @@
         body>section:nth-of-type(even) .btn-primary {
             background: var(--navy);
             color: var(--ivory);
-            border: 1px solid var(--gold);
+            border: 1px solid var(--gold-light);
         }
 
         body>section:nth-of-type(even) .btn-primary:hover {
@@ -1070,7 +1070,7 @@
             margin: 0 8px;
             flex: 0 1 auto;
             backdrop-filter: blur(3px);
-            border: 1.5px solid var(--gold);
+            border: 1.5px solid var(--gold-light);
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(23, 43, 73, 0.16);
             padding: 10px 10px 8px;
@@ -1104,7 +1104,7 @@
             width: 220px;
             height: 300px;
             object-fit: cover;
-            border: 4px solid var(--gold);
+            border: 4px solid var(--gold-light);
             border-radius: 110px 110px 15px 15px;
             box-shadow: 0 16px 36px rgba(23, 43, 73, 0.16);
             transition: transform 0.3s ease;
@@ -1144,7 +1144,7 @@
             height: 160px;
             object-fit: cover;
             border-radius: 50%;
-            border: 4px solid var(--gold);
+            border: 4px solid var(--gold-light);
             box-shadow: 0 14px 32px rgba(23, 43, 73, 0.16);
             display: inline-block;
         }
@@ -1165,7 +1165,7 @@
             transform: translate(-50%, -50%);
             background: rgba(23, 43, 73, 0.96);
             color: var(--ivory);
-            border: 1px solid var(--gold);
+            border: 1px solid var(--gold-light);
             padding: 18px 28px;
             border-radius: 12px;
             box-shadow: 0 12px 36px rgba(15, 30, 51, 0.35);
@@ -1426,7 +1426,7 @@
 
 
     <div class="container text-center py-4">
-        <p class="mb-2" style="letter-spacing: 0.08em; font-weight: 600; color: var(--gold);" data-i18n="openingGreeting">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+        <p class="mb-2" style="letter-spacing: 0.08em; font-weight: 600; color: var(--gold-light);" data-i18n="openingGreeting">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
         <p class="mb-0 mx-auto" style="max-width: 760px; color: var(--navy); line-height: 1.8;" data-i18n="openingText">With utmost respect, we invite you and your family to attend our wedding celebration and share in our happiness.</p>
 
         <div class="section-ornament" aria-hidden="true">
@@ -1587,7 +1587,7 @@
                 <p class="small text-muted2" data-i18n="weddingGiftText">Your prayers and blessings are the greatest gift for us.</p>
                 <div style="margin:18px 0">
                     <button id="toggleGiftBtn" class="btn btn-sm"
-                        style="background:var(--navy);color:var(--text-light);border:2px solid var(--gold);font-weight:700;padding:10px 22px;border-radius:50px;box-shadow:0 0 0 3px rgba(176,138,74,0.25), 0 4px 16px rgba(176,138,74,0.2);transition:all 0.3s ease;" data-i18n="sendGift">Send Gift</button>
+                        style="background:var(--navy);color:var(--text-light);border:2px solid var(--gold-light);font-weight:700;padding:10px 22px;border-radius:50px;box-shadow:0 0 0 3px rgba(176,138,74,0.25), 0 4px 16px rgba(176,138,74,0.2);transition:all 0.3s ease;" data-i18n="sendGift">Send Gift</button>
                 </div>
 
                 <div id="giftCardsWrapper">
@@ -1655,7 +1655,7 @@
                 <textarea id="g_message" class="form-control mb-3" rows="4" placeholder="Write your best wishes..."
                     required data-i18n-placeholder="guestMessagePlaceholder"></textarea>
                 <button id="g_submit" type="submit" class="btn btn-primary w-100 py-2"
-                    style="background: var(--navy); color: var(--text-light); border:1px solid var(--gold); border-radius:50px; font-weight:600" data-i18n="sendMessage">Send Message</button>
+                    style="background: var(--navy); color: var(--text-light); border:1px solid var(--gold-light); border-radius:50px; font-weight:600" data-i18n="sendMessage">Send Message</button>
             </form>
             <div id="guestList" style="margin-top:18px;max-height:260px;overflow:auto"></div>
         </div>
@@ -1665,9 +1665,9 @@
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" alt="Ryka" class="thankyou-img">
                     <div style="margin-top:12px; font-weight:600; color: var(--navy);">
                         <a href="https://instagram.com/rykanrdnt" target="_blank" rel="noopener"
-                            style="color:var(--gold); text-decoration:none;">
+                            style="color:var(--gold-light); text-decoration:none;">
                             <i class="fa-brands fa-instagram"
-                                style="margin-right:8px; color: var(--gold);"></i>rykanrdnt&nbsp;&nbsp;&nbsp;&nbsp;
+                                style="margin-right:8px; color: var(--gold-light);"></i>rykanrdnt&nbsp;&nbsp;&nbsp;&nbsp;
                         </a>
                     </div>
                 </div>
@@ -1675,9 +1675,9 @@
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" alt="Adit" class="thankyou-img">
                     <div style="margin-top:12px; font-weight:600; color: var(--navy);">
                         <a href="https://instagram.com/uwa_adit" target="_blank" rel="noopener"
-                            style="color:var(--gold); text-decoration:none;">
+                            style="color:var(--gold-light); text-decoration:none;">
                             <i class="fa-brands fa-instagram"
-                                style="margin-right:8px; color: var(--gold);"></i>uwa_adit&nbsp;&nbsp;&nbsp;&nbsp;
+                                style="margin-right:8px; color: var(--gold-light);"></i>uwa_adit&nbsp;&nbsp;&nbsp;&nbsp;
                         </a>
                     </div>
                 </div>
@@ -1699,13 +1699,13 @@
             </div> -->
             <h2 class="font-wedding display-4" data-i18n="thankYouTitle">Thank You&nbsp;</h2>
             <p class="small text-muted2" data-i18n="thankYouText">It is an honor and a joy for us if you are willing to attend and bless our wedding with your presence. Thank you for your prayers, attendance, and support.</p>
-            <p class="mt-4 mb-2" style="font-weight: 700; letter-spacing: 0.04em; color: var(--gold);" data-i18n="thankYouClosing">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+            <p class="mt-4 mb-2" style="font-weight: 700; letter-spacing: 0.04em; color: var(--gold-light);" data-i18n="thankYouClosing">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
             
         </div>
     </section>
 
 
-    <section class="container py-5" style="background: var(--navy); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);">
+    <section class="container py-5" style="background: var(--navy); border-top: 1px solid var(--gold-light); border-bottom: 1px solid var(--gold-light);">
         <div class="text-center mb-4">
             <h2 class="font-wedding display-4" data-i18n="footerTitle">See You at the Wedding&nbsp;</h2>
 
@@ -2796,7 +2796,7 @@
 
         .countdown-item {
             background: rgba(17, 28, 46, 0.7);
-            border: 1.5px solid var(--gold);
+            border: 1.5px solid var(--gold-light);
             border-radius: 12px;
             padding: 10px;
             min-width: 62px;
@@ -2811,7 +2811,7 @@
         }
 
         .event-card {
-            border: 1.5px solid var(--gold);
+            border: 1.5px solid var(--gold-light);
             background: #111C2E !important;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
@@ -2823,7 +2823,7 @@
         .btn-action, .btn-primary {
             background-color: #111C2E;
             color: var(--gold-light);
-            border: 1px solid var(--gold);
+            border: 1px solid var(--gold-light);
         }
 
         .btn-action:hover, .btn-primary:hover {
@@ -2843,7 +2843,7 @@
 
         .nav-floating a:hover,
         .nav-floating a.active {
-            color: var(--gold);
+            color: var(--gold-light);
         }
 
         .lang-switcher {
@@ -2857,7 +2857,7 @@
         }
 
         .lang-btn.active {
-            background: var(--gold);
+            background: var(--gold-light);
             color: #070D16;
         }
 
@@ -2872,7 +2872,7 @@
         }
 
         .music-toggle.playing {
-            background: var(--gold);
+            background: var(--gold-light);
             border-color: var(--gold-light);
         }
 
@@ -2896,7 +2896,7 @@
         #guestbook .form-select:focus {
             background: rgba(7, 13, 22, 0.9) !important;
             color: #F6F1E7 !important;
-            border-color: var(--gold);
+            border-color: var(--gold-light);
         }
 
         #guestbook #guestList {

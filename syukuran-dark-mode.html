@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Syukuran Menjelang Pernikahan</title>
+
+    <!-- Memaksa color scheme gelap agar sinkron dengan sistem -->
+    <meta name="color-scheme" content="dark">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The Wedding of Ryka & Adit">
+    <meta property="og:description" content="Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir di hari istimewa kami.">
+    <meta property="og:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+    <meta property="og:image:secure_url" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Ryka & Adit Wedding">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+
+    <link rel="icon" type="image/png" href="assets/icon.png">
+
+    <!-- Font Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Allura&family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas library untuk download kartu sebagai gambar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg-dark: #0B131F;
+            --card-bg: #111C2E;
+            --card-border: #C9A96E;
+            --gold: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-shimmer: #FFF6E5;
+            --text-main: #F6F1E7;
+            --text-muted: rgba(246, 241, 231, 0.7);
+            --box-bg: #18263D;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark) !important;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.08) 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            color: var(--text-main) !important;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            padding: 20px 0 40px;
+            overflow-x: hidden;
+        }
+
+        /* ANIMASI TIRAI (CURTAIN OPENING) */
+        .curtain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark) !important;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .curtain-overlay.open {
+            transform: translateY(-100%);
+        }
+
+        .curtain-content {
+            text-align: center;
+            color: var(--text-main);
+            padding: 20px;
+        }
+
+        .curtain-title {
+            font-family: 'Allura', cursive;
+            font-size: 48px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .curtain-subtitle {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            color: var(--text-muted);
+        }
+
+        .btn-open-invitation {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--bg-dark);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-open-invitation:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 16px;
+            transition: max-width 0.3s ease;
+        }
+
+        /* CARD WRAPPER */
+        .invitation-card {
+            background: var(--card-bg) !important;
+            border: 1.5px solid var(--card-border);
+            border-radius: 20px;
+            padding: 36px 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .container.is-downloading {
+            width: 500px;
+            background-color: var(--card-bg) !important;
+        }
+
+        /* HEADER & SHINE GOLD ANIMATION */
+        @keyframes shineGold {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .gold-shine,
+        .title-names,
+        .arabic {
+            background: linear-gradient(to right,
+                    #D4AF37 15%,
+                    #F3E5AB 35%,
+                    #FFFFFF 50%,
+                    #F3E5AB 65%,
+                    #D4AF37 85%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: shineGold 4s linear infinite;
+            font-weight: bold;
+        }
+
+        .container.is-downloading .gold-shine,
+        .container.is-downloading .title-names,
+        .container.is-downloading .arabic {
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+            color: var(--gold) !important;
+            animation: none !important;
+        }
+
+        .tagline {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .title-names {
+            font-family: 'Allura', cursive;
+            font-size: 42px;
+            margin-bottom: 16px;
+        }
+
+        .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 22px;
+            margin: 20px 0 10px;
+        }
+
+        /* GUEST GREETING */
+        .guest-box {
+            background: var(--box-bg) !important;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 20px 0 24px;
+        }
+
+        .guest-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .guest-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+
+        /* CONTENT TEXT */
+        p {
+            font-size: 14px;
+            color: var(--text-main);
+            opacity: 0.9;
+            margin-bottom: 14px;
+        }
+
+        .divider {
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+            margin: 24px auto;
+            border-radius: 2px;
+            opacity: 0.6;
+        }
+
+        /* EVENT DETAILS */
+        .event-box {
+            background: var(--box-bg) !important;
+            border: 1.5px dashed rgba(212, 175, 55, 0.4);
+            border-radius: 14px;
+            padding: 20px;
+            margin: 24px 0;
+            text-align: left;
+        }
+
+        .event-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .event-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-icon {
+            color: var(--gold);
+            font-size: 16px;
+            margin-top: 3px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .event-info label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .event-info span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* BUTTON */
+        .btn-map {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            background: var(--card-bg) !important;
+            color: var(--gold-light) !important;
+            border: 1px solid var(--gold);
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            margin-top: 10px;
+        }
+
+        .qr-map {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 80%;
+            padding: 12px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            margin-top: 10px;
+            margin-left: 10%;
+        }
+
+        .btn-map:hover {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light)) !important;
+            color: var(--bg-dark) !important;
+            border-color: var(--gold-light);
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.3);
+        }
+
+        .container.is-downloading .qr-map {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 80%;
+            padding: 12px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            margin-top: 10px;
+            margin-left: 10%;
+        }
+
+        .container.is-downloading .btn-map {
+            display: none;
+        }
+
+        /* FOOTER */
+        .footer-thanks {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 24px;
+            font-style: italic;
+        }
+
+        .family-name {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-top: 8px;
+            font-style: normal;
+        }
+
+        /* TOMBOL MUSIK MELAYANG */
+        .music-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            background: var(--card-bg) !important;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            color: var(--gold) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 998;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: var(--box-bg) !important;
+        }
+
+        .music-btn i {
+            font-size: 18px;
+        }
+
+        @keyframes rotateMusic {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .music-btn.playing i {
+            animation: rotateMusic 4s linear infinite;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- OVERLAY TIRAI (CURTAIN OPENING) -->
+    <div class="curtain-overlay" id="curtainOverlay">
+        <div class="curtain-content">
+            <div class="curtain-subtitle">Undangan Syukuran Menjelang Pernikahan</div>
+            <div class="curtain-title">Ryka Nurdianti</div>
+            <div class="guest-box" style="margin: 18px 0 20px;">
+                <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+                <div class="guest-name" id="curtainGuestName">Tamu Undangan</div>
+            </div>
+            <button class="btn-open-invitation" id="openInvitationBtn">
+                <i class="fa-solid fa-envelope-open"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
+
+    <!-- ELEMENT AUDIO BACKSOUND -->
+    <audio id="audioBacksound" loop preload="auto">
+        <source src="assets/Bridal Night.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- TOMBOL KONTROL MUSIK -->
+    <button class="music-btn" id="musicBtn" title="Putar/Hentikan Musik">
+        <i class="fa-solid fa-compact-disc" id="musicIcon"></i>
+    </button>
+
+    <div class="container" id="mainContainer">
+        <!-- KARTU UNDANGAN -->
+        <div class="invitation-card" id="invitationCard">
+
+            <div class="tagline">Syukuran Menjelang Pernikahan</div>
+
+            <div class="guest-box">
+                <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+                <div class="guest-name" id="guestName">Tamu Undangan</div>
+            </div>
+
+            <div class="arabic">Assalamu’alaikum Warahmatullaahi Wabarakatuh</div>
+
+            <p>
+                Dengan memohon rahmat dan rida Allah SWT, kami bermaksud menyelenggarakan acara Syukuran
+                Menjelang Pernikahan putri kami:
+            </p>
+
+            <h1 class="title-names">Ryka Nurdianti</h1>
+
+            <p>
+                Putri dari <b>Bapak Supyandi</b> & <b>Ibu Muryani</b>
+            </p>
+
+            <p>
+                Acara ini merupakan wujud rasa syukur sekaligus doa bersama demi kelancaran hari bahagia dan keberkahan
+                rumah tangga yang akan dibina. Kami mengundang Bapak/Ibu/Saudara/i untuk hadir pada:
+            </p>
+
+            <div class="divider"></div>
+
+            <!-- DETAIL ACARA -->
+            <div class="event-box">
+                <div class="event-row">
+                    <i class="fa-regular fa-calendar event-icon"></i>
+                    <div class="event-info">
+                        <label>Hari & Tanggal</label>
+                        <span>Sabtu, 19 Desember 2026</span>
+                    </div>
+                </div>
+
+                <div class="event-row">
+                    <i class="fa-regular fa-clock event-icon"></i>
+                    <div class="event-info">
+                        <label>Waktu</label>
+                        <span>13.00 WIB – 16.00 WIB</span>
+                    </div>
+                </div>
+
+                <div class="event-row">
+                    <i class="fa-solid fa-location-dot event-icon"></i>
+                    <div class="event-info">
+                        <label>Lokasi Acara</label>
+                        <span>Kediaman Keluarga Bapak Supyandi</span>
+                        <div style="font-size: 12px; color: var(--text-muted); font-weight: normal; margin-top: 2px;">
+                            Komp. Sapta Taruna PU Blok B. 108 RT. 07/08
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://maps.app.goo.gl/gR3MQmjpuQif3T957" target="_blank" class="btn-map">
+                    <i class="fa-solid fa-map-location-dot"></i> Petunjuk Arah (Google Maps)
+                </a>
+
+                <img src="assets/Golden_QR_Code_on_Transparent_Background-removebg-preview.png" class="qr-map">
+            </div>
+
+            <p class="footer-thanks">
+                Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk
+                memberikan doa restu.
+            </p>
+
+            <div class="family-name">
+                Wassalamu’alaikum Warahmatullahi Wabarakatuh.<br><br>
+                <small style="font-weight: normal; color: var(--text-muted);">Kami yang berbahagia,</small><br>
+                Keluarga Besar Bapak Supyandi & Ibu Muryani
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Ambil nama tamu dari URL param (?to=NamaTamu)
+        const params = new URLSearchParams(window.location.search);
+        const guest = params.get('to');
+
+        if (guest) {
+            const guestNameEl = document.getElementById('guestName');
+            const curtainGuestNameEl = document.getElementById('curtainGuestName');
+            const displayName = decodeURIComponent(guest).replace(/\+/g, ' ');
+
+            if (guestNameEl) guestNameEl.textContent = displayName;
+            if (curtainGuestNameEl) curtainGuestNameEl.textContent = displayName;
+        }
+
+        // Fitur Pemutar Musik / Backsound
+        const audio = document.getElementById('audioBacksound');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+                musicIcon.className = 'fa-solid fa-volume-xmark';
+                isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    musicBtn.classList.add('playing');
+                    musicIcon.className = 'fa-solid fa-compact-disc';
+                    isPlaying = true;
+                }).catch(err => {
+                    console.log("Autoplay dicegah oleh browser:", err);
+                });
+            }
+        }
+
+        musicBtn.addEventListener('click', toggleMusic);
+
+        // Animasi Buka Tirai & Mulai Musik
+        const curtainOverlay = document.getElementById('curtainOverlay');
+        const openInvitationBtn = document.getElementById('openInvitationBtn');
+
+        openInvitationBtn.addEventListener('click', function () {
+            curtainOverlay.classList.add('open');
+            if (!isPlaying) {
+                toggleMusic();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

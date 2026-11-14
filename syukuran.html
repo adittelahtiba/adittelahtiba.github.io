@@ -40,7 +40,6 @@
             --gold: #B08A4A;
             --gold-light: #C9A96E;
             --gold-shimmer: #FFF6E5;
-            --gold-image: url('assets/gold.png');
 
             --bg-color: #F6F1E7;
             --card-bg: #FAF6EE;
@@ -56,60 +55,14 @@
         }
 
         body {
-            background-color: var(--navy);
-            background-image: url('assets/navy.png');
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
+            background-color: var(--ivory);
+            background-image: radial-gradient(rgba(176, 138, 74, 0.12) 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
             color: var(--navy);
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             padding: 20px 0 40px;
             overflow-x: hidden;
-        }
-
-        [style*="background: var(--navy)"],
-        [style*="background-color: var(--navy)"],
-        [style*="background: var(--navy-deep)"],
-        [style*="background-color: var(--navy-deep)"] {
-            background-image: url('assets/navy.png');
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
-        }
-
-        [style*="background: var(--ivory)"],
-        [style*="background-color: var(--ivory)"],
-        [style*="background: var(--ivory-warm)"],
-        [style*="background-color: var(--ivory-warm)"] {
-            background-image: url('assets/ivory.png');
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
-        }
-
-        .bg-warm-ivory {
-            background-image: url('assets/warm-ivory.png');
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
-        }
-
-        .gold-text {
-            background-image: var(--gold-image);
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .gold-fill {
-            background-image: var(--gold-image);
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
         }
 
         /* ANIMASI TIRAI (CURTAIN OPENING) */
@@ -120,7 +73,6 @@
             width: 100%;
             height: 100%;
             background-color: var(--navy);
-            background-image: url('assets/navy.png');
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -142,13 +94,7 @@
         .curtain-title {
             font-family: 'Allura', cursive;
             font-size: 48px;
-            color: transparent;
-            background-image: var(--gold-image);
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
-            -webkit-background-clip: text;
-            background-clip: text;
+            color: var(--gold-light);
             margin-bottom: 10px;
         }
 
@@ -162,10 +108,7 @@
         }
 
         .btn-open-invitation {
-            background-image: var(--gold-image);
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
             color: var(--navy);
             border: none;
             padding: 12px 32px;
@@ -193,10 +136,6 @@
         /* CARD WRAPPER */
         .invitation-card {
             background: var(--card-bg);
-            background-image: url('assets/warm-ivory.png');
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
             border: 1.5px solid var(--gold);
             border-radius: 20px;
             padding: 36px 24px;
@@ -209,19 +148,27 @@
             width: 500px;
         }
 
+        /* HEADER & SHINE GOLD ANIMATION */
+        @keyframes shineGold {
+            to {
+                background-position: 200% center;
+            }
+        }
+
         .gold-shine,
         .title-names,
         .arabic {
-            background-image: var(--gold-image);
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
+            background: linear-gradient(to right,
+                    #B08A4A 15%,
+                    #C9A96E 35%,
+                    #FFF6E5 50%,
+                    #C9A96E 65%,
+                    #B08A4A 85%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: transparent;
             display: inline-block;
-            animation: none;
+            animation: shineGold 4s linear infinite;
             font-weight: bold;
         }
 
@@ -229,14 +176,10 @@
         .container.is-downloading .gold-shine,
         .container.is-downloading .title-names,
         .container.is-downloading .arabic {
-            background-image: var(--gold-image) !important;
-            background-repeat: repeat-y !important;
-            background-size: 100% auto !important;
-            background-position: center top !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            color: transparent !important;
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+            color: var(--gold) !important;
             animation: none !important;
         }
 
@@ -244,10 +187,7 @@
             font-size: 11px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: black;
-            background-position: center top;
-            -webkit-background-clip: text;
-            background-clip: text;
+            color: var(--gold);
             font-weight: 600;
             margin-bottom: 8px;
         }
@@ -266,7 +206,7 @@
 
         /* GUEST GREETING */
         .guest-box {
-            background-image: url('assets/navy.png');
+            background: var(--navy);
             border: 1px solid var(--gold);
             border-radius: 12px;
             padding: 12px 16px;
@@ -283,12 +223,13 @@
         .guest-name {
             font-size: 16px;
             font-weight: 600;
+            color: var(--gold-light);
         }
 
         /* CONTENT TEXT */
         p {
             font-size: 14px;
-            color: black;
+            color: var(--navy);
             opacity: 0.9;
             margin-bottom: 14px;
         }
@@ -296,10 +237,7 @@
         .divider {
             width: 50px;
             height: 2px;
-            background-image: var(--gold-image);
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
+            background: var(--gold);
             margin: 24px auto;
             border-radius: 2px;
             opacity: 0.6;
@@ -308,10 +246,6 @@
         /* EVENT DETAILS */
         .event-box {
             background: var(--ivory);
-            background-image: url('assets/ivory.png');
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
             border: 1.5px dashed var(--gold);
             border-radius: 14px;
             padding: 20px;
@@ -350,7 +284,7 @@
         .event-info span {
             font-size: 14px;
             font-weight: 600;
-            color: black;
+            color: var(--navy);
         }
 
         /* BUTTON */
@@ -389,12 +323,9 @@
         }
 
         .btn-map:hover {
-            background-image: var(--gold-image);
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
             color: var(--navy);
-            border-color: var(--gold);
+            border-color: var(--gold-light);
             box-shadow: 0 6px 18px rgba(176, 138, 74, 0.35);
         }
 
@@ -426,12 +357,9 @@
             gap: 8px;
             width: 100%;
             padding: 14px;
-            background-image: var(--gold-image);
-            background-repeat: repeat-y;
-            background-size: 100% auto;
-            background-position: center top;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
             color: var(--navy-deep);
-            border: 1px solid var(--gold);
+            border: 1px solid var(--gold-light);
             border-radius: 30px;
             text-decoration: none;
             font-size: 14px;
@@ -457,7 +385,7 @@
 
         .family-name {
             font-weight: 600;
-            color: black;
+            color: var(--navy);
             margin-top: 8px;
             font-style: normal;
         }
@@ -472,7 +400,7 @@
             background: var(--navy);
             border: 1.5px solid var(--gold);
             border-radius: 50%;
-            color: var(--gold);
+            color: var(--gold-light);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -514,9 +442,9 @@
         <div class="curtain-content">
             <div class="curtain-subtitle">Undangan Syukuran Menjelang Pernikahan</div>
             <div class="curtain-title">Ryka Nurdianti</div>
-            <div class="guest-box" style="margin: 18px 0 20px; ">
+            <div class="guest-box" style="margin: 18px 0 20px; background: rgba(23, 43, 73, 0.6); border-color: rgba(176, 138, 74, 0.6);">
                 <div class="guest-label" style="color: var(--ivory); opacity: 0.9;">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
-                <div class="guest-name gold-text" id="curtainGuestName">Tamu Undangan</div>
+                <div class="guest-name" id="curtainGuestName" style="color: var(--gold-light);">Tamu Undangan</div>
             </div>
             <button class="btn-open-invitation" id="openInvitationBtn">
                 <i class="fa-solid fa-envelope-open"></i> Buka Undangan
@@ -543,7 +471,7 @@
 
             <div class="guest-box">
                 <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
-                <div class="guest-name gold-text" id="guestName">Tamu Undangan</div>
+                <div class="guest-name" id="guestName">Tamu Undangan</div>
             </div>
 
             <div class="arabic">Assalamu’alaikum Warahmatullaahi Wabarakatuh</div>

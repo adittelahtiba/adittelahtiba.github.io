@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser & Dark Mode Detector</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #222;
+            padding: 30px;
+            transition: .3s;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .item {
+            padding: 12px;
+            margin: 10px 0;
+            background: #eee;
+            border-radius: 8px;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Browser Detector</h2>
+
+    <div class="item">
+        Browser:
+        <div class="status" id="browser">Checking...</div>
+    </div>
+
+    <div class="item">
+        System Dark Mode:
+        <div class="status" id="systemTheme">Checking...</div>
+    </div>
+
+    <div class="item">
+        Samsung Internet:
+        <div class="status" id="samsung">Checking...</div>
+    </div>
+
+    <div class="item">
+        Force Dark Mode:
+        <div class="status" id="forceDark">Belum dapat dipastikan</div>
+    </div>
+</div>
+
+<script>
+function detectBrowser() {
+    const ua = navigator.userAgent;
+
+    const isSamsung = /SamsungBrowser/i.test(ua);
+
+    const isDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+    ).matches;
+
+    // Browser
+    document.getElementById('browser').textContent =
+        isSamsung ? 'Samsung Internet' : 'Browser lainnya';
+
+    // System theme
+    document.getElementById('systemTheme').textContent =
+        isDark ? 'Dark Mode' : 'Light Mode';
+
+    // Samsung
+    document.getElementById('samsung').textContent =
+        isSamsung ? 'Ya' : 'Tidak';
+
+    // Force Dark Mode candidate
+    document.getElementById('forceDark').textContent =
+        isSamsung && !isDark
+            ? 'Perlu pemeriksaan lanjutan'
+            : 'Tidak terdeteksi';
+}
+
+// Initial detection
+detectBrowser();
+
+// Listen for theme changes
+window.matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', detectBrowser);
+</script>
+
+</body>
+</html>

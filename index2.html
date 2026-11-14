@@ -1,992 +1,308 @@
+
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
-
-    <title>Undangan Syukuran Menjelang Pernikahan</title>
-
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="The Wedding of Ryka & Adit">
-    <meta property="og:description" content="Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir di hari istimewa kami.">
-    <meta property="og:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
-    <meta property="og:image:secure_url" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="Ryka & Adit Wedding">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
-
-    <link rel="icon" type="image/png" href="assets/icon.png">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Allura&family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- html2canvas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    <style>
-        /* =========================================
-           COLOR PALETTE
-        ========================================= */
-
-        :root {
-            color-scheme: light;
-
-            --ivory: #F6F1E7;
-            --ivory-warm: #FAF6EE;
-
-            --navy: #172B49;
-            --navy-deep: #0F1E33;
-
-            --gold: #B08A4A;
-            --gold-light: #C9A96E;
-            --gold-shimmer: #FFF6E5;
-
-            --bg-color: #F6F1E7;
-            --card-bg: #FAF6EE;
-            --text-main: #172B49;
-            --text-muted: rgba(23, 43, 73, 0.65);
-            --border: rgba(176, 138, 74, 0.35);
-        }
-
-        /* =========================================
-           DARK MODE PROTECTION
-           ========================================= */
-
-        html {
-            color-scheme: light !important;
-            background-color: #F6F1E7;
-        }
-
-        body {
-            color-scheme: light !important;
-            background-color: #F6F1E7;
-        }
-
-        /* Proteksi elemen visual dari forced colors */
-        .curtain-overlay,
-        .invitation-card,
-        .guest-box,
-        .event-box,
-        .btn-open-invitation,
-        .btn-download,
-        .btn-map,
-        .qr-map,
-        .music-btn {
-            color-scheme: light;
-            forced-color-adjust: none;
-        }
-
-        /* =========================================
-           RESET
-        ========================================= */
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--ivory);
-            background-image: radial-gradient(
-                rgba(176, 138, 74, 0.12) 0.5px,
-                transparent 0.5px
-            );
-            background-size: 24px 24px;
-
-            color: var(--navy);
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.6;
-
-            padding: 20px 0 40px;
-            overflow-x: hidden;
-        }
-
-        /* =========================================
-           CURTAIN OPENING
-        ========================================= */
-
-        .curtain-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-
-            background-color: var(--navy);
-
-            z-index: 9999;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-
-            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-
-        .curtain-overlay.open {
-            transform: translateY(-100%);
-        }
-
-        .curtain-content {
-            text-align: center;
-            color: var(--ivory);
-            padding: 20px;
-        }
-
-        .curtain-title {
-            font-family: 'Allura', cursive;
-            font-size: 48px;
-            color: var(--gold-light);
-            margin-bottom: 10px;
-        }
-
-        .curtain-subtitle {
-            font-size: 12px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 24px;
-            color: var(--ivory);
-            opacity: 0.8;
-        }
-
-        .btn-open-invitation {
-            background: linear-gradient(
-                135deg,
-                var(--gold),
-                var(--gold-light)
-            );
-
-            color: var(--navy);
-            border: none;
-            padding: 12px 32px;
-            border-radius: 30px;
-
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-
-            box-shadow: 0 4px 15px rgba(176, 138, 74, 0.4);
-
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .btn-open-invitation:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(176, 138, 74, 0.6);
-        }
-
-        /* =========================================
-           CONTAINER
-        ========================================= */
-
-        .container {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 0 16px;
-            transition: max-width 0.3s ease;
-        }
-
-        .container.is-downloading {
-            width: 500px;
-        }
-
-        /* =========================================
-           INVITATION CARD
-        ========================================= */
-
-        .invitation-card {
-            background: var(--card-bg);
-            border: 1.5px solid var(--gold);
-            border-radius: 20px;
-
-            padding: 36px 24px;
-
-            box-shadow: 0 10px 30px rgba(23, 43, 73, 0.08);
-
-            text-align: center;
-        }
-
-        /* =========================================
-           GOLD SHIMMER ANIMATION
-        ========================================= */
-
-        @keyframes shineGold {
-            to {
-                background-position: 200% center;
-            }
-        }
-
-        .gold-shine,
-        .title-names,
-        .arabic {
-            background-image: linear-gradient(
-                to right,
-                #B08A4A 15%,
-                #C9A96E 35%,
-                #FFF6E5 50%,
-                #C9A96E 65%,
-                #B08A4A 85%
-            );
-
-            background-size: 200% auto;
-            background-position: 0% center;
-
-            background-clip: text;
-            -webkit-background-clip: text;
-
-            -webkit-text-fill-color: transparent;
-
-            display: inline-block;
-
-            animation: shineGold 4s linear infinite;
-
-            font-weight: bold;
-
-            color-scheme: light;
-            forced-color-adjust: none;
-        }
-
-        /* Download: gold menjadi warna solid */
-
-        .container.is-downloading .gold-shine,
-        .container.is-downloading .title-names,
-        .container.is-downloading .arabic {
-            background: none !important;
-            background-image: none !important;
-
-            -webkit-background-clip: initial !important;
-            background-clip: initial !important;
-
-            -webkit-text-fill-color: var(--gold) !important;
-
-            color: var(--gold) !important;
-
-            animation: none !important;
-        }
-
-        /* =========================================
-           TEXT
-        ========================================= */
-
-        .tagline {
-            font-size: 11px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .title-names {
-            font-family: 'Allura', cursive;
-            font-size: 42px;
-            margin-bottom: 16px;
-        }
-
-        .arabic {
-            font-family: 'Amiri', serif;
-            font-size: 22px;
-            margin: 20px 0 10px;
-        }
-
-        /* =========================================
-           GUEST GREETING
-        ========================================= */
-
-        .guest-box {
-            background: var(--navy);
-            border: 1px solid var(--gold);
-            border-radius: 12px;
-
-            padding: 12px 16px;
-            margin: 20px 0 24px;
-        }
-
-        .guest-label {
-            font-size: 12px;
-            color: var(--ivory);
-            opacity: 0.85;
-            margin-bottom: 2px;
-        }
-
-        .guest-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--gold-light);
-        }
-
-        /* =========================================
-           CONTENT TEXT
-        ========================================= */
-
-        p {
-            font-size: 14px;
-            color: var(--navy);
-            opacity: 0.9;
-            margin-bottom: 14px;
-        }
-
-        .divider {
-            width: 50px;
-            height: 2px;
-            background: var(--gold);
-            margin: 24px auto;
-            border-radius: 2px;
-            opacity: 0.6;
-        }
-
-        /* =========================================
-           EVENT DETAILS
-        ========================================= */
-
-        .event-box {
-            background: var(--ivory);
-            border: 1.5px dashed var(--gold);
-            border-radius: 14px;
-
-            padding: 20px;
-            margin: 24px 0;
-
-            text-align: left;
-        }
-
-        .event-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-
-        .event-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .event-icon {
-            color: var(--gold);
-            font-size: 16px;
-            margin-top: 3px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .event-info label {
-            display: block;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .event-info span {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--navy);
-        }
-
-        /* =========================================
-           MAP BUTTON
-        ========================================= */
-
-        .btn-map {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-
-            width: 100%;
-            padding: 12px;
-
-            background: var(--navy);
-            color: var(--ivory);
-
-            border: 1px solid var(--gold);
-            border-radius: 30px;
-
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-
-            transition: all 0.25s ease;
-            margin-top: 10px;
-        }
-
-        .btn-map:hover {
-            background: linear-gradient(
-                135deg,
-                var(--gold),
-                var(--gold-light)
-            );
-
-            color: var(--navy);
-            border-color: var(--gold-light);
-
-            box-shadow: 0 6px 18px rgba(176, 138, 74, 0.35);
-        }
-
-        .qr-map {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-
-            width: 80%;
-            padding: 12px;
-
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-
-            transition: all 0.25s ease;
-
-            margin-top: 10px;
-            margin-left: 10%;
-        }
-
-        .container.is-downloading .qr-map {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            gap: 8px;
-            width: 80%;
-            padding: 12px;
-
-            border-radius: 30px;
-            margin-top: 10px;
-            margin-left: 10%;
-        }
-
-        .container.is-downloading .btn-map {
-            display: none;
-        }
-
-        /* =========================================
-           DOWNLOAD BUTTON
-        ========================================= */
-
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-
-            width: 100%;
-            padding: 14px;
-
-            background: linear-gradient(
-                135deg,
-                var(--gold),
-                var(--gold-light)
-            );
-
-            color: var(--navy-deep);
-
-            border: 1px solid var(--gold-light);
-            border-radius: 30px;
-
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 700;
-
-            transition: all 0.25s ease;
-            margin-top: 24px;
-
-            cursor: pointer;
-
-            box-shadow: 0 4px 15px rgba(176, 138, 74, 0.3);
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(176, 138, 74, 0.5);
-        }
-
-        /* =========================================
-           FOOTER
-        ========================================= */
-
-        .footer-thanks {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 24px;
-            font-style: italic;
-        }
-
-        .family-name {
-            font-weight: 600;
-            color: var(--navy);
-            margin-top: 8px;
-            font-style: normal;
-        }
-
-        /* =========================================
-           FLOATING MUSIC BUTTON
-        ========================================= */
-
-        .music-btn {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-
-            width: 44px;
-            height: 44px;
-
-            background: var(--navy);
-            border: 1.5px solid var(--gold);
-            border-radius: 50%;
-
-            color: var(--gold-light);
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            cursor: pointer;
-
-            box-shadow: 0 4px 15px rgba(23, 43, 73, 0.3);
-
-            z-index: 998;
-
-            transition: all 0.3s ease;
-        }
-
-        .music-btn:hover {
-            transform: scale(1.1);
-            background: var(--navy-deep);
-        }
-
-        .music-btn i {
-            font-size: 18px;
-        }
-
-        @keyframes rotateMusic {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .music-btn.playing i {
-            animation: rotateMusic 4s linear infinite;
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Pernikahan Aditya &amp; Ryka</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 22px 12px 40px;
+      color: #17233A;
+      font-family: Georgia, "Times New Roman", serif;
+
+      background-color: #F4EBDD;
+      background-image: url("assets/file_00000000ea048211860f32b0c6ed7ae4.png");
+      background-position: center top;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .invitation {
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #B99A68;
+      background: rgba(248, 243, 233, .88);
+      box-shadow: 0 14px 45px rgba(45, 35, 22, .13);
+    }
+
+    .cover {
+      min-height: 760px;
+      padding: 58px 24px 50px;
+      text-align: center;
+      background: rgba(244, 235, 221, .78);
+      border-bottom: 1px solid #C7AE83;
+    }
+
+    .ornament {
+      width: 190px;
+      margin: 0 auto 34px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #A98750;
+    }
+
+    .ornament::before,
+    .ornament::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: #A98750;
+    }
+
+    .ornament span {
+      width: 11px;
+      height: 11px;
+      border: 1px solid #A98750;
+      transform: rotate(45deg);
+    }
+
+    .eyebrow {
+      margin: 0 0 22px;
+      color: #88765D;
+      font: 11px/1.9 Arial, sans-serif;
+      letter-spacing: .30em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: #17233A;
+      font-size: clamp(48px, 12vw, 76px);
+      line-height: 1.04;
+      font-weight: 400;
+    }
+
+    .ampersand {
+      display: block;
+      margin: 10px 0;
+      color: #A98750;
+      font-size: 43px;
+      font-style: italic;
+    }
+
+    .photo-frame {
+      width: min(100%, 390px);
+      aspect-ratio: 4 / 5;
+      margin: 40px auto 28px;
+      padding: 8px;
+      border: 1px solid #A98750;
+      background: rgba(255,255,255,.38);
+    }
+
+    .photo-placeholder {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      color: #F4EBDD;
+      text-align: center;
+      font: 11px/1.9 Arial, sans-serif;
+      letter-spacing: .20em;
+      background: linear-gradient(145deg, #101D35, #30251B);
+    }
+
+    .date {
+      margin: 28px 0 36px;
+      color: #17233A;
+      font: 12px Arial, sans-serif;
+      letter-spacing: .34em;
+    }
+
+    .section {
+      padding: 62px 28px;
+      text-align: center;
+      background: rgba(250, 247, 240, .84);
+      border-bottom: 1px solid #C7AE83;
+    }
+
+    .section .eyebrow {
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      color: #17233A;
+      font-size: clamp(34px, 8vw, 46px);
+      font-weight: 400;
+    }
+
+    .rule {
+      width: 88px;
+      height: 1px;
+      margin: 24px auto 30px;
+      background: #A98750;
+    }
+
+    .greeting {
+      max-width: 470px;
+      margin: 0 auto;
+      color: #6E6253;
+      font-size: 18px;
+      line-height: 1.85;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 34px;
+      padding: 16px 26px;
+      border: 1px solid #A98750;
+      background: #17233A;
+      color: #F4EBDD;
+      text-decoration: none;
+      font: 11px Arial, sans-serif;
+      letter-spacing: .20em;
+    }
+
+    .event-title {
+      margin: 0 0 12px;
+      color: #17233A;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .event-detail {
+      margin: 7px 0;
+      color: #6E6253;
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    footer {
+      padding: 34px 18px;
+      background: #17233A;
+      color: #E9DDC9;
+      text-align: center;
+      font: 11px Arial, sans-serif;
+      letter-spacing: .25em;
+    }
+
+    @media (max-width: 390px) {
+      body {
+        padding: 10px 8px 24px;
+      }
+
+      .cover {
+        min-height: auto;
+        padding: 48px 18px;
+      }
+
+      .section {
+        padding: 48px 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- =========================================
-         CURTAIN OPENING
-    ========================================= -->
+  <main class="invitation">
 
-    <div class="curtain-overlay" id="curtainOverlay">
+    <!-- COVER -->
+    <section class="cover">
 
-        <div class="curtain-content">
+      <div class="ornament"><span></span></div>
 
-            <div class="curtain-subtitle">
-                Undangan Syukuran Menjelang Pernikahan
-            </div>
+      <p class="eyebrow">
+        You are invited to the wedding of
+      </p>
 
-            <div class="curtain-title">
-                Ryka Nurdianti
-            </div>
+      <h1>
+        Aditya
+        <span class="ampersand">&amp;</span>
+        Ryka
+      </h1>
 
-            <div class="guest-box"
-                style="margin: 18px 0 20px; background: rgba(23, 43, 73, 0.6); border-color: rgba(176, 138, 74, 0.6);">
-
-                <div class="guest-label"
-                    style="color: var(--ivory); opacity: 0.9;">
-                    Kepada Yth. Bapak/Ibu/Saudara/i:
-                </div>
-
-                <div class="guest-name"
-                    id="curtainGuestName"
-                    style="color: var(--gold-light);">
-                    Tamu Undangan
-                </div>
-
-            </div>
-
-            <button class="btn-open-invitation" id="openInvitationBtn">
-                <i class="fa-solid fa-envelope-open"></i>
-                Buka Undangan
-            </button>
-
+      <div class="photo-frame">
+        <div class="photo-placeholder">
+          AREA FOTO PREWEDDING<br>
+          GANTI DENGAN FOTO KALIAN
         </div>
-    </div>
+      </div>
 
-    <!-- =========================================
-         AUDIO BACKSOUND
-    ========================================= -->
+      <p class="date">
+        20 · 12 · 2026
+      </p>
 
-    <audio id="audioBacksound" loop preload="auto">
-        <source src="assets/Bridal Night.mp3" type="audio/mpeg">
-        Browser Anda tidak mendukung elemen audio.
-    </audio>
+      <div class="ornament"><span></span></div>
 
-    <!-- MUSIC CONTROL -->
+      <p class="eyebrow">
+        With love and gratitude
+      </p>
 
-    <button class="music-btn" id="musicBtn" title="Putar/Hentikan Musik">
-        <i class="fa-solid fa-compact-disc" id="musicIcon"></i>
-    </button>
+    </section>
 
-    <!-- =========================================
-         MAIN CONTAINER
-    ========================================= -->
+    <!-- PEMBUKAAN -->
+    <section class="section">
 
-    <div class="container" id="mainContainer">
+      <p class="eyebrow">
+        Assalamu'alaikum warahmatullahi wabarakatuh
+      </p>
 
-        <div class="invitation-card" id="invitationCard">
+      <div class="rule"></div>
 
-            <div class="tagline">
-                Syukuran Menjelang Pernikahan
-            </div>
+      <h2>
+        Dengan memohon<br>
+        rahmat Allah
+      </h2>
 
-            <div class="guest-box">
+      <p class="greeting">
+        Dengan penuh rasa syukur, kami mengundang
+        Bapak/Ibu/Saudara/i untuk hadir dan memberikan
+        doa restu pada hari bahagia kami.
+      </p>
 
-                <div class="guest-label">
-                    Kepada Yth. Bapak/Ibu/Saudara/i:
-                </div>
+      <a class="button" href="#detail-acara">
+        LIHAT DETAIL ACARA
+      </a>
 
-                <div class="guest-name" id="guestName">
-                    Tamu Undangan
-                </div>
+    </section>
 
-            </div>
+    <!-- DETAIL ACARA -->
+    <section class="section" id="detail-acara">
 
-            <div class="arabic">
-                Assalamu’alaikum Warahmatullaahi Wabarakatuh
-            </div>
+      <p class="eyebrow">
+        Save the date
+      </p>
 
-            <p>
-                Dengan memohon rahmat dan rida Allah SWT, kami bermaksud
-                menyelenggarakan acara Syukuran Menjelang Pernikahan putri kami:
-            </p>
+      <h2>Detail Acara</h2>
 
-            <h1 class="title-names">
-                Ryka Nurdianti
-            </h1>
+      <div class="rule"></div>
 
-            <p>
-                Putri dari <b>Bapak Supyandi</b> & <b>Ibu Muryani</b>
-            </p>
+      <p class="event-title">
+        Akad Nikah &amp; Resepsi
+      </p>
 
-            <p>
-                Acara ini merupakan wujud rasa syukur sekaligus doa bersama
-                demi kelancaran hari bahagia dan keberkahan rumah tangga
-                yang akan dibina. Kami mengundang Bapak/Ibu/Saudara/i
-                untuk hadir pada:
-            </p>
+      <p class="event-detail">
+        Ahad, 20 Desember 2026
+      </p>
 
-            <div class="divider"></div>
+      <p class="event-detail">
+        Waktu dan lokasi menyusul
+      </p>
 
-            <!-- DETAIL ACARA -->
+    </section>
 
-            <div class="event-box">
+    <!-- FOOTER -->
+    <footer>
+      ADITYA &amp; RYKA · 20.12.2026
+    </footer>
 
-                <div class="event-row">
-
-                    <i class="fa-regular fa-calendar event-icon"></i>
-
-                    <div class="event-info">
-                        <label>Hari & Tanggal</label>
-                        <span>Sabtu, 19 Desember 2026</span>
-                    </div>
-
-                </div>
-
-                <div class="event-row">
-
-                    <i class="fa-regular fa-clock event-icon"></i>
-
-                    <div class="event-info">
-                        <label>Waktu</label>
-                        <span>13.00 WIB – 16.00 WIB</span>
-                    </div>
-
-                </div>
-
-                <div class="event-row">
-
-                    <i class="fa-solid fa-location-dot event-icon"></i>
-
-                    <div class="event-info">
-
-                        <label>Lokasi Acara</label>
-
-                        <span>
-                            Kediaman Keluarga Bapak Supyandi
-                        </span>
-
-                        <div style="font-size: 12px; color: var(--text-muted); font-weight: normal; margin-top: 2px;">
-                            Komp. Sapta Taruna PU Blok B. 108 RT. 07/08
-                        </div>
-
-                    </div>
-                </div>
-
-                <a href="https://maps.app.goo.gl/gR3MQmjpuQif3T957"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-map">
-
-                    <i class="fa-solid fa-map-location-dot"></i>
-                    Petunjuk Arah (Google Maps)
-
-                </a>
-
-                <img src="assets/Golden_QR_Code_on_Transparent_Background-removebg-preview.png"
-                    class="qr-map"
-                    alt="QR Code Google Maps">
-
-            </div>
-
-            <p class="footer-thanks">
-
-                Merupakan suatu kehormatan dan kebahagiaan bagi kami
-                apabila Bapak/Ibu/Saudara/i berkenan hadir untuk
-                memberikan doa restu.
-
-            </p>
-
-            <div class="family-name">
-
-                Wassalamu’alaikum Warahmatullahi Wabarakatuh.
-
-                <br><br>
-
-                <small style="font-weight: normal; color: var(--text-muted);">
-                    Kami yang berbahagia,
-                </small>
-
-                <br>
-
-                Keluarga Besar Bapak Supyandi & Ibu Muryani
-
-            </div>
-
-        </div>
-
-        <!-- DOWNLOAD BUTTON (OPSIONAL) -->
-
-        <!--
-        <button class="btn-download" id="downloadBtn">
-            <i class="fa-solid fa-image"></i>
-            Download Undangan
-        </button>
-        -->
-
-    </div>
-
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================= -->
-
-    <script>
-
-        /* =========================================
-           GUEST NAME FROM URL
-        ========================================= */
-
-        const params = new URLSearchParams(window.location.search);
-        const guest = params.get('to');
-
-        if (guest) {
-
-            const guestNameEl = document.getElementById('guestName');
-            const curtainGuestNameEl = document.getElementById('curtainGuestName');
-
-            const displayName = guest.replace(/\+/g, ' ');
-
-            if (guestNameEl) {
-                guestNameEl.textContent = displayName;
-            }
-
-            if (curtainGuestNameEl) {
-                curtainGuestNameEl.textContent = displayName;
-            }
-
-        }
-
-
-        /* =========================================
-           MUSIC PLAYER
-        ========================================= */
-
-        const audio = document.getElementById('audioBacksound');
-        const musicBtn = document.getElementById('musicBtn');
-        const musicIcon = document.getElementById('musicIcon');
-
-        let isPlaying = false;
-        let wasPlayingBeforeHidden = false;
-
-        function toggleMusic() {
-
-            if (isPlaying) {
-
-                audio.pause();
-
-                musicBtn.classList.remove('playing');
-                musicIcon.className = 'fa-solid fa-volume-xmark';
-
-                isPlaying = false;
-
-            } else {
-
-                audio.play().then(() => {
-
-                    musicBtn.classList.add('playing');
-                    musicIcon.className = 'fa-solid fa-compact-disc';
-
-                    isPlaying = true;
-
-                }).catch(err => {
-
-                    console.log("Autoplay dicegah oleh browser:", err);
-
-                });
-
-            }
-
-        }
-
-        musicBtn.addEventListener('click', toggleMusic);
-
-
-        /* =========================================
-           AUTO STOP MUSIC WHEN TAB HIDDEN
-        ========================================= */
-
-        document.addEventListener('visibilitychange', function () {
-
-            if (document.hidden) {
-
-                if (isPlaying) {
-
-                    wasPlayingBeforeHidden = true;
-
-                    audio.pause();
-
-                    musicBtn.classList.remove('playing');
-                    musicIcon.className = 'fa-solid fa-volume-xmark';
-
-                    isPlaying = false;
-
-                } else {
-
-                    wasPlayingBeforeHidden = false;
-
-                }
-
-            }
-
-        });
-
-
-        /* =========================================
-           CURTAIN OPENING
-        ========================================= */
-
-        const curtainOverlay = document.getElementById('curtainOverlay');
-        const openInvitationBtn = document.getElementById('openInvitationBtn');
-
-        openInvitationBtn.addEventListener('click', function () {
-
-            curtainOverlay.classList.add('open');
-
-            if (!isPlaying) {
-                toggleMusic();
-            }
-
-        });
-
-
-        /* =========================================
-           DOWNLOAD INVITATION
-        ========================================= */
-
-        const downloadBtn = document.getElementById('downloadBtn');
-        const mainContainer = document.getElementById('mainContainer');
-        const invitationCard = document.getElementById('invitationCard');
-
-        // Hanya jalankan jika tombol download tersedia.
-        if (downloadBtn) {
-
-            downloadBtn.addEventListener('click', function () {
-
-                downloadBtn.innerHTML =
-                    '<i class="fa-solid fa-spinner fa-spin"></i> Memproses Gambar...';
-
-                downloadBtn.style.pointerEvents = 'none';
-
-                mainContainer.classList.add('is-downloading');
-
-                setTimeout(() => {
-
-                    html2canvas(invitationCard, {
-
-                        scale: 2,
-                        useCORS: true,
-                        backgroundColor: null
-
-                    }).then(canvas => {
-
-                        const link = document.createElement('a');
-
-                        link.download = 'Undangan-Ryka-Nurdianti.png';
-                        link.href = canvas.toDataURL('image/png');
-
-                        link.click();
-
-                        mainContainer.classList.remove('is-downloading');
-
-                        downloadBtn.innerHTML =
-                            '<i class="fa-solid fa-image"></i> Download Undangan';
-
-                        downloadBtn.style.pointerEvents = 'auto';
-
-                    }).catch(err => {
-
-                        console.error('Gagal mendownload:', err);
-
-                        alert('Terjadi kesalahan saat mengunduh gambar.');
-
-                        mainContainer.classList.remove('is-downloading');
-
-                        downloadBtn.innerHTML =
-                            '<i class="fa-solid fa-image"></i> Download Undangan';
-
-                        downloadBtn.style.pointerEvents = 'auto';
-
-                    });
-
-                }, 150);
-
-            });
-
-        }
-
-    </script>
+  </main>
 
 </body>
 </html>

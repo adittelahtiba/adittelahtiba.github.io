@@ -305,7 +305,7 @@ body>section h4.font-wedding {
 #coverOverlay .cover-right-bg {
     right: 0;
     width: 45%;
-    background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg');
+    background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).webp');
 }
 
 #coverOverlay.open {
@@ -401,7 +401,7 @@ body>section h4.font-wedding {
 @media (max-width: 767px) {
     #coverOverlay {
         justify-content: center;
-        background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg');
+        background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).webp');
         background-position: center top;
         background-size: cover;
     }
@@ -907,7 +907,7 @@ body>section h4.font-wedding {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.45.jpeg');
+    background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.45.webp');
     background-size: cover;
     background-position: center;
     opacity: 0.1;

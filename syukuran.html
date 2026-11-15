@@ -7,7 +7,7 @@
     <title>Undangan Syukuran Menjelang Pernikahan</title>
 
     <!-- Deklarasi standar: minta browser tidak memaksa dark mode -->
-    <meta name="color-scheme" content="only light">
+    <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#FBF7EF">
 
     <meta property="og:type" content="website">
@@ -36,7 +36,8 @@
 
     <style>
         :root {
-            color-scheme: only light;
+            
+            color-scheme: only light !important;
 
             /* Permukaan terang */
             --ivory: #FBF7EF;
@@ -78,6 +79,7 @@
         }
 
         body {
+            color-scheme: only light !important;
             background-color: var(--ivory);
             background-image: radial-gradient(var(--sand) 0.5px, transparent 0.5px);
             background-size: 24px 24px;

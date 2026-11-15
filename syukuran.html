@@ -578,6 +578,7 @@
         const openInvitationBtn = document.getElementById('openInvitationBtn');
 
         openInvitationBtn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'instant' });
             curtainOverlay.classList.add('open');
             if (!isPlaying) {
                 toggleMusic();

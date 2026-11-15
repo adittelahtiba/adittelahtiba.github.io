@@ -298,7 +298,7 @@ body>section h4.font-wedding {
 #coverOverlay .cover-left-bg {
     left: 0;
     width: 55%;
-    background-image: url('assets/image copy.png');
+    background-image: url('assets/navy.png');
 }
 
 #coverOverlay .cover-right-bg {
@@ -429,8 +429,6 @@ body>section h4.font-wedding {
 .hero-section {
     height: 100vh;
     background-color: var(--navy);
-    background-image: linear-gradient(rgba(12, 24, 41, 0.55), rgba(12, 24, 41, 0.55)),
-        url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070');
     background-position: center;
     background-size: cover;
     display: flex;

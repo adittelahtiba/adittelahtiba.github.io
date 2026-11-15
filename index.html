@@ -281,8 +281,8 @@
                             <div class="atm-card money-card">
                                 <div class="atm-card-inner">
                                     <div class="atm-chip"></div>
-                                    <div class="atm-bank-name">Mandiri</div>
-                                    <div class="atm-number"><span class="rek-val">1234 5678 9012</span> <i
+                                    <div class="atm-bank-name">BCA</div>
+                                    <div class="atm-number"><span class="rek-val">7751443564</span> <i
                                             class="fa-regular fa-copy copy-icon" title="Copy Account Number"></i></div>
                                     <div class="atm-label">Account Holder</div>
                                     <div class="atm-holder-name">Ryka Nurdianti</div>
@@ -294,11 +294,11 @@
                             <div class="atm-card money-card">
                                 <div class="atm-card-inner">
                                     <div class="atm-chip"></div>
-                                    <div class="atm-bank-name">BCA</div>
-                                    <div class="atm-number"><span class="rek-val">1234 5678 9012</span> <i
+                                    <div class="atm-bank-name">Mandiri</div>
+                                    <div class="atm-number"><span class="rek-val">1300025164602</span> <i
                                             class="fa-regular fa-copy copy-icon" title="Copy Account Number"></i></div>
                                     <div class="atm-label">Account Holder</div>
-                                    <div class="atm-holder-name">Ryka Nurdianti</div>
+                                    <div class="atm-holder-name">Aditya Pangestu</div>
                                     <div class="atm-logo">BANK</div>
                                 </div>
                             </div>
@@ -310,9 +310,7 @@
                                     <div class="atm-label" style="font-size: 1.2rem; margin-bottom: 5px;"><i
                                             class="fa-solid fa-map-location-dot"></i> Ship to:</div>
                                     <div class="atm-holder-name" style="font-size: 1rem; line-height: 1.4;">
-                                        <span id="giftAddress">Jl. Melati No. 123,<br>
-                                            Kec. Coblong, Kota Bandung,<br>
-                                            West Java 40123</span> <i class="fa-regular fa-copy copy-icon"
+                                        <span id="giftAddress">Komp. Sapta Taruna Pu, Jalan Rio Susilo Blok B No. 108, KOTA BANDUNG</span> <i class="fa-regular fa-copy copy-icon"
                                             title="Copy Address"></i>
                                     </div>
                                     <div class="atm-logo" style="opacity: 0.3;"><i class="fa-solid fa-box-archive"></i>
@@ -446,7 +444,7 @@
             const guestbookSection = document.getElementById('guestbook');
             try {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3000);
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
                 const res = await fetch(`${API_BASE}/wedding_guest_book?select=*,created_at&order=created_at.desc`, {
                     headers: HEADERS,
                     signal: controller.signal

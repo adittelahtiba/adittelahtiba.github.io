@@ -47,6 +47,9 @@
                 </div>
             </div>
         </div>
+         <div class="android-dark-notice" id="androidDarkNotice" style="display: none;">
+    Untuk tampilan terbaik, nonaktifkan mode gelap pada browser/perangkat Anda.
+</div>
     </div>
 
     <div class="nav-floating">
@@ -1476,6 +1479,36 @@
                 });
         })();
     </script>
+
+    <script>
+    // Deteksi perangkat Android untuk menampilkan notice dark mode secara kondisional
+    // Deteksi perangkat Android untuk menampilkan notice dark mode secara kondisional
+(function() {
+    const noticeEl = document.getElementById('androidDarkNotice');
+    if (!noticeEl) return;
+
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+    // Deteksi Android
+    const isAndroid = /android/i.test(ua);
+
+    // Deteksi iOS
+    const isIOS = /ipad|iphone|ipod/i.test(ua) && !window.MSStream;
+
+    // Deteksi Google Chrome Android
+    const isChrome = /Chrome\/[\d.]+/i.test(ua) &&
+                     /Android/i.test(ua) &&
+                     !/EdgA|OPR|SamsungBrowser|UCBrowser/i.test(ua);
+
+    // Deteksi Instagram In-App Browser
+    const isInstagram = /Instagram/i.test(ua);
+
+    // Tampilkan hanya pada Android selain Chrome dan Instagram
+    if (isAndroid && !isIOS && !isChrome && !isInstagram) {
+        noticeEl.style.display = 'block';
+    }
+})();
+</script>
 </body>
 
 </html>

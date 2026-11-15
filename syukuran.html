@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Undangan Syukuran Menjelang Pernikahan</title>
 
+    <!-- Deklarasi standar: minta browser tidak memaksa dark mode -->
+    <meta name="color-scheme" content="only light">
+    <meta name="theme-color" content="#FBF7EF">
+
     <meta property="og:type" content="website">
     <meta property="og:title" content="The Wedding of Ryka & Adit">
     <meta property="og:description" content="Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir di hari istimewa kami.">
@@ -17,7 +21,6 @@
     <meta property="og:site_name" content="Ryka & Adit Wedding">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
-
 
     <link rel="icon" type="image/png" href="assets/icon.png">
 
@@ -33,19 +36,39 @@
 
     <style>
         :root {
-            --ivory: #F6F1E7;
-            --ivory-warm: #FAF6EE;
-            --navy: #172B49;
-            --navy-deep: #0F1E33;
-            --gold: #B08A4A;
-            --gold-light: #C9A96E;
-            --gold-shimmer: #FFF6E5;
+            color-scheme: only light;
 
-            --bg-color: #F6F1E7;
-            --card-bg: #FAF6EE;
-            --text-main: #172B49;
-            --text-muted: rgba(23, 43, 73, 0.65);
-            --border: rgba(176, 138, 74, 0.35);
+            /* Permukaan terang */
+            --ivory: #FBF7EF;
+            --ivory-warm: #F3EBDC;
+            --paper: #FFFDF8;
+            --champagne: #F3E6C4;
+            --sand: #E7DCC4;
+
+            /* Permukaan gelap */
+            --navy: #152744;
+            --navy-deep: #0C1829;
+            --navy-raised: #1F365C;
+            --navy-glow: #2A4572;
+
+            /* Teks di permukaan terang */
+            --ink: #14233B;
+            --ink-soft: #4B5A70;
+
+            /* Teks di permukaan gelap */
+            --on-dark: #F7F1E3;
+            --on-dark-soft: #D9D0BD;
+            --silver: #EEF1F5;
+
+            /* Emas */
+            --gold: #B99650;
+            --gold-ink: #85652A;
+            --gold-bright: #DCC287;
+
+            /* Peta semantik */
+            --c-text: var(--ink);
+            --c-text-soft: var(--ink-soft);
+            --c-accent: var(--gold-ink);
         }
 
         * {
@@ -56,9 +79,9 @@
 
         body {
             background-color: var(--ivory);
-            background-image: radial-gradient(rgba(176, 138, 74, 0.12) 0.5px, transparent 0.5px);
+            background-image: radial-gradient(var(--sand) 0.5px, transparent 0.5px);
             background-size: 24px 24px;
-            color: var(--navy);
+            color: var(--c-text);
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             padding: 20px 0 40px;
@@ -87,14 +110,14 @@
 
         .curtain-content {
             text-align: center;
-            color: var(--ivory);
+            color: var(--on-dark);
             padding: 20px;
         }
 
         .curtain-title {
             font-family: 'Allura', cursive;
             font-size: 48px;
-            color: var(--gold-light);
+            color: var(--gold-bright);
             margin-bottom: 10px;
         }
 
@@ -103,26 +126,26 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 24px;
-            color: var(--ivory);
-            opacity: 0.8;
+            color: var(--on-dark);
+            opacity: 0.85;
         }
 
         .btn-open-invitation {
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            color: var(--navy);
-            border: none;
+            background-color: var(--champagne);
+            color: var(--navy-deep);
+            border: 1px solid var(--gold-bright);
             padding: 12px 32px;
             border-radius: 30px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(176, 138, 74, 0.4);
+            box-shadow: 0 4px 15px rgba(12, 24, 41, 0.3);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .btn-open-invitation:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(176, 138, 74, 0.6);
+            box-shadow: 0 6px 20px rgba(12, 24, 41, 0.5);
         }
 
         .container {
@@ -135,60 +158,37 @@
 
         /* CARD WRAPPER */
         .invitation-card {
-            background: var(--card-bg);
+            background: var(--paper);
             border: 1.5px solid var(--gold);
             border-radius: 20px;
             padding: 36px 24px;
-            box-shadow: 0 10px 30px rgba(23, 43, 73, 0.08);
+            box-shadow: 0 10px 30px rgba(12, 24, 41, 0.08);
             text-align: center;
         }
 
-        /* KHUSUS KONDISI SAAT DOWNLOAD: UBAH CONTAINER JADI LEBAR (LANDSCAPE) */
         .container.is-downloading {
             width: 500px;
-        }
-
-        /* HEADER & SHINE GOLD ANIMATION */
-        @keyframes shineGold {
-            to {
-                background-position: 200% center;
-            }
         }
 
         .gold-shine,
         .title-names,
         .arabic {
-            background: linear-gradient(to right,
-                    #B08A4A 15%,
-                    #C9A96E 35%,
-                    #FFF6E5 50%,
-                    #C9A96E 65%,
-                    #B08A4A 85%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-            animation: shineGold 4s linear infinite;
+            color: var(--gold-ink);
             font-weight: bold;
         }
 
-        /* UBAH GRADASI JADI WARNA EMAS SOLID SAAT DOWNLOAD */
         .container.is-downloading .gold-shine,
         .container.is-downloading .title-names,
         .container.is-downloading .arabic {
-            background: none !important;
-            -webkit-background-clip: initial !important;
-            -webkit-text-fill-color: initial !important;
-            color: var(--gold) !important;
-            animation: none !important;
+            color: var(--gold-ink) !important;
         }
 
         .tagline {
             font-size: 11px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--gold);
-            font-weight: 600;
+            color: var(--gold-ink);
+            font-weight: 700;
             margin-bottom: 8px;
         }
 
@@ -215,7 +215,7 @@
 
         .guest-label {
             font-size: 12px;
-            color: var(--ivory);
+            color: var(--on-dark);
             opacity: 0.85;
             margin-bottom: 2px;
         }
@@ -223,14 +223,14 @@
         .guest-name {
             font-size: 16px;
             font-weight: 600;
-            color: var(--gold-light);
+            color: var(--gold-bright);
         }
 
         /* CONTENT TEXT */
         p {
             font-size: 14px;
-            color: var(--navy);
-            opacity: 0.9;
+            color: var(--ink);
+            opacity: 0.95;
             margin-bottom: 14px;
         }
 
@@ -240,12 +240,12 @@
             background: var(--gold);
             margin: 24px auto;
             border-radius: 2px;
-            opacity: 0.6;
+            opacity: 0.7;
         }
 
         /* EVENT DETAILS */
         .event-box {
-            background: var(--ivory);
+            background: var(--ivory-warm);
             border: 1.5px dashed var(--gold);
             border-radius: 14px;
             padding: 20px;
@@ -265,7 +265,7 @@
         }
 
         .event-icon {
-            color: var(--gold);
+            color: var(--gold-ink);
             font-size: 16px;
             margin-top: 3px;
             width: 20px;
@@ -277,14 +277,14 @@
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-muted);
+            color: var(--ink-soft);
             font-weight: 600;
         }
 
         .event-info span {
             font-size: 14px;
             font-weight: 600;
-            color: var(--navy);
+            color: var(--ink);
         }
 
         /* BUTTON */
@@ -296,7 +296,7 @@
             width: 100%;
             padding: 12px;
             background: var(--navy);
-            color: var(--ivory);
+            color: var(--on-dark);
             border: 1px solid var(--gold);
             border-radius: 30px;
             text-decoration: none;
@@ -323,10 +323,10 @@
         }
 
         .btn-map:hover {
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            color: var(--navy);
-            border-color: var(--gold-light);
-            box-shadow: 0 6px 18px rgba(176, 138, 74, 0.35);
+            background: var(--navy-deep);
+            color: var(--gold-bright);
+            border-color: var(--gold-bright);
+            box-shadow: 0 6px 18px rgba(12, 24, 41, 0.25);
         }
 
         .container.is-downloading .qr-map {
@@ -349,48 +349,22 @@
             display: none;
         }
 
-        /* DOWNLOAD BUTTON */
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            color: var(--navy-deep);
-            border: 1px solid var(--gold-light);
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 700;
-            transition: all 0.25s ease;
-            margin-top: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(176, 138, 74, 0.3);
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(176, 138, 74, 0.5);
-        }
-
         /* FOOTER */
         .footer-thanks {
             font-size: 13px;
-            color: var(--text-muted);
+            color: var(--ink-soft);
             margin-top: 24px;
             font-style: italic;
         }
 
         .family-name {
             font-weight: 600;
-            color: var(--navy);
+            color: var(--ink);
             margin-top: 8px;
             font-style: normal;
         }
 
-        /* TOMBOL MUSIK MELAYANG (FLOATING MUSIC CONTROL) */
+        /* TOMBOL MUSIK MELAYANG */
         .music-btn {
             position: fixed;
             bottom: 24px;
@@ -400,12 +374,12 @@
             background: var(--navy);
             border: 1.5px solid var(--gold);
             border-radius: 50%;
-            color: var(--gold-light);
+            color: var(--gold-bright);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(23, 43, 73, 0.3);
+            box-shadow: 0 4px 15px rgba(12, 24, 41, 0.3);
             z-index: 998;
             transition: all 0.3s ease;
         }
@@ -420,13 +394,8 @@
         }
 
         @keyframes rotateMusic {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .music-btn.playing i {
@@ -442,9 +411,9 @@
         <div class="curtain-content">
             <div class="curtain-subtitle">Undangan Syukuran Menjelang Pernikahan</div>
             <div class="curtain-title">Ryka Nurdianti</div>
-            <div class="guest-box" style="margin: 18px 0 20px; background: rgba(23, 43, 73, 0.6); border-color: rgba(176, 138, 74, 0.6);">
-                <div class="guest-label" style="color: var(--ivory); opacity: 0.9;">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
-                <div class="guest-name" id="curtainGuestName" style="color: var(--gold-light);">Tamu Undangan</div>
+            <div class="guest-box" style="margin: 18px 0 20px; background: rgba(21, 39, 68, 0.85); border-color: rgba(185, 150, 80, 0.6);">
+                <div class="guest-label" style="color: var(--on-dark); opacity: 0.9;">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+                <div class="guest-name" id="curtainGuestName" style="color: var(--gold-bright);">Tamu Undangan</div>
             </div>
             <button class="btn-open-invitation" id="openInvitationBtn">
                 <i class="fa-solid fa-envelope-open"></i> Buka Undangan
@@ -464,7 +433,7 @@
     </button>
 
     <div class="container" id="mainContainer">
-        <!-- KARTU UNDANGAN YANG BISA DIDOWNLOAD JADI GAMBAR -->
+        <!-- KARTU UNDANGAN -->
         <div class="invitation-card" id="invitationCard">
 
             <div class="tagline">Syukuran Menjelang Pernikahan</div>
@@ -517,7 +486,7 @@
                     <div class="event-info">
                         <label>Lokasi Acara</label>
                         <span>Kediaman Keluarga Bapak Supyandi</span>
-                        <div style="font-size: 12px; color: var(--text-muted); font-weight: normal; margin-top: 2px;">
+                        <div style="font-size: 12px; color: var(--ink-soft); font-weight: normal; margin-top: 2px;">
                             Komp. Sapta Taruna PU Blok B. 108 RT. 07/08
                         </div>
                     </div>
@@ -527,7 +496,7 @@
                     <i class="fa-solid fa-map-location-dot"></i> Petunjuk Arah (Google Maps)
                 </a>
 
-                <img src="assets/Golden_QR_Code_on_Transparent_Background-removebg-preview.png" class="qr-map">
+                <img src="assets/Golden_QR_Code_on_Transparent_Background-removebg-preview.png" class="qr-map" alt="QR Code Lokasi">
             </div>
 
             <p class="footer-thanks">
@@ -537,29 +506,14 @@
 
             <div class="family-name">
                 Wassalamu’alaikum Warahmatullahi Wabarakatuh.<br><br>
-                <small style="font-weight: normal; color: var(--text-muted);">Kami yang berbahagia,</small><br>
+                <small style="font-weight: normal; color: var(--ink-soft);">Kami yang berbahagia,</small><br>
                 Keluarga Besar Bapak Supyandi & Ibu Muryani
             </div>
 
         </div>
-
-        <!-- TOMBOL DOWNLOAD GAMBAR -->
-        <!-- <button class="btn-download" id="downloadBtn">
-            <i class="fa-solid fa-image"></i> Download Undangan
-        </button> -->
     </div>
 
     <script>
-        (function () {
-            const ua = navigator.userAgent || '';
-            const isSamsungBrowser = /SamsungBrowser/i.test(ua) || (/Samsung/i.test(ua) && /Android/i.test(ua));
-            if (isSamsungBrowser) {
-                const redirectUrl = new URL('syukuran-samsung-browser.html', window.location.href).toString();
-                window.location.replace(redirectUrl);
-                return;
-            }
-        })();
-
         // Ambil nama tamu dari URL param (?to=NamaTamu)
         const params = new URLSearchParams(window.location.search);
         const guest = params.get('to');
@@ -578,7 +532,6 @@
         const musicBtn = document.getElementById('musicBtn');
         const musicIcon = document.getElementById('musicIcon');
         let isPlaying = false;
-        let wasPlayingBeforeHidden = false; // Menyimpan status musik sebelum tab ditinggal
 
         function toggleMusic() {
             if (isPlaying) {
@@ -599,26 +552,6 @@
 
         musicBtn.addEventListener('click', toggleMusic);
 
-        // Fitur Auto Stop Musik Saat Halaman Tidak Aktif / Berpindah Tab
-        document.addEventListener('visibilitychange', function () {
-            if (document.hidden) {
-                // Jika tab disembunyikan / pindah tab / minimize
-                if (isPlaying) {
-                    wasPlayingBeforeHidden = true; // Tandai bahwa sebelumnya musik sedang menyala
-                    audio.pause();
-                    musicBtn.classList.remove('playing');
-                    musicIcon.className = 'fa-solid fa-volume-xmark';
-                    isPlaying = false;
-                } else {
-                    wasPlayingBeforeHidden = false;
-                }
-            } else {
-                // Jika halaman dibuka kembali
-                // (Opsional: Jika ingin musik otomatis menyala lagi saat kembali, ubah kondisi di bawah. 
-                // Saat ini dibiarkan berhenti sesuai permintaan "musik auto berhenti")
-            }
-        });
-
         // Animasi Buka Tirai & Mulai Musik
         const curtainOverlay = document.getElementById('curtainOverlay');
         const openInvitationBtn = document.getElementById('openInvitationBtn');
@@ -628,44 +561,6 @@
             if (!isPlaying) {
                 toggleMusic();
             }
-        });
-
-        // Fitur Download Kartu Undangan Menjadi Gambar (PNG) menggunakan html2canvas
-        const downloadBtn = document.getElementById('downloadBtn');
-        const mainContainer = document.getElementById('mainContainer');
-        const invitationCard = document.getElementById('invitationCard');
-
-        downloadBtn.addEventListener('click', function () {
-            downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses Gambar...';
-            downloadBtn.style.pointerEvents = 'none';
-
-            // Tambahkan class agar container melebar dan animasi shine berhenti (menjadi warna emas solid)
-            mainContainer.classList.add('is-downloading');
-
-            // Beri jeda sekejap agar browser merender perubahan lebar & style sebelum html2canvas mengambil screenshot
-            setTimeout(() => {
-                html2canvas(invitationCard, {
-                    scale: 2, // Kualitas tinggi (retina)
-                    useCORS: true,
-                    backgroundColor: null
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = 'Undangan-Ryka-Nurdianti.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-
-                    // Kembalikan ukuran container dan style seperti semula setelah selesai
-                    mainContainer.classList.remove('is-downloading');
-                    downloadBtn.innerHTML = '<i class="fa-solid fa-image"></i> Download Undangan';
-                    downloadBtn.style.pointerEvents = 'auto';
-                }).catch(err => {
-                    console.error('Gagal mendownload:', err);
-                    alert('Terjadi kesalahan saat mengunduh gambar.');
-                    mainContainer.classList.remove('is-downloading');
-                    downloadBtn.innerHTML = '<i class="fa-solid fa-image"></i> Download Undangan';
-                    downloadBtn.style.pointerEvents = 'auto';
-                });
-            }, 150);
         });
     </script>
 

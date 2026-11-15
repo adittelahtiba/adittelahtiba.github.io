@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ryka & Adit | 20.12.2026</title>
     <!-- Deklarasi standar (bukan deteksi): minta browser tidak memaksa dark mode. Boleh dihapus untuk menguji ketahanan desain. -->
-    <meta name="color-scheme" content="only light">
+    <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#FBF7EF">
     <meta property="og:type" content="website">
     <meta property="og:title" content="The Wedding of Ryka & Adit">
@@ -96,7 +96,7 @@
         </div>
     </section>
 
-    <script src="assets/tsparticles.slim.bundle.min.js"></script>
+    <script src="assets/tsparticles.slim.bundle.min.js" defer></script>
 
     <div class="lang-switcher" aria-label="Language selector">
         <button class="lang-btn active" type="button" data-lang="en">EN</button>
@@ -127,13 +127,13 @@
         <h3 class="font-wedding display-4" data-i18n="coupleTitle">The Couple&nbsp;</h3>
         <div class="row mt-5 align-items-center">
             <div class="col-md-5">
-                <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" class="couple-img mb-3">
+                <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" class="couple-img mb-3" loading="lazy" decoding="async">
                 <h3 class="font-wedding">Ryka Nurdianti, S.T&nbsp;</h3>
                 <p data-i18n="rykaParents">Daughter of Mr. Supyandi & Mrs. Yani</p>
             </div>
             <div class="col-md-2 font-wedding display-3 my-4">&</div>
             <div class="col-md-5">
-                <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" class="couple-img mb-3">
+                <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" class="couple-img mb-3" loading="lazy" decoding="async">
                 <h3 class="font-wedding">Aditya Pangestu, S.Kom&nbsp;</h3>
                 <p data-i18n="aditParents">Son of Mr. Jajang & Mrs. Eulis</p>
             </div>
@@ -143,8 +143,8 @@
 
 
     <section id="countdownSection" class="section-wedding text-center">
-        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="metadata">
-            <source src="assets/fd.mp4" type="video/mp4">
+        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="none" poster="assets/navy.png">
+            <source data-src="assets/fd.mp4" type="video/mp4">
         </video>
         <div class="countdown-overlay"></div>
         <div style="position: relative; z-index: 1;">
@@ -244,15 +244,15 @@
 
         <div class="gallery-slideshow" aria-label="Gallery slideshow">
             <div class="gallery-stage" id="galleryStage">
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg" alt="Gallery 1"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg" alt="Gallery 2"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg" alt="Gallery 3"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47.jpeg" alt="Gallery 4"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38.jpeg" alt="Gallery 5"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).jpeg" alt="Gallery 6"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.56.jpeg" alt="Gallery 7"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.59.jpeg" alt="Gallery 8"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.06.jpeg" alt="Gallery 9"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg" alt="Gallery 1" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg" alt="Gallery 2" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg" alt="Gallery 3" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47.jpeg" alt="Gallery 4" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38.jpeg" alt="Gallery 5" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).jpeg" alt="Gallery 6" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.56.jpeg" alt="Gallery 7" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.59.jpeg" alt="Gallery 8" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.06.jpeg" alt="Gallery 9" loading="lazy" decoding="async"></div>
             </div>
         </div>
     </section>
@@ -345,7 +345,7 @@
 
         <div style="display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
                 <div>
-                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" alt="Ryka" class="thankyou-img">
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" alt="Ryka" class="thankyou-img" loading="lazy" decoding="async">
                     <div style="margin-top:12px; font-weight:600; color:var(--ink);">
                         <a href="https://instagram.com/rykanrdnt" target="_blank" rel="noopener"
                             style="color:var(--gold-ink); text-decoration:none;">
@@ -355,7 +355,7 @@
                     </div>
                 </div>
                 <div>
-                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" alt="Adit" class="thankyou-img">
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" alt="Adit" class="thankyou-img" loading="lazy" decoding="async">
                     <div style="margin-top:12px; font-weight:600; color:var(--ink);">
                         <a href="https://instagram.com/uwa_adit" target="_blank" rel="noopener"
                             style="color:var(--gold-ink); text-decoration:none;">
@@ -612,7 +612,30 @@
         }
 
         if (guestForm) { guestForm.addEventListener('submit', submitGuest); }
-        fetchGuests();
+
+        // Ambil data buku tamu hanya saat pengunjung mendekati bagiannya.
+        (function deferGuestbookFetch() {
+            const section = document.getElementById('guestbook');
+            if (!section) return;
+
+            let loaded = false;
+            const loadOnce = () => {
+                if (loaded) return;
+                loaded = true;
+                fetchGuests();
+                if (observer) observer.disconnect();
+            };
+
+            let observer = null;
+            if ('IntersectionObserver' in window) {
+                observer = new IntersectionObserver((entries) => {
+                    if (entries.some(entry => entry.isIntersecting)) loadOnce();
+                }, { rootMargin: '300px 0px', threshold: 0 });
+                observer.observe(section);
+            } else {
+                loadOnce();
+            }
+        })();
 
         // Personalize cover from query param ?to=Name or ?name=Name
         function getQueryParam(key) { try { return new URL(window.location.href).searchParams.get(key); } catch (e) { return null } }
@@ -1110,46 +1133,54 @@
         (function () {
             const section = document.getElementById('countdownSection');
             const video = document.getElementById('countdownVideo');
-            if (!section || !video) return;
+            const source = video && video.querySelector('source[data-src]');
+            if (!section || !video || !source) return;
 
-            const markReady = () => {
-                video.classList.add('is-ready');
+            let sourceLoaded = false;
+
+            const sectionIsVisible = () => {
+                const rect = section.getBoundingClientRect();
+                return rect.top < window.innerHeight && rect.bottom > 0;
             };
 
             const tryPlay = () => {
-                if (video.readyState < 2) return;
-                video.muted = true;
-                video.play().catch(() => {});
+                if (document.hidden || !sectionIsVisible()) return;
+                if (video.readyState >= 2) {
+                    video.play().catch(() => {});
+                }
             };
 
-            const pauseVideo = () => {
-                video.pause();
+            const loadVideo = () => {
+                if (!sourceLoaded) {
+                    sourceLoaded = true;
+                    source.src = source.dataset.src;
+                    video.load();
+                }
+                if (video.readyState >= 2) tryPlay();
             };
 
-            if (video.readyState >= 2) {
-                markReady();
+            video.addEventListener('canplay', () => {
+                video.classList.add('is-ready');
+                tryPlay();
+            }, { once: true });
+
+            const pauseVideo = () => video.pause();
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) loadVideo();
+                        else pauseVideo();
+                    });
+                }, { threshold: 0.25 });
+                observer.observe(section);
             } else {
-                video.addEventListener('canplay', markReady, { once: true });
+                loadVideo();
             }
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        tryPlay();
-                    } else {
-                        pauseVideo();
-                    }
-                });
-            }, { threshold: 0.25 });
-
-            observer.observe(section);
-
             document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    pauseVideo();
-                } else if (section.getBoundingClientRect().top < window.innerHeight && section.getBoundingClientRect().bottom > 0) {
-                    tryPlay();
-                }
+                if (document.hidden) pauseVideo();
+                else if (sourceLoaded && sectionIsVisible()) tryPlay();
             });
         })();
     </script>
@@ -1225,66 +1256,7 @@
     </script>
 
 
-    <script>
-        // Gallery lazy loading — preload di background, baru tampil saat sudah ready
-        (function () {
-            var lazyImgs = document.querySelectorAll('.gallery-lazy');
-
-            function revealImg(img) {
-                var src = img.dataset.src;
-                if (!src) return;
-
-                // Buat Image object di background — download + decode sebelum tampil
-                var preloader = new Image();
-
-                var finish = function () {
-                    // Pakai decode() kalau tersedia supaya browser decode dulu sebelum render
-                    var doReveal = function () {
-                        img.src = src;
-                        // requestAnimationFrame pastikan browser sudah siap paint
-                        requestAnimationFrame(function () {
-                            requestAnimationFrame(function () {
-                                img.classList.add('loaded');
-                                var skeleton = img.previousElementSibling;
-                                if (skeleton && skeleton.classList.contains('gallery-skeleton')) {
-                                    skeleton.classList.add('hidden');
-                                }
-                            });
-                        });
-                    };
-
-                    if (typeof preloader.decode === 'function') {
-                        preloader.decode().then(doReveal).catch(doReveal);
-                    } else {
-                        doReveal();
-                    }
-                };
-
-                preloader.onload = finish;
-                preloader.onerror = finish; // tetap tampil meski error
-                preloader.src = src;    // mulai download di background
-            }
-
-            if ('IntersectionObserver' in window) {
-                var observer = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            revealImg(entry.target);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    rootMargin: '200px 0px', // mulai preload 200px sebelum masuk layar
-                    threshold: 0
-                });
-
-                lazyImgs.forEach(function (img) { observer.observe(img); });
-            } else {
-                // Fallback: langsung load semua
-                lazyImgs.forEach(function (img) { revealImg(img); });
-            }
-        })();
-    </script>
+    <!-- Gallery uses native loading="lazy" and decoding="async" on images. -->
 
 
 

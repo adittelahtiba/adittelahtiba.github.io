@@ -24,7 +24,7 @@
    ========================================================================= */
 
 :root {
-    color-scheme: only light;
+    color-scheme: only light !important;
 
     /* Permukaan terang */
     --ivory: #FBF7EF;
@@ -116,6 +116,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--ivory);
     color: var(--ink);
+    color-scheme: only light !important;
 }
 
 /* Pita section: selang-seling ivory / ivory hangat */

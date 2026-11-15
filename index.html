@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ryka & Adit | 20.12.2026</title>
     <!-- Deklarasi standar (bukan deteksi): minta browser tidak memaksa dark mode. Boleh dihapus untuk menguji ketahanan desain. -->
+    <meta name="description" content="Undangan pernikahan Ryka &amp; Adit, Minggu 20 Desember 2026. Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir di hari istimewa kami.">
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#FBF7EF">
     <meta property="og:type" content="website">
@@ -20,9 +21,17 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share.jpg">
 
+    <link rel="preload" as="image" href="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1).jpeg" fetchpriority="high">
     <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css2.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css"></noscript>
+    <style>
+        /* font-display: swap untuk ikon Font Awesome (menggantikan "block" bawaan) */
+        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-solid-900.woff2) format("woff2")}
+        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-regular-400.woff2) format("woff2")}
+        @font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-brands-400.woff2) format("woff2")}
+    </style>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
 </head>
@@ -53,21 +62,21 @@
     </div>
 
     <div class="nav-floating">
-        <a href="#home" class="nav-link active" data-section="home"><i class="fa-solid fa-house" style="color:var(--ink)"></i></a>
-        <a href="#couple" class="nav-link" data-section="couple"><i class="fa-solid fa-heart" style="color:var(--ink)"></i></a>
-        <a href="#event" class="nav-link" data-section="event"><i class="fa-solid fa-calendar-days" style="color:var(--ink)"></i></a>
-        <a href="#gallery" class="nav-link" data-section="gallery"><i class="fa-solid fa-images" style="color:var(--ink)"></i></a>
-        <a href="#guestbook" class="nav-link" data-section="guestbook"><i class="fa-solid fa-comment-dots" style="color:var(--ink)"></i></a>
+        <a href="#home" class="nav-link active" data-section="home" aria-label="Beranda"><i class="fa-solid fa-house" style="color:var(--ink)"></i></a>
+        <a href="#couple" class="nav-link" data-section="couple" aria-label="Mempelai"><i class="fa-solid fa-heart" style="color:var(--ink)"></i></a>
+        <a href="#event" class="nav-link" data-section="event" aria-label="Acara"><i class="fa-solid fa-calendar-days" style="color:var(--ink)"></i></a>
+        <a href="#gallery" class="nav-link" data-section="gallery" aria-label="Galeri"><i class="fa-solid fa-images" style="color:var(--ink)"></i></a>
+        <a href="#guestbook" class="nav-link" data-section="guestbook" aria-label="Ucapan &amp; doa"><i class="fa-solid fa-comment-dots" style="color:var(--ink)"></i></a>
     </div>
 
     <section id="home" class="hero-section">
         <div class="home-bg-layer is-active" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg');"></div>
-        <div class="home-bg-layer" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.45.jpeg');"></div>
-        <div class="home-bg-layer" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg');"></div>
+        <div class="home-bg-layer" data-bg="assets/WhatsApp Image 2026-10-07 at 16.19.45.jpeg"></div>
+        <div class="home-bg-layer" data-bg="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg"></div>
         <div class="home-bg-side" style="background-image: url('assets/navy.png');"></div>
         <!-- <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" class="floral-top" alt="flower"> -->
         <div class="hero-content">
-            <h4 class="text-uppercase ls-3" data-i18n="homeTag">The Wedding Of</h4>
+            <p class="h4 text-uppercase ls-3 mb-2" data-i18n="homeTag">The Wedding Of</p>
             <h1 class="display-2 font-wedding shine-silver">Ryka & Adit&nbsp;</h1>
             <p data-i18n="weddingDate">20 . 12 . 2026</p>
             <div class="hero-cta">
@@ -96,7 +105,22 @@
         </div>
     </section>
 
-    <script src="assets/tsparticles.slim.bundle.min.js" defer></script>
+    <script>
+        // Muat tsParticles setelah halaman selesai dimuat agar tidak menghambat LCP.
+        // Gambar hero ke-2 & ke-3 juga dimuat setelah load, supaya tidak berebut bandwidth dengan gambar LCP.
+        window.addEventListener('load', function () {
+            document.querySelectorAll('.home-bg-layer[data-bg]').forEach(function (el) {
+                el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')";
+            });
+            var loadParticles = function () {
+                var sc = document.createElement('script');
+                sc.src = 'assets/tsparticles.slim.bundle.min.js';
+                document.body.appendChild(sc);
+            };
+            if ('requestIdleCallback' in window) requestIdleCallback(loadParticles, { timeout: 1500 });
+            else setTimeout(loadParticles, 300);
+        });
+    </script>
 
     <div class="lang-switcher" aria-label="Language selector">
         <button class="lang-btn active" type="button" data-lang="en">EN</button>
@@ -124,16 +148,16 @@
     </div>
 
     <section id="couple" class="section-wedding container text-center">
-        <h3 class="font-wedding display-4" data-i18n="coupleTitle">The Couple&nbsp;</h3>
+        <h2 class="font-wedding display-4" data-i18n="coupleTitle">The Couple&nbsp;</h2>
         <div class="row mt-5 align-items-center">
             <div class="col-md-5">
-                <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" class="couple-img mb-3" loading="lazy" decoding="async">
+                <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" class="couple-img mb-3" alt="Foto Ryka Nurdianti" loading="lazy" decoding="async">
                 <h3 class="font-wedding">Ryka Nurdianti, S.T&nbsp;</h3>
                 <p data-i18n="rykaParents">Daughter of Mr. Supyandi & Mrs. Yani</p>
             </div>
             <div class="col-md-2 font-wedding display-3 my-4">&</div>
             <div class="col-md-5">
-                <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" class="couple-img mb-3" loading="lazy" decoding="async">
+                <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" class="couple-img mb-3" alt="Foto Aditya Pangestu" loading="lazy" decoding="async">
                 <h3 class="font-wedding">Aditya Pangestu, S.Kom&nbsp;</h3>
                 <p data-i18n="aditParents">Son of Mr. Jajang & Mrs. Eulis</p>
             </div>
@@ -143,8 +167,9 @@
 
 
     <section id="countdownSection" class="section-wedding text-center">
-        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="none" poster="assets/navy.png">
+        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="none" poster="assets/navy.png" aria-hidden="true" tabindex="-1">
             <source data-src="assets/fd.mp4" type="video/mp4">
+            <track kind="captions" src="assets/captions-empty.vtt" srclang="id" label="Indonesia">
         </video>
         <div class="countdown-overlay"></div>
         <div style="position: relative; z-index: 1;">
@@ -178,7 +203,7 @@
                     <circle class="gold-fill" cx="188" cy="25" r="1.2"/>
                 </svg>
             </div> -->
-            <h4 class="font-wedding display-4 text-dark-navy" data-i18n="eventTitle">The Event</h4>
+            <h2 class="font-wedding display-4 text-dark-navy" data-i18n="eventTitle">The Event</h2>
         </div>
 
         <div class="row">
@@ -213,7 +238,7 @@
 
         <div class="row mt-4">
             <div class="col-12 mb-5">
-                <h4 data-i18n="firstMeeting">Our First Meeting</h4>
+                <h3 class="h4" data-i18n="firstMeeting">Our First Meeting</h3>
                 <p class="small text-muted" data-i18n="firstMeetingText">
                     It all began with a simple meeting fueled by a sincere desire to know each other better.
                     Without much planning, that moment became the beginning of a journey that gradually brought
@@ -222,7 +247,7 @@
             </div>
 
             <div class="col-12 mb-5">
-                <h4 data-i18n="strengtheningHearts">Strengthening Our Hearts</h4>
+                <h3 class="h4" data-i18n="strengtheningHearts">Strengthening Our Hearts</h3>
                 <p class="small text-muted" data-i18n="strengtheningHeartsText">
                     After getting to know each other and understanding one another more deeply, we became certain
                     to take the next step toward a more serious commitment. With the blessing of our families,
@@ -266,7 +291,7 @@
     </div>
 
     <section class="section-wedding container text-center" id="wedding-gift">
-        <h3 class="font-wedding display-4" data-i18n="weddingGiftTitle">Wedding Gift&nbsp;</h3>
+        <h2 class="font-wedding display-4" data-i18n="weddingGiftTitle">Wedding Gift&nbsp;</h2>
         <div class="row justify-content-center mt-4">
             <div class="col-md-8">
                 <p class="small text-muted2" data-i18n="weddingGiftText">Your prayers and blessings are the greatest gift for us.</p>
@@ -330,7 +355,7 @@
             <form id="guestForm">
                 <input id="g_name" type="text" class="form-control mb-3" placeholder="Full Name" value="Guest"
                     required readonly disabled data-i18n-placeholder="guestNamePlaceholder">
-                <select id="g_attend" class="form-select mb-3" data-i18n-label="attendance">
+                <select id="g_attend" class="form-select mb-3" data-i18n-label="attendance" aria-label="Konfirmasi kehadiran">
                     <option value="Hadir">Attending</option>
                     <option value="Belum Pasti">Maybe</option>
                     <option value="Tidak Hadir">Not Attending</option>

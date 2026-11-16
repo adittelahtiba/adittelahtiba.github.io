@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panduan Dekorasi Ryka & Adit</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #121212;
+      color: #f5ebd9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1080px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #f5ebd9;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: #a89f91;
+    }
+
+    .canva-wrapper {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-top: 56.25%; /* Rasio 16:9 */
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #1e1e1e;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+
+    .canva-wrapper iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border: none;
+    }
+
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .btn-open {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #6B0F1A;
+      color: #f5ebd9;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 8px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-open:hover {
+      background-color: #851422;
+    }
+
+    .btn-open:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Panduan Dekorasi Ryka & Adit</h1>
+      <p>Gunakan tombol panah pada layar atau geser slide untuk melihat detail panduan</p>
+    </header>
+
+    <div class="canva-wrapper">
+      <iframe
+        loading="lazy"
+        src="https://www.canva.com/design/DAHbDQuKEd0/SMuUSB6gR8JkMRGlamWk4Q/view?embed"
+        allowfullscreen="allowfullscreen"
+        allow="fullscreen">
+      </iframe>
+    </div>
+
+    <div class="actions">
+      <a
+        href="https://www.canva.com/design/DAHbDQuKEd0/SMuUSB6gR8JkMRGlamWk4Q/view"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-open">
+        Buka Layar Penuh di Canva ↗
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

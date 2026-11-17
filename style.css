@@ -64,7 +64,11 @@
     --danger-fg: #FFF1F2;
     --danger-ink: #8A2230;
 
+    /* Navy untuk teks (di permukaan terang) */
+    --navy-text: #1B3A6B;
+
     /* Peta semantik: default = permukaan terang */
+    --c-title: var(--navy-text);
     --c-text: var(--ink);
     --c-text-soft: var(--ink-soft);
     --c-accent: var(--gold-ink);
@@ -90,6 +94,7 @@ body>section.footer-band,
 .confirm-box,
 .music-toggle.playing,
 .lang-btn.active {
+    --c-title: var(--gold-bright);
     --c-text: var(--on-dark);
     --c-text-soft: var(--on-dark-soft);
     --c-accent: var(--gold-bright);
@@ -204,6 +209,50 @@ body>section h4.font-wedding {
 .copy-icon:hover {
     transform: scale(1.2);
     color: var(--on-dark);
+}
+
+/* ---------- Kombinasi teks: navy + emas ----------
+   Permukaan terang : judul section & teks isi = navy, aksen kecil = emas.
+   Permukaan gelap  : tetap emas terang / putih gading (lihat peta semantik).
+   Navy gelap di atas ivory = pasangan A, aman saat force dark. */
+body>section h2.font-wedding {
+    color: var(--c-title);
+}
+
+/* Ayat: kutipan navy, rujukan emas */
+#verse p.fst-italic {
+    color: var(--navy-text);
+    line-height: 1.9;
+}
+
+#verse p.fw-bold {
+    color: var(--gold-ink);
+    letter-spacing: 0.14em;
+    font-size: 0.85rem;
+}
+
+/* Mempelai: nama emas, keterangan orang tua navy */
+#couple p {
+    color: var(--navy-text);
+}
+
+/* Acara: judul kartu emas, detail navy, ikon emas */
+.event-card p {
+    color: var(--navy-text);
+}
+
+.event-card p i {
+    color: var(--gold-ink);
+}
+
+.event-card p.small {
+    color: var(--ink-soft);
+}
+
+/* Love story: subjudul navy tebal */
+body>section h3.h4 {
+    color: var(--navy-text);
+    font-weight: 600;
 }
 
 /* ---------- Ornamen ---------- */
@@ -1387,21 +1436,432 @@ body>section.footer-band {
     border-bottom: 1px solid var(--gold);
 }
 
+/* ---------- Tekstur latar (assets/*.webp) ----------
+   Semua gambar bisa di-tile (seamless). background-color tetap dipertahankan
+   sebagai warna dasar: kalau gambar belum termuat / gagal, tampilan tetap utuh.
+     bg-ivory.webp       kertas ivory   (section terang)
+     bg-ivory-warm.webp  kertas hangat  (section selang-seling & Acara)
+     bg-paper.webp       kertas kartu   (event-card, gift, buku tamu)
+     bg-navy-grain.webp  linen navy, PNG-like transparan: ditumpuk di atas
+                         warna navy apa pun (countdown, footer, kartu ATM)
+   Tekstur sengaja berkontras rendah agar teks tetap terbaca. */
+body {
+    background-image: url('assets/bg-ivory.webp');
+    background-size: 560px auto;
+    background-repeat: repeat;
+}
+
+/* Section terang (ganjil = ivory, genap = ivory hangat).
+   Selector dibuat spesifik supaya menimpa background-size: contain
+   milik .section-wedding. */
+body>section:not(#home):not(#countdownSection):not(.footer-band) {
+    background-image: url('assets/bg-ivory.webp');
+    background-size: 560px auto;
+    background-repeat: repeat;
+    background-position: top left;
+}
+
+body>section:nth-of-type(even):not(#home):not(#countdownSection):not(.footer-band) {
+    background-image: url('assets/bg-ivory-warm.webp');
+}
+
+#event {
+    background-image: url('assets/bg-ivory-warm.webp');
+    background-size: 560px auto;
+    background-repeat: repeat;
+}
+
+/* Kartu putih gading */
+.event-card,
+.card-gift,
+#guestbook .card {
+    background-image: url('assets/bg-paper.webp');
+    background-size: 560px auto;
+    background-repeat: repeat;
+}
+
+/* Permukaan navy: linen transparan di atas warna navy */
+#countdownSection,
+body>section.footer-band,
+.atm-card {
+    background-image: url('assets/bg-navy-grain.webp');
+    background-size: 420px auto;
+    background-repeat: repeat;
+}
+
+/* ---------- Ornamen: bunga sudut, divider, bingkai foto (assets/*.svg) ----------
+   SVG-nya statis; gerakan dibuat lewat CSS pada elemen pembungkus (transform/rotate)
+   sehingga ringan untuk HP. Semua gerakan mati otomatis jika perangkat meminta
+   "kurangi gerakan" (prefers-reduced-motion). Ornamen murni dekoratif (aria-hidden). */
+
+/* Section yang punya sudut bunga */
+.has-orn {
+    position: relative;
+    isolation: isolate;
+}
+
+.orn-corner {
+    position: absolute !important;
+    z-index: -1 !important;
+    width: clamp(92px, 26vw, 160px);
+    aspect-ratio: 1 / 1;
+    pointer-events: none;
+    transition: opacity 1.6s ease;
+}
+
+.orn-corner.tl {
+    top: 0;
+    left: 0;
+}
+
+.orn-corner.tr {
+    top: 0;
+    right: 0;
+    transform: scaleX(-1);
+}
+
+.orn-corner.bl {
+    bottom: 0;
+    left: 0;
+    transform: scaleY(-1);
+}
+
+.orn-corner.br {
+    bottom: 0;
+    right: 0;
+    transform: scale(-1, -1);
+    transition-delay: .3s;
+}
+
+/* Hero & countdown punya lapisan foto/video: sudut harus di atasnya */
+#home>.orn-corner {
+    z-index: 2 !important;
+}
+
+#countdownSection>.orn-corner {
+    z-index: 1 !important;
+}
+
+/* Dua lapisan: ranting+daun (bawah) dan bunga (atas), pivot di pojok */
+.orn-corner::before,
+.orn-corner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    transform-origin: 0 0;
+}
+
+.orn-corner::before {
+    background-image: url('assets/floral-corner-stems.svg');
+}
+
+.orn-corner::after {
+    background-image: url('assets/floral-corner-blooms.svg');
+}
+
+.orn-corner.dark::before {
+    background-image: url('assets/floral-corner-stems-dark.svg');
+}
+
+.orn-corner.dark::after {
+    background-image: url('assets/floral-corner-blooms-dark.svg');
+}
+
+/* Muncul pelan (hanya bila JS aktif; tanpa JS ornamen langsung terlihat) */
+html.orn-ready .orn-corner {
+    opacity: 0;
+}
+
+html.orn-ready .has-orn.orn-on .orn-corner {
+    opacity: 1;
+}
+
+/* ---------- Divider ---------- */
+.orn-divider {
+    position: relative;
+    width: min(100%, 320px);
+    aspect-ratio: 360 / 40;
+    margin: 4px auto 22px;
+    background: url('assets/divider.svg') center / 100% 100% no-repeat;
+}
+
+.orn-divider::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 11.5%;
+    aspect-ratio: 1 / 1;
+    translate: -50% -50%;
+    background: url('assets/divider-flower.svg') center / contain no-repeat;
+}
+
+.orn-divider.dark {
+    background-image: url('assets/divider-dark.svg');
+}
+
+.orn-divider.dark::after {
+    background-image: url('assets/divider-flower-dark.svg');
+}
+
+/* ---------- Bingkai foto ---------- */
+.photo-orn {
+    --s: 92px;
+    /* lebar ranting bunga */
+    position: relative;
+    width: max-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    isolation: isolate;
+}
+
+.photo-orn>img {
+    position: relative;
+    z-index: 2;
+    display: block;
+}
+
+/* Dua garis bingkai berlapis di belakang foto */
+.photo-orn::before,
+.photo-orn::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    border: 1px solid var(--gold);
+}
+
+.photo-orn.arch::before {
+    inset: -11px;
+    border-radius: 121px 121px 26px 26px;
+    opacity: .8;
+}
+
+.photo-orn.arch::after {
+    inset: -21px;
+    border-radius: 131px 131px 36px 36px;
+    opacity: .4;
+}
+
+.photo-orn.round {
+    --s: 64px;
+}
+
+.photo-orn.round::before {
+    inset: -10px;
+    border-radius: 50%;
+    border: 1.5px dashed var(--gold);
+    opacity: .85;
+}
+
+.photo-orn.round::after {
+    inset: -19px;
+    border-radius: 50%;
+    opacity: .4;
+}
+
+@media (max-width: 480px) {
+    .photo-orn {
+        --s: 72px;
+    }
+
+    .photo-orn.round {
+        --s: 54px;
+    }
+
+    .photo-orn.arch::before {
+        border-radius: 101px 101px 23px 23px;
+    }
+
+    .photo-orn.arch::after {
+        border-radius: 111px 111px 33px 33px;
+    }
+}
+
+/* Beri ruang agar cincin & ranting dua foto bulat tidak saling bertumpuk */
+#guestbook>.guest-photos>div {
+    padding: 0 14px;
+}
+
+/* Ranting bunga yang menyembul dari balik foto */
+.photo-flower {
+    position: absolute;
+    z-index: 1;
+    width: var(--s);
+    aspect-ratio: 120 / 170;
+    background: url('assets/floral-sprig.svg') center bottom / 100% 100% no-repeat;
+    transform-origin: 50% 100%;
+    pointer-events: none;
+}
+
+.arch .pf-1 {
+    left: calc(var(--s) * -.44);
+    bottom: calc(var(--s) * -.06);
+    transform: rotate(-24deg);
+}
+
+.arch .pf-2 {
+    right: calc(var(--s) * -.44);
+    top: calc(var(--s) * -.34);
+    transform: scaleX(-1) rotate(-24deg);
+}
+
+.round .pf-1 {
+    left: calc(var(--s) * -.38);
+    bottom: calc(var(--s) * -.10);
+    transform: rotate(-30deg);
+}
+
+.round .pf-2 {
+    right: calc(var(--s) * -.38);
+    bottom: calc(var(--s) * -.10);
+    transform: scaleX(-1) rotate(-30deg);
+}
+
+/* ---------- Gerakan ---------- */
+@media (prefers-reduced-motion: no-preference) {
+
+    /* Sudut bunga: ranting goyang pelan, bunga goyang sedikit lebih lebar */
+    .orn-corner::before {
+        animation: ornSwayA 9s ease-in-out infinite alternate;
+    }
+
+    .orn-corner::after {
+        animation: ornSwayB 6.5s ease-in-out -2s infinite alternate;
+    }
+
+    .orn-corner.tr::before,
+    .orn-corner.bl::before {
+        animation-duration: 10.5s;
+        animation-delay: -4s;
+    }
+
+    .orn-corner.tr::after,
+    .orn-corner.bl::after {
+        animation-duration: 7.5s;
+        animation-delay: -1s;
+    }
+
+    /* Divider: terbuka dari tengah saat muncul, bunga tengah berputar pelan */
+    .orn-divider.reveal.in-view {
+        animation: ornOpen 1.5s cubic-bezier(.22, .8, .24, 1) backwards;
+        animation-delay: var(--d, 0s);
+    }
+
+    .orn-divider::after {
+        animation: ornTurn 48s linear infinite;
+    }
+
+    /* Foto: bingkai "bernapas", cincin putus-putus berputar, ranting bergoyang */
+    .photo-orn::before {
+        animation: ornBreath 6s ease-in-out infinite;
+    }
+
+    .photo-orn::after {
+        animation: ornBreath 6s ease-in-out -3s infinite;
+    }
+
+    .photo-orn.round::before {
+        animation: ornTurn 50s linear infinite;
+    }
+
+    .photo-flower {
+        animation: ornSprig 6s ease-in-out infinite alternate;
+    }
+
+    .photo-flower.pf-2 {
+        animation-duration: 7.5s;
+        animation-delay: -3s;
+    }
+}
+
+@keyframes ornSwayA {
+    from {
+        transform: rotate(-1.8deg);
+    }
+
+    to {
+        transform: rotate(2deg);
+    }
+}
+
+@keyframes ornSwayB {
+    from {
+        transform: rotate(-3deg) scale(1);
+    }
+
+    to {
+        transform: rotate(3.4deg) scale(1.025);
+    }
+}
+
+@keyframes ornOpen {
+    from {
+        opacity: 0;
+        clip-path: inset(0 50% 0 50%);
+    }
+
+    to {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@keyframes ornTurn {
+    to {
+        rotate: 360deg;
+    }
+}
+
+@keyframes ornBreath {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+@keyframes ornSprig {
+    from {
+        rotate: -3.5deg;
+    }
+
+    to {
+        rotate: 3.5deg;
+    }
+}
+
 /* ---------- Animasi ---------- */
 @media (prefers-reduced-motion: no-preference) {
+    /* Fade-in dari bawah. Memakai animation (bukan transition) agar
+       transform hover pada kartu tidak tertimpa setelah animasi selesai. */
     .reveal {
         opacity: 0;
-        transform: translateY(18px) scale(.995);
-        transition: opacity .8s cubic-bezier(.2, .9, .2, 1), transform .8s cubic-bezier(.2, .9, .2, 1);
     }
 
     .reveal.in-view {
         opacity: 1;
-        transform: none;
+        animation: fadeUp 1s cubic-bezier(.22, .8, .24, 1) backwards;
+        animation-delay: var(--d, 0s);
     }
 
-    .hero-section.reveal {
-        transform: translateY(6px) scale(1.01);
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(44px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .gallery-container img {

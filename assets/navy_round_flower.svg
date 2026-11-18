@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <radialGradient id="petal" cx="35%" cy="25%" r="80%">
+      <stop offset="0" stop-color="#7898b8"/>
+      <stop offset=".42" stop-color="#31577f"/>
+      <stop offset="1" stop-color="#071d3c"/>
+    </radialGradient>
+    <radialGradient id="petalLight" cx="30%" cy="22%" r="85%">
+      <stop offset="0" stop-color="#a8bfd3"/>
+      <stop offset=".5" stop-color="#456b91"/>
+      <stop offset="1" stop-color="#102b4d"/>
+    </radialGradient>
+    <radialGradient id="center" cx="45%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#274b70"/>
+      <stop offset="1" stop-color="#06172e"/>
+    </radialGradient>
+    <g id="outerPetal">
+      <path d="M400 390 C350 330 326 250 365 178 C382 147 418 147 435 178 C474 250 450 330 400 390Z"
+            fill="url(#petal)" stroke="#9bb4cb" stroke-opacity=".48" stroke-width="3"/>
+      <path d="M400 372 C390 295 390 235 400 177" fill="none" stroke="#c0d0df" stroke-opacity=".42" stroke-width="3"/>
+    </g>
+    <g id="innerPetal">
+      <path d="M400 395 C354 350 350 290 379 250 C392 231 408 231 421 250 C450 290 446 350 400 395Z"
+            fill="url(#petalLight)" stroke="#b2c5d8" stroke-opacity=".55" stroke-width="2.5"/>
+      <path d="M400 380 Q395 315 400 255" fill="none" stroke="#d0dce7" stroke-opacity=".4" stroke-width="2"/>
+    </g>
+  </defs>
+
+  <!-- Outer rounded ring -->
+  <g opacity=".98">
+    <use href="#outerPetal"/>
+    <use href="#outerPetal" transform="rotate(30 400 400)"/>
+    <use href="#outerPetal" transform="rotate(60 400 400)"/>
+    <use href="#outerPetal" transform="rotate(90 400 400)"/>
+    <use href="#outerPetal" transform="rotate(120 400 400)"/>
+    <use href="#outerPetal" transform="rotate(150 400 400)"/>
+    <use href="#outerPetal" transform="rotate(180 400 400)"/>
+    <use href="#outerPetal" transform="rotate(210 400 400)"/>
+    <use href="#outerPetal" transform="rotate(240 400 400)"/>
+    <use href="#outerPetal" transform="rotate(270 400 400)"/>
+    <use href="#outerPetal" transform="rotate(300 400 400)"/>
+    <use href="#outerPetal" transform="rotate(330 400 400)"/>
+  </g>
+
+  <!-- Inner layered petals -->
+  <g>
+    <use href="#innerPetal" transform="rotate(15 400 400)"/>
+    <use href="#innerPetal" transform="rotate(60 400 400)"/>
+    <use href="#innerPetal" transform="rotate(105 400 400)"/>
+    <use href="#innerPetal" transform="rotate(150 400 400)"/>
+    <use href="#innerPetal" transform="rotate(195 400 400)"/>
+    <use href="#innerPetal" transform="rotate(240 400 400)"/>
+    <use href="#innerPetal" transform="rotate(285 400 400)"/>
+    <use href="#innerPetal" transform="rotate(330 400 400)"/>
+  </g>
+
+  <circle cx="400" cy="400" r="72" fill="url(#center)" stroke="#9bb4cb" stroke-opacity=".55" stroke-width="3"/>
+  <g fill="#d7c08b">
+    <circle cx="400" cy="348" r="7"/><circle cx="426" cy="359" r="6"/>
+    <circle cx="442" cy="382" r="6"/><circle cx="435" cy="411" r="7"/>
+    <circle cx="416" cy="435" r="6"/><circle cx="386" cy="440" r="6"/>
+    <circle cx="360" cy="420" r="7"/><circle cx="356" cy="390" r="6"/>
+    <circle cx="375" cy="365" r="6"/><circle cx="400" cy="400" r="8"/>
+  </g>
+  <g stroke="#d7c08b" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M400 400 L400 340 M400 400 L430 355 M400 400 L452 390 M400 400 L431 432 M400 400 L370 440 M400 400 L350 390 M400 400 L374 357"/>
+  </g>
+</svg>

@@ -3,33 +3,43 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ryka & Adit | 20.12.2026</title>
     <!-- Deklarasi standar (bukan deteksi): minta browser tidak memaksa dark mode. Boleh dihapus untuk menguji ketahanan desain. -->
+    <meta name="description" content="Undangan pernikahan Ryka &amp; Adit, Minggu 20 Desember 2026. Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir di hari istimewa kami.">
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#FBF7EF">
     <meta property="og:type" content="website">
     <meta property="og:title" content="The Wedding of Ryka & Adit">
     <meta property="og:description" content="Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir di hari istimewa kami.">
-    <meta property="og:image" content="https://www.ryka-adit.my.id/assets/cover-share.jpg">
-    <meta property="og:image:secure_url" content="https://www.ryka-adit.my.id/assets/cover-share.jpg">
-    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image" content="https://www.ryka-adit.my.id/assets/cover-share.webp">
+    <meta property="og:image:secure_url" content="https://www.ryka-adit.my.id/assets/cover-share.webp">
+    <meta property="og:image:type" content="image/webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Ryka & Adit Wedding">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share.jpg">
+    <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share.webp">
 
+    <link rel="preload" as="image" href="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1).webp" fetchpriority="high">
     <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css2.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <!-- Font tema undangan: Great Vibes (script), Cormorant Garamond (serif), Jost (teks) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css"></noscript>
+    <style>
+        /* font-display: swap untuk ikon Font Awesome (menggantikan "block" bawaan) */
+        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-solid-900.woff2) format("woff2")}
+        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-regular-400.woff2) format("woff2")}
+        @font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-brands-400.woff2) format("woff2")}
+    </style>
+    <link rel="stylesheet" href="style-gemini.css">
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
 </head>
 
 <body>
-
-    <!-- Particles containers (moved into top sections only) - global container removed -->
 
     <!-- Cover overlay (personalized via query param ?to=Nama) -->
     <div id="coverOverlay">
@@ -38,7 +48,6 @@
         <div id="tsparticles-home" class="tparty"></div>
         <div id="coverCard">
             <div class="cover-card-inner">
-                <!-- <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" style="max-width:90px;opacity:0.95;margin-bottom:6px"> -->
                 <div id="coverGreeting" data-i18n="coverGreeting" style="color:var(--on-dark);opacity:0.95">To Our Esteemed Guest</div>
                 <h2 id="coverCouple">Ryka &amp; Adit&nbsp;</h2>
                 <p class="sub" data-i18n="coverDate">Sunday, 20 December 2026</p>
@@ -47,47 +56,35 @@
                 </div>
             </div>
         </div>
-         <!-- <div class="android-dark-notice" id="androidDarkNotice" style="display: none;">
-    Untuk tampilan terbaik, nonaktifkan mode gelap pada browser/perangkat Anda.
-</div> -->
     </div>
 
     <div class="nav-floating">
-        <a href="#home" class="nav-link active" data-section="home"><i class="fa-solid fa-house" style="color:var(--ink)"></i></a>
-        <a href="#couple" class="nav-link" data-section="couple"><i class="fa-solid fa-heart" style="color:var(--ink)"></i></a>
-        <a href="#event" class="nav-link" data-section="event"><i class="fa-solid fa-calendar-days" style="color:var(--ink)"></i></a>
-        <a href="#gallery" class="nav-link" data-section="gallery"><i class="fa-solid fa-images" style="color:var(--ink)"></i></a>
-        <a href="#guestbook" class="nav-link" data-section="guestbook"><i class="fa-solid fa-comment-dots" style="color:var(--ink)"></i></a>
+        <a href="#home" class="nav-link active" data-section="home" aria-label="Beranda"><i class="fa-solid fa-house" style="color:var(--ink)"></i></a>
+        <a href="#couple" class="nav-link" data-section="couple" aria-label="Mempelai"><i class="fa-solid fa-heart" style="color:var(--ink)"></i></a>
+        <a href="#event" class="nav-link" data-section="event" aria-label="Acara"><i class="fa-solid fa-calendar-days" style="color:var(--ink)"></i></a>
+        <a href="#gallery" class="nav-link" data-section="gallery" aria-label="Galeri"><i class="fa-solid fa-images" style="color:var(--ink)"></i></a>
+        <a href="#guestbook" class="nav-link" data-section="guestbook" aria-label="Ucapan &amp; doa"><i class="fa-solid fa-comment-dots" style="color:var(--ink)"></i></a>
     </div>
 
-    <section id="home" class="hero-section">
-        <div class="home-bg-layer is-active" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg');"></div>
-        <div class="home-bg-layer" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.45.jpeg');"></div>
-        <div class="home-bg-layer" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg');"></div>
+    <section id="home" class="hero-section has-orn">
+        <span class="orn-corner tr dark" aria-hidden="true"></span>
+        <div class="home-bg-layer is-active" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).webp');"></div>
+        <div class="home-bg-layer" data-bg="assets/WhatsApp Image 2026-10-07 at 16.19.45.webp"></div>
+        <div class="home-bg-layer" data-bg="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).webp"></div>
         <div class="home-bg-side" style="background-image: url('assets/navy.png');"></div>
-        <!-- <img src="https://cdn-icons-png.flaticon.com/512/2913/2913520.png" class="floral-top" alt="flower"> -->
         <div class="hero-content">
-            <h4 class="text-uppercase ls-3" data-i18n="homeTag">The Wedding Of</h4>
+            <p class="h4 text-uppercase ls-3 mb-2" data-i18n="homeTag">The Wedding Of</p>
             <h1 class="display-2 font-wedding shine-silver">Ryka & Adit&nbsp;</h1>
             <p data-i18n="weddingDate">20 . 12 . 2026</p>
             <div class="hero-cta">
                 <a id="saveTheDateBtn" class="cover-btn primary" target="_blank" rel="noopener" data-i18n="saveDate">Save the Date</a>
             </div>
         </div>
-        <!-- <img class="decor-flower left" src="https://cdn-icons-png.flaticon.com/512/2099/2099078.png" alt="flower left">
-        <img class="decor-flower right" src="https://cdn-icons-png.flaticon.com/512/2099/2099086.png" alt="flower right"> -->
     </section>
 
     <section id="verse" class="section-wedding text-center container">
         <div id="tsparticles-verse" class="tparty"></div>
-        <div class="section-ornament" aria-hidden="true">
-            <svg viewBox="0 0 360 50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="gold divider">
-                <path class="gold-line" d="M15 25 H345"/>
-                <circle class="gold-fill" cx="172" cy="25" r="1.2"/>
-                <circle class="gold-fill" cx="180" cy="25" r="2.2"/>
-                <circle class="gold-fill" cx="188" cy="25" r="1.2"/>
-            </svg>
-        </div>
+        <div class="orn-divider" aria-hidden="true"></div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <p class="fst-italic" data-i18n="verseText">"And among the signs of His power is that He created for you spouses from among yourselves, so that you may find tranquility in them..."</p>
@@ -96,7 +93,20 @@
         </div>
     </section>
 
-    <script src="assets/tsparticles.slim.bundle.min.js" defer></script>
+    <script>
+        window.addEventListener('load', function () {
+            document.querySelectorAll('.home-bg-layer[data-bg]').forEach(function (el) {
+                el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')";
+            });
+            var loadParticles = function () {
+                var sc = document.createElement('script');
+                sc.src = 'assets/tsparticles.slim.bundle.min.js';
+                document.body.appendChild(sc);
+            };
+            if ('requestIdleCallback' in window) requestIdleCallback(loadParticles, { timeout: 1500 });
+            else setTimeout(loadParticles, 300);
+        });
+    </script>
 
     <div class="lang-switcher" aria-label="Language selector">
         <button class="lang-btn active" type="button" data-lang="en">EN</button>
@@ -108,47 +118,45 @@
     <button id="musicToggle" class="music-toggle" aria-label="Toggle music"> <i class="fa-solid fa-compact-disc"></i>
     </button>
 
-
     <div class="container text-center py-4">
         <p class="mb-2" style="letter-spacing: 0.08em; font-weight: 600; color: var(--gold-ink);" data-i18n="openingGreeting">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
         <p class="mb-0 mx-auto" style="max-width: 760px; color:var(--ink); line-height: 1.8;" data-i18n="openingText">With utmost respect, we invite you and your family to attend our wedding celebration and share in our happiness.</p>
-
-        <div class="section-ornament" aria-hidden="true">
-            <svg viewBox="0 0 360 50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="gold divider">
-                <path class="gold-line" d="M15 25 H345"/>
-                <circle class="gold-fill" cx="172" cy="25" r="1.2"/>
-                <circle class="gold-fill" cx="180" cy="25" r="2.2"/>
-                <circle class="gold-fill" cx="188" cy="25" r="1.2"/>
-            </svg>
-        </div>
+        <div class="orn-divider" aria-hidden="true"></div>
     </div>
 
     <section id="couple" class="section-wedding container text-center">
-        <h3 class="font-wedding display-4" data-i18n="coupleTitle">The Couple&nbsp;</h3>
+        <h2 class="font-wedding display-4" data-i18n="coupleTitle">The Couple&nbsp;</h2>
+        <div class="orn-divider" aria-hidden="true"></div>
         <div class="row mt-5 align-items-center">
             <div class="col-md-5">
-                <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" class="couple-img mb-3" loading="lazy" decoding="async">
+                <div class="photo-orn arch mb-3">
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.webp" class="couple-img" alt="Foto Ryka Nurdianti" loading="lazy" decoding="async">
+                </div>
                 <h3 class="font-wedding">Ryka Nurdianti, S.T&nbsp;</h3>
                 <p data-i18n="rykaParents">Daughter of Mr. Supyandi & Mrs. Yani</p>
             </div>
             <div class="col-md-2 font-wedding display-3 my-4">&</div>
             <div class="col-md-5">
-                <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" class="couple-img mb-3" loading="lazy" decoding="async">
+                <div class="photo-orn arch mb-3">
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.webp" class="couple-img" alt="Foto Aditya Pangestu" loading="lazy" decoding="async">
+                </div>
                 <h3 class="font-wedding">Aditya Pangestu, S.Kom&nbsp;</h3>
                 <p data-i18n="aditParents">Son of Mr. Jajang & Mrs. Eulis</p>
             </div>
         </div>
     </section>
 
-
-
-    <section id="countdownSection" class="section-wedding text-center">
-        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="none" poster="assets/navy.png">
+    <section id="countdownSection" class="section-wedding text-center has-orn">
+        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="none" poster="assets/navy.png" aria-hidden="true" tabindex="-1">
             <source data-src="assets/fd.mp4" type="video/mp4">
+            <track kind="captions" src="assets/captions-empty.vtt" srclang="id" label="Indonesia">
         </video>
         <div class="countdown-overlay"></div>
+        <span class="orn-corner tl dark" aria-hidden="true"></span>
+        <span class="orn-corner br dark" aria-hidden="true"></span>
         <div style="position: relative; z-index: 1;">
-            <h2 class="font-wedding mb-4" data-i18n="countdownTitle">Countdown&nbsp;</h2>
+            <h2 class="font-wedding" data-i18n="countdownTitle">Countdown&nbsp;</h2>
+            <div class="orn-divider dark" aria-hidden="true"></div>
             <div class="d-flex justify-content-center">
                 <div class="countdown-item">
                     <h3 id="d">0&nbsp;</h3><small data-i18n="days">Days</small>
@@ -166,19 +174,10 @@
         </div>
     </section>
 
-
-
     <section class="container py-5" id="event">
         <div class="text-center mb-5">
-            <!-- <div class="section-ornament" aria-hidden="true">
-                <svg viewBox="0 0 360 50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="gold divider">
-                    <path class="gold-line" d="M15 25 H345"/>
-                    <circle class="gold-fill" cx="172" cy="25" r="1.2"/>
-                    <circle class="gold-fill" cx="180" cy="25" r="2.2"/>
-                    <circle class="gold-fill" cx="188" cy="25" r="1.2"/>
-                </svg>
-            </div> -->
-            <h4 class="font-wedding display-4 text-dark-navy" data-i18n="eventTitle">The Event</h4>
+            <h2 class="font-wedding display-4 text-dark-navy" data-i18n="eventTitle">The Event</h2>
+            <div class="orn-divider" aria-hidden="true"></div>
         </div>
 
         <div class="row">
@@ -207,13 +206,13 @@
         </div>
     </section>
 
-
     <section class="container py-5 text-center">
         <h2 class="font-wedding display-4" data-i18n="loveStoryTitle">Love Story&nbsp;</h2>
+        <div class="orn-divider" aria-hidden="true"></div>
 
-        <div class="row mt-4">
-            <div class="col-12 mb-5">
-                <h4 data-i18n="firstMeeting">Our First Meeting</h4>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-8 mb-5">
+                <h3 class="h4" data-i18n="firstMeeting">Our First Meeting</h3>
                 <p class="small text-muted" data-i18n="firstMeetingText">
                     It all began with a simple meeting fueled by a sincere desire to know each other better.
                     Without much planning, that moment became the beginning of a journey that gradually brought
@@ -221,8 +220,8 @@
                 </p>
             </div>
 
-            <div class="col-12 mb-5">
-                <h4 data-i18n="strengtheningHearts">Strengthening Our Hearts</h4>
+            <div class="col-md-8 mb-3">
+                <h3 class="h4" data-i18n="strengtheningHearts">Strengthening Our Hearts</h3>
                 <p class="small text-muted" data-i18n="strengtheningHeartsText">
                     After getting to know each other and understanding one another more deeply, we became certain
                     to take the next step toward a more serious commitment. With the blessing of our families,
@@ -232,27 +231,23 @@
         </div>
     </section>
 
-    <section class="container py-5 text-center">
-        <!-- removed duplicate single gift card (merged below) -->
-    </section>
-
-
     <section class="container py-5" id="gallery">
         <div class="text-center mb-4">
             <h2 class="font-wedding display-4" data-i18n="galleryTitle">Happy Memories&nbsp;</h2>
+            <div class="orn-divider" aria-hidden="true"></div>
         </div>
 
         <div class="gallery-slideshow" aria-label="Gallery slideshow">
             <div class="gallery-stage" id="galleryStage">
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).jpeg" alt="Gallery 1" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).jpeg" alt="Gallery 2" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).jpeg" alt="Gallery 3" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47.jpeg" alt="Gallery 4" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38.jpeg" alt="Gallery 5" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).jpeg" alt="Gallery 6" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.56.jpeg" alt="Gallery 7" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.59.jpeg" alt="Gallery 8" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.06.jpeg" alt="Gallery 9" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).webp" alt="Gallery 1" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).webp" alt="Gallery 2" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).webp" alt="Gallery 3" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47.webp" alt="Gallery 4" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38.webp" alt="Gallery 5" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).webp" alt="Gallery 6" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.56.webp" alt="Gallery 7" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.59.webp" alt="Gallery 8" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.06.webp" alt="Gallery 9" loading="lazy" decoding="async"></div>
             </div>
         </div>
     </section>
@@ -266,13 +261,14 @@
     </div>
 
     <section class="section-wedding container text-center" id="wedding-gift">
-        <h3 class="font-wedding display-4" data-i18n="weddingGiftTitle">Wedding Gift&nbsp;</h3>
+        <h2 class="font-wedding display-4" data-i18n="weddingGiftTitle">Wedding Gift&nbsp;</h2>
+        <div class="orn-divider" aria-hidden="true"></div>
         <div class="row justify-content-center mt-4">
             <div class="col-md-8">
                 <p class="small text-muted2" data-i18n="weddingGiftText">Your prayers and blessings are the greatest gift for us.</p>
                 <div style="margin:18px 0">
                     <button id="toggleGiftBtn" class="btn btn-sm"
-                        style="background:var(--navy);color:var(--on-dark);border:2px solid var(--gold);font-weight:700;padding:10px 22px;border-radius:50px;box-shadow:0 0 0 3px rgba(185,150,80,0.3), 0 4px 16px rgba(12,24,41,0.25);transition:all 0.3s ease;" data-i18n="sendGift">Send Gift</button>
+                        style="background:var(--navy);color:var(--on-dark);border:1.5px solid var(--gold);font-weight:700;padding:10px 24px;border-radius:50px;box-shadow:0 4px 16px rgba(12,24,41,0.2);transition:all 0.3s ease;" data-i18n="sendGift">Send Gift</button>
                 </div>
 
                 <div id="giftCardsWrapper">
@@ -326,11 +322,12 @@
 
     <section id="guestbook" class="section-wedding container">
         <div class="card border-0 p-4 mb-5">
-            <h2 class="font-wedding text-center mb-4" data-i18n="guestbookTitle">Messages & Prayers&nbsp;</h2>
+            <h2 class="font-wedding text-center" data-i18n="guestbookTitle">Messages & Prayers&nbsp;</h2>
+            <div class="orn-divider" aria-hidden="true"></div>
             <form id="guestForm">
                 <input id="g_name" type="text" class="form-control mb-3" placeholder="Full Name" value="Guest"
                     required readonly disabled data-i18n-placeholder="guestNamePlaceholder">
-                <select id="g_attend" class="form-select mb-3" data-i18n-label="attendance">
+                <select id="g_attend" class="form-select mb-3" data-i18n-label="attendance" aria-label="Konfirmasi kehadiran">
                     <option value="Hadir">Attending</option>
                     <option value="Belum Pasti">Maybe</option>
                     <option value="Tidak Hadir">Not Attending</option>
@@ -343,62 +340,54 @@
             <div id="guestList" style="margin-top:18px;max-height:260px;overflow:auto"></div>
         </div>
 
-        <div style="display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
-                <div>
-                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.jpeg" alt="Ryka" class="thankyou-img" loading="lazy" decoding="async">
-                    <div style="margin-top:12px; font-weight:600; color:var(--ink);">
-                        <a href="https://instagram.com/rykanrdnt" target="_blank" rel="noopener"
-                            style="color:var(--gold-ink); text-decoration:none;">
-                            <i class="fa-brands fa-instagram"
-                                style="margin-right:8px; color: var(--gold-ink);"></i>rykanrdnt&nbsp;&nbsp;&nbsp;&nbsp;
-                        </a>
-                    </div>
+        <div class="guest-photos" style="display:flex;gap:32px;justify-content:center;margin-top:24px;flex-wrap:wrap;text-align:center;">
+            <div>
+                <div class="photo-orn round">
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.webp" alt="Ryka" class="thankyou-img" loading="lazy" decoding="async">
                 </div>
-                <div>
-                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.jpeg" alt="Adit" class="thankyou-img" loading="lazy" decoding="async">
-                    <div style="margin-top:12px; font-weight:600; color:var(--ink);">
-                        <a href="https://instagram.com/uwa_adit" target="_blank" rel="noopener"
-                            style="color:var(--gold-ink); text-decoration:none;">
-                            <i class="fa-brands fa-instagram"
-                                style="margin-right:8px; color: var(--gold-ink);"></i>uwa_adit&nbsp;&nbsp;&nbsp;&nbsp;
-                        </a>
-                    </div>
+                <div style="margin-top:10px; font-weight:600; color:var(--ink);">
+                    <a href="https://instagram.com/rykanrdnt" target="_blank" rel="noopener"
+                        style="color:var(--gold-ink); text-decoration:none;">
+                        <i class="fa-brands fa-instagram"
+                            style="margin-right:6px; color: var(--gold-ink);"></i>rykanrdnt
+                    </a>
                 </div>
             </div>
-    </section>
-
-
-
-    <!-- Thank you: Bottom section with round couple images -->
-    <section class="section-wedding container text-center" id="thankyou">
-        <div class="text-center mb-4">
-            <!-- <div class="section-ornament" aria-hidden="true">
-                <svg viewBox="0 0 360 50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="gold divider">
-                    <path class="gold-line" d="M15 25 H345"/>
-                    <circle class="gold-fill" cx="172" cy="25" r="1.2"/>
-                    <circle class="gold-fill" cx="180" cy="25" r="2.2"/>
-                    <circle class="gold-fill" cx="188" cy="25" r="1.2"/>
-                </svg>
-            </div> -->
-            <h2 class="font-wedding display-4" data-i18n="thankYouTitle">Thank You&nbsp;</h2>
-            <p class="small text-muted2" data-i18n="thankYouText">It is an honor and a joy for us if you are willing to attend and bless our wedding with your presence. Thank you for your prayers, attendance, and support.</p>
-            <p class="mt-4 mb-2" style="font-weight: 700; letter-spacing: 0.04em; color: var(--gold-ink);" data-i18n="thankYouClosing">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
-            
+            <div>
+                <div class="photo-orn round">
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.webp" alt="Adit" class="thankyou-img" loading="lazy" decoding="async">
+                </div>
+                <div style="margin-top:10px; font-weight:600; color:var(--ink);">
+                    <a href="https://instagram.com/uwa_adit" target="_blank" rel="noopener"
+                        style="color:var(--gold-ink); text-decoration:none;">
+                        <i class="fa-brands fa-instagram"
+                            style="margin-right:6px; color: var(--gold-ink);"></i>uwa_adit
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- Thank you: Bottom section -->
+    <section class="section-wedding container text-center" id="thankyou">
+        <div class="text-center mb-4">
+            <h2 class="font-wedding display-4" data-i18n="thankYouTitle">Thank You&nbsp;</h2>
+            <div class="orn-divider" aria-hidden="true"></div>
+            <p class="small text-muted2 mx-auto" style="max-width: 680px;" data-i18n="thankYouText">It is an honor and a joy for us if you are willing to attend and bless our wedding with your presence. Thank you for your prayers, attendance, and support.</p>
+            <p class="mt-4 mb-2" style="font-weight: 700; letter-spacing: 0.04em; color: var(--gold-ink);" data-i18n="thankYouClosing">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+        </div>
+    </section>
 
     <section class="container py-5 footer-band">
         <div class="text-center mb-4">
             <h2 class="font-wedding display-4" data-i18n="footerTitle">See You at the Wedding&nbsp;</h2>
-
-            <p class="small text-muted2 mb-5 " data-i18n="footerText">We look forward to celebrating this special day with you.</p>
-
+            <div class="orn-divider dark" aria-hidden="true"></div>
+            <p class="small text-muted2 mb-5" data-i18n="footerText">We look forward to celebrating this special day with you.</p>
         </div>
     </section>
 
     <script>
-        // Logika Countdown (event date: 02 Jul 2026 08:00 WIB - future date)
+        // Logika Countdown
         const target = new Date("Dec 20, 2026 08:00:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -431,7 +420,6 @@
         const guestList = document.getElementById('guestList');
         let guestMessages = [];
 
-        // user_code stored in session so they can delete their own comments
         function getUserCode() {
             let c = sessionStorage.getItem('wedding_user_code');
             if (!c) { c = Math.random().toString(36).slice(2, 10); sessionStorage.setItem('wedding_user_code', c); }
@@ -528,17 +516,17 @@
                 }
 
                 return `
-                                        <div class="guest-item">
-                                            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-                                                <div style="display:flex;align-items:center;gap:8px">
-                                                    <strong>${escapeHtml(g.name || '')}</strong>
-                                                    <span class="att-badge ${attClass}" title="${escapeHtml(title)}" aria-label="${escapeHtml(title)}">${iconHtml}</span>
-                                                </div>
-                                                ${canDelete ? `<button onclick="confirmDelete(${id})" title="Delete" class="btn-icon guest-del"><i class="fa-regular fa-trash-can"></i></button>` : ''}
-                                            </div>
-                                            <div style="margin-top:6px">${escapeHtml(g.comment || '')}</div>
-                                            <div class="guest-time">${time || fallbackText}</div>
-                                        </div>`;
+                    <div class="guest-item">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                            <div style="display:flex;align-items:center;gap:8px">
+                                <strong>${escapeHtml(g.name || '')}</strong>
+                                <span class="att-badge ${attClass}" title="${escapeHtml(title)}" aria-label="${escapeHtml(title)}">${iconHtml}</span>
+                            </div>
+                            ${canDelete ? `<button onclick="confirmDelete(${id})" title="Delete" class="btn-icon guest-del"><i class="fa-regular fa-trash-can"></i></button>` : ''}
+                        </div>
+                        <div style="margin-top:6px">${escapeHtml(g.comment || '')}</div>
+                        <div class="guest-time">${time || fallbackText}</div>
+                    </div>`;
             }).join('');
         }
 
@@ -591,7 +579,6 @@
             } catch (e) { showCopyNotification('✗ Failed to delete'); }
         }
 
-        // Confirm delete modal (small, similar to notification but with actions)
         function confirmDelete(id) {
             const existing = document.getElementById('confirmModal'); if (existing) existing.remove();
             const wrap = document.createElement('div');
@@ -599,13 +586,13 @@
             wrap.style.position = 'fixed'; wrap.style.top = 0; wrap.style.left = 0; wrap.style.right = 0; wrap.style.bottom = 0;
             wrap.style.display = 'flex'; wrap.style.alignItems = 'center'; wrap.style.justifyContent = 'center'; wrap.style.zIndex = 11000;
             wrap.innerHTML = `
-                            <div class="confirm-box">
-                                <div style="margin-bottom:12px; font-weight:700">Delete message?</div>
-                                <div style="display:flex;gap:10px;justify-content:center">
-                                    <button id="confirmNo" class="confirm-btn no">Cancel</button>
-                                    <button id="confirmYes" class="confirm-btn yes">Delete</button>
-                                </div>
-                            </div>`;
+                <div class="confirm-box">
+                    <div style="margin-bottom:12px; font-weight:700">Delete message?</div>
+                    <div style="display:flex;gap:10px;justify-content:center">
+                        <button id="confirmNo" class="confirm-btn no">Cancel</button>
+                        <button id="confirmYes" class="confirm-btn yes">Delete</button>
+                    </div>
+                </div>`;
             document.body.appendChild(wrap);
             document.getElementById('confirmNo').addEventListener('click', () => wrap.remove());
             document.getElementById('confirmYes').addEventListener('click', () => { wrap.remove(); deleteGuest(id); });
@@ -613,7 +600,6 @@
 
         if (guestForm) { guestForm.addEventListener('submit', submitGuest); }
 
-        // Ambil data buku tamu hanya saat pengunjung mendekati bagiannya.
         (function deferGuestbookFetch() {
             const section = document.getElementById('guestbook');
             if (!section) return;
@@ -637,7 +623,6 @@
             }
         })();
 
-        // Personalize cover from query param ?to=Name or ?name=Name
         function getQueryParam(key) { try { return new URL(window.location.href).searchParams.get(key); } catch (e) { return null } }
 
         const guestLookupState = {
@@ -679,7 +664,7 @@
 
         resolveGuestFromTable();
 
-        // Google Calendar link for save-the-date button on the home section
+        // Google Calendar link for save-the-date button
         (function () {
             const saveBtn = document.getElementById('saveTheDateBtn');
             if (!saveBtn) return;
@@ -694,32 +679,23 @@
             saveBtn.href = href;
         })();
 
-
-
-
         const translations = {
             en: {
                 coverGreeting: 'To Our Beloved Guest',
                 coverDate: 'Sunday, 20 December 2026',
                 coverButton: 'Open Invitation',
                 saveDate: 'Save the Date',
-
                 homeTag: 'The Wedding of',
                 weddingDate: '20 . 12 . 2026',
-
                 verseText: '"And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy. Indeed in that are signs for a people who give thought."',
-
                 coupleTitle: 'The Couple',
                 rykaParents: 'Daughter of Mr. Supyandi & Mrs. Muryani',
                 aditParents: 'Son of Mr. Jajang Solihin & Mrs. Eulis Karmilah',
-
                 loveStoryTitle: 'Our Love Story',
                 firstMeeting: 'Our First Meeting',
                 firstMeetingText: 'Our journey began with a simple meeting and a sincere intention to get to know one another. What started as a quiet beginning gradually brought us closer, opening the way to a beautiful future together.',
-
                 strengtheningHearts: 'A Step Toward Forever',
                 strengtheningHeartsText: 'As we grew to understand one another, our hearts became certain of the path ahead. With the love and blessings of our families, we chose to take the next step and begin our journey as husband and wife.',
-
                 eventTitle: 'Wedding Celebration',
                 weddingCeremony: 'Akad',
                 reception: 'Wedding Reception',
@@ -731,16 +707,13 @@
                 hours: 'Hours',
                 minutes: 'Minutes',
                 seconds: 'Seconds',
-
                 weddingGiftTitle: 'Wedding Gift',
                 weddingGiftText: 'Your prayers and blessings are the most precious gift to us.',
                 sendGift: 'Send a Gift',
-
                 guestbookTitle: 'Wishes & Prayers',
                 guestNamePlaceholder: 'Full Name',
                 guestMessagePlaceholder: 'Share your wishes and prayers...',
                 sendMessage: 'Send Wishes',
-
                 justNow: 'just now',
                 ago: 'ago',
                 second: 'second',
@@ -755,20 +728,17 @@
                 months: 'months',
                 year: 'year',
                 years: 'years',
-
                 attending: 'Joyfully Accept',
                 maybe: 'Undecided',
                 notAttending: 'Regretfully Decline',
-
-                openingGreeting: 'Assalamu\'alaikum Warahmatullahi Wabarakatuh',
+                openingGreeting: 'Assalamualaikum Warahmatullahi Wabarakatuh',
                 openingText: 'With utmost respect, we invite you and your family to grace our wedding celebration and share in our happiness.',
                 thankYouTitle: 'Thank You',
                 thankYouText: 'It is an honor and a joy for us if you are willing to attend and bless our wedding with your presence. Thank you for your prayers, attendance, and support.',
-                thankYouClosing: 'Wassalamu\'alaikum Warahmatullahi Wabarakatuh',
+                thankYouClosing: 'Wassalamualaikum Warahmatullahi Wabarakatuh',
                 thankYouSignature: 'Ryka & Adit',
                 footerTitle: 'See You at the Wedding',
                 footerText: 'We look forward to celebrating this special day with you.',
-
                 galleryTitle: 'Our Moments',
                 toGuest: 'To: '
             },
@@ -823,11 +793,11 @@
                 attending: 'Hadir',
                 maybe: 'Belum Pasti',
                 notAttending: 'Tidak Hadir',
-                openingGreeting: 'Assalamu\'alaikum Warahmatullahi Wabarakatuh',
+                openingGreeting: 'Assalamualaikum Warahmatullahi Wabarakatuh',
                 openingText: 'Dengan penuh hormat, kami mengundang Bapak/Ibu/Saudara/i serta kerabat sekalian untuk hadir dan merayakan pernikahan kami. Kehadiran serta doa restu Anda merupakan kebahagiaan dan keberkahan bagi kami.',
                 thankYouTitle: 'Terima Kasih',
                 thankYouText: 'Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Atas kehadiran serta doa restu yang telah diberikan, kami ucapkan terima kasih.',
-                thankYouClosing: 'Wassalamu\'alaikum Warahmatullahi Wabarakatuh',
+                thankYouClosing: 'Wassalamualaikum Warahmatullahi Wabarakatuh',
                 thankYouSignature: 'Ryka & Adit',
                 footerTitle: 'Sampai Bertemu di Pernikahan',
                 footerText: 'Kami menantikan kebersamaan Anda dalam merayakan hari istimewa ini.',
@@ -952,7 +922,6 @@
             window.addEventListener('load', setActiveNav);
         })();
 
-        // Open invite: lift the cover upward like a curtain, try play music, and reveal the page
         (function () {
             const openBtn = document.getElementById('openInvite');
             const cover = document.getElementById('coverOverlay');
@@ -970,7 +939,6 @@
                 }
 
                 window.scrollTo({ top: 0, behavior: 'instant' });
-
                 cover.classList.add('open');
 
                 setTimeout(() => {
@@ -991,14 +959,13 @@
             });
         })();
 
-        // Music toggle control
         (function () {
             const audio = document.getElementById('bgAudio');
             const btn = document.getElementById('musicToggle');
             let playing = false;
-            let shouldResumeOnVisible = false; // remember if we should resume when tab becomes visible
+            let shouldResumeOnVisible = false;
 
-            function setPlaying(v) { playing = v; btn.classList.toggle('playing', v); btn.innerHTML = v ? '<i class="fa-solid fa-compact-disc"></i>' : '<i class="fa-solid fa-compact-disc"></i>'; }
+            function setPlaying(v) { playing = v; btn.classList.toggle('playing', v); btn.innerHTML = '<i class="fa-solid fa-compact-disc"></i>'; }
 
             btn.addEventListener('click', () => {
                 if (!audio.src) { alert('Silakan taruh file musik di assets/music.mp3 atau set src.'); return; }
@@ -1009,31 +976,24 @@
             audio.addEventListener('pause', () => setPlaying(false));
             audio.addEventListener('play', () => setPlaying(true));
 
-            // Pause/resume audio when page/tab visibility changes
             document.addEventListener('visibilitychange', function () {
                 try {
                     if (document.hidden) {
-                        // remember current playing state so we can resume later
                         shouldResumeOnVisible = playing;
                         if (playing) { audio.pause(); setPlaying(false); }
                     } else {
-                        // tab became visible again
                         if (shouldResumeOnVisible) {
-                            audio.play().then(() => setPlaying(true)).catch(() => {/* autoplay blocked - ignore */ });
+                            audio.play().then(() => setPlaying(true)).catch(() => {});
                         }
                         shouldResumeOnVisible = false;
                     }
-                } catch (e) {/* ignore */ }
+                } catch (e) {}
             });
 
-            // Some mobile browsers fire pagehide when app goes to background - treat similar to visibilitychange
             window.addEventListener('pagehide', function () { try { shouldResumeOnVisible = playing; if (playing) { audio.pause(); setPlaying(false); } } catch (e) { } });
-
-            // Ensure audio is stopped on unload/navigation
             window.addEventListener('beforeunload', function () { try { audio.pause(); } catch (e) { } });
         })();
 
-        // Helper function to show copy notification
         function showCopyNotification(message) {
             const existing = document.querySelector('.copy-notification');
             if (existing) existing.remove();
@@ -1048,7 +1008,6 @@
             }, 3000);
         }
 
-        // Click to copy ATM cards and gift address
         (function () {
             const atmCards = document.querySelectorAll('.atm-card');
             atmCards.forEach(card => {
@@ -1080,29 +1039,13 @@
             });
         })();
 
-        // IntersectionObserver reveal animations
-        // (function(){
-        //     if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        //     const els = document.querySelectorAll('section, .card, .event-card, .gallery-container, .hero-section');
-        //     els.forEach(el=> el.classList.add('reveal'));
-        //     const io = new IntersectionObserver((entries)=>{
-        //         entries.forEach(e=>{ if(e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
-        //     }, {threshold:0.12});
-        //     els.forEach(el=> io.observe(el));
-        // })();
-
-        // Disable right-click and common inspect shortcuts (not foolproof)
         (function () {
             document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
             document.addEventListener('keydown', function (e) {
-                // F12
                 if (e.keyCode === 123) e.preventDefault();
-                // Ctrl+Shift+I / Ctrl+Shift+J
                 if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) e.preventDefault();
-                // Ctrl+U
                 if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) e.preventDefault();
             });
-            // prevent some touch-zoom gestures (best-effort)
             let lastTouchEnd = 0;
             document.addEventListener('touchstart', function (e) {
                 if (e.touches.length > 1) e.preventDefault();
@@ -1113,19 +1056,16 @@
                 lastTouchEnd = now;
             }, { passive: false });
         })();
-
-
     </script>
     <script>
         (function () {
             const btn = document.getElementById('toggleGiftBtn');
             const wrapper = document.getElementById('giftCardsWrapper');
             if (!btn || !wrapper) return;
-            // Ensure initial hidden state
             wrapper.style.display = 'none';
             btn.addEventListener('click', () => {
                 wrapper.style.display = 'block';
-                btn.style.display = 'none'; // Sembunyikan tombol saat hadiah dibuka
+                btn.style.display = 'none';
                 setTimeout(() => window.scrollTo({ top: wrapper.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }), 120);
             });
         })();
@@ -1192,73 +1132,22 @@
 
                 tsParticles.load("tsparticles-home", {
                     fullScreen: { enable: false },
-
-                    background: {
-                        color: "transparent"
-                    },
-
+                    background: { color: "transparent" },
                     particles: {
-                        number: {
-                            value: 38,
-                            density: { enable: true, area: 900 }
-                        },
-
-                        color: {
-                            value: ["#B99650", "#DCC287", "#F3E6C4"]
-                        },
-
-                        shape: {
-                            type: "polygon",
-                            polygon: {
-                                sides: 6
-                            }
-                        },
-
-                        rotate: {
-                            value: { min: 0, max: 360 },
-                            animation: { enable: true, speed: 8 }
-                        },
-
-                        opacity: {
-                            value: { min: 0.25, max: 0.7 },
-                            animation: {
-                                enable: true,
-                                speed: 0.5,
-                                minimumValue: 0.2
-                            }
-                        },
-
-                        size: {
-                            value: { min: 1.5, max: 3.5 }
-                        },
-
-                        move: {
-                            enable: true,
-                            direction: "bottom",
-                            speed: { min: 1, max: 1.8 },
-                            gravity: {
-                                enable: false
-                            },
-                            outModes: { default: "out" }
-                        },
-
-                        wobble: {
-                            enable: true,
-                            distance: 12,
-                            speed: { min: -1.5, max: 1.5 }
-                        }
+                        number: { value: 38, density: { enable: true, area: 900 } },
+                        color: { value: ["#B99650", "#DCC287", "#F3E6C4"] },
+                        shape: { type: "polygon", polygon: { sides: 6 } },
+                        rotate: { value: { min: 0, max: 360 }, animation: { enable: true, speed: 8 } },
+                        opacity: { value: { min: 0.25, max: 0.7 }, animation: { enable: true, speed: 0.5, minimumValue: 0.2 } },
+                        size: { value: { min: 1.5, max: 3.5 } },
+                        move: { enable: true, direction: "bottom", speed: { min: 1, max: 1.8 }, gravity: { enable: false }, outModes: { default: "out" } },
+                        wobble: { enable: true, distance: 12, speed: { min: -1.5, max: 1.5 } }
                     },
-
                     detectRetina: true
                 });
             }, 100);
         })();
     </script>
-
-
-    <!-- Gallery uses native loading="lazy" and decoding="async" on images. -->
-
-
 
     <script>
         (function () {
@@ -1312,9 +1201,10 @@
             if (slides.length && stage) {
                 var swipedRecently = false;
 
-                slides.forEach(function (slide, idx) {
+                function bindSlideClick(slide) {
                     slide.addEventListener('click', function () {
                         if (swipedRecently) return;
+                        var idx = slides.indexOf(slide);
                         if (slide.classList.contains('is-active')) {
                             openLightbox(idx);
                         } else if (slide.classList.contains('is-next')) {
@@ -1325,9 +1215,57 @@
                             goToDirection(1);
                         }
                     });
-                });
+                }
+                slides.forEach(bindSlideClick);
 
-                /* ---------- Lightbox ---------- */
+                var EXTRA_PHOTOS = [
+                    '2026-10-07 at 16.19.32', '2026-10-07 at 16.19.37', '2026-10-07 at 16.19.40',
+                    '2026-10-07 at 16.19.45', '2026-10-07 at 16.19.46', '2026-10-07 at 16.19.48'
+                ];
+                var extrasAdded = false;
+
+                function addExtraSlides() {
+                    if (extrasAdded) return;
+                    extrasAdded = true;
+                    var frag = document.createDocumentFragment();
+                    EXTRA_PHOTOS.forEach(function (name) {
+                        var slide = document.createElement('div');
+                        slide.className = 'gallery-slide';
+                        var img = document.createElement('img');
+                        img.src = 'assets/WhatsApp Image ' + name + '.webp';
+                        img.alt = 'Gallery ' + (slides.length + 1);
+                        img.decoding = 'async';
+                        slide.appendChild(img);
+                        bindSlideClick(slide);
+                        slides.push(slide);
+                        frag.appendChild(slide);
+                    });
+                    stage.appendChild(frag);
+                    updateGallery();
+                }
+
+                function whenInitialPhotosLoaded(cb) {
+                    var imgs = Array.prototype.slice.call(stage.querySelectorAll('img'));
+                    var pending = imgs.length;
+                    if (!pending) return cb();
+                    var done = function () { if (--pending === 0) cb(); };
+                    imgs.forEach(function (img) {
+                        if (img.complete) { done(); return; }
+                        img.addEventListener('load', done, { once: true });
+                        img.addEventListener('error', done, { once: true });
+                        img.loading = 'eager';
+                    });
+                }
+
+                function scheduleExtras() {
+                    whenInitialPhotosLoaded(function () {
+                        if ('requestIdleCallback' in window) requestIdleCallback(addExtraSlides, { timeout: 1500 });
+                        else setTimeout(addExtraSlides, 300);
+                    });
+                }
+                if (document.readyState === 'complete') scheduleExtras();
+                else window.addEventListener('load', scheduleExtras);
+
                 var lb = document.getElementById('galleryLightbox');
                 var lbImg = document.getElementById('lbImg');
                 var lbCount = document.getElementById('lbCount');
@@ -1443,44 +1381,88 @@
     </script>
 
     <script>
-        // Section fade-up on scroll removed to keep mobile scrolling smooth.
         (function () {
-            var sections = document.querySelectorAll('body > section:not(:first-of-type)');
-                sections.forEach(function (section) {
-                section.classList.add('fade-visible');
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if (!('IntersectionObserver' in window)) return;
+
+            var SELECTORS = [
+                'body > section:not(#home) h2.font-wedding',
+                '.orn-divider', '#verse p',
+                '#couple .col-md-5', '#couple .col-md-2',
+                '.countdown-item',
+                '.event-card',
+                '.col-md-8.mb-5', '.col-md-8.mb-3',
+                '#gallery .gallery-slideshow',
+                '#wedding-gift .col-md-8 > p', '#toggleGiftBtn', '#giftCardsWrapper .col-md-6',
+                '#guestbook .card', '#guestbook > .guest-photos',
+                '#thankyou p', '.footer-band p'
+            ].join(',');
+
+            var all = Array.prototype.slice.call(document.querySelectorAll(SELECTORS));
+            var targets = all.filter(function (el) {
+                return !all.some(function (o) { return o !== el && o.contains(el); });
+            });
+            var hero = Array.prototype.slice.call(document.querySelectorAll('#home .hero-content > *'));
+
+            targets.concat(hero).forEach(function (el) { el.classList.add('reveal'); });
+
+            function byDom(a, b) {
+                return (a.target || a).compareDocumentPosition(b.target || b) & 4 ? -1 : 1;
+            }
+
+            var io = new IntersectionObserver(function (entries) {
+                var visible = entries.filter(function (en) { return en.isIntersecting; }).sort(byDom);
+                visible.forEach(function (en, i) {
+                    en.target.style.setProperty('--d', Math.min(i * 0.14, 0.7) + 's');
+                    en.target.classList.add('in-view');
+                    io.unobserve(en.target);
                 });
+            }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+            var started = false;
+            function start() {
+                if (started) return;
+                started = true;
+                hero.forEach(function (el, i) {
+                    el.style.setProperty('--d', (0.25 + i * 0.2) + 's');
+                    el.classList.add('in-view');
+                });
+                targets.forEach(function (el) { io.observe(el); });
+            }
+
+            var cover = document.getElementById('coverOverlay');
+            if (!cover) { start(); return; }
+            new MutationObserver(function (_, mo) {
+                if (cover.classList.contains('open')) {
+                    mo.disconnect();
+                    setTimeout(start, 500);
+                }
+            }).observe(cover, { attributes: true, attributeFilter: ['class'] });
         })();
     </script>
 
     <script>
-    // Deteksi perangkat Android untuk menampilkan notice dark mode secara kondisional
-    // Deteksi perangkat Android untuk menampilkan notice dark mode secara kondisional
-(function() {
-    const noticeEl = document.getElementById('androidDarkNotice');
-    if (!noticeEl) return;
+        (function () {
+            var secs = document.querySelectorAll('.has-orn');
+            if (!secs.length || !('IntersectionObserver' in window)) return;
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            document.documentElement.classList.add('orn-ready');
 
-    const ua = navigator.userAgent || navigator.vendor || window.opera;
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) { en.target.classList.add('orn-on'); io.unobserve(en.target); }
+                });
+            }, { threshold: 0.05 });
 
-    // Deteksi Android
-    const isAndroid = /android/i.test(ua);
+            function start() { secs.forEach(function (s) { io.observe(s); }); }
 
-    // Deteksi iOS
-    const isIOS = /ipad|iphone|ipod/i.test(ua) && !window.MSStream;
-
-    // Deteksi Google Chrome Android
-    const isChrome = /Chrome\/[\d.]+/i.test(ua) &&
-                     /Android/i.test(ua) &&
-                     !/EdgA|OPR|SamsungBrowser|UCBrowser/i.test(ua);
-
-    // Deteksi Instagram In-App Browser
-    const isInstagram = /Instagram/i.test(ua);
-
-    // Tampilkan hanya pada Android selain Chrome dan Instagram
-    if (isAndroid && !isIOS && !isChrome && !isInstagram) {
-        noticeEl.style.display = 'block';
-    }
-})();
-</script>
+            var cover = document.getElementById('coverOverlay');
+            if (!cover) { start(); return; }
+            new MutationObserver(function (_, mo) {
+                if (cover.classList.contains('open')) { mo.disconnect(); setTimeout(start, 500); }
+            }).observe(cover, { attributes: true, attributeFilter: ['class'] });
+        })();
+    </script>
 </body>
 
 </html>

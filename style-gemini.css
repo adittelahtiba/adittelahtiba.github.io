@@ -1,26 +1,6 @@
 /* =========================================================================
    UNDANGAN DIGITAL — SISTEM WARNA "IVORY · MIDNIGHT · ANTIQUE GOLD"
    Satu sumber CSS. Semua warna dikelola lewat custom properties di :root.
-
-   PRINSIP KETAHANAN TERHADAP FORCE DARK (tanpa deteksi apa pun)
-   Browser yang memaksa dark mode bekerja secara heuristik: permukaan yang
-   sangat terang dibalik jadi gelap, teks yang sangat gelap dibalik jadi terang,
-   sedangkan permukaan gelap dan teks terang dibiarkan. Desain ini patuh pada
-   tiga aturan supaya hasilnya tetap kontras dalam kedua kondisi:
-
-   1. Hanya ada dua jenis pasangan warna, dan keduanya ekstrem:
-        A. permukaan sangat terang + teks sangat gelap
-        B. permukaan sangat gelap  + teks sangat terang
-      Pasangan A dibalik jadi B oleh browser, B dibiarkan, jadi keduanya tetap
-      terbaca. Tidak ada teks gelap di atas permukaan emas/menengah, karena
-      itu satu-satunya kombinasi yang bisa pecah saat hanya teksnya yang dibalik.
-   2. Emas punya tiga peran terpisah, bukan satu warna untuk semua:
-        --gold-ink     teks emas di atas permukaan terang
-        --gold-bright  teks emas di atas permukaan gelap
-        --gold         garis, bingkai, ornamen (tanpa teks), terlihat di keduanya
-   3. Tanpa transparansi pada teks/permukaan penting, tanpa gradient pada teks
-      (background-clip:text), tanpa blend mode. Overlay foto memakai warna
-      gelap saja.
    ========================================================================= */
 
 :root {
@@ -66,6 +46,11 @@
 
     /* Navy untuk teks (di permukaan terang) */
     --navy-text: #1B3A6B;
+
+    /* Sistem font: script untuk judul besar, serif untuk nama & kutipan, sans untuk teks */
+    --font-script: 'Great Vibes', 'Allura', cursive;
+    --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Jost', 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
     /* Peta semantik: default = permukaan terang */
     --c-title: var(--navy-text);
@@ -118,7 +103,8 @@ html {
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
     background-color: var(--ivory);
     color: var(--ink);
     color-scheme: only light !important;
@@ -172,11 +158,21 @@ body>section .small {
 
 /* ---------- Tipografi dekoratif ---------- */
 .font-wedding {
-    font-family: 'Allura', cursive;
+    font-family: var(--font-script);
+    font-weight: 400;
+    font-synthesis: none;
     color: var(--c-accent);
 }
 
-/* Judul emas: warna solid (tanpa gradient text) */
+h3.font-wedding,
+h4.font-wedding {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-synthesis: weight;
+    letter-spacing: 0.02em;
+    font-variant-numeric: lining-nums;
+}
+
 .gold-shine,
 #coverCouple,
 body>section:not(#home) h1.font-wedding,
@@ -188,7 +184,6 @@ body>section h4.font-wedding {
     font-weight: bold;
 }
 
-/* Nama mempelai di hero: perak terang solid di atas foto gelap */
 #home h1.font-wedding,
 .shine-silver {
     color: var(--silver);
@@ -211,29 +206,16 @@ body>section h4.font-wedding {
     color: var(--on-dark);
 }
 
-/* ---------- Kombinasi teks: navy + emas ----------
-   Permukaan terang : judul section & teks isi = navy, aksen kecil = emas.
-   Permukaan gelap  : tetap emas terang / putih gading (lihat peta semantik).
-   Navy gelap di atas ivory = pasangan A, aman saat force dark. */
 body>section h2.font-wedding {
     color: var(--c-title);
 }
 
-/* Garis emas tipis di bawah judul section terang */
-body>section:not(#home):not(#countdownSection):not(.footer-band) h2.font-wedding::after {
-    content: "";
-    display: block;
-    width: 64px;
-    height: 1.5px;
-    margin: 10px auto 0;
-    background-color: var(--gold);
-    border-radius: 2px;
-}
-
-/* Ayat: kutipan navy, rujukan emas */
 #verse p.fst-italic {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.3rem;
     color: var(--navy-text);
-    line-height: 1.9;
+    line-height: 1.8;
 }
 
 #verse p.fw-bold {
@@ -242,12 +224,10 @@ body>section:not(#home):not(#countdownSection):not(.footer-band) h2.font-wedding
     font-size: 0.85rem;
 }
 
-/* Mempelai: nama emas, keterangan orang tua navy */
 #couple p {
     color: var(--navy-text);
 }
 
-/* Acara: judul kartu emas, detail navy, ikon emas */
 .event-card p {
     color: var(--navy-text);
 }
@@ -260,65 +240,11 @@ body>section:not(#home):not(#countdownSection):not(.footer-band) h2.font-wedding
     color: var(--ink-soft);
 }
 
-/* Love story: subjudul navy tebal */
 body>section h3.h4 {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
     color: var(--navy-text);
-    font-weight: 600;
-}
-
-/* ---------- Ornamen ---------- */
-.floral-top {
-    position: relative;
-    display: block;
-    margin: 0 auto 12px;
-    max-width: 140px;
-    opacity: 0.95;
-}
-
-.decor-flower {
-    position: absolute;
-    pointer-events: none;
-    opacity: 0.12;
-}
-
-.decor-flower.left {
-    left: -20px;
-    top: 10px;
-    width: 120px;
-}
-
-.decor-flower.right {
-    right: -20px;
-    bottom: 10px;
-    width: 120px;
-}
-
-.section-ornament {
-    width: min(100%, 360px);
-    height: 50px;
-    display: block;
-    margin: 0 auto 18px;
-    opacity: 1;
-}
-
-.section-ornament svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.section-ornament .gold-line,
-.section-ornament .gold-line-thin {
-    fill: none;
-    stroke: var(--gold);
-    stroke-width: 0.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.section-ornament .gold-fill {
-    fill: var(--gold);
-    stroke: none;
+    font-weight: 700;
 }
 
 /* ---------- Cover overlay ---------- */
@@ -417,8 +343,8 @@ body>section h3.h4 {
 }
 
 #coverCard h2 {
-    font-family: 'Allura', serif;
-    font-size: 46px;
+    font-family: var(--font-script);
+    font-size: 50px;
     margin: 6px 0;
     color: var(--gold-bright);
     text-shadow: 0 2px 14px rgba(12, 24, 41, 0.85);
@@ -535,7 +461,6 @@ body>section h3.h4 {
     z-index: 1;
 }
 
-/* Overlay foto: hanya warna gelap */
 #home .home-bg-layer::after {
     content: "";
     position: absolute;
@@ -574,10 +499,6 @@ body>section h3.h4 {
     position: relative;
     z-index: 2;
     margin-top: 12px;
-}
-
-#home .floral-top {
-    display: none;
 }
 
 #home h4,
@@ -639,7 +560,6 @@ body>section h3.h4 {
     text-decoration: none !important;
 }
 
-/* Champagne terang + teks navy sangat gelap (pasangan A) */
 .cover-btn.primary {
     background-color: var(--champagne);
     color: var(--navy-deep);
@@ -682,7 +602,6 @@ body>section h3.h4 {
     min-width: 140px;
 }
 
-/* Navy + teks terang + garis emas (pasangan B), semua state tetap pasangan B */
 .btn-action,
 .btn-primary {
     --bs-btn-color: var(--on-dark);
@@ -829,13 +748,8 @@ body>section h3.h4 {
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg)
-    }
-
-    to {
-        transform: rotate(360deg)
-    }
+    from { transform: rotate(0deg) }
+    to { transform: rotate(360deg) }
 }
 
 /* ---------- Mempelai & foto ---------- */
@@ -846,9 +760,9 @@ body>section h3.h4 {
     height: 300px;
     object-fit: cover;
     background-color: var(--paper);
-    border: 4px solid var(--gold);
+    border: 2px solid var(--gold);
     border-radius: 110px 110px 15px 15px;
-    box-shadow: 0 16px 36px rgba(12, 24, 41, 0.18);
+    box-shadow: 0 12px 28px rgba(12, 24, 41, 0.12);
     transition: transform 0.3s ease;
 }
 
@@ -861,13 +775,13 @@ body>section h3.h4 {
 }
 
 .thankyou-img {
-    width: 160px;
-    height: 160px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     background-color: var(--paper);
     border-radius: 50%;
-    border: 4px solid var(--gold);
-    box-shadow: 0 14px 32px rgba(12, 24, 41, 0.18);
+    border: 2px solid var(--gold);
+    box-shadow: 0 10px 24px rgba(12, 24, 41, 0.12);
     display: inline-block;
 }
 
@@ -875,19 +789,7 @@ body>section h3.h4 {
     .thankyou-img {
         width: 120px;
         height: 120px;
-        border-width: 3px;
     }
-}
-
-.story-img {
-    max-width: 420px;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    border: 1px solid var(--gold);
-    box-shadow: 0 8px 24px rgba(12, 24, 41, 0.12);
 }
 
 /* ---------- Countdown ---------- */
@@ -939,8 +841,10 @@ body>section h3.h4 {
 
 .countdown-item h3 {
     color: var(--gold-bright);
-    font-family: 'Allura', serif;
-    font-size: 2rem;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-variant-numeric: lining-nums;
+    font-size: 2.2rem;
     margin-bottom: 2px;
     line-height: 1;
 }
@@ -957,7 +861,6 @@ body>section h3.h4 {
 }
 
 /* ---------- Acara ---------- */
-/* Foto latar dipisah ke lapisan sendiri; dasar section tetap warna solid */
 #event {
     position: relative;
     background-color: var(--ivory-warm);
@@ -1024,11 +927,6 @@ body>section h3.h4 {
     background: var(--paper);
 }
 
-.card-gift h5,
-.card-gift p {
-    color: var(--ink);
-}
-
 .atm-card {
     --atm-circle: var(--navy-raised);
     width: 100%;
@@ -1087,7 +985,9 @@ body>section h3.h4 {
 }
 
 .atm-number {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
     font-size: 1.4rem;
     letter-spacing: 2px;
     margin: 15px 0;
@@ -1131,18 +1031,6 @@ body>section h3.h4 {
 }
 
 /* ---------- Galeri ---------- */
-.gallery-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-}
-
-.gallery-container img {
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
 .gallery-slideshow {
     position: relative;
     padding: 12px 0 0;
@@ -1205,6 +1093,7 @@ body>section h3.h4 {
     transform: translate(-50%, -50%) scale(1);
     filter: blur(0) saturate(1);
     z-index: 3;
+    cursor: zoom-in;
 }
 
 .gallery-slide.is-next {
@@ -1214,68 +1103,9 @@ body>section h3.h4 {
     filter: blur(2px) saturate(0.65);
 }
 
-.gallery-slide.is-active {
-    cursor: zoom-in;
-}
-
 .gallery-slide.is-hidden {
     opacity: 0;
     visibility: hidden;
-}
-
-.gallery-img-wrap {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    background-color: var(--sand);
-    height: 220px;
-    /* tinggi tetap: cegah layout shift */
-    contain: strict;
-}
-
-.gallery-skeleton {
-    position: absolute;
-    inset: 0;
-    background-color: var(--sand);
-    animation: skeletonShimmer 1.4s ease-in-out infinite;
-    border-radius: 12px;
-    z-index: 1;
-    transition: opacity 0.3s ease;
-}
-
-.gallery-skeleton.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-@keyframes skeletonShimmer {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.55;
-    }
-}
-
-.gallery-lazy {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-    display: block;
-    border: 1px solid var(--gold);
-    box-shadow: 0 4px 15px rgba(12, 24, 41, 0.1);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    position: relative;
-    z-index: 2;
-}
-
-.gallery-lazy.loaded {
-    opacity: 1;
 }
 
 /* ---------- Buku tamu ---------- */
@@ -1324,7 +1154,6 @@ select.form-select:disabled {
     opacity: 1;
 }
 
-/* Daftar ucapan (dirender lewat JS) */
 .guest-empty {
     color: var(--ink-soft);
 }
@@ -1345,7 +1174,6 @@ select.form-select:disabled {
     border: none;
 }
 
-/* Badge kehadiran: gelap + terang */
 .att-badge {
     display: inline-block;
     padding: 4px 8px;
@@ -1416,27 +1244,13 @@ select.form-select:disabled {
 }
 
 @keyframes slideInDown {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -70%);
-    }
-
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
+    from { opacity: 0; transform: translate(-50%, -70%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 @keyframes slideOutUp {
-    from {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
-
-    to {
-        opacity: 0;
-        transform: translate(-50%, -70%);
-    }
+    from { opacity: 1; transform: translate(-50%, -50%); }
+    to { opacity: 0; transform: translate(-50%, -70%); }
 }
 
 /* ---------- Footer gelap ---------- */
@@ -1447,24 +1261,13 @@ body>section.footer-band {
     border-bottom: 1px solid var(--gold);
 }
 
-/* ---------- Tekstur latar (assets/*.webp) ----------
-   Semua gambar bisa di-tile (seamless). background-color tetap dipertahankan
-   sebagai warna dasar: kalau gambar belum termuat / gagal, tampilan tetap utuh.
-     bg-ivory.webp       kertas ivory   (section terang)
-     bg-ivory-warm.webp  kertas hangat  (section selang-seling & Acara)
-     bg-paper.webp       kertas kartu   (event-card, gift, buku tamu)
-     bg-navy-grain.webp  linen navy, PNG-like transparan: ditumpuk di atas
-                         warna navy apa pun (countdown, footer, kartu ATM)
-   Tekstur sengaja berkontras rendah agar teks tetap terbaca. */
+/* ---------- Tekstur latar ---------- */
 body {
     background-image: url('assets/bg-ivory.webp');
     background-size: 560px auto;
     background-repeat: repeat;
 }
 
-/* Section terang (ganjil = ivory, genap = ivory hangat).
-   Selector dibuat spesifik supaya menimpa background-size: contain
-   milik .section-wedding. */
 body>section:not(#home):not(#countdownSection):not(.footer-band) {
     background-image: url('assets/bg-ivory.webp');
     background-size: 560px auto;
@@ -1482,7 +1285,6 @@ body>section:nth-of-type(even):not(#home):not(#countdownSection):not(.footer-ban
     background-repeat: repeat;
 }
 
-/* Kartu putih gading */
 .event-card,
 .card-gift,
 #guestbook .card {
@@ -1491,7 +1293,6 @@ body>section:nth-of-type(even):not(#home):not(#countdownSection):not(.footer-ban
     background-repeat: repeat;
 }
 
-/* Permukaan navy: linen transparan di atas warna navy */
 #countdownSection,
 body>section.footer-band,
 .atm-card {
@@ -1500,10 +1301,217 @@ body>section.footer-band,
     background-repeat: repeat;
 }
 
+/* =========================================================================
+   DESAIN ULANG: ORNAMEN SUDUT, DIVIDER, & FRAME PROFIL (CLEAN EDITORIAL)
+   ========================================================================= */
+
+/* ---------- Ornamen Sudut (Minimalis & Tipis, hanya untuk Hero & Countdown) ---------- */
+.has-orn {
+    --orn-s: clamp(64px, 12vw, 96px);
+    position: relative;
+    isolation: isolate;
+}
+
+.orn-corner {
+    position: absolute !important;
+    z-index: 2 !important;
+    width: var(--orn-s);
+    aspect-ratio: 1 / 1;
+    pointer-events: none;
+    opacity: 0.45;
+    transition: opacity 1s ease;
+}
+
+.orn-corner.tl { top: 16px; left: 16px; }
+.orn-corner.tr { top: 16px; right: 16px; transform: scaleX(-1); }
+.orn-corner.bl { bottom: 16px; left: 16px; }
+.orn-corner.br { bottom: 16px; right: 16px; transform: scaleX(-1); }
+
+.orn-corner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid var(--gold);
+    border-left: 1px solid var(--gold);
+}
+
+.orn-corner.bl::before,
+.orn-corner.br::before {
+    border-top: none;
+    border-bottom: 1px solid var(--gold);
+}
+
+.orn-corner::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-top: 1px solid var(--gold);
+    border-left: 1px solid var(--gold);
+    opacity: 0.45;
+}
+
+.orn-corner.bl::after,
+.orn-corner.br::after {
+    border-top: none;
+    border-bottom: 1px solid var(--gold);
+}
+
+.orn-corner.dark::before,
+.orn-corner.dark::after {
+    border-color: var(--gold-bright);
+}
+
+html.orn-ready .orn-corner { opacity: 0; }
+html.orn-ready .has-orn.orn-on .orn-corner { opacity: 0.55; }
+
+/* ---------- Divider: Garis Hairline + Aksen Diamond Minimalis ---------- */
+.orn-divider {
+    position: relative;
+    width: min(100%, 210px);
+    height: 16px;
+    margin: 8px auto 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none !important;
+}
+
+.orn-divider::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--gold) 25%,
+        var(--gold) 42%,
+        transparent 43%,
+        transparent 57%,
+        var(--gold) 58%,
+        var(--gold) 75%,
+        transparent 100%
+    );
+    transform: translateY(-50%);
+}
+
+.orn-divider::after {
+    content: "";
+    position: static;
+    translate: none;
+    width: 7px;
+    height: 7px;
+    border: 1.5px solid var(--gold);
+    background-color: var(--ivory);
+    transform: rotate(45deg);
+    background-image: none !important;
+}
+
+body>section:nth-of-type(even) .orn-divider::after,
+#event .orn-divider::after {
+    background-color: var(--ivory-warm);
+}
+
+#guestbook .orn-divider::after {
+    background-color: var(--paper);
+}
+
+.orn-divider.dark::before {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--gold-bright) 25%,
+        var(--gold-bright) 42%,
+        transparent 43%,
+        transparent 57%,
+        var(--gold-bright) 58%,
+        var(--gold-bright) 75%,
+        transparent 100%
+    );
+}
+
+.orn-divider.dark::after {
+    border-color: var(--gold-bright);
+    background-color: var(--navy);
+    background-image: none !important;
+}
+
+/* ---------- Bingkai Foto: Clean Double Hairline (Tanpa Gem & Cincin Tebal) ---------- */
+.photo-orn {
+    position: relative;
+    width: max-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px;
+    isolation: isolate;
+}
+
+.photo-orn.arch {
+    margin-top: 12px;
+    margin-bottom: 1.5rem !important;
+}
+
+.photo-orn.round {
+    margin-bottom: 1.25rem;
+}
+
+.photo-orn > img {
+    position: relative;
+    z-index: 2;
+    display: block;
+    border-width: 2px !important;
+    border-color: var(--gold) !important;
+    box-shadow: 0 12px 28px rgba(12, 24, 41, 0.12) !important;
+}
+
+.photo-orn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--gold);
+    opacity: 0.65;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.photo-orn::after,
+.frame-gem {
+    display: none !important;
+}
+
+.photo-orn.arch::before {
+    border-radius: 118px 118px 20px 20px;
+}
+
+.photo-orn.round::before {
+    border-radius: 50%;
+}
+
+@media (max-width: 480px) {
+    .photo-orn {
+        padding: 6px;
+    }
+
+    .photo-orn.arch::before {
+        border-radius: 96px 96px 16px 16px;
+    }
+}
+
 /* ---------- Animasi ---------- */
 @media (prefers-reduced-motion: no-preference) {
-    /* Fade-in dari bawah. Memakai animation (bukan transition) agar
-       transform hover pada kartu tidak tertimpa setelah animasi selesai. */
+    .orn-divider.reveal.in-view {
+        animation: ornOpen 0.9s cubic-bezier(.22, .8, .24, 1) backwards;
+        animation-delay: var(--d, 0s);
+    }
+
+    @keyframes ornOpen {
+        from { opacity: 0; clip-path: inset(0 50% 0 50%); }
+        to { opacity: 1; clip-path: inset(0 0 0 0); }
+    }
+
     .reveal {
         opacity: 0;
     }
@@ -1515,24 +1523,8 @@ body>section.footer-band,
     }
 
     @keyframes fadeUp {
-        from {
-            opacity: 0;
-            transform: translateY(44px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .gallery-container img {
-        transition: transform .6s ease, filter .6s ease;
-    }
-
-    .gallery-container img:hover {
-        transform: scale(1.04);
-        filter: brightness(1.05);
+        from { opacity: 0; transform: translateY(44px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 }
 
@@ -1541,7 +1533,6 @@ body>section.footer-band,
         scroll-behavior: auto;
     }
 
-    .gallery-container img,
     .event-card,
     .btn-action,
     .btn-primary {
@@ -1549,7 +1540,7 @@ body>section.footer-band,
     }
 }
 
-/* ---------- Lightbox galeri (permukaan gelap + kontrol terang) ---------- */
+/* ---------- Lightbox galeri ---------- */
 .lightbox {
     position: fixed;
     inset: 0;
@@ -1600,22 +1591,9 @@ body>section.footer-band,
     color: var(--on-dark);
 }
 
-.lb-close {
-    top: 16px;
-    right: 16px;
-}
-
-.lb-prev {
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.lb-next {
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-}
+.lb-close { top: 16px; right: 16px; }
+.lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
 
 .lb-count {
     position: absolute;
@@ -1625,21 +1603,4 @@ body>section.footer-band,
     color: var(--on-dark);
     font-size: 0.85rem;
     letter-spacing: 0.1em;
-}
-
-.android-dark-notice {
-    position: absolute;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 420px;
-    text-align: center;
-    font-size: 11px;
-    line-height: 1.4;
-    color: var(--on-dark-soft, #D9D0BD);
-    opacity: 0.8;
-    z-index: 3;
-    pointer-events: none;
-    letter-spacing: 0.02em;
 }

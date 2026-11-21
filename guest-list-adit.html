@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0e1424" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Daftar Tamu · Ryka & Adit</title>
+    <style>
+        :root {
+            --bg: #0e1424;
+            --surface: #161e33;
+            --surface-2: #1e2842;
+            --line: #2a3556;
+            --text: #eef1f8;
+            --muted: #9aa6c4;
+            --gold: #d9b86c;
+            --gold-ink: #1b1608;
+            --ok: #6fd3a0;
+            --danger: #ff8a8a;
+            --radius: 14px;
+            --safe-b: env(safe-area-inset-bottom, 0px);
+        }
+        * { box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.45;
+            padding-bottom: calc(96px + var(--safe-b));
+        }
+        button, input, select { font: inherit; color: inherit; }
+        button { cursor: pointer; }
+        :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+        .wrap { max-width: 720px; margin: 0 auto; padding: 0 14px; }
+
+        /* Header */
+        .top {
+            padding: 22px 0 14px;
+            padding-top: calc(22px + env(safe-area-inset-top, 0px));
+        }
+        .top h1 { margin: 0; font-size: 1.35rem; font-weight: 700; letter-spacing: .01em; }
+        .top p { margin: 2px 0 0; color: var(--muted); font-size: .9rem; }
+
+        /* Statistik */
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+        .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; }
+        .stat b { display: block; font-size: 1.35rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+        .stat span { color: var(--muted); font-size: .78rem; }
+
+        /* Form tambah / ubah */
+        .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; margin-bottom: 14px; }
+        .panel.editing { border-color: var(--gold); }
+        .panel-title { margin: 0 0 8px; font-size: .9rem; font-weight: 600; color: var(--muted); }
+        .panel.editing .panel-title { color: var(--gold); }
+        .field {
+            width: 100%; min-height: 48px; padding: 0 14px;
+            background: var(--bg); border: 1px solid var(--line); border-radius: 12px;
+            font-size: 16px; /* cegah zoom otomatis di iOS */
+        }
+        .field::placeholder { color: #67739a; }
+        .form-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+        .btn {
+            min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line);
+            background: var(--surface-2); font-weight: 600; font-size: .9rem; white-space: nowrap;
+            transition: background .15s, transform .05s;
+        }
+        .btn:active { transform: scale(.98); }
+        .btn-primary { background: var(--gold); border-color: var(--gold); color: var(--gold-ink); flex: 1; }
+        .btn-primary:disabled { opacity: .6; }
+        .btn-danger { color: var(--danger); }
+        .btn-sm { min-height: 40px; padding: 0 12px; font-size: .85rem; }
+
+        /* Pencarian & urutan */
+        .tools { display: flex; gap: 8px; margin-bottom: 10px; position: sticky; top: 0; z-index: 5; padding: 8px 0; background: linear-gradient(var(--bg) 80%, transparent); }
+        .tools .field { flex: 1; min-width: 0; }
+        .tools select.field { flex: 0 0 auto; width: auto; padding-right: 10px; }
+
+        /* Daftar tamu */
+        .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+        .guest { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }
+        .guest-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+        .guest-name { margin: 0; font-size: 1.02rem; font-weight: 650; overflow-wrap: anywhere; }
+        .guest-meta { margin: 2px 0 0; color: var(--muted); font-size: .8rem; }
+        .opens { flex: 0 0 auto; padding: 4px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; background: var(--surface-2); color: var(--muted); }
+        .opens.seen { background: rgba(111, 211, 160, .14); color: var(--ok); }
+        .guest-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .guest-actions .row2 { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .copy { background: rgba(217, 184, 108, .12); border-color: rgba(217, 184, 108, .45); color: var(--gold); }
+
+        .empty { text-align: center; color: var(--muted); padding: 36px 10px; background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); }
+        .skeleton { height: 108px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); animation: pulse 1.2s ease-in-out infinite; }
+        @keyframes pulse { 50% { opacity: .55; } }
+
+        /* Toast */
+        .toast {
+            position: fixed; left: 50%; bottom: calc(18px + var(--safe-b)); transform: translate(-50%, 20px);
+            max-width: calc(100% - 28px); padding: 12px 16px; border-radius: 12px;
+            background: #243152; border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+            font-size: .9rem; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 30;
+        }
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+        .toast.error { border-color: var(--danger); color: var(--danger); }
+
+        /* Dialog hapus */
+        dialog {
+            border: 1px solid var(--line); border-radius: 18px; background: var(--surface); color: var(--text);
+            width: min(92vw, 380px); padding: 20px;
+        }
+        dialog::backdrop { background: rgba(5, 8, 16, .7); }
+        dialog h2 { margin: 0 0 6px; font-size: 1.1rem; }
+        dialog p { margin: 0 0 16px; color: var(--muted); overflow-wrap: anywhere; }
+        dialog .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        dialog .btn-confirm { background: #d95757; border-color: #d95757; color: #fff; }
+
+        @media (min-width: 560px) {
+            body { font-size: 16px; }
+            .guest-actions { grid-template-columns: auto auto 1fr; }
+            .guest-actions .row2 { grid-column: auto; justify-self: end; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrap">
+        <header class="top">
+            <h1>Daftar Tamu</h1>
+            <p>Ryka &amp; Adit · 20 Desember 2026</p>
+        </header>
+
+        <section class="stats" aria-label="Ringkasan">
+            <div class="stat"><b id="statTotal">–</b><span>Tamu</span></div>
+            <div class="stat"><b id="statSeen">–</b><span>Sudah buka</span></div>
+            <div class="stat"><b id="statOpens">–</b><span>Total buka</span></div>
+        </section>
+
+        <form id="guestForm" class="panel" autocomplete="off">
+            <h2 id="panelTitle" class="panel-title">Tambah tamu</h2>
+            <input id="guestName" class="field" type="text" placeholder="Nama tamu" enterkeyhint="done" required />
+            <div class="form-actions">
+                <button id="submitBtn" type="submit" class="btn btn-primary">Tambah tamu</button>
+                <button id="cancelBtn" type="button" class="btn" hidden>Batal</button>
+            </div>
+        </form>
+
+        <div class="tools">
+            <input id="search" class="field" type="search" placeholder="Cari nama tamu" aria-label="Cari nama tamu" />
+            <select id="sort" class="field" aria-label="Urutkan">
+                <option value="new">Terbaru</option>
+                <option value="opens">Paling sering buka</option>
+                <option value="unseen">Belum buka</option>
+                <option value="az">A–Z</option>
+            </select>
+        </div>
+
+        <ul id="guestList" class="list" aria-live="polite"></ul>
+    </main>
+
+    <div id="toast" class="toast" role="status"></div>
+
+    <dialog id="deleteDialog">
+        <h2>Hapus tamu?</h2>
+        <p id="deleteText"></p>
+        <div class="actions">
+            <button type="button" class="btn" id="deleteNo">Batal</button>
+            <button type="button" class="btn btn-confirm" id="deleteYes">Hapus</button>
+        </div>
+    </dialog>
+
+    <script>
+        const API_BASE = 'https://worrkhiiwvlinanxsimn.supabase.co/rest/v1';
+        const HEADERS = {
+            apikey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcnJraGlpd3ZsaW5hbnhzaW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNTEzOTIsImV4cCI6MjA4MjYyNzM5Mn0.vygEL8BYGK_UXPwMrvgpRkk7RVQQ5Q0AB1n5uk1IYi0',
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+        };
+
+        const $ = (id) => document.getElementById(id);
+        const guestForm = $('guestForm'), guestNameInput = $('guestName'), guestListEl = $('guestList');
+        const submitBtn = $('submitBtn'), cancelBtn = $('cancelBtn'), panel = guestForm, panelTitle = $('panelTitle');
+        const searchEl = $('search'), sortEl = $('sort'), toastEl = $('toast');
+        const deleteDialog = $('deleteDialog');
+
+        let guests = [];
+        let editingId = null;
+        let pendingDeleteId = null;
+        let toastTimer = null;
+
+        function toast(message, isError = false) {
+            toastEl.textContent = message;
+            toastEl.classList.toggle('error', isError);
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (c) => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+
+        function formatDate(value) {
+            if (!value) return '-';
+            const d = new Date(value);
+            return Number.isNaN(d.getTime()) ? value : d.toLocaleString('id-ID', {
+                day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        function buildGuestChatTemplate(guestName, lang = 'id') {
+            const safeName = String(guestName || '').trim();
+            const guestParam = safeName.replace(/\s+/g, '+');
+            const inviteUrl = `https://ryka-adit.my.id/?to=${guestParam}&language=${lang}`;
+
+            return `Assalamu’alaikum Warahmatullahi Wabarakatuh\n\n` +
+                `Dengan memohon rahmat dan ridho Allah SWT, serta tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i ${safeName} untuk hadir dan memberikan doa restu pada acara pernikahan kami.\n\n` +
+                `💍 Ryka & Adit 💍\n\n` +
+                `Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan turut menyaksikan momen istimewa dalam hidup kami.\n\n` +
+                `📖 Detail acara serta lokasi dapat dilihat melalui undangan digital berikut:\n\n` +
+                `🔗 ${inviteUrl}\n\n` +
+                `Mohon maaf apabila terdapat kesalahan penulisan nama atau gelar dalam undangan digital ini.\n\n` +
+                `Atas perhatian, kehadiran, serta doa restu Bapak/Ibu/Saudara/i, kami ucapkan terima kasih.\n\n` +
+                `Wassalamu’alaikum Warahmatullahi Wabarakatuh\n\n` +
+                `🙏 Hormat kami,\n` +
+                `Ryka & Adit`;
+        }
+
+        async function copyGuestChat(guest, lang) {
+            try {
+                await navigator.clipboard.writeText(buildGuestChatTemplate(guest.guest_name, lang));
+                toast(`Pesan ${lang.toUpperCase()} untuk ${guest.guest_name} disalin`);
+            } catch (error) {
+                toast('Gagal menyalin pesan', true);
+                console.error(error);
+            }
+        }
+
+        function renderStats() {
+            $('statTotal').textContent = guests.length;
+            $('statSeen').textContent = guests.filter(g => (g.open_count || 0) > 0).length;
+            $('statOpens').textContent = guests.reduce((sum, g) => sum + (Number(g.open_count) || 0), 0);
+        }
+
+        function visibleGuests() {
+            const q = searchEl.value.trim().toLowerCase();
+            let rows = guests.filter(g => !q || String(g.guest_name || '').toLowerCase().includes(q));
+            const by = sortEl.value;
+            if (by === 'opens') rows.sort((a, b) => (b.open_count || 0) - (a.open_count || 0));
+            else if (by === 'unseen') rows = rows.filter(g => !(g.open_count > 0));
+            else if (by === 'az') rows.sort((a, b) => String(a.guest_name).localeCompare(String(b.guest_name), 'id'));
+            return rows;
+        }
+
+        function renderList() {
+            const rows = visibleGuests();
+            if (!rows.length) {
+                guestListEl.innerHTML = `<li class="empty">${guests.length ? 'Tidak ada tamu yang cocok.' : 'Belum ada tamu. Tambahkan nama tamu pertama di atas.'}</li>`;
+                return;
+            }
+            guestListEl.innerHTML = rows.map(g => {
+                const count = Number(g.open_count) || 0;
+                const by = g.create_by ? ` · oleh ${escapeHtml(g.create_by)}` : '';
+                return `
+                <li class="guest">
+                    <div class="guest-head">
+                        <div>
+                            <h3 class="guest-name">${escapeHtml(g.guest_name || '')}</h3>
+                            <p class="guest-meta">${formatDate(g.created_at)}${by}</p>
+                        </div>
+                        <span class="opens ${count > 0 ? 'seen' : ''}">${count > 0 ? `Dibuka ${count}×` : 'Belum dibuka'}</span>
+                    </div>
+                    <div class="guest-actions">
+                        <button type="button" class="btn btn-sm copy" data-action="copy-id" data-id="${g.id}">Salin ID</button>
+                        <button type="button" class="btn btn-sm copy" data-action="copy-en" data-id="${g.id}">Salin EN</button>
+                        <div class="row2">
+                            <button type="button" class="btn btn-sm" data-action="edit" data-id="${g.id}">Ubah</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-action="delete" data-id="${g.id}">Hapus</button>
+                        </div>
+                    </div>
+                </li>`;
+            }).join('');
+        }
+
+        async function fetchGuests() {
+            guestListEl.innerHTML = '<li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li>';
+            try {
+                const res = await fetch(`${API_BASE}/guest_list?select=id,created_at,create_by,guest_name,open_count&order=created_at.desc`, { headers: HEADERS });
+                if (!res.ok) throw new Error('Failed to load guests');
+                guests = await res.json();
+                renderStats();
+                renderList();
+            } catch (error) {
+                guestListEl.innerHTML = '<li class="empty">Data tidak bisa dimuat. Periksa koneksi lalu coba lagi.<br><br><button type="button" class="btn" id="retryBtn">Muat ulang</button></li>';
+                $('retryBtn').addEventListener('click', fetchGuests);
+                toast('Gagal memuat daftar tamu', true);
+                console.error(error);
+            }
+        }
+
+        function resetForm() {
+            editingId = null;
+            guestForm.reset();
+            panel.classList.remove('editing');
+            panelTitle.textContent = 'Tambah tamu';
+            submitBtn.textContent = 'Tambah tamu';
+            cancelBtn.hidden = true;
+        }
+
+        async function submitGuest(event) {
+            event.preventDefault();
+            const guestName = guestNameInput.value.trim();
+            if (!guestName) { toast('Nama tamu tidak boleh kosong', true); return; }
+
+            const wasEditing = Boolean(editingId);
+            submitBtn.disabled = true;
+            try {
+                const payload = { guest_name: guestName, guest_name_lower: guestName.toLowerCase(), create_by: 'Adit' };
+                const url = wasEditing ? `${API_BASE}/guest_list?id=eq.${editingId}` : `${API_BASE}/guest_list`;
+                const res = await fetch(url, { method: wasEditing ? 'PATCH' : 'POST', headers: HEADERS, body: JSON.stringify(payload) });
+                if (!res.ok) throw new Error('Request failed');
+
+                resetForm();
+                toast(wasEditing ? 'Tamu diperbarui' : 'Tamu ditambahkan');
+                await fetchGuests();
+            } catch (error) {
+                toast(wasEditing ? 'Gagal memperbarui tamu' : 'Gagal menambahkan tamu', true);
+                console.error(error);
+            } finally {
+                submitBtn.disabled = false;
+            }
+        }
+
+        function prepareEdit(guest) {
+            editingId = guest.id;
+            guestNameInput.value = guest.guest_name || '';
+            panel.classList.add('editing');
+            panelTitle.textContent = 'Ubah nama tamu';
+            submitBtn.textContent = 'Simpan perubahan';
+            cancelBtn.hidden = false;
+            panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            guestNameInput.focus({ preventScroll: true });
+        }
+
+        function askDelete(guest) {
+            pendingDeleteId = guest.id;
+            $('deleteText').textContent = `${guest.guest_name} akan dihapus dari daftar tamu.`;
+            deleteDialog.showModal();
+        }
+
+        async function deleteGuest(id) {
+            try {
+                const res = await fetch(`${API_BASE}/guest_list?id=eq.${id}`, { method: 'DELETE', headers: HEADERS });
+                if (!res.ok) throw new Error('Delete failed');
+                if (editingId === id) resetForm();
+                toast('Tamu dihapus');
+                await fetchGuests();
+            } catch (error) {
+                toast('Gagal menghapus tamu', true);
+                console.error(error);
+            }
+        }
+
+        guestForm.addEventListener('submit', submitGuest);
+        cancelBtn.addEventListener('click', () => { resetForm(); toast('Perubahan dibatalkan'); });
+        searchEl.addEventListener('input', renderList);
+        sortEl.addEventListener('change', renderList);
+
+        $('deleteNo').addEventListener('click', () => deleteDialog.close());
+        $('deleteYes').addEventListener('click', () => {
+            const id = pendingDeleteId;
+            deleteDialog.close();
+            if (id != null) deleteGuest(id);
+        });
+        deleteDialog.addEventListener('click', (e) => { if (e.target === deleteDialog) deleteDialog.close(); });
+
+        guestListEl.addEventListener('click', (event) => {
+            const btn = event.target.closest('[data-action]');
+            if (!btn) return;
+            const guest = guests.find(g => String(g.id) === btn.dataset.id);
+            if (!guest) return;
+            switch (btn.dataset.action) {
+                case 'copy-id': copyGuestChat(guest, 'id'); break;
+                case 'copy-en': copyGuestChat(guest, 'en'); break;
+                case 'edit': prepareEdit(guest); break;
+                case 'delete': askDelete(guest); break;
+            }
+        });
+
+        fetchGuests();
+    </script>
+</body>
+</html>

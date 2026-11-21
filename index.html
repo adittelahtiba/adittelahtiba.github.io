@@ -60,7 +60,7 @@
 
     <div class="nav-floating">
         <a href="#home" class="nav-link active" data-section="home" aria-label="Beranda"><i class="fa-solid fa-house" style="color:var(--ink)"></i></a>
-        <a href="#couple" class="nav-link" data-section="couple" aria-label="Mempelai"><i class="fa-solid fa-heart" style="color:var(--ink)"></i></a>
+        <a href="#couple" class="nav-link" data-section="couple" aria-label="Mempelai"><i class="fa-solid fa-paw" style="color:var(--ink)"></i></a>
         <a href="#event" class="nav-link" data-section="event" aria-label="Acara"><i class="fa-solid fa-calendar-days" style="color:var(--ink)"></i></a>
         <a href="#gallery" class="nav-link" data-section="gallery" aria-label="Galeri"><i class="fa-solid fa-images" style="color:var(--ink)"></i></a>
         <a href="#guestbook" class="nav-link" data-section="guestbook" aria-label="Ucapan &amp; doa"><i class="fa-solid fa-comment-dots" style="color:var(--ink)"></i></a>
@@ -109,9 +109,9 @@
         });
     </script>
 
-    <div class="lang-switcher" aria-label="Language selector">
-        <button class="lang-btn active" type="button" data-lang="en">EN</button>
-        <button class="lang-btn" type="button" data-lang="id">ID</button>
+    <div class="lang-switcher" role="group" aria-label="Language selector">
+        <button class="lang-btn" type="button" data-lang="en" aria-label="English" aria-pressed="false">EN</button>
+        <button class="lang-btn active" type="button" data-lang="id" aria-label="Bahasa Indonesia" aria-pressed="true">ID</button>
     </div>
 
     <!-- background audio + control -->
@@ -126,20 +126,24 @@
     </div>
 
     <section id="couple" class="section-wedding container text-center">
+        <!-- <div class="couple-cloud cc-a" aria-hidden="true"><img src="assets/cloud (7).webp" width="400" height="250" alt="" loading="lazy" decoding="async"></div>
+        <div class="couple-cloud cc-b" aria-hidden="true"><img src="assets/cloud (6).webp" width="400" height="250" alt="" loading="lazy" decoding="async"></div> -->
         <h2 class="font-wedding display-4" data-i18n="coupleTitle">The Couple&nbsp;</h2>
         <div class="orn-divider" aria-hidden="true"></div>
         <div class="row mt-5 align-items-center">
             <div class="col-md-5">
-                <div class="photo-orn arch mb-3">
+                <div class="photo-orn arch has-cloud mb-3">
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.webp" class="couple-img" alt="Foto Ryka Nurdianti" loading="lazy" decoding="async">
+                    <!-- <span class="couple-cloud-base" aria-hidden="true"><img src="assets/cloud (5).webp" width="400" height="250" alt="" loading="lazy" decoding="async"></span> -->
                 </div>
                 <h3 class="font-wedding">Ryka Nurdianti, S.T&nbsp;</h3>
                 <p data-i18n="rykaParents">Daughter of Mr. Supyandi & Mrs. Yani</p>
             </div>
             <div class="col-md-2 font-wedding display-3 my-4">&</div>
             <div class="col-md-5">
-                <div class="photo-orn arch mb-3">
+                <div class="photo-orn arch has-cloud mb-3">
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.webp" class="couple-img" alt="Foto Aditya Pangestu" loading="lazy" decoding="async">
+                    <!-- <span class="couple-cloud-base flip" aria-hidden="true"><img src="assets/cloud (4).webp" width="400" height="250" alt="" loading="lazy" decoding="async"></span> -->
                 </div>
                 <h3 class="font-wedding">Aditya Pangestu, S.Kom&nbsp;</h3>
                 <p data-i18n="aditParents">Son of Mr. Jajang & Mrs. Eulis</p>
@@ -809,10 +813,28 @@
             }
         };
 
-        const langState = { current: 'en' };
+        const SUPPORTED_LANGS = ['id', 'en'];
+
+        // ?language=id | en  (default: id)
+        function resolveInitialLanguage() {
+            const q = (getQueryParam('language') || '').trim().toLowerCase();
+            return SUPPORTED_LANGS.indexOf(q) !== -1 ? q : 'id';
+        }
+
+        // Simpan pilihan ke URL (parameter lain seperti ?to= tetap ada), agar link yang dibagikan ikut bahasanya
+        function syncLanguageToUrl(lang) {
+            try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('language', lang);
+                window.history.replaceState(null, '', url);
+            } catch (e) { }
+        }
+
+        const langState = { current: resolveInitialLanguage() };
 
         function setLanguage(lang) {
             langState.current = lang;
+            document.documentElement.lang = lang;
             const selected = translations[lang] || translations.en;
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -858,7 +880,9 @@
             if (saveDateBtn) saveDateBtn.textContent = selected.saveDate;
 
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
+                const isActive = btn.dataset.lang === lang;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', String(isActive));
             });
 
             if (guestMessages.length) {
@@ -867,7 +891,10 @@
         }
 
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+            btn.addEventListener('click', () => {
+                setLanguage(btn.dataset.lang);
+                syncLanguageToUrl(btn.dataset.lang);
+            });
         });
         setLanguage(langState.current);
 

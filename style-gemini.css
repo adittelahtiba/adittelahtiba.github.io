@@ -398,17 +398,70 @@ body>section h3.h4 {
     }
 
     #coverCard {
+        width: min(calc(100% - 32px), 390px);
         margin: 0 auto;
         text-align: center;
-        padding: 28px;
+        padding: 22px 20px 24px;
+        background: rgba(251, 247, 239, 0.94);
+        border: 1px solid var(--gold);
+        border-radius: 18px;
+        box-shadow: 0 14px 40px rgba(12, 24, 41, 0.22);
     }
 
     .cover-card-inner {
         align-items: center;
     }
 
+    .cover-photo-frame {
+        display: block;
+        width: 132px;
+        height: 132px;
+        margin: 0 auto 16px;
+        padding: 6px;
+        border: 1.5px solid var(--gold);
+        border-radius: 50%;
+        background: var(--ivory);
+        box-shadow: 0 8px 22px rgba(12, 24, 41, 0.18);
+    }
+
+    .cover-photo-frame img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center 35%;
+        border-radius: 50%;
+    }
+
+    #coverGreeting,
+    #coverCard h2,
+    #coverCard p.sub {
+        color: var(--navy-deep) !important;
+        text-shadow: none !important;
+    }
+
+    #coverCard h2 {
+        font-size: clamp(42px, 13vw, 50px);
+    }
+
+    #coverCard p.sub {
+        margin-bottom: 18px;
+    }
+
+    #openInvite {
+        background: var(--navy) !important;
+        color: var(--on-dark) !important;
+        border-color: var(--gold) !important;
+    }
+
     #coverCard [style*="justify-content:center"] {
         justify-content: center !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .cover-photo-frame {
+        display: none;
     }
 }
 
@@ -1524,7 +1577,7 @@ body>section:nth-of-type(even) .orn-divider::after,
 
     @keyframes fadeUp {
         from { opacity: 0; transform: translateY(44px); }
-        to { opacity: 1; transform: translateY(0); }
+        to { opacity: 1, transform: translateY(0); }
     }
 }
 

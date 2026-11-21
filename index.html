@@ -979,14 +979,13 @@
             const musicBtn = document.getElementById('musicToggle');
             if (!openBtn || !cover) return;
 
-            openBtn.addEventListener('click', () => {
-                if (!guestLookupState.resolved || !guestLookupState.allowed) {
-                    if (openBtn) {
-                        openBtn.disabled = true;
-                        openBtn.textContent = 'Sedang mencari tamu...';
-                    }
-                    return;
-                }
+            let opened = false;
+            const canOpen = () => guestLookupState.resolved && guestLookupState.allowed;
+
+            // Satu pintu untuk semua cara membuka: tombol, scroll, swipe, atau tombol panah
+            function openInvitation() {
+                if (opened) return;
+                opened = true;
 
                 window.scrollTo({ top: 0, behavior: 'instant' });
                 cover.classList.add('open');
@@ -1006,6 +1005,46 @@
                 setTimeout(() => {
                     window.dispatchEvent(new Event("resize"));
                 }, 600);
+            }
+
+            // 1) Tombol
+            openBtn.addEventListener('click', () => {
+                if (!canOpen()) {
+                    openBtn.disabled = true;
+                    openBtn.textContent = 'Sedang mencari tamu...';
+                    return;
+                }
+                openInvitation();
+            });
+
+            // 2) Scroll mouse / trackpad ke bawah (halaman di belakang cover tidak ikut bergeser)
+            cover.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (e.deltaY > 4 && canOpen()) openInvitation();
+            }, { passive: false });
+
+            // 3) Swipe ke atas di layar sentuh (dibuka saat jari diangkat, minimal 40px)
+            let touchStartY = null;
+            cover.addEventListener('touchstart', (e) => {
+                touchStartY = e.touches.length === 1 ? e.touches[0].clientY : null;
+            }, { passive: true });
+            cover.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+            }, { passive: false });
+            cover.addEventListener('touchend', (e) => {
+                if (touchStartY === null) return;
+                const dy = touchStartY - e.changedTouches[0].clientY;
+                touchStartY = null;
+                if (dy > 40 && canOpen()) openInvitation();
+            }, { passive: true });
+
+            // 4) Keyboard: panah bawah / Page Down
+            document.addEventListener('keydown', (e) => {
+                if (opened || !cover.isConnected) return;
+                if ((e.key === 'ArrowDown' || e.key === 'PageDown') && canOpen()) {
+                    e.preventDefault();
+                    openInvitation();
+                }
             });
         })();
 

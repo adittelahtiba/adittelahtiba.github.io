@@ -266,6 +266,8 @@ body>section h3.h4 {
     background-size: 560px auto;
     background-repeat: repeat;
     overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
     transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.4s ease;
 }
 
@@ -449,12 +451,12 @@ body>section h3.h4 {
     margin-top: 14px;
 }
 
-#coverOverlay .cover-btn {
+/* #coverOverlay .cover-btn {
     padding: 11px 34px;
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: 1rem;
-}
+} */
 
 #coverOverlay:not(.is-navy) .cover-btn.primary {
     background: linear-gradient(180deg, #2A4572 0%, #14233B 100%);
@@ -1596,7 +1598,7 @@ body>section:nth-of-type(even) .orn-divider::after,
 /* ---------- Animasi ---------- */
 @media (prefers-reduced-motion: no-preference) {
     .orn-divider.reveal.in-view {
-        animation: ornOpen 0.9s cubic-bezier(.22, .8, .24, 1) backwards;
+        animation: ornOpen 1.5s cubic-bezier(.22, .8, .24, 1) backwards;
         animation-delay: var(--d, 0s);
     }
 
@@ -1611,7 +1613,7 @@ body>section:nth-of-type(even) .orn-divider::after,
 
     .reveal.in-view {
         opacity: 1;
-        animation: fadeUp 1s cubic-bezier(.22, .8, .24, 1) backwards;
+        animation: fadeUp 1.5s cubic-bezier(.22, .8, .24, 1) backwards;
         animation-delay: var(--d, 0s);
     }
 

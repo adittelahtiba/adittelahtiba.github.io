@@ -220,10 +220,10 @@
             return Number.isNaN(d.getTime()) ? value : d.toLocaleString();
         }
 
-        function buildGuestChatTemplate(guestName) {
+        function buildGuestChatTemplate(guestName, lang = 'id') {
             const safeName = String(guestName || '').trim();
             const guestParam = safeName.replace(/\s+/g, '+');
-            const inviteUrl = `https://ryka-adit.my.id/?to=${guestParam}`;
+            const inviteUrl = `https://ryka-adit.my.id/?to=${guestParam}&language=${lang}`;
 
             return `Assalamu’alaikum Warahmatullahi Wabarakatuh\n\n` +
                 `Dengan memohon rahmat dan ridho Allah SWT, serta tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i ${safeName} untuk hadir dan memberikan doa restu pada acara pernikahan kami.\n\n` +
@@ -238,8 +238,8 @@
                 `Ryka & Adit`;
         }
 
-        async function copyGuestChat(guestName) {
-            const text = buildGuestChatTemplate(guestName);
+        async function copyGuestChat(guestName, lang = 'id') {
+            const text = buildGuestChatTemplate(guestName, lang);
             try {
                 await navigator.clipboard.writeText(text);
                 setStatus(`Chat template copied for ${guestName}.`);
@@ -269,7 +269,8 @@
                         <td>${escapeHtml(row.guest_name || '')}</td>
                         <td>
                             <div class="table-actions">
-                                <button type="button" class="copy-btn" data-action="copy-chat" data-id="${row.id}" data-name="${String(row.guest_name || '').replace(/"/g, '&quot;')}">Copy Chat</button>
+                                <button type="button" class="copy-btn" data-action="copy-chat" data-id="${row.id}" data-name="${String(row.guest_name || '').replace(/"/g, '&quot;')}">Copy Chat (ID)</button>
+                                <button type="button" class="copy-btn" data-action="copy-chat-en" data-id="${row.id}" data-name="${String(row.guest_name || '').replace(/"/g, '&quot;')}">Copy Chat (EN)</button>
                                 <button type="button" class="secondary" data-action="edit" data-id="${row.id}" data-name="${String(row.guest_name || '').replace(/"/g, '&quot;')}">Edit</button>
                                 <button type="button" class="danger" data-action="delete" data-id="${row.id}">Delete</button>
                             </div>
@@ -372,7 +373,12 @@
 
             if (action === 'copy-chat') {
                 const name = target.dataset.name || '';
-                await copyGuestChat(name);
+                await copyGuestChat(name, 'id');
+            }
+
+            if (action === 'copy-chat-en') {
+                const name = target.dataset.name || '';
+                await copyGuestChat(name, 'en');
             }
         });
 

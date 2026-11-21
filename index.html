@@ -43,16 +43,34 @@
 
     <!-- Cover overlay (personalized via query param ?to=Nama) -->
     <div id="coverOverlay">
-        <div class="cover-left-bg"></div>
-        <div class="cover-right-bg"></div>
         <div id="tsparticles-home" class="tparty"></div>
-        <div id="coverCard">
-            <div class="cover-card-inner">
-                <div id="coverGreeting" data-i18n="coverGreeting" style="color:var(--on-dark);opacity:0.95">To Our Esteemed Guest</div>
-                <h2 id="coverCouple">Ryka &amp; Adit&nbsp;</h2>
-                <p class="sub" data-i18n="coverDate">Sunday, 20 December 2026</p>
-                <div style="display:flex;gap:10px;justify-content:center">
-                    <button id="openInvite" class="cover-btn primary">Open Invitation</button>
+        <div class="cover-stage">
+            <!-- Awan sudut (bergerak pelan) -->
+            <!-- <div class="cc cc-corner-l" aria-hidden="true"><img src="assets/cloud (3).webp" width="400" height="250" alt="" decoding="async"></div>
+            <div class="cc cc-corner-r" aria-hidden="true"><img src="assets/cloud (4).webp" width="400" height="250" alt="" decoding="async"></div> -->
+
+            <div id="coverCard">
+                <div class="cover-card-inner">
+                    <p class="cover-tag" data-i18n="homeTag">The Wedding Of</p>
+
+                    <div class="cover-photo">
+                        <!-- Awan di belakang bingkai -->
+                        <!-- <div class="cc cc-back-l" aria-hidden="true"><img src="assets/cloud (3).webp" width="400" height="250" alt="" decoding="async"></div>
+                        <div class="cc cc-back-r" aria-hidden="true"><img src="assets/cloud (5).webp" width="400" height="250" alt="" decoding="async"></div> -->
+                        <div class="cover-frame">
+                            <img src="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1).webp" alt="Ryka &amp; Adit" fetchpriority="high" decoding="async">
+                        </div>
+                        <!-- 1 awan kucing, di depan bingkai -->
+                        <div class="cc cc-cat" aria-hidden="true"><img src="assets/cat 3.webp" width="400" height="250" alt="" decoding="async"></div>
+                    </div>
+
+                    <h2 id="coverCouple" class="mt-3">Ryka &amp; Adit&nbsp;</h2>
+                    <p class="cover-invite" data-i18n="coverInvite">We hope you will be part of our special day.</p>
+                    <p class="sub" data-i18n="coverDate">Sunday, 20 December 2026</p>
+                    <div id="coverGreeting" data-i18n="coverGreeting">To Our Esteemed Guest</div>
+                    <div class="cover-actions">
+                        <button id="openInvite" class="cover-btn primary">Open Invitation</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -376,7 +394,7 @@
 
     <!-- Thank you: Bottom section -->
     <section class="section-wedding container text-center" id="thankyou">
-        <div class="deco deco-cat" aria-hidden="true"><img class="deco-float delay" src="assets/cat 3.webp" width="400" height="250" alt="" loading="lazy" decoding="async"></div>
+        <div class="deco deco-cat" aria-hidden="true"><img class="deco-float delay" src="assets/kucing.webp" width="400" height="250" alt="" loading="lazy" decoding="async"></div>
         <div class="text-center mb-4">
             <h2 class="font-wedding display-4" data-i18n="thankYouTitle">Thank You&nbsp;</h2>
             <div class="orn-divider" aria-hidden="true"></div>
@@ -690,6 +708,7 @@
             en: {
                 coverGreeting: 'To Our Beloved Guest',
                 coverDate: 'Sunday, 20 December 2026',
+                coverInvite: 'We hope you will be part of our special day.',
                 coverButton: 'Open Invitation',
                 saveDate: 'Save the Date',
                 homeTag: 'The Wedding of',
@@ -752,6 +771,7 @@
             id: {
                 coverGreeting: 'Kepada Tamu Terhormat',
                 coverDate: 'Minggu, 20 Desember 2026',
+                coverInvite: 'Kami berharap Anda menjadi bagian dari hari istimewa kami.',
                 coverButton: 'Buka Undangan',
                 saveDate: 'Simpan Tanggal',
                 homeTag: 'Pernikahan',

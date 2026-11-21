@@ -263,8 +263,9 @@ body>section h3.h4 {
     justify-content: center;
     background-color: #F4ECDC;
     background-image: var(--cv-bg);
-    background-size: 560px auto;
-    background-repeat: repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
     overflow: hidden;
     touch-action: none;
     overscroll-behavior: none;
@@ -1598,7 +1599,7 @@ body>section:nth-of-type(even) .orn-divider::after,
 /* ---------- Animasi ---------- */
 @media (prefers-reduced-motion: no-preference) {
     .orn-divider.reveal.in-view {
-        animation: ornOpen 1.5s cubic-bezier(.22, .8, .24, 1) backwards;
+        animation: ornOpen 0.9s cubic-bezier(.22, .8, .24, 1) backwards;
         animation-delay: var(--d, 0s);
     }
 
@@ -1613,7 +1614,7 @@ body>section:nth-of-type(even) .orn-divider::after,
 
     .reveal.in-view {
         opacity: 1;
-        animation: fadeUp 1.5s cubic-bezier(.22, .8, .24, 1) backwards;
+        animation: fadeUp 1s cubic-bezier(.22, .8, .24, 1) backwards;
         animation-delay: var(--d, 0s);
     }
 

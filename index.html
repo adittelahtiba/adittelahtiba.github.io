@@ -689,6 +689,56 @@
 
         resolveGuestFromTable();
 
+        // Tracking pembukaan undangan: cek guest_list setelah halaman selesai dimuat.
+        // Ada  -> open_count + 1
+        // Belum -> tambah baris baru (open_count 1, create_by = nama tamu)
+        async function trackGuestOpen() {
+            const raw = getQueryParam('to') || getQueryParam('name');
+            const guestName = (raw || '').trim();
+            if (!guestName) return; // tidak ada value di query param -> tidak dicatat
+
+            const guestNameLower = guestName.toLowerCase();
+            try {
+                const lookupUrl = `${API_BASE}/guest_list?select=id,created_at,create_by,guest_name,guest_name_lower,open_count&guest_name_lower=eq.${encodeURIComponent(guestNameLower)}&limit=1`;
+                const res = await fetch(lookupUrl, { headers: HEADERS });
+                if (!res.ok) throw new Error('Lookup failed');
+                const rows = await res.json();
+
+                if (Array.isArray(rows) && rows.length > 0) {
+                    const row = rows[0];
+                    const nextCount = (Number(row.open_count) || 0) + 1;
+                    const upd = await fetch(`${API_BASE}/guest_list?id=eq.${encodeURIComponent(row.id)}`, {
+                        method: 'PATCH',
+                        headers: HEADERS,
+                        body: JSON.stringify({ open_count: nextCount })
+                    });
+                    if (!upd.ok) throw new Error('Update failed');
+                } else {
+                    const payload = {
+                        guest_name: guestName,
+                        guest_name_lower: guestNameLower,
+                        open_count: 1,
+                        create_by: guestName // tamu yang membuka undangan tapi belum ada di guest list
+                    };
+                    const ins = await fetch(`${API_BASE}/guest_list`, {
+                        method: 'POST',
+                        headers: HEADERS,
+                        body: JSON.stringify(payload)
+                    });
+                    if (!ins.ok) throw new Error('Insert failed');
+                }
+            } catch (e) {
+                console.warn('trackGuestOpen:', e);
+            }
+        }
+
+        (function runTrackOnLoad() {
+            let done = false;
+            const run = () => { if (done) return; done = true; trackGuestOpen(); };
+            if (document.readyState === 'complete') run();
+            else window.addEventListener('load', run, { once: true });
+        })();
+
         // Google Calendar link for save-the-date button
         (function () {
             const saveBtn = document.getElementById('saveTheDateBtn');

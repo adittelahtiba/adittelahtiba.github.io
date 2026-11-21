@@ -584,23 +584,71 @@
         const musicBtn = document.getElementById('musicBtn');
         const musicIcon = document.getElementById('musicIcon');
         let isPlaying = false;
+        let pausedByVisibility = false;
+
+        function setPlayingUI(playing) {
+            isPlaying = playing;
+            if (playing) {
+                musicBtn.classList.add('playing');
+                musicIcon.className = 'fa-solid fa-compact-disc';
+            } else {
+                musicBtn.classList.remove('playing');
+                musicIcon.className = 'fa-solid fa-volume-xmark';
+            }
+        }
+
+        function playAudio() {
+            return audio.play().then(() => {
+                setPlayingUI(true);
+                pausedByVisibility = false;
+            }).catch(err => {
+                console.log("Autoplay/playback dicegah oleh browser:", err);
+            });
+        }
+
+        function pauseAudio(byVisibility = false) {
+            audio.pause();
+            setPlayingUI(false);
+            pausedByVisibility = byVisibility;
+        }
 
         function toggleMusic() {
             if (isPlaying) {
-                audio.pause();
-                musicBtn.classList.remove('playing');
-                musicIcon.className = 'fa-solid fa-volume-xmark';
-                isPlaying = false;
+                pauseAudio(false);
             } else {
-                audio.play().then(() => {
-                    musicBtn.classList.add('playing');
-                    musicIcon.className = 'fa-solid fa-compact-disc';
-                    isPlaying = true;
-                }).catch(err => {
-                    console.log("Autoplay dicegah oleh browser:", err);
-                });
+                playAudio();
             }
         }
+
+        musicBtn.addEventListener('click', toggleMusic);
+
+        // Stop saat halaman tidak aktif / tersembunyi, lanjutkan saat kembali aktif
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                if (isPlaying) {
+                    pauseAudio(true);
+                }
+            } else {
+                if (pausedByVisibility) {
+                    playAudio();
+                }
+            }
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // Cadangan untuk beberapa webview/browser saat window kehilangan fokus
+        window.addEventListener('blur', function () {
+            if (isPlaying) {
+                pauseAudio(true);
+            }
+        });
+
+        window.addEventListener('focus', function () {
+            if (!document.hidden && pausedByVisibility) {
+                playAudio();
+            }
+        });
 
         musicBtn.addEventListener('click', toggleMusic);
 

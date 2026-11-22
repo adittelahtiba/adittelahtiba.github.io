@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cek Dark Mode</title>
+<script>
+    // Uji meta color-scheme lewat URL:  ?cs=light-dark | light | only-light | none
+    (function () {
+        var cs = new URLSearchParams(location.search).get('cs') || 'light-dark';
+        var map = { 'light-dark': 'light dark', 'light': 'light', 'only-light': 'only light' };
+        if (map[cs]) {
+            var m = document.createElement('meta');
+            m.name = 'color-scheme';
+            m.content = map[cs];
+            document.head.appendChild(m);
+        }
+    })();
+</script>
+<style>
+    /* Palet sendiri (tanpa color-scheme) supaya hasil tes tidak tercampur */
+    :root { --bg: #f4f1ea; --card: #ffffff; --text: #1b2433; --soft: #5b6678; --line: #d9d3c4; }
+    @media (prefers-color-scheme: dark) {
+        :root { --bg: #0b1422; --card: #16243b; --text: #f1ebdd; --soft: #b9c0cc; --line: #2a3c5a; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 20px 16px 40px; background: var(--bg); color: var(--text);
+           font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    main { max-width: 520px; margin: 0 auto; }
+    h1 { font-size: 1.2rem; margin: 0 0 14px; }
+    .verdict { border-radius: 16px; padding: 22px 16px; text-align: center; font-size: 1.6rem; font-weight: 800;
+               border: 2px solid var(--line); background: var(--card); }
+    .verdict small { display: block; font-size: .85rem; font-weight: 500; color: var(--soft); margin-top: 4px; }
+    .verdict.dark { background: #0c1829; color: #dcc287; border-color: #dcc287; }
+    .verdict.light { background: #fff8e6; color: #85652a; border-color: #b99650; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; background: var(--card);
+            border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: .92rem; }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { color: var(--soft); width: 52%; }
+    td:last-child { font-weight: 600; word-break: break-word; }
+    h2 { font-size: 1rem; margin: 22px 0 8px; }
+    .boxes { display: flex; gap: 10px; }
+    .box { flex: 1; padding: 16px 10px; text-align: center; border-radius: 10px; font-weight: 600; border: 1px solid #888; }
+    .b1 { background: #ffffff; color: #000000; }
+    .b2 { background: #000000; color: #ffffff; }
+    p.note { font-size: .85rem; color: var(--soft); margin: 8px 0 0; }
+    .links a { display: inline-block; margin: 4px 6px 0 0; padding: 6px 10px; border: 1px solid var(--line);
+               border-radius: 999px; color: var(--text); text-decoration: none; font-size: .85rem; background: var(--card); }
+    .links a.on { border-color: #b99650; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+    <h1>Cek Dark Mode Perangkat / Browser</h1>
+
+    <div id="verdict" class="verdict">…</div>
+
+    <table id="rows"></table>
+
+    <h2>Tes warna tetap</h2>
+    <div class="boxes">
+        <div class="box b1">Putih #FFF<br>teks hitam</div>
+        <div class="box b2">Hitam #000<br>teks putih</div>
+    </div>
+    <p class="note">Dua kotak ini warnanya dikunci. Kalau browser memaksa dark mode (force dark), kotak putih biasanya ikut jadi gelap/abu atau terlihat redup.</p>
+
+    <h2>Uji meta color-scheme</h2>
+    <div class="links" id="links"></div>
+    <p class="note">Ganti pilihan, halaman otomatis dimuat ulang. Bandingkan baris "Hasil deteksi" dan tampilan kotak di atas.</p>
+</main>
+
+<script>
+(function () {
+    var $ = function (id) { return document.getElementById(id); };
+    var mqDark  = window.matchMedia('(prefers-color-scheme: dark)');
+    var mqLight = window.matchMedia('(prefers-color-scheme: light)');
+
+    function uaInfo() {
+        var ua = navigator.userAgent, m;
+        if ((m = ua.match(/SamsungBrowser\/([\d.]+)/))) return 'Samsung Internet ' + m[1];
+        if ((m = ua.match(/EdgA?\/([\d.]+)/)))         return 'Edge ' + m[1];
+        if ((m = ua.match(/Firefox\/([\d.]+)/)))       return 'Firefox ' + m[1];
+        if ((m = ua.match(/(?:Chrome|CriOS)\/([\d.]+)/))) return 'Chrome ' + m[1];
+        if ((m = ua.match(/Version\/([\d.]+).*Safari/))) return 'Safari ' + m[1];
+        return 'Tidak dikenali';
+    }
+
+    function yn(q) { return window.matchMedia(q).matches ? 'ya' : 'tidak'; }
+
+    function render() {
+        var supported = window.matchMedia('(prefers-color-scheme)').media !== 'not all';
+        var state = !supported ? 'tidak didukung'
+                  : mqDark.matches ? 'GELAP'
+                  : mqLight.matches ? 'TERANG'
+                  : 'tanpa preferensi';
+
+        var v = $('verdict');
+        v.className = 'verdict ' + (mqDark.matches ? 'dark' : 'light');
+        v.innerHTML = (mqDark.matches ? '🌙 Dark mode AKTIF' : '☀️ Dark mode TIDAK aktif') +
+                      '<small>Hasil deteksi prefers-color-scheme: ' + state + '</small>';
+
+        var cs = new URLSearchParams(location.search).get('cs') || 'light-dark';
+        var metaEl = document.querySelector('meta[name="color-scheme"]');
+        var rows = [
+            ['Hasil deteksi', state],
+            ['(prefers-color-scheme: dark)', yn('(prefers-color-scheme: dark)')],
+            ['(prefers-color-scheme: light)', yn('(prefers-color-scheme: light)')],
+            ['Media query didukung', supported ? 'ya' : 'tidak'],
+            ['Meta color-scheme di halaman ini', metaEl ? metaEl.content : '(tidak ada)'],
+            ['Browser', uaInfo()],
+            ['forced-colors', yn('(forced-colors: active)')],
+            ['prefers-contrast: more', yn('(prefers-contrast: more)')],
+            ['Layar', screen.width + '×' + screen.height + ' @' + (window.devicePixelRatio || 1) + 'x'],
+            ['Diperbarui', new Date().toLocaleTimeString()]
+        ];
+        $('rows').innerHTML = rows.map(function (r) {
+            return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+        }).join('');
+
+        var opts = [['light-dark', 'light dark'], ['light', 'light'], ['only-light', 'only light'], ['none', 'tanpa meta']];
+        $('links').innerHTML = opts.map(function (o) {
+            return '<a href="?cs=' + o[0] + '"' + (o[0] === cs ? ' class="on"' : '') + '>' + o[1] + '</a>';
+        }).join('');
+    }
+
+    // Perbarui langsung kalau mode HP / browser diganti saat halaman terbuka
+    [mqDark, mqLight].forEach(function (mq) {
+        if (mq.addEventListener) mq.addEventListener('change', render);
+        else if (mq.addListener) mq.addListener(render);
+    });
+    render();
+})();
+</script>
+</body>
+</html>

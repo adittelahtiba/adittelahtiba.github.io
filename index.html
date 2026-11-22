@@ -1666,7 +1666,7 @@
                 tip.hidden = false;
                 requestAnimationFrame(function () { requestAnimationFrame(function () { tip.classList.add('show'); }); });
                 timer = setTimeout(close, AUTO_CLOSE_MS);
-                try { sessionStorage.setItem('dark_tip_seen', '1'); } catch (e) { }
+                // try { sessionStorage.setItem('dark_tip_seen', '1'); } catch (e) { }
             }
 
             function show(mode) {

@@ -1898,8 +1898,8 @@ body>section#couple:not(#home):not(#countdownSection):not(.footer-band) {
 
 .dark-tip img {
     display: block;
-    width: 110px;
-    max-width: 60%;
+    /* width: 110px; */
+    max-width: 80%;
     height: auto;
     margin: 0 auto 8px;
     pointer-events: none;

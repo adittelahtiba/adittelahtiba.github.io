@@ -1863,3 +1863,76 @@ body>section#couple:not(#home):not(#countdownSection):not(.footer-band) {
     outline: 2px solid var(--gold-ink);
     outline-offset: 2px;
 } */
+
+/* =========================================================================
+   POPUP SARAN MODE TERANG (kanan atas, tutup sendiri 10 detik)
+   ========================================================================= */
+.dark-tip {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 100002;
+    width: min(280px, calc(100vw - 24px));
+    padding: 16px 14px 12px;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(12, 24, 41, 0.28);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity .35s ease, transform .35s ease;
+}
+
+.dark-tip[hidden] {
+    display: none;
+}
+
+.dark-tip.show {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+.dark-tip img {
+    display: block;
+    width: 110px;
+    max-width: 60%;
+    height: auto;
+    margin: 0 auto 8px;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.dark-tip p {
+    margin: 0;
+    padding: 0 12px; /* beri ruang agar teks tidak menabrak tombol X */
+    font-size: 0.86rem;
+    line-height: 1.45;
+    color: var(--ink);
+}
+
+.dark-tip-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    background: var(--ivory-warm);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dark-tip { transition: none; }
+}

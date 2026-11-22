@@ -132,6 +132,13 @@
         <button class="lang-btn active" type="button" data-lang="id" aria-label="Bahasa Indonesia" aria-pressed="true">ID</button>
     </div>
 
+    <!-- Popup saran mode terang (muncul hanya di Android bermode gelap) -->
+    <div id="darkTip" class="dark-tip" role="status" aria-live="polite" hidden>
+        <button type="button" id="darkTipClose" class="dark-tip-close" aria-label="Close">&times;</button>
+        <img data-src="assets/si-imut.webp" alt="" width="400" height="250" decoding="async">
+        <p id="darkTipText" data-i18n="darkTipText"></p>
+    </div>
+
     <!-- background audio + control -->
     <audio id="bgAudio" src="assets/Our Wedding Day (1).mp3" loop preload="none"></audio>
     <button id="musicToggle" class="music-toggle" aria-label="Toggle music"> <i class="fa-solid fa-compact-disc"></i>
@@ -816,7 +823,9 @@
                 footerTitle: 'See You at the Wedding',
                 footerText: 'We look forward to celebrating this special day with you.',
                 galleryTitle: 'Our Moments',
-                toGuest: 'To: '
+                toGuest: 'To: ',
+                darkTipText: 'For the best experience, please switch your browser/device to light mode.',
+                darkTipTextMaybe: 'If the page looks dark or dimmed, please switch your browser/device to light mode for the best experience.'
             },
             id: {
                 coverGreeting: 'Kepada Tamu Terhormat',
@@ -879,7 +888,9 @@
                 footerTitle: 'Sampai Bertemu di Pernikahan',
                 footerText: 'Kami menantikan kebersamaan Anda dalam merayakan hari istimewa ini.',
                 galleryTitle: 'Galeri Bahagia',
-                toGuest: 'Kepada: '
+                toGuest: 'Kepada: ',
+                darkTipText: 'Untuk tampilan yang lebih baik, ubah browser/perangkat Anda ke mode terang.',
+                darkTipTextMaybe: 'Jika tampilan terlihat gelap atau redup, ubah browser/perangkat Anda ke mode terang untuk tampilan yang lebih baik.'
             }
         };
 
@@ -1600,6 +1611,78 @@
             new MutationObserver(function (_, mo) {
                 if (cover.classList.contains('open')) { mo.disconnect(); setTimeout(start, 500); }
             }).observe(cover, { attributes: true, attributeFilter: ['class'] });
+        })();
+    </script>
+    <script>
+        // Popup saran mode terang: Android + mode gelap, muncul setelah halaman selesai dimuat
+        (function () {
+            var AUTO_CLOSE_MS = 10000;               // tutup sendiri setelah 10 detik
+            var SHOW_FOR_SAMSUNG_UNKNOWN = true;     // Samsung Internet tidak melaporkan mode gelap -> tampilkan dengan kalimat "jika..."
+
+            var tip = document.getElementById('darkTip');
+            var img = tip && tip.querySelector('img');
+            var txt = document.getElementById('darkTipText');
+            var closeBtn = document.getElementById('darkTipClose');
+            if (!tip || !img || !txt || !closeBtn) return;
+
+            var params = new URLSearchParams(location.search);
+            var force = params.get('darktip') === '1';   // untuk uji coba: ?darktip=1
+
+            function isAndroid() {
+                var uaData = navigator.userAgentData;
+                if (uaData && uaData.platform) return uaData.platform === 'Android';
+                return /Android/i.test(navigator.userAgent || '');
+            }
+
+            function detect() {
+                if (force) return 'detected';
+                try { if (sessionStorage.getItem('dark_tip_seen') === '1') return null; } catch (e) { }
+                if (!isAndroid()) return null;
+                var dark = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                if (dark) return 'detected';
+                if (SHOW_FOR_SAMSUNG_UNKNOWN && /SamsungBrowser/i.test(navigator.userAgent || '')) return 'maybe';
+                return null;
+            }
+
+            var timer = null, shown = false;
+
+            function close() {
+                clearTimeout(timer);
+                tip.classList.remove('show');
+                setTimeout(function () { tip.hidden = true; }, 400);
+            }
+
+            function reveal() {
+                if (shown) return;
+                shown = true;
+                tip.hidden = false;
+                requestAnimationFrame(function () { requestAnimationFrame(function () { tip.classList.add('show'); }); });
+                timer = setTimeout(close, AUTO_CLOSE_MS);
+                try { sessionStorage.setItem('dark_tip_seen', '1'); } catch (e) { }
+            }
+
+            function show(mode) {
+                var key = mode === 'maybe' ? 'darkTipTextMaybe' : 'darkTipText';
+                txt.setAttribute('data-i18n', key);   // supaya ikut berganti saat tombol bahasa ditekan
+                var dict = (typeof translations !== 'undefined' && typeof langState !== 'undefined')
+                    ? (translations[langState.current] || translations.en) : null;
+                if (dict && dict[key]) txt.textContent = dict[key];
+
+                img.addEventListener('load', reveal, { once: true });
+                img.addEventListener('error', function () { img.style.display = 'none'; reveal(); }, { once: true });
+                img.src = img.getAttribute('data-src');
+                setTimeout(reveal, 3000);   // jaga-jaga kalau gambar lambat
+            }
+
+            closeBtn.addEventListener('click', close);
+
+            function start() {
+                var mode = detect();
+                if (!mode) return;
+                setTimeout(function () { show(mode); }, 600);
+            }
+            if (document.readyState === 'complete') start();
+            else window.addEventListener('load', start, { once: true });
         })();
     </script>
 </body>

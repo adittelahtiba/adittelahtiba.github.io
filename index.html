@@ -135,7 +135,7 @@
     <!-- Popup saran mode terang (muncul hanya di Android bermode gelap) -->
     <div id="darkTip" class="dark-tip" role="status" aria-live="polite" hidden>
         <button type="button" id="darkTipClose" class="dark-tip-close" aria-label="Close">&times;</button>
-        <img data-src="assets/si-imut.webp" alt="" width="400" height="250" decoding="async">
+        <img data-src="assets/cat-info.webp" alt="" height="250" decoding="async">
         <p id="darkTipText" data-i18n="darkTipText"></p>
     </div>
 
@@ -1634,10 +1634,18 @@
                 return /Android/i.test(navigator.userAgent || '');
             }
 
+            // Chrome asli saja (bukan Samsung Internet, Edge, Opera, Firefox, UC, Vivaldi, atau WebView aplikasi)
+            function isChromeAndroid() {
+                var ua = navigator.userAgent || '';
+                return /Chrome\/|CriOS\//.test(ua) &&
+                    !/SamsungBrowser|EdgA|Edg\/|OPR\/|OPT\/|Firefox|FxiOS|UCBrowser|Vivaldi|; wv\)/i.test(ua);
+            }
+
             function detect() {
                 if (force) return 'detected';
                 try { if (sessionStorage.getItem('dark_tip_seen') === '1') return null; } catch (e) { }
                 if (!isAndroid()) return null;
+                if (isChromeAndroid()) return null;   // Chrome menghormati color-scheme "only light", popup tidak perlu
                 var dark = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
                 if (dark) return 'detected';
                 if (SHOW_FOR_SAMSUNG_UNKNOWN && /SamsungBrowser/i.test(navigator.userAgent || '')) return 'maybe';

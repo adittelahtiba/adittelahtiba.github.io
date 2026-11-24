@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasyakur Bini’mah – Ryka &amp; Adit</title>
+
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#FBF7EF">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Tasyakur Bini’mah Ryka &amp; Adit">
+    <meta property="og:description" content="Dengan memohon rahmat dan rida Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara tasyakur bini’mah menjelang pernikahan Ryka &amp; Adit.">
+    <meta property="og:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+    <meta property="og:image:secure_url" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Ryka &amp; Adit Wedding">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share-syukuran.jpg">
+
+    <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+    <link rel="preload" as="image" href="assets/bg-ivory.webp" fetchpriority="high">
+
+    <!-- Font: Lora (judul) + Cormorant Garamond (isi) + Amiri (Arab) + Parisienne (cover) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cormorant+Garamond:wght@500;600;700&family=Lora:wght@500;600&family=Parisienne&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css">
+
+    <style>
+        :root {
+            color-scheme: light;
+
+            /* Permukaan terang */
+            --ivory: #FBF7EF;
+            --ivory-warm: #F3EBDC;
+            --paper: #FFFDF8;
+
+            /* Permukaan gelap */
+            --navy: #152744;
+            --navy-deep: #0C1829;
+
+            /* Teks */
+            --ink: #14233B;
+            --ink-soft: #4B5A70;
+            --on-dark: #F7F1E3;
+
+            /* Emas */
+            --gold: #B99650;
+            --gold-ink: #85652A;
+            --gold-bright: #DCC287;
+
+            /* Font */
+            --font-heading: 'Lora', Georgia, serif;
+            --font-body: 'Cormorant Garamond', Georgia, serif;
+            --font-arabic: 'Amiri', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--ivory);
+            background-image: url('assets/bg-ivory.webp');
+            background-size: 560px auto;
+            background-repeat: repeat;
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-size: 19px;
+            font-weight: 500;
+            font-variant-numeric: lining-nums;
+            font-feature-settings: "lnum" 1;
+            line-height: 1.6;
+            padding: 20px 0 40px;
+            overflow-x: hidden;
+        }
+
+        /* ---------- Teks dasar ---------- */
+        p {
+            font-size: 19px;
+            margin-bottom: 14px;
+        }
+
+        .heading {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--ink);
+        }
+
+        .bismillah {
+            font-family: var(--font-arabic);
+            font-size: 26px;
+            line-height: 1.9;
+            color: var(--gold-ink);
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-size: 28px;
+        }
+
+        .subtitle {
+            font-size: 19px;
+            color: var(--ink-soft);
+            margin-top: 4px;
+        }
+
+        .salam {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--gold-ink);
+            margin: 22px 0 12px;
+            text-wrap: balance;
+        }
+
+        .name {
+            font-size: 26px;
+            color: var(--gold-ink);
+            margin: 10px 0 6px;
+        }
+
+        .name-and {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            color: var(--gold-ink);
+            margin: 4px 0;
+        }
+
+        .parents {
+            color: var(--ink-soft);
+            margin-bottom: 8px;
+        }
+
+        .parents b {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .divider {
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+            margin: 24px auto;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        /* ---------- Cover (tirai) ---------- */
+        .curtain-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--navy);
+            background-image: url('assets/bg-navy-grain.webp');
+            background-size: 420px auto;
+            background-repeat: repeat;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .curtain-overlay.open {
+            transform: translateY(-100%);
+        }
+
+        .curtain-content {
+            text-align: center;
+            color: var(--on-dark);
+            padding: 20px;
+        }
+
+        .curtain-content .bismillah,
+        .curtain-content .guest-name {
+            color: var(--gold-bright);
+        }
+
+        .curtain-content .heading {
+            color: var(--on-dark);
+        }
+
+        .curtain-content .subtitle {
+            color: var(--on-dark);
+            opacity: 0.85;
+        }
+
+        .curtain-couple {
+            font-family: 'Parisienne', cursive;
+            font-size: 48px;
+            font-weight: 400;
+            line-height: 1.2;
+            margin: 14px 0 4px;
+        }
+
+        .curtain-content .guest-box {
+            margin: 18px 0 22px;
+            background: rgba(21, 39, 68, 0.85);
+            border-color: rgba(185, 150, 80, 0.6);
+        }
+
+        .btn-open {
+            background-color: var(--navy);
+            color: var(--gold-bright);
+            border: 1px solid var(--gold-bright);
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-family: var(--font-body);
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(12, 24, 41, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-open:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(12, 24, 41, 0.5);
+        }
+
+        /* ---------- Kartu undangan ---------- */
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .invitation-card {
+            background-color: var(--paper);
+            background-image: url('assets/bg-paper.webp');
+            background-size: 560px auto;
+            background-repeat: repeat;
+            border: 1.5px solid var(--gold);
+            border-radius: 20px;
+            padding: 36px 24px;
+            box-shadow: 0 10px 30px rgba(12, 24, 41, 0.08);
+            text-align: center;
+        }
+
+        /* Kotak nama tamu */
+        .guest-box {
+            background-color: var(--navy);
+            background-image: url('assets/bg-navy-grain.webp');
+            background-size: 420px auto;
+            background-repeat: repeat;
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 20px 0 24px;
+        }
+
+        .guest-label {
+            font-size: 15px;
+            letter-spacing: 0.02em;
+            color: var(--on-dark);
+            opacity: 0.85;
+            margin-bottom: 2px;
+        }
+
+        .guest-name {
+            font-family: var(--font-heading);
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--gold-bright);
+        }
+
+        /* Detail acara */
+        .event-box {
+            background-color: var(--ivory-warm);
+            background-image: url('assets/bg-ivory-warm.webp');
+            background-size: 560px auto;
+            background-repeat: repeat;
+            border: 1.5px dashed var(--gold);
+            border-radius: 14px;
+            padding: 20px;
+            margin: 24px 0;
+            text-align: left;
+        }
+
+        .event-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .event-row:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .event-icon {
+            color: var(--gold-ink);
+            font-size: 16px;
+            margin-top: 3px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .event-info .label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--gold-ink);
+        }
+
+        .event-info .value {
+            display: block;
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .event-info .address {
+            font-size: 17px;
+            color: var(--ink-soft);
+            margin-top: 2px;
+        }
+
+        .btn-map {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 16px;
+            padding: 12px;
+            background: var(--navy);
+            color: var(--on-dark);
+            border: 1px solid var(--gold);
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-map:hover {
+            background: var(--navy-deep);
+            color: var(--gold-bright);
+            border-color: var(--gold-bright);
+            box-shadow: 0 6px 18px rgba(12, 24, 41, 0.25);
+        }
+
+        /* Penutup */
+        .footer-thanks {
+            color: var(--ink-soft);
+            margin-top: 24px;
+        }
+
+        .family-name {
+            font-family: var(--font-heading);
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--ink);
+            margin-top: 8px;
+        }
+
+        .family-name .salam {
+            margin: 4px 0 18px;
+        }
+
+        .family-name small {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            color: var(--ink-soft);
+            margin-bottom: 4px;
+        }
+
+        /* Tombol musik */
+        .music-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 998;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--navy);
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            color: var(--gold-bright);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(12, 24, 41, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: var(--navy-deep);
+        }
+
+        .music-btn i {
+            font-size: 18px;
+        }
+
+        .music-btn.playing i {
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .curtain-overlay { transition-duration: 0.01s; }
+            .music-btn.playing i { animation: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- COVER (TIRAI) -->
+    <div class="curtain-overlay" id="curtainOverlay">
+        <div class="curtain-content">
+            <div class="bismillah" lang="ar" dir="rtl">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+            <div class="heading title">Tasyakur Bini’mah</div>
+            <div class="subtitle">Menjelang Pernikahan</div>
+            <div class="heading curtain-couple">Ryka &amp; Adit</div>
+
+            <div class="guest-box">
+                <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+                <div class="guest-name" id="curtainGuestName">Tamu Undangan</div>
+            </div>
+
+            <button class="btn-open" id="openInvitationBtn">
+                <i class="fa-solid fa-envelope-open"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
+
+    <!-- MUSIK -->
+    <audio id="audioBacksound" loop preload="auto">
+        <source src="assets/Bridal Night.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <button class="music-btn" id="musicBtn" title="Putar/Hentikan musik" aria-label="Putar atau hentikan musik">
+        <i class="fa-solid fa-compact-disc" id="musicIcon"></i>
+    </button>
+
+    <!-- KARTU UNDANGAN -->
+    <div class="container">
+        <main class="invitation-card">
+
+            <div class="bismillah" lang="ar" dir="rtl" style="display: none;">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+            <h1 class="heading title" style="display: none;">Tasyakur Bini’mah</h1>
+            <div class="subtitle" style="display: none;">Menjelang Pernikahan</div>
+
+            <div class="guest-box" style="display: none;">
+                <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+                <div class="guest-name" id="guestName">Tamu Undangan</div>
+            </div>
+
+            <div class="salam">Assalamu’alaikum Warahmatullahi Wabarakatuh</div>
+
+            <p>
+                Dengan memohon rahmat dan rida Allah SWT, kami bermaksud menyelenggarakan acara tasyakur bini’mah menjelang pernikahan:
+            </p>
+
+            <h2 class="heading name">Ryka Nurdianti</h2>
+            <p class="parents"><small>Putri dari <b>Bapak Supyandi</b> dan <b>Ibu Muryani</b></small></p>
+
+            <div class="name-and">&amp;</div>
+
+            <h2 class="heading name">Aditya Pangestu</h2>
+            <p class="parents"><small>dari <b>Bapak Jajang Solihin</b> dan <b>Ibu Eulis Karmilah</b></small></p>
+
+            <p>Kami mengundang Bapak/Ibu/Saudara/i untuk hadir pada:</p>
+
+            <div class="divider"></div>
+
+            <!-- DETAIL ACARA -->
+            <div class="event-box">
+                <div class="event-row">
+                    <i class="fa-regular fa-calendar event-icon"></i>
+                    <div class="event-info">
+                        <span class="label">Hari dan Tanggal</span>
+                        <span class="value">Sabtu, 19 Desember 2026</span>
+                    </div>
+                </div>
+
+                <div class="event-row">
+                    <i class="fa-regular fa-clock event-icon"></i>
+                    <div class="event-info">
+                        <span class="label">Waktu</span>
+                        <span class="value">11.00 WIB – Selesai</span>
+                    </div>
+                </div>
+
+                <div class="event-row">
+                    <i class="fa-solid fa-location-dot event-icon"></i>
+                    <div class="event-info">
+                        <span class="label">Lokasi Acara</span>
+                        <span class="value">Kediaman Keluarga Bapak Supyandi</span>
+                        <div class="address">Komp. Sapta Taruna PU Blok B. 108 RT. 07/08</div>
+                    </div>
+                </div>
+
+                <a href="https://maps.app.goo.gl/gR3MQmjpuQif3T957" target="_blank" rel="noopener" class="btn-map">
+                    <i class="fa-solid fa-map-location-dot"></i> Petunjuk Arah (Google Maps)
+                </a>
+            </div>
+
+            <p class="footer-thanks"><small>
+                Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk
+                memberikan doa restu. Atas kehadiran dan doa restunya, kami ucapkan terima kasih.</small>
+            </p>
+
+            <div class="family-name">
+                <div class="salam">Wassalamu’alaikum Warahmatullahi Wabarakatuh</div>
+                <small>Kami yang berbahagia,</small>
+                Keluarga Besar<br>Bapak Supyandi dan Ibu Muryani
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Nama tamu dari URL (?to=NamaTamu)
+        const guest = new URLSearchParams(window.location.search).get('to');
+        if (guest) {
+            document.getElementById('guestName').textContent = guest;
+            document.getElementById('curtainGuestName').textContent = guest;
+        }
+
+        // Musik
+        const audio = document.getElementById('audioBacksound');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+        let pausedByVisibility = false;
+
+        function setPlayingUI(playing) {
+            isPlaying = playing;
+            musicBtn.classList.toggle('playing', playing);
+            musicIcon.className = playing ? 'fa-solid fa-compact-disc' : 'fa-solid fa-volume-xmark';
+        }
+
+        function playAudio() {
+            return audio.play().then(() => {
+                setPlayingUI(true);
+                pausedByVisibility = false;
+            }).catch(err => {
+                console.log('Pemutaran dicegah oleh browser:', err);
+            });
+        }
+
+        function pauseAudio(byVisibility = false) {
+            audio.pause();
+            setPlayingUI(false);
+            pausedByVisibility = byVisibility;
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                pauseAudio(false);
+            } else {
+                playAudio();
+            }
+        }
+
+        musicBtn.addEventListener('click', toggleMusic);
+
+        // Jeda musik saat halaman tidak aktif, lanjutkan saat kembali
+        function pauseIfActive() {
+            if (isPlaying) pauseAudio(true);
+        }
+
+        function resumeIfPaused() {
+            if (!document.hidden && pausedByVisibility) playAudio();
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            document.hidden ? pauseIfActive() : resumeIfPaused();
+        });
+        window.addEventListener('blur', pauseIfActive);
+        window.addEventListener('focus', resumeIfPaused);
+
+        // Buka undangan
+        document.getElementById('openInvitationBtn').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            document.getElementById('curtainOverlay').classList.add('open');
+            if (!isPlaying) toggleMusic();
+        });
+    </script>
+
+</body>
+
+</html>

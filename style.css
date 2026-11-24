@@ -48,7 +48,7 @@
     --navy-text: #1B3A6B;
 
     /* Sistem font: script untuk judul besar, serif untuk nama & kutipan, sans untuk teks */
-    --font-script: 'Great Vibes', 'Allura', cursive;
+    --font-script: 'Allura', cursive;
     --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
     --font-sans: 'Jost', 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 

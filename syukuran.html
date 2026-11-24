@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Syukuran Menjelang Pernikahan</title>
+    <title>Tasyakur Bini’mah – Ryka &amp; Adit</title>
 
     <!-- Deklarasi standar: minta browser tidak memaksa dark mode -->
     <meta name="color-scheme" content="light">
@@ -29,7 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Great+Vibes&family=Jost:wght@300;400;500;600&family=Amiri:ital@0;1&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Bonheur+Royale&family=Great+Vibes&family=Jost:wght@300;400;500;600&family=Amiri:ital@0;1&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css">
 
@@ -71,6 +71,7 @@
             --font-script: 'Great Vibes', 'Allura', cursive;
             --font-serif: 'Cormorant Garamond', Georgia, serif;
             --font-sans: 'Jost', 'Montserrat', system-ui, sans-serif;
+            --font-arabic: 'Amiri', serif;
 
             /* Peta semantik */
             --c-text: var(--ink);
@@ -127,9 +128,17 @@
             padding: 20px;
         }
 
+        .curtain-bismillah {
+            font-family: var(--font-arabic);
+            font-size: 26px;
+            line-height: 1.7;
+            color: var(--gold-bright);
+            margin-bottom: 12px;
+        }
+
         .curtain-title {
-            font-family: var(--font-script);
-            font-size: 48px;
+            font-family: 'Bonheur Royale', 'Great Vibes', cursive;
+            font-size: 54px;
             color: var(--gold-bright);
             margin-bottom: 10px;
         }
@@ -139,8 +148,18 @@
             font-size: 12px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 18px;
             color: var(--on-dark);
+            opacity: 0.9;
+        }
+
+        .curtain-event-sub {
+            display: block;
+            margin-top: 4px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: none;
+            color: var(--on-dark-soft);
             opacity: 0.85;
         }
 
@@ -211,17 +230,29 @@
             margin-bottom: 8px;
         }
 
+        /* Font nama pengantin */
         .title-names {
-            font-family: var(--font-script);
-            font-size: 42px;
-            font-weight: 400;
-            margin-bottom: 16px;
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            margin: 8px 0 6px;
+        }
+
+        .name-and {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 22px;
+            color: var(--gold-ink);
+            margin: 12px 0;
         }
 
         .arabic {
-            font-family: 'Amiri', serif;
-            font-size: 22px;
-            margin: 20px 0 10px;
+            font-family: var(--font-arabic);
+            font-size: 25px;
+            line-height: 1.8;
+            margin: 12px 0 14px;
         }
 
         /* GUEST GREETING */
@@ -267,6 +298,50 @@
             margin: 24px auto;
             border-radius: 2px;
             opacity: 0.7;
+        }
+
+        /* DIVIDER ORNAMEN */
+        .divider-paw {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 60%;
+            margin: 30px auto;
+        }
+
+        .divider-paw::before,
+        .divider-paw::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold));
+        }
+
+        .divider-paw::after {
+            background: linear-gradient(to left, transparent, var(--gold));
+        }
+
+        .divider-paw .dot {
+            flex: none;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        /* SALAM PEMBUKA & PENUTUP */
+        .salam {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--gold-ink);
+            margin: 4px 0 22px;
+        }
+
+        .salam-closing {
+            margin: 0;
         }
 
         /* EVENT DETAILS */
@@ -458,8 +533,14 @@
     <!-- OVERLAY TIRAI (CURTAIN OPENING) -->
     <div class="curtain-overlay" id="curtainOverlay">
         <div class="curtain-content">
-            <div class="curtain-subtitle">Undangan Syukuran Menjelang Pernikahan</div>
-            <div class="curtain-title">Ryka Nurdianti</div>
+            <div class="curtain-bismillah" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+
+            <div class="curtain-subtitle">
+                Tasyakur Bini’mah
+                <span class="curtain-event-sub">Menjelang Pernikahan</span>
+            </div>
+
+            <div class="curtain-title">Ryka & Adit</div>
             <div class="guest-box" style="margin: 18px 0 20px; background: rgba(21, 39, 68, 0.85); border-color: rgba(185, 150, 80, 0.6);">
                 <div class="guest-label" style="color: var(--on-dark); opacity: 0.9;">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
                 <div class="guest-name" id="curtainGuestName" style="color: var(--gold-bright);">Tamu Undangan</div>
@@ -488,19 +569,14 @@
         <!-- KARTU UNDANGAN -->
         <div class="invitation-card" id="invitationCard">
 
-            <div class="tagline">Syukuran Menjelang Pernikahan</div>
-
-            <div class="guest-box">
-                <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
-                <div class="guest-name" id="guestName">Tamu Undangan</div>
-            </div>
-
-            <div class="arabic">Assalamu’alaikum Warahmatullaahi Wabarakatuh</div>
+            <div class="salam">Assalamualaikum<br>Warahmatullahi Wabarakatuh</div>
 
             <p>
-                Dengan memohon rahmat dan rida Allah SWT, kami bermaksud menyelenggarakan acara Syukuran
-                Menjelang Pernikahan putri kami:
+                Dengan memohon rahmat dan rida Allah SWT, kami bermaksud menyelenggarakan acara tasyakur bini’mah menjelang pernikahan:
             </p>
+
+            <!-- DIVIDER 1: setelah pembuka, sebelum nama mempelai -->
+            <div class="divider-paw"><span class="dot"></span></div>
 
             <h1 class="title-names">Ryka Nurdianti</h1>
 
@@ -508,12 +584,20 @@
                 Putri dari <b>Bapak Supyandi</b> & <b>Ibu Muryani</b>
             </p>
 
+            <div class="name-and">&amp;</div>
+
+            <h1 class="title-names">Aditya Pangestu</h1>
+
             <p>
-                Acara ini merupakan wujud rasa syukur sekaligus doa bersama demi kelancaran hari bahagia dan keberkahan
-                rumah tangga yang akan dibina. Kami mengundang Bapak/Ibu/Saudara/i untuk hadir pada:
+                Putra dari <b>Bapak Jajang Solihin</b> & <b>Ibu Eulis Karmilah</b>
             </p>
 
-            <div class="divider"></div>
+            <!-- DIVIDER 2: setelah nama mempelai, sebelum ajakan hadir -->
+            <div class="divider-paw"><span class="dot"></span></div>
+
+            <p>
+                Kami mengundang Bapak/Ibu/Saudara/i untuk hadir pada:
+            </p>
 
             <!-- DETAIL ACARA -->
             <div class="event-box">
@@ -529,7 +613,7 @@
                     <i class="fa-regular fa-clock event-icon"></i>
                     <div class="event-info">
                         <label>Waktu</label>
-                        <span>13.00 WIB – Selesai</span>
+                        <span>11.00 WIB – Selesai</span>
                     </div>
                 </div>
 
@@ -551,13 +635,19 @@
                 <img src="assets/Golden_QR_Code_on_Transparent_Background-removebg-preview.png" class="qr-map" alt="QR Code Lokasi">
             </div>
 
+            <!-- DIVIDER 3: setelah detail acara, sebelum kalimat penutup -->
+            <div class="divider-paw"><span class="dot"></span></div>
+
             <p class="footer-thanks">
-                Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk
-                memberikan doa restu.
+                Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
             </p>
 
+            <!-- DIVIDER 4: sebelum salam penutup -->
+            <div class="divider-paw"><span class="dot"></span></div>
+
             <div class="family-name">
-                Wassalamu’alaikum Warahmatullahi Wabarakatuh.<br><br>
+                <div class="salam salam-closing">Wassalamu’alaikum<br>Warahmatullahi Wabarakatuh.</div>
+                <br>
                 <small style="font-weight: normal; color: var(--ink-soft);">Kami yang berbahagia,</small><br>
                 Keluarga Besar Bapak Supyandi & Ibu Muryani
             </div>
@@ -571,11 +661,9 @@
         const guest = params.get('to');
 
         if (guest) {
-            const guestNameEl = document.getElementById('guestName');
             const curtainGuestNameEl = document.getElementById('curtainGuestName');
             const displayName = decodeURIComponent(guest).replace(/\+/g, ' ');
 
-            if (guestNameEl) guestNameEl.textContent = displayName;
             if (curtainGuestNameEl) curtainGuestNameEl.textContent = displayName;
         }
 
@@ -650,8 +738,6 @@
             }
         });
 
-        musicBtn.addEventListener('click', toggleMusic);
-
         // Animasi Buka Tirai & Mulai Musik
         const curtainOverlay = document.getElementById('curtainOverlay');
         const openInvitationBtn = document.getElementById('openInvitationBtn');
@@ -665,31 +751,22 @@
         });
 
         // Deteksi perangkat Android untuk menampilkan notice dark mode secara kondisional
-(function() {
-    const noticeEl = document.getElementById('androidDarkNotice');
-    if (!noticeEl) return;
+        (function () {
+            const noticeEl = document.getElementById('androidDarkNotice');
+            if (!noticeEl) return;
 
-    const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const isAndroid = /android/i.test(ua);
+            const isIOS = /ipad|iphone|ipod/i.test(ua) && !window.MSStream;
+            const isChrome = /Chrome\/[\d.]+/i.test(ua) &&
+                             /Android/i.test(ua) &&
+                             !/EdgA|OPR|SamsungBrowser|UCBrowser/i.test(ua);
+            const isInstagram = /Instagram/i.test(ua);
 
-    // Deteksi Android
-    const isAndroid = /android/i.test(ua);
-
-    // Deteksi iOS
-    const isIOS = /ipad|iphone|ipod/i.test(ua) && !window.MSStream;
-
-    // Deteksi Google Chrome Android
-    const isChrome = /Chrome\/[\d.]+/i.test(ua) &&
-                     /Android/i.test(ua) &&
-                     !/EdgA|OPR|SamsungBrowser|UCBrowser/i.test(ua);
-
-    // Deteksi Instagram In-App Browser
-    const isInstagram = /Instagram/i.test(ua);
-
-    // Tampilkan hanya pada Android selain Chrome dan Instagram
-    if (isAndroid && !isIOS && !isChrome && !isInstagram) {
-        noticeEl.style.display = 'block';
-    }
-})();
+            if (isAndroid && !isIOS && !isChrome && !isInstagram) {
+                noticeEl.style.display = 'block';
+            }
+        })();
     </script>
 
 </body>

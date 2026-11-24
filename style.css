@@ -48,7 +48,7 @@
     --navy-text: #1B3A6B;
 
     /* Sistem font: script untuk judul besar, serif untuk nama & kutipan, sans untuk teks */
-    --font-script: 'Allura', cursive;
+    --font-script: 'MonteCarlo', cursive;
     --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
     --font-sans: 'Jost', 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -1935,4 +1935,21 @@ body>section#couple:not(#home):not(#countdownSection):not(.footer-band) {
 
 @media (prefers-reduced-motion: reduce) {
     .dark-tip { transition: none; }
+}
+
+/* Tanda "&" sebagai SVG: warna mengikuti teks sekitarnya (currentColor) */
+.amp-svg {
+    display: inline-block;
+    height: 0.62em;
+    width: calc(0.62em * 1.0316);
+    margin: 0 0.14em;
+    fill: currentColor;
+    vertical-align: -0.02em;
+    overflow: visible;
+}
+
+/* "&" besar di section Mempelai */
+.amp-svg-lg {
+    height: 0.7em;
+    width: calc(0.7em * 1.0316);
 }

@@ -23,10 +23,10 @@
 
     <link rel="preload" as="image" href="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1).webp" fetchpriority="high">
     <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font tema undangan: Allura (script), Cormorant Garamond (serif), Jost (teks) -->
+    <!-- Font tema undangan: MonteCarlo (script), Cormorant Garamond (serif), Jost (teks) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Allura&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=MonteCarlo&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css"></noscript>
     <style>
@@ -40,6 +40,10 @@
 </head>
 
 <body>
+
+    <!-- Glyph "&" sebagai SVG (outline Cardo Italic, lisensi OFL) -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="amp-glyph" viewBox="0 0 1502 1456"><path transform="translate(-20 1453) scale(1 -1)" d="M1152 631Q1152 627 1159.0 617.0Q1166 607 1177.5 589.5Q1189 572 1200 548Q1224 494 1224.0 427.5Q1224 361 1197.0 302.0Q1170 243 1125.0 195.0Q1080 147 1020.0 110.0Q960 73 894 48Q761 -3 633 -3Q422 -3 244 86Q110 154 50 279Q20 343 20.0 416.5Q20 490 40.0 549.5Q60 609 96 659Q173 764 295 804Q328 815 350.0 817.0Q372 819 376.0 821.5Q380 824 380.0 832.5Q380 841 376.5 845.5Q373 850 366.5 854.0Q360 858 351.0 863.5Q342 869 323.5 886.0Q305 903 284.0 926.5Q263 950 248 976Q215 1032 215.0 1095.5Q215 1159 240.0 1210.0Q265 1261 306.5 1300.5Q348 1340 402.0 1369.0Q456 1398 514 1416Q628 1453 737 1453Q861 1453 974 1406Q1120 1345 1120 1232Q1120 1203 1101.0 1180.5Q1082 1158 1053.0 1158.0Q1024 1158 1006.5 1169.0Q989 1180 978 1198Q961 1222 951.0 1269.5Q941 1317 917.5 1339.5Q894 1362 864 1376Q810 1400 736.5 1400.0Q663 1400 599.5 1371.5Q536 1343 492 1292Q401 1188 401 1027Q401 921 470 892Q501 878 542.5 875.5Q584 873 619.0 870.0Q654 867 663.0 858.5Q672 850 672.0 834.0Q672 818 663.0 810.0Q654 802 642 797Q620 788 572 788Q424 788 357.5 753.0Q291 718 252.5 639.0Q214 560 214.0 460.5Q214 361 247.0 290.0Q280 219 337 166Q460 50 633 50Q805 50 980 154Q1098 225 1148 322Q1174 373 1174.0 430.5Q1174 488 1155.5 529.0Q1137 570 1104 596Q1040 648 926 648Q840 648 790 613Q772 600 772.0 582.0Q772 564 779.5 553.0Q787 542 796 532Q819 502 819.0 482.5Q819 463 805.0 446.0Q791 429 769.5 429.0Q748 429 733.0 437.0Q718 445 708 458Q686 486 686.0 535.5Q686 585 721.0 628.5Q756 672 808 700Q910 757 1024 757L1280 746Q1427 746 1427 804Q1427 823 1416 836Q1397 860 1397.0 880.5Q1397 901 1416.0 916.0Q1435 931 1455.0 931.0Q1475 931 1486.5 923.0Q1498 915 1506 902Q1522 878 1522.0 838.5Q1522 799 1500.0 766.5Q1478 734 1444.0 711.5Q1410 689 1368.5 675.5Q1327 662 1289.0 655.0Q1251 648 1221.0 645.5Q1191 643 1171.5 643.0Q1152 643 1152 631Z"/></symbol></svg>
+
 
     <!-- Cover overlay (personalized via query param ?to=Nama) -->
     <div id="coverOverlay">
@@ -64,7 +68,7 @@
                         <div class="cc cc-cat" aria-hidden="true"><img src="assets/cat 3.webp" width="400" height="250" alt="" decoding="async"></div>
                     </div>
 
-                    <h2 id="coverCouple" class="mt-3">Ryka &amp; Adit&nbsp;</h2>
+                    <h2 id="coverCouple" class="mt-3">Ryka <svg class="amp-svg" role="img" aria-label="&amp;"><use href="#amp-glyph"></use></svg>Adit&nbsp;</h2>
                     <p class="cover-invite" data-i18n="coverInvite">We hope you will be part of our special day.</p>
                     <p class="sub" data-i18n="coverDate">Sunday, 20 December 2026</p>
                     <div id="coverGreeting" data-i18n="coverGreeting">To Our Esteemed Guest</div>
@@ -92,7 +96,7 @@
         <div class="home-bg-side" style="background-image: url('assets/navy.png');"></div>
         <div class="hero-content">
             <p class="h4 text-uppercase ls-3 mb-2" data-i18n="homeTag">The Wedding Of</p>
-            <h1 class="display-2 font-wedding shine-silver">Ryka & Adit&nbsp;</h1>
+            <h1 class="display-2 font-wedding shine-silver">Ryka <svg class="amp-svg" role="img" aria-label="&amp;"><use href="#amp-glyph"></use></svg>Adit&nbsp;</h1>
             <p data-i18n="weddingDate">20 . 12 . 2026</p>
             <div class="hero-cta">
                 <a id="saveTheDateBtn" class="cover-btn primary" target="_blank" rel="noopener" data-i18n="saveDate">Save the Date</a>
@@ -164,7 +168,7 @@
                 <h3 class="font-wedding">Ryka Nurdianti, S.T&nbsp;</h3>
                 <p data-i18n="rykaParents">Daughter of Mr. Supyandi & Mrs. Yani</p>
             </div>
-            <div class="col-md-2 font-wedding display-3 my-4">&</div>
+            <div class="col-md-2 font-wedding display-3 my-4"><svg class="amp-svg amp-svg-lg" role="img" aria-label="&amp;"><use href="#amp-glyph"></use></svg></div>
             <div class="col-md-5">
                 <div class="photo-orn arch mb-1">
                     <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.webp" class="couple-img" alt="Foto Aditya Pangestu" loading="lazy" decoding="async">
@@ -353,7 +357,7 @@
 
     <section id="guestbook" class="section-wedding container">
         <div class="card border-0 p-4 mb-5">
-            <h2 class="font-wedding text-center" data-i18n="guestbookTitle">Messages & Prayers&nbsp;</h2>
+            <h2 class="font-wedding text-center" data-i18n="guestbookTitle" data-amp>Messages <svg class="amp-svg" role="img" aria-label="&amp;"><use href="#amp-glyph"></use></svg>Prayers&nbsp;</h2>
             <div class="orn-divider" aria-hidden="true"></div>
             <form id="guestForm">
                 <input id="g_name" type="text" class="form-control mb-3" placeholder="Full Name" value="Guest"
@@ -793,7 +797,7 @@
                 weddingGiftTitle: 'Wedding Gift',
                 weddingGiftText: 'Your prayers and blessings are the most precious gift to us.',
                 sendGift: 'Send a Gift',
-                guestbookTitle: 'Wishes & Prayers',
+                guestbookTitle: 'Wishes &Prayers',
                 guestNamePlaceholder: 'Full Name',
                 guestMessagePlaceholder: 'Share your wishes and prayers...',
                 sendMessage: 'Send Wishes',
@@ -858,7 +862,7 @@
                 weddingGiftTitle: 'Hadiah Pernikahan',
                 weddingGiftText: 'Doa restu Anda adalah karunia bagi kami.',
                 sendGift: 'Kirim Hadiah',
-                guestbookTitle: 'Ucapan & Doa',
+                guestbookTitle: 'Ucapan &Doa',
                 guestNamePlaceholder: 'Nama Lengkap',
                 guestMessagePlaceholder: 'Tulis doa dan ucapan terbaikmu...',
                 sendMessage: 'Kirim Ucapan',
@@ -930,6 +934,10 @@
                 if (selected[key]) {
                     el.placeholder = selected[key];
                 }
+            });
+
+            document.querySelectorAll('[data-amp]').forEach(el => {
+                el.innerHTML = el.textContent.replace(/&/g, '<svg class="amp-svg" role="img" aria-label="&amp;"><use href="#amp-glyph"></use></svg>');
             });
 
             const select = document.getElementById('g_attend');

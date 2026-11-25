@@ -14,8 +14,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Tasyakur Bini’mah – Ryka & Adit 19 Desember 2026">
     <meta property="og:description" content="Dengan penuh rasa syukur, kami mengundang Anda untuk hadir dan berbagi kebahagiaan dalam acara tasyakur pernikahan Ryka & Adit.">
-    <meta property="og:image" content="https://www.ryka-adit.my.id/assets/cover-tasyakur.webp">
-    <meta property="og:image:secure_url" content="https://www.ryka-adit.my.id/assets/cover-tasyakur.webp">
+    <meta property="og:image" content="https://www.ryka-adit.my.id/assets/cover-tasyakuran.webp">
+    <meta property="og:image:secure_url" content="https://www.ryka-adit.my.id/assets/cover-tasyakuran.webp">
     <meta property="og:image:type" content="image/webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -25,7 +25,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tasyakur Bini’mah – Ryka & Adit">
     <meta name="twitter:description" content="Dengan penuh rasa syukur, kami mengundang Anda untuk hadir dan berbagi kebahagiaan dalam acara tasyakur pernikahan Ryka & Adit.">
-    <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-tasyakur.webp">
+    <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-tasyakuran.webp">
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preload" as="image" href="assets/bg-ivory.webp" fetchpriority="high">
 
@@ -819,6 +819,19 @@
             0%, 100% { transform: rotate(45deg) scale(1); }
             50% { transform: rotate(225deg) scale(1.3); }
         }
+
+        /* divider: statis, tanpa animasi */
+        .divider-paw .dot { animation: none !important; transform: rotate(45deg); }
+        .divider-paw.reveal { opacity: 1; transform: none; transition: none; }
+
+        /* kubah/mahkota atas card: statis, tanpa animasi */
+        .card-crest *,
+        .card-crest .cv-swing,
+        .card-crest .cv-halo,
+        .card-crest .cv-twinkle,
+        .card-crest .cv-spin { animation: none !important; }
+        .card-crest .cv-halo { opacity: .6; }
+        .card-crest .cv-twinkle { opacity: .8; transform: none; }
 
         /* muncul saat di-scroll */
         .reveal {

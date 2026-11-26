@@ -21,20 +21,17 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://www.ryka-adit.my.id/assets/cover-share.webp">
 
-    <link rel="preload" as="image" href="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1).webp" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1)-w960.webp" type="image/webp" fetchpriority="high">
     <link href="assets/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font tema undangan: MonteCarlo (script), Cormorant Garamond (serif), Jost (teks) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=MonteCarlo&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="assets/fontawesome-free-6.7.2-web/css/all.min.css"></noscript>
-    <style>
-        /* font-display: swap untuk ikon Font Awesome (menggantikan "block" bawaan) */
-        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-solid-900.woff2) format("woff2")}
-        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-regular-400.woff2) format("woff2")}
-        @font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fontawesome-free-6.7.2-web/webfonts/fa-brands-400.woff2) format("woff2")}
-    </style>
+    <!-- Google Fonts tidak lagi memblokir render (swap sudah aktif lewat display=swap) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=MonteCarlo&family=Jost:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=MonteCarlo&family=Jost:wght@300;400;500;600&display=swap"></noscript>
+    <!-- Font Awesome versi ringan (hanya ikon yang dipakai) - dibuat oleh optimize_assets.py -->
+    <link rel="stylesheet" href="assets/fa-lite/fa-lite.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="assets/fa-lite/fa-lite.css"></noscript>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
 </head>
@@ -62,7 +59,7 @@
                         <!-- <div class="cc cc-back-l" aria-hidden="true"><img src="assets/cloud (3).webp" width="400" height="250" alt="" decoding="async"></div>
                         <div class="cc cc-back-r" aria-hidden="true"><img src="assets/cloud (5).webp" width="400" height="250" alt="" decoding="async"></div> -->
                         <div class="cover-frame">
-                            <img src="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1).webp" alt="Ryka &amp; Adit" fetchpriority="high" decoding="async">
+                            <img src="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1)-w960.webp" alt="Ryka &amp; Adit" fetchpriority="high" decoding="async">
                         </div>
                         <!-- 1 awan kucing, di depan bingkai -->
                         <div class="cc cc-cat" aria-hidden="true"><img src="assets/cat 3.webp" width="400" height="250" alt="" decoding="async"></div>
@@ -90,10 +87,10 @@
 
     <section id="home" class="hero-section has-orn">
         <!-- <span class="orn-corner tr dark" aria-hidden="true"></span> -->
-        <div class="home-bg-layer is-active" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).webp');"></div>
-        <div class="home-bg-layer" data-bg="assets/WhatsApp Image 2026-10-07 at 16.19.45.webp"></div>
-        <div class="home-bg-layer" data-bg="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).webp"></div>
-        <div class="home-bg-side" style="background-image: url('assets/navy.png');"></div>
+        <div class="home-bg-layer is-active" style="background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.38 (1)-w960.webp');"></div>
+        <div class="home-bg-layer" data-bg="assets/WhatsApp Image 2026-10-07 at 16.19.45-w960.webp"></div>
+        <div class="home-bg-layer" data-bg="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1)-w960.webp"></div>
+        <div class="home-bg-side" style="background-image: url('assets/navy.webp');"></div>
         <div class="hero-content">
             <p class="h4 text-uppercase ls-3 mb-2" data-i18n="homeTag">The Wedding Of</p>
             <h1 class="display-2 font-wedding shine-silver">Ryka <svg class="amp-svg" role="img" aria-label="&amp;"><use href="#amp-glyph"></use></svg>Adit&nbsp;</h1>
@@ -117,17 +114,24 @@
     </section>
 
     <script>
-        window.addEventListener('load', function () {
+        // Aset dekoratif non-kritis (hero layer 2-3 + tekstur #event) dimuat setelah undangan dibuka
+        window.loadDeferredArt = function () {
+            if (window.__artLoaded) return;
+            window.__artLoaded = true;
             document.querySelectorAll('.home-bg-layer[data-bg]').forEach(function (el) {
                 el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')";
             });
+            document.documentElement.classList.add('art-ready');
+        };
+        window.addEventListener('load', function () {
             var loadParticles = function () {
+                if (!document.getElementById('tsparticles-home')) return; // cover sudah ditutup
                 var sc = document.createElement('script');
                 sc.src = 'assets/tsparticles.slim.bundle.min.js';
                 document.body.appendChild(sc);
             };
-            if ('requestIdleCallback' in window) requestIdleCallback(loadParticles, { timeout: 1500 });
-            else setTimeout(loadParticles, 300);
+            if ('requestIdleCallback' in window) requestIdleCallback(loadParticles, { timeout: 2500 });
+            else setTimeout(loadParticles, 800);
         });
     </script>
 
@@ -162,8 +166,8 @@
         <div class="row mt-5 align-items-center">
             <div class="col-md-5">
                 <div class="photo-orn arch mb-1">
-                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.webp" class="couple-img" alt="Foto Ryka Nurdianti" loading="lazy" decoding="async">
-                    <span class="couple-cloud-base" aria-hidden="true"><img src="assets/paw-mini.webp" width="400" height="250" alt="" loading="lazy" decoding="async"></span>
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03-w640.webp" class="couple-img" alt="Foto Ryka Nurdianti" loading="lazy" decoding="async">
+                    <span class="couple-cloud-base" aria-hidden="true"><img src="assets/paw-mini.webp" width="492" height="164" alt="" loading="lazy" decoding="async"></span>
                 </div>
                 <h3 class="font-wedding">Ryka Nurdianti, S.T&nbsp;</h3>
                 <p data-i18n="rykaParents">Daughter of Mr. Supyandi & Mrs. Yani</p>
@@ -171,8 +175,8 @@
             <div class="col-md-2 font-wedding display-3 my-4"><svg class="amp-svg amp-svg-lg" role="img" aria-label="&amp;"><use href="#amp-glyph"></use></svg></div>
             <div class="col-md-5">
                 <div class="photo-orn arch mb-1">
-                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.webp" class="couple-img" alt="Foto Aditya Pangestu" loading="lazy" decoding="async">
-                    <span class="couple-cloud-base flip" aria-hidden="true"><img src="assets/paw-mini.webp" width="400" height="250" alt="" loading="lazy" decoding="async"></span>
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07-w640.webp" class="couple-img" alt="Foto Aditya Pangestu" loading="lazy" decoding="async">
+                    <span class="couple-cloud-base flip" aria-hidden="true"><img src="assets/paw-mini.webp" width="492" height="164" alt="" loading="lazy" decoding="async"></span>
                 </div>
                 <h3 class="font-wedding">Aditya Pangestu, S.Kom&nbsp;</h3>
                 <p data-i18n="aditParents">Son of Mr. Jajang & Mrs. Eulis</p>
@@ -181,7 +185,7 @@
     </section>
 
     <section id="countdownSection" class="section-wedding text-center has-orn">
-        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="none" poster="assets/navy.png" aria-hidden="true" tabindex="-1">
+        <video id="countdownVideo" class="countdown-video" muted loop playsinline preload="none" poster="assets/navy.webp" aria-hidden="true" tabindex="-1">
             <source data-src="assets/fd.mp4" type="video/mp4">
             <track kind="captions" src="assets/captions-empty.vtt" srclang="id" label="Indonesia">
         </video>
@@ -274,15 +278,15 @@
 
         <div class="gallery-slideshow" aria-label="Gallery slideshow">
             <div class="gallery-stage" id="galleryStage">
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1).webp" alt="Gallery 1" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1).webp" alt="Gallery 2" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).webp" alt="Gallery 3" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47.webp" alt="Gallery 4" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38.webp" alt="Gallery 5" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1).webp" alt="Gallery 6" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.56.webp" alt="Gallery 7" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.59.webp" alt="Gallery 8" loading="lazy" decoding="async"></div>
-                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.06.webp" alt="Gallery 9" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1)-w960.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.19.38 (1)-w1400.webp" alt="Gallery 1" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1)-w640.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.19.40 (1)-w1400.webp" alt="Gallery 2" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1)-w960.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1)-w1400.webp" alt="Gallery 3" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.47-w640.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.19.47-w1400.webp" alt="Gallery 4" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.38-w640.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.19.38-w1400.webp" alt="Gallery 5" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1)-w640.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.20.01 (1)-w1400.webp" alt="Gallery 6" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.56-w640.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.19.56-w1400.webp" alt="Gallery 7" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.19.59-w640.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.19.59-w1400.webp" alt="Gallery 8" loading="lazy" decoding="async"></div>
+                <div class="gallery-slide"><img src="assets/WhatsApp Image 2026-10-07 at 16.20.06-w640.webp" data-full="assets/WhatsApp Image 2026-10-07 at 16.20.06-w1400.webp" alt="Gallery 9" loading="lazy" decoding="async"></div>
             </div>
         </div>
     </section>
@@ -378,7 +382,7 @@
         <div class="guest-photos" style="display:flex;gap:32px;justify-content:center;margin-top:24px;flex-wrap:wrap;text-align:center;">
             <div>
                 <div class="photo-orn round">
-                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03.webp" alt="Ryka" class="thankyou-img" loading="lazy" decoding="async">
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.28.03-w640.webp" alt="Ryka" class="thankyou-img" loading="lazy" decoding="async">
                 </div>
                 <div style="margin-top:10px; font-weight:600; color:var(--ink);">
                     <a href="https://instagram.com/rykanrdnt" target="_blank" rel="noopener"
@@ -390,7 +394,7 @@
             </div>
             <div>
                 <div class="photo-orn round">
-                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07.webp" alt="Adit" class="thankyou-img" loading="lazy" decoding="async">
+                    <img src="assets/WhatsApp Image 2026-10-07 at 16.20.07-w640.webp" alt="Adit" class="thankyou-img" loading="lazy" decoding="async">
                 </div>
                 <div style="margin-top:10px; font-weight:600; color:var(--ink);">
                     <a href="https://instagram.com/uwa_adit" target="_blank" rel="noopener"
@@ -423,18 +427,19 @@
     </section>
 
     <script>
-        // Logika Countdown
-        const target = new Date("Dec 20, 2026 08:00:00").getTime();
+        // Logika Countdown (WIB eksplisit: sama untuk tamu di zona waktu mana pun)
+        const target = new Date("2026-12-20T08:00:00+07:00").getTime();
+        const cdEl = { d: document.getElementById('d'), h: document.getElementById('h'), m: document.getElementById('m'), s: document.getElementById('s') };
+        let cdTimer = null;
         function updateCountdown() {
-            const now = new Date().getTime();
-            const gap = target - now;
-            if (gap <= 0) { document.getElementById('d').innerText = 0; document.getElementById('h').innerText = 0; document.getElementById('m').innerText = 0; document.getElementById('s').innerText = 0; return; }
-            document.getElementById('d').innerText = Math.floor(gap / (1000 * 60 * 60 * 24));
-            document.getElementById('h').innerText = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('m').innerText = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById('s').innerText = Math.floor((gap % (1000 * 60)) / 1000);
+            const gap = Math.max(0, target - Date.now());
+            cdEl.d.textContent = Math.floor(gap / 86400000);
+            cdEl.h.textContent = Math.floor((gap % 86400000) / 3600000);
+            cdEl.m.textContent = Math.floor((gap % 3600000) / 60000);
+            cdEl.s.textContent = Math.floor((gap % 60000) / 1000);
+            if (gap === 0 && cdTimer) { clearInterval(cdTimer); cdTimer = null; }
         }
-        updateCountdown(); setInterval(updateCountdown, 1000);
+        updateCountdown(); cdTimer = setInterval(updateCountdown, 1000);
 
         // Copy helpers for rekening / alamat
         function copyText(text) { navigator.clipboard.writeText(text).then(() => { showCopyNotification('Copied: ' + text); }).catch(() => { showCopyNotification('Copy failed'); }); }
@@ -746,8 +751,13 @@
         (function runTrackOnLoad() {
             let done = false;
             const run = () => { if (done) return; done = true; trackGuestOpen(); };
-            if (document.readyState === 'complete') run();
-            else window.addEventListener('load', run, { once: true });
+            // Jalankan setelah halaman benar-benar idle, supaya 2 request Supabase tidak ikut bersaing dengan gambar/LCP
+            const schedule = () => setTimeout(() => {
+                if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 4000 });
+                else run();
+            }, 2500);
+            if (document.readyState === 'complete') schedule();
+            else window.addEventListener('load', schedule, { once: true });
         })();
 
         // Google Calendar link for save-the-date button
@@ -757,8 +767,8 @@
             const title = encodeURIComponent('Akad Nikah — Ryka & Adit');
             const details = encodeURIComponent('Akad dan Resepsi pernikahan Ryka & Adit. Lokasi: Graha Sativa Bulog, Bandung.');
             const location = encodeURIComponent('Graha Sativa Bulog, Bandung');
-            const start = new Date('2026-12-20T08:00:00');
-            const end = new Date('2026-12-20T14:00:00');
+            const start = new Date('2026-12-20T08:00:00+07:00');
+            const end = new Date('2026-12-20T14:00:00+07:00');
             function toCalTime(d) { return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'; }
             const dates = `${toCalTime(start)}/${toCalTime(end)}`;
             const href = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
@@ -1007,38 +1017,24 @@
             const navLinks = Array.from(document.querySelectorAll('.nav-link'));
             const sections = Array.from(document.querySelectorAll('section[id]'));
 
-            function setActiveNav() {
-                const scrollY = window.scrollY + window.innerHeight * 0.3;
-                let current = 'home';
-
-                sections.forEach(section => {
-                    if (section.offsetTop <= scrollY) {
-                        current = section.id;
-                    }
-                });
-
+            function setActive(id) {
                 navLinks.forEach(link => {
-                    const isActive = link.dataset.section === current;
+                    const isActive = link.dataset.section === id;
                     link.classList.toggle('active', isActive);
                     const icon = link.querySelector('i');
-                    if (icon) {
-                        icon.style.color = isActive ? 'var(--gold-ink)' : 'var(--ink)';
-                    }
+                    if (icon) icon.style.color = isActive ? 'var(--gold-ink)' : 'var(--ink)';
                 });
             }
 
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.forEach(item => item.classList.remove('active'));
-                    link.classList.add('active');
-                    const icon = link.querySelector('i');
-                    if (icon) icon.style.color = 'var(--gold-ink)';
-                });
-            });
+            navLinks.forEach(link => link.addEventListener('click', () => setActive(link.dataset.section)));
+            setActive('home');
 
-            setActiveNav();
-            window.addEventListener('scroll', setActiveNav, { passive: true });
-            window.addEventListener('load', setActiveNav);
+            // Garis pantau di 30% tinggi layar (logika sama seperti sebelumnya), tanpa offsetTop/forced reflow
+            if (!('IntersectionObserver' in window)) return;
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(en => { if (en.isIntersecting) setActive(en.target.id); });
+            }, { rootMargin: '-30% 0px -70% 0px', threshold: 0 });
+            sections.forEach(s => io.observe(s));
         })();
 
         (function () {
@@ -1060,6 +1056,8 @@
                 cover.classList.add('open');
 
                 setTimeout(() => {
+                    // Partikel hanya untuk cover: hentikan & bebaskan setelah cover tertutup
+                    if (window.__homeParticles) { try { window.__homeParticles.destroy(); } catch (e) { } window.__homeParticles = null; }
                     cover.remove();
                 }, 1200);
 
@@ -1071,9 +1069,8 @@
                         }
                     }).catch(() => { });
                 }
-                setTimeout(() => {
-                    window.dispatchEvent(new Event("resize"));
-                }, 600);
+                // Aset dekoratif non-kritis baru diunduh setelah undangan dibuka
+                setTimeout(() => { if (window.loadDeferredArt) window.loadDeferredArt(); }, 600);
             }
 
             // 1) Tombol
@@ -1204,15 +1201,8 @@
                 if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) e.preventDefault();
                 if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) e.preventDefault();
             });
-            let lastTouchEnd = 0;
-            document.addEventListener('touchstart', function (e) {
-                if (e.touches.length > 1) e.preventDefault();
-            }, { passive: false });
-            document.addEventListener('touchend', function (e) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) e.preventDefault();
-                lastTouchEnd = now;
-            }, { passive: false });
+            // Zoom dobel-ketuk dicegah lewat CSS (touch-action: manipulation di style.css).
+            // Listener touchstart/touchend non-passive di document dihapus: itu memaksa browser menunggu JS di setiap sentuhan (scroll patah-patah di HP kelas bawah).
         })();
     </script>
     <script>
@@ -1284,15 +1274,20 @@
     </script>
     <script>
         (function () {
+            var tries = 0;
             const check = setInterval(() => {
+                if (++tries > 150) { clearInterval(check); return; }   // menyerah setelah ~15 dtk
                 if (!window.tsParticles) return;
                 clearInterval(check);
+                if (!document.getElementById('tsparticles-home')) return; // cover sudah ditutup
 
+                var small = window.innerWidth < 600;
                 tsParticles.load("tsparticles-home", {
                     fullScreen: { enable: false },
                     background: { color: "transparent" },
+                    fpsLimit: 45,
                     particles: {
-                        number: { value: 38, density: { enable: true, area: 900 } },
+                        number: { value: small ? 22 : 38, density: { enable: true, area: 900 } },
                         color: { value: ["#B99650", "#DCC287", "#F3E6C4"] },
                         shape: { type: "polygon", polygon: { sides: 6 } },
                         rotate: { value: { min: 0, max: 360 }, animation: { enable: true, speed: 8 } },
@@ -1302,7 +1297,7 @@
                         wobble: { enable: true, distance: 12, speed: { min: -1.5, max: 1.5 } }
                     },
                     detectRetina: true
-                });
+                }).then(function (c) { window.__homeParticles = c; });
             }, 100);
         })();
     </script>
@@ -1314,6 +1309,7 @@
             var stage = document.getElementById('galleryStage');
             var autoTimer = null;
             var AUTO_DELAY = 2000;
+            var galleryVisible = false;
 
             function updateGallery() {
                 slides.forEach(function (slide, index) {
@@ -1334,7 +1330,7 @@
 
             var lbOpenFlag = function () { var el = document.getElementById('galleryLightbox'); return el && !el.hidden; };
             function startAutoPlay() {
-                if (lbOpenFlag()) return;
+                if (lbOpenFlag() || !galleryVisible) return;
                 if (autoTimer) clearInterval(autoTimer);
                 autoTimer = setInterval(function () {
                     currentIndex = (currentIndex + 1) % slides.length;
@@ -1390,7 +1386,9 @@
                         var slide = document.createElement('div');
                         slide.className = 'gallery-slide';
                         var img = document.createElement('img');
-                        img.src = 'assets/WhatsApp Image ' + name + '.webp';
+                        img.src = 'assets/WhatsApp Image ' + name + (name === '2026-10-07 at 16.19.45' ? '-w960' : '-w640') + '.webp';
+                        img.dataset.full = 'assets/WhatsApp Image ' + name + '-w1400.webp';
+                        img.loading = 'lazy';
                         img.alt = 'Gallery ' + (slides.length + 1);
                         img.decoding = 'async';
                         slide.appendChild(img);
@@ -1402,27 +1400,15 @@
                     updateGallery();
                 }
 
-                function whenInitialPhotosLoaded(cb) {
-                    var imgs = Array.prototype.slice.call(stage.querySelectorAll('img'));
-                    var pending = imgs.length;
-                    if (!pending) return cb();
-                    var done = function () { if (--pending === 0) cb(); };
-                    imgs.forEach(function (img) {
-                        if (img.complete) { done(); return; }
-                        img.addEventListener('load', done, { once: true });
-                        img.addEventListener('error', done, { once: true });
-                        img.loading = 'eager';
-                    });
-                }
-
+                // Foto tambahan baru dibuat saat galeri hampir terlihat (bukan saat halaman dimuat) dan memakai lazy-loading
                 function scheduleExtras() {
-                    whenInitialPhotosLoaded(function () {
-                        if ('requestIdleCallback' in window) requestIdleCallback(addExtraSlides, { timeout: 1500 });
-                        else setTimeout(addExtraSlides, 300);
-                    });
+                    if (!('IntersectionObserver' in window)) { addExtraSlides(); return; }
+                    var xio = new IntersectionObserver(function (es) {
+                        if (es.some(function (e) { return e.isIntersecting; })) { xio.disconnect(); addExtraSlides(); }
+                    }, { rootMargin: '800px 0px' });
+                    xio.observe(stage);
                 }
-                if (document.readyState === 'complete') scheduleExtras();
-                else window.addEventListener('load', scheduleExtras);
+                scheduleExtras();
 
                 var lb = document.getElementById('galleryLightbox');
                 var lbImg = document.getElementById('lbImg');
@@ -1432,7 +1418,7 @@
 
                 function renderLightbox() {
                     var img = slides[lbIndex].querySelector('img');
-                    lbImg.src = img.currentSrc || img.src;
+                    lbImg.src = img.dataset.full || img.currentSrc || img.src;
                     lbImg.alt = img.alt || '';
                     lbCount.textContent = (lbIndex + 1) + ' / ' + slides.length;
                 }
@@ -1533,7 +1519,13 @@
                 stage.addEventListener('focusout', startAutoPlay);
 
                 updateGallery();
-                startAutoPlay();
+                // Slideshow hanya berjalan saat galeri terlihat (hemat CPU & baterai)
+                if ('IntersectionObserver' in window) {
+                    new IntersectionObserver(function (es) {
+                        galleryVisible = es[es.length - 1].isIntersecting;
+                        if (galleryVisible) startAutoPlay(); else stopAutoPlay();
+                    }, { threshold: 0.1 }).observe(stage);
+                } else { galleryVisible = true; startAutoPlay(); }
             }
         })();
     </script>

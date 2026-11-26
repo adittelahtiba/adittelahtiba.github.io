@@ -100,6 +100,7 @@ body {
 
 html {
     scroll-behavior: smooth;
+    touch-action: manipulation; /* tanpa zoom dobel-ketuk & tanpa jeda 300ms; cubit-zoom tetap ada demi aksesibilitas */
 }
 
 body {
@@ -925,7 +926,7 @@ body>section h3.h4 {
 .countdown-item {
     margin: 0 8px;
     flex: 0 1 auto;
-    background-color: var(--transparent);
+    background-color: transparent;
     color: var(--gold-bright);
     border: 1.5px solid var(--gold);
     border-radius: 12px;
@@ -966,12 +967,15 @@ body>section h3.h4 {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.45.webp');
     background-size: cover;
     background-position: center;
     opacity: 0.1;
     z-index: 0;
     pointer-events: none;
+}
+
+html.art-ready #event::before {
+    background-image: url('assets/WhatsApp Image 2026-10-07 at 16.19.45-w640.webp');
 }
 
 #event>* {
@@ -1139,6 +1143,7 @@ body>section h3.h4 {
     margin: 0 auto;
     perspective: 1200px;
     overflow: hidden;
+    container-type: inline-size; /* satuan cqw = % lebar panggung */
     touch-action: pan-y;
     user-select: none;
     -webkit-user-select: none;
@@ -1149,9 +1154,14 @@ body>section h3.h4 {
     cursor: grabbing;
 }
 
+/* Posisi digeser lewat transform (bukan left) dan tanpa transisi filter, agar berjalan di compositor */
 .gallery-slide {
+    --x: 0cqw;
+    --s: 0.85;
+    --r: 0deg;
     position: absolute;
     top: 50%;
+    left: 50%;
     width: clamp(180px, 28vw, 350px);
     height: clamp(220px, 34vw, 420px);
     border-radius: 12px;
@@ -1160,10 +1170,9 @@ body>section h3.h4 {
     box-shadow: 0 18px 28px rgba(12, 24, 41, 0.2);
     opacity: 0;
     background-color: var(--paper);
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.8s ease, filter 0.8s ease, left 0.8s ease, right 0.8s ease;
-    transform: translate(-50%, -50%) scale(0.85);
-    filter: blur(2.5px) saturate(0.7);
+    transform: translate(calc(-50% + var(--x)), -50%) scale(var(--s)) rotateY(var(--r));
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease;
+    will-change: transform, opacity;
     cursor: pointer;
     pointer-events: auto;
 }
@@ -1173,35 +1182,41 @@ body>section h3.h4 {
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: brightness(0.96);
 }
 
 .gallery-slide.is-prev {
-    left: 18%;
+    --x: -32cqw;
+    --s: 0.84;
+    --r: 18deg;
     opacity: 0.38;
-    transform: translate(-50%, -50%) scale(0.84) rotateY(18deg);
-    filter: blur(2px) saturate(0.65);
 }
 
 .gallery-slide.is-active {
-    left: 50%;
+    --x: 0cqw;
+    --s: 1;
+    --r: 0deg;
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    filter: blur(0) saturate(1);
     z-index: 3;
     cursor: zoom-in;
 }
 
 .gallery-slide.is-next {
-    left: 82%;
+    --x: 32cqw;
+    --s: 0.84;
+    --r: -18deg;
     opacity: 0.38;
-    transform: translate(-50%, -50%) scale(0.84) rotateY(-18deg);
-    filter: blur(2px) saturate(0.65);
 }
 
 .gallery-slide.is-hidden {
     opacity: 0;
     visibility: hidden;
+}
+
+/* Cadangan untuk browser lama tanpa container query units */
+@supports not (width: 1cqw) {
+    .gallery-slide { --x: 0px; }
+    .gallery-slide.is-prev { left: 18%; }
+    .gallery-slide.is-next { left: 82%; }
 }
 
 /* ---------- Buku tamu ---------- */

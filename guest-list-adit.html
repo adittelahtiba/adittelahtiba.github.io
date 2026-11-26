@@ -41,11 +41,24 @@
 
         /* Header */
         .top {
-            padding: 22px 0 14px;
-            padding-top: calc(22px + env(safe-area-inset-top, 0px));
+            padding: 16px 0 14px;
         }
         .top h1 { margin: 0; font-size: 1.35rem; font-weight: 700; letter-spacing: .01em; }
         .top p { margin: 2px 0 0; color: var(--muted); font-size: .9rem; }
+
+        /* Filter pemilik (paling atas) */
+        .owner-filter {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 4px;
+            margin-top: calc(10px + env(safe-area-inset-top, 0px));
+            background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+        }
+        .owner-filter button {
+            min-height: 44px; padding: 0 6px; border: 0; border-radius: 10px; background: transparent;
+            color: var(--muted); font-weight: 600; font-size: .9rem; line-height: 1.15;
+            transition: background .15s, color .15s;
+        }
+        .owner-filter button small { display: block; font-weight: 500; font-size: .72rem; opacity: .8; font-variant-numeric: tabular-nums; }
+        .owner-filter button[aria-pressed="true"] { background: var(--gold); color: var(--gold-ink); }
 
         /* Statistik */
         .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
@@ -131,6 +144,13 @@
 </head>
 <body>
     <main class="wrap">
+        <div id="ownerFilter" class="owner-filter" role="group" aria-label="Filter tamu berdasarkan pembuat">
+            <button type="button" data-owner="all" aria-pressed="true">All<small>–</small></button>
+            <button type="button" data-owner="adit" aria-pressed="false">Adit<small>–</small></button>
+            <button type="button" data-owner="ryka" aria-pressed="false">Ryka<small>–</small></button>
+            <button type="button" data-owner="other" aria-pressed="false">Other<small>–</small></button>
+        </div>
+
         <header class="top">
             <h1>Daftar Tamu</h1>
             <p>Ryka &amp; Adit · 20 Desember 2026</p>
@@ -191,6 +211,25 @@
         const deleteDialog = $('deleteDialog');
 
         let guests = [];
+        let ownerFilter = 'all';
+        const ownerFilterEl = $('ownerFilter');
+
+        function ownerOf(g) {
+            const v = String(g.create_by || '').trim().toLowerCase();
+            return v === 'adit' || v === 'ryka' ? v : 'other';
+        }
+        function scopedGuests() {
+            return ownerFilter === 'all' ? guests : guests.filter(g => ownerOf(g) === ownerFilter);
+        }
+        function renderOwnerFilter() {
+            const counts = { all: guests.length, adit: 0, ryka: 0, other: 0 };
+            guests.forEach(g => counts[ownerOf(g)]++);
+            ownerFilterEl.querySelectorAll('button').forEach(btn => {
+                const key = btn.dataset.owner;
+                btn.setAttribute('aria-pressed', String(key === ownerFilter));
+                btn.querySelector('small').textContent = counts[key];
+            });
+        }
         let editingId = null;
         let pendingDeleteId = null;
         let toastTimer = null;
@@ -246,14 +285,16 @@
         }
 
         function renderStats() {
-            $('statTotal').textContent = guests.length;
-            $('statSeen').textContent = guests.filter(g => (g.open_count || 0) > 0).length;
-            $('statOpens').textContent = guests.reduce((sum, g) => sum + (Number(g.open_count) || 0), 0);
+            const rows = scopedGuests();
+            $('statTotal').textContent = rows.length;
+            $('statSeen').textContent = rows.filter(g => (g.open_count || 0) > 0).length;
+            $('statOpens').textContent = rows.reduce((sum, g) => sum + (Number(g.open_count) || 0), 0);
+            renderOwnerFilter();
         }
 
         function visibleGuests() {
             const q = searchEl.value.trim().toLowerCase();
-            let rows = guests.filter(g => !q || String(g.guest_name || '').toLowerCase().includes(q));
+            let rows = scopedGuests().filter(g => !q || String(g.guest_name || '').toLowerCase().includes(q));
             const by = sortEl.value;
             if (by === 'opens') rows.sort((a, b) => (b.open_count || 0) - (a.open_count || 0));
             else if (by === 'unseen') rows = rows.filter(g => !(g.open_count > 0));
@@ -264,7 +305,7 @@
         function renderList() {
             const rows = visibleGuests();
             if (!rows.length) {
-                guestListEl.innerHTML = `<li class="empty">${guests.length ? 'Tidak ada tamu yang cocok.' : 'Belum ada tamu. Tambahkan nama tamu pertama di atas.'}</li>`;
+                guestListEl.innerHTML = `<li class="empty">${scopedGuests().length ? 'Tidak ada tamu yang cocok.' : (guests.length ? 'Belum ada tamu untuk filter ini.' : 'Belum ada tamu. Tambahkan nama tamu pertama di atas.')}</li>`;
                 return;
             }
             guestListEl.innerHTML = rows.map(g => {
@@ -372,6 +413,13 @@
 
         guestForm.addEventListener('submit', submitGuest);
         cancelBtn.addEventListener('click', () => { resetForm(); toast('Perubahan dibatalkan'); });
+        ownerFilterEl.addEventListener('click', (event) => {
+            const btn = event.target.closest('[data-owner]');
+            if (!btn) return;
+            ownerFilter = btn.dataset.owner;
+            renderStats();
+            renderList();
+        });
         searchEl.addEventListener('input', renderList);
         sortEl.addEventListener('change', renderList);
 

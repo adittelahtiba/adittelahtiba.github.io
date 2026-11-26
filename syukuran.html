@@ -523,34 +523,29 @@
             opacity: 0.7;
         }
 
+        .divider {
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+            margin: 24px auto;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
         /* DIVIDER ORNAMEN */
         .divider-paw {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            width: 60%;
-            margin: 30px auto;
+            /* margin: 30px auto; */
         }
 
-        .divider-paw::before,
-        .divider-paw::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold));
-        }
-
-        .divider-paw::after {
-            background: linear-gradient(to left, transparent, var(--gold));
-        }
-
-        .divider-paw .dot {
-            flex: none;
-            width: 6px;
-            height: 6px;
-            background: var(--gold);
-            transform: rotate(45deg);
+        .divider-paw img {
+            display: block;
+            width: auto;
+            width: 40%;
+            /* height: 28px; */
+            object-fit: contain;
         }
 
         /* SALAM PEMBUKA & PENUTUP */
@@ -746,7 +741,7 @@
 
                     <div class="cover-photo">
                         <div class="cover-frame">
-                            <img src="assets/WhatsApp%20Image%202026-10-07%20at%2016.19.38%20(1).webp" alt="Ryka &amp; Adit" fetchpriority="high" decoding="async">
+                            <img src="assets/WhatsApp Image 2026-10-07 at 16.19.47 (1).webp" alt="Ryka &amp; Adit" fetchpriority="high" decoding="async">
                         </div>
                         <div class="cc cc-cat" aria-hidden="true"><img src="assets/cat 3.webp" width="400" height="250" alt="" decoding="async"></div>
                     </div>
@@ -785,7 +780,7 @@
             </p>
 
             <!-- DIVIDER 1: setelah pembuka, sebelum nama mempelai -->
-            <div class="divider-paw"><span class="dot"></span></div>
+            <div class="divider-paw"><img src="assets/paw-mini.webp" alt=""></div>
 
             <h1 class="title-names">Ryka Nurdianti</h1>
 
@@ -802,7 +797,7 @@
             </p>
 
             <!-- DIVIDER 2: setelah nama mempelai, sebelum ajakan hadir -->
-            <div class="divider-paw"><span class="dot"></span></div>
+            <!-- <div class="divider-paw"><img src="assets/paw-mini.webp" alt=""></div> -->
 
             <p>
                 Kami mengundang Bapak/Ibu/Saudara/i untuk hadir pada:
@@ -845,14 +840,14 @@
             </div>
 
             <!-- DIVIDER 3: setelah detail acara, sebelum kalimat penutup -->
-            <div class="divider-paw"><span class="dot"></span></div>
+            <!-- <div class="divider-paw"><img src="assets/paw-mini.webp" alt=""></div> -->
 
             <p class="footer-thanks">
                 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
             </p>
 
             <!-- DIVIDER 4: sebelum salam penutup -->
-            <div class="divider-paw"><span class="dot"></span></div>
+            <div class="divider-paw"><img src="assets/paw-mini.webp" alt=""></div>
 
             <div class="family-name">
                 <div class="salam salam-closing">Wassalamu’alaikum<br>Warahmatullahi Wabarakatuh.</div>

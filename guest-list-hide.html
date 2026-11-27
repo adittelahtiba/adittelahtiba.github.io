@@ -214,6 +214,11 @@
         let ownerFilter = 'all';
         const ownerFilterEl = $('ownerFilter');
 
+        // is_hide = 1 → tamu disembunyikan: tidak ditampilkan & tidak masuk hitungan
+        function isHidden(g) {
+            return g.is_hide === true || Number(g.is_hide) === 1;
+        }
+
         function ownerOf(g) {
             const v = String(g.create_by || '').trim().toLowerCase();
             return v === 'adit' || v === 'ryka' ? v : 'other';
@@ -335,9 +340,9 @@
         async function fetchGuests() {
             guestListEl.innerHTML = '<li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li>';
             try {
-                const res = await fetch(`${API_BASE}/guest_list?select=id,created_at,create_by,guest_name,open_count&order=created_at.desc`, { headers: HEADERS });
+                const res = await fetch(`${API_BASE}/guest_list?select=id,created_at,create_by,guest_name,open_count,is_hide&order=created_at.desc`, { headers: HEADERS });
                 if (!res.ok) throw new Error('Failed to load guests');
-                guests = await res.json();
+                guests = (await res.json()).filter(g => !isHidden(g));
                 renderStats();
                 renderList();
             } catch (error) {

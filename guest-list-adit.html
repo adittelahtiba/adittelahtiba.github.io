@@ -105,6 +105,11 @@
         .opens.seen { background: rgba(111, 211, 160, .14); color: var(--ok); }
         .guest-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
         .guest-actions .row2 { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .hide-flag { display: inline-block; margin-top: 6px; padding: 2px 9px; border-radius: 999px; font-size: .74rem; font-weight: 600; font-variant-numeric: tabular-nums; background: var(--surface-2); color: var(--muted); }
+        .hide-flag.hidden-guest { background: rgba(255, 138, 138, .14); color: var(--danger); }
+        .guest.is-hidden { border-style: dashed; }
+        .field-label { display: block; margin: 10px 0 4px; font-size: .8rem; color: var(--muted); }
+        select.field { appearance: auto; }
         .copy { background: rgba(217, 184, 108, .12); border-color: rgba(217, 184, 108, .45); color: var(--gold); }
 
         .empty { text-align: center; color: var(--muted); padding: 36px 10px; background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); }
@@ -165,6 +170,11 @@
         <form id="guestForm" class="panel" autocomplete="off">
             <h2 id="panelTitle" class="panel-title">Tambah tamu</h2>
             <input id="guestName" class="field" type="text" placeholder="Nama tamu" enterkeyhint="done" required />
+            <label class="field-label" for="isHide">is_hide</label>
+            <select id="isHide" class="field">
+                <option value="0" selected>0 – Tampil</option>
+                <option value="1">1 – Hide (disembunyikan)</option>
+            </select>
             <div class="form-actions">
                 <button id="submitBtn" type="submit" class="btn btn-primary">Tambah tamu</button>
                 <button id="cancelBtn" type="button" class="btn" hidden>Batal</button>
@@ -205,7 +215,7 @@
         };
 
         const $ = (id) => document.getElementById(id);
-        const guestForm = $('guestForm'), guestNameInput = $('guestName'), guestListEl = $('guestList');
+        const guestForm = $('guestForm'), guestNameInput = $('guestName'), isHideInput = $('isHide'), guestListEl = $('guestList');
         const submitBtn = $('submitBtn'), cancelBtn = $('cancelBtn'), panel = guestForm, panelTitle = $('panelTitle');
         const searchEl = $('search'), sortEl = $('sort'), toastEl = $('toast');
         const deleteDialog = $('deleteDialog');
@@ -213,6 +223,11 @@
         let guests = [];
         let ownerFilter = 'all';
         const ownerFilterEl = $('ownerFilter');
+
+        // is_hide: 1 = hide, 0 = tampil (data tetap ditampilkan di halaman ini)
+        function hideValue(g) {
+            return (g.is_hide === true || Number(g.is_hide) === 1) ? 1 : 0;
+        }
 
         function ownerOf(g) {
             const v = String(g.create_by || '').trim().toLowerCase();
@@ -311,12 +326,14 @@
             guestListEl.innerHTML = rows.map(g => {
                 const count = Number(g.open_count) || 0;
                 const by = g.create_by ? ` · oleh ${escapeHtml(g.create_by)}` : '';
+                const hv = hideValue(g);
                 return `
-                <li class="guest">
+                <li class="guest ${hv === 1 ? 'is-hidden' : ''}">
                     <div class="guest-head">
                         <div>
                             <h3 class="guest-name">${escapeHtml(g.guest_name || '')}</h3>
                             <p class="guest-meta">${formatDate(g.created_at)}${by}</p>
+                            <span class="hide-flag ${hv === 1 ? 'hidden-guest' : ''}">is_hide=${hv} · ${hv === 1 ? 'Hide' : 'Tampil'}</span>
                         </div>
                         <span class="opens ${count > 0 ? 'seen' : ''}">${count > 0 ? `Dibuka ${count}×` : 'Belum dibuka'}</span>
                     </div>
@@ -335,7 +352,7 @@
         async function fetchGuests() {
             guestListEl.innerHTML = '<li class="skeleton"></li><li class="skeleton"></li><li class="skeleton"></li>';
             try {
-                const res = await fetch(`${API_BASE}/guest_list?select=id,created_at,create_by,guest_name,open_count&order=created_at.desc`, { headers: HEADERS });
+                const res = await fetch(`${API_BASE}/guest_list?select=id,created_at,create_by,guest_name,open_count,is_hide&order=created_at.desc`, { headers: HEADERS });
                 if (!res.ok) throw new Error('Failed to load guests');
                 guests = await res.json();
                 renderStats();
@@ -365,7 +382,7 @@
             const wasEditing = Boolean(editingId);
             submitBtn.disabled = true;
             try {
-                const payload = { guest_name: guestName, guest_name_lower: guestName.toLowerCase(), create_by: 'Adit' };
+                const payload = { guest_name: guestName, guest_name_lower: guestName.toLowerCase(), create_by: 'Adit', is_hide: Number(isHideInput.value) === 1 ? 1 : 0 };
                 const url = wasEditing ? `${API_BASE}/guest_list?id=eq.${editingId}` : `${API_BASE}/guest_list`;
                 const res = await fetch(url, { method: wasEditing ? 'PATCH' : 'POST', headers: HEADERS, body: JSON.stringify(payload) });
                 if (!res.ok) throw new Error('Request failed');
@@ -384,6 +401,7 @@
         function prepareEdit(guest) {
             editingId = guest.id;
             guestNameInput.value = guest.guest_name || '';
+            isHideInput.value = String(hideValue(guest));
             panel.classList.add('editing');
             panelTitle.textContent = 'Ubah nama tamu';
             submitBtn.textContent = 'Simpan perubahan';

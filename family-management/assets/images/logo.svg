@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Logo Ryka &amp; Adit">
+  <rect width="64" height="64" rx="16" fill="#172B49"/>
+  <path d="M10 27 L32 9 L54 27" fill="none" stroke="#C9A96E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M32 24.5c-1.6-2.2-5.2-1.4-5.2 1.4 0 2.2 3 4.2 5.2 5.8 2.2-1.6 5.2-3.6 5.2-5.8 0-2.8-3.6-3.6-5.2-1.4z" fill="#B08A4A"/>
+  <text x="32" y="51" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#F6F1E7">R &amp; A</text>
+</svg>
